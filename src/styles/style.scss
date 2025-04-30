@@ -1,0 +1,30 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
+
+// 전체 선택자
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+// 변수 (variable)
+$primary-color: #4caf50;
+$secondery-color: #fd9d02;
+$point-color: #004483;
+$dark-color: #333333;
+$gray-color1: #3e3e3e;
+$gray-color2: #444444;
+$gray-color3: #737373;
+$gray-color4: #787878;
+$font-stack: 'Pretendard';
+$padding-base: 16px;
