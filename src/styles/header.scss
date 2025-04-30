@@ -12,12 +12,20 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  ul {
-    border: 1px solid #f00;
+  .header-wrap {
     width: 1080px;
     height: inherit;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    .site-wrap {
+      li {
+        a {
+          color: variables.$primary-color;
+          font-weight: bold;
+        }
+      }
+    }
     .btn-wrap {
       display: flex;
       justify-content: center;
