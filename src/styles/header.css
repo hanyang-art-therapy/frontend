@@ -1,0 +1,34 @@
+header {
+  background: #fff;
+}
+
+header {
+  background: #fff;
+  width: 100vw;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+header .header-wrap {
+  width: 1080px;
+  height: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .header-wrap .site-wrap li a {
+  color: #fd9d02;
+  font-weight: bold;
+}
+header .header-wrap .btn-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 164px;
+  height: 40px;
+  gap: 20px;
+  background: #fd9d02;
+  color: #fff;
+  font-size: 14px;
+}/*# sourceMappingURL=header.css.map */

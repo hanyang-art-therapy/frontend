@@ -1,0 +1,38 @@
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+nav .icon-wrap {
+  width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+}
+nav .icon-wrap li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+nav .icon-wrap li a img {
+  width: 142px;
+}
+nav .icon-wrap li a span {
+  font-size: 18px;
+  color: #004483;
+  font-weight: 700;
+}
+nav .menu-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+nav .menu-wrap li a {
+  color: #333333;
+  font-weight: 700;
+}/*# sourceMappingURL=nav.css.map */
