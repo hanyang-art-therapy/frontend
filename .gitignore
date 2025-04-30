@@ -27,3 +27,15 @@ dist-ssr
 .env
 .env.*
 
+
+# scss mpa files
+.gallery.css
+.gallery.css.map
+.header.css
+.header.css.map
+.main.css
+.main.css.map
+.nav.css
+.nav.css.map
+.style.css
+.style.css.map
