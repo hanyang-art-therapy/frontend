@@ -1,0 +1,33 @@
+@use './variables';
+
+header {
+  background: #fff;
+  // 나머지 스타일들...
+}
+
+header {
+  background: #fff;
+  width: 100vw;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ul {
+    border: 1px solid #f00;
+    width: 1080px;
+    height: inherit;
+    display: flex;
+    justify-content: space-between;
+    .btn-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 164px;
+      height: 40px;
+      gap: 20px;
+      background: variables.$primary-color;
+      color: #fff;
+      font-size: 14px;
+    }
+  }
+}

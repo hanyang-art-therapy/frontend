@@ -1,0 +1,30 @@
+header {
+  background: #fff;
+}
+
+header {
+  background: #fff;
+  width: 100vw;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+header ul {
+  border: 1px solid #f00;
+  width: 1080px;
+  height: inherit;
+  display: flex;
+  justify-content: space-between;
+}
+header ul .btn-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 164px;
+  height: 40px;
+  gap: 20px;
+  background: #fd9d02;
+  color: #fff;
+  font-size: 14px;
+}/*# sourceMappingURL=header.css.map */

@@ -1,0 +1,19 @@
+@use './variables';
+
+nav {
+  width: 1080px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  .icon-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .nav-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

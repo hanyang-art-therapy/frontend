@@ -1,0 +1,17 @@
+nav {
+  width: 1080px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+nav .icon-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+nav .nav-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}/*# sourceMappingURL=nav.css.map */
