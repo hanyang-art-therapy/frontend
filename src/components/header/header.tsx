@@ -4,19 +4,21 @@ import '../../styles/header.scss';
 export default function Header() {
   return (
     <header>
-      <ul>
-        <li>
-          <a href='#'>사이트맵</a>
-        </li>
-        <div className='btn-wrap'>
+      <div className='header-wrap'>
+        <ul className='site-wrap'>
+          <li>
+            <a href='#'>사이트맵</a>
+          </li>
+        </ul>
+        <ul className='btn-wrap'>
           <li>
             <a href='#'>로그인</a>
           </li>
           <li>
             <a href='#'>마이페이지</a>
           </li>
-        </div>
-      </ul>
+        </ul>
+      </div>
     </header>
   );
 }

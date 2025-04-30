@@ -10,14 +10,18 @@ header {
   justify-content: center;
   align-items: center;
 }
-header ul {
-  border: 1px solid #f00;
+header .header-wrap {
   width: 1080px;
   height: inherit;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-header ul .btn-wrap {
+header .header-wrap .site-wrap li a {
+  color: #fd9d02;
+  font-weight: bold;
+}
+header .header-wrap .btn-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
