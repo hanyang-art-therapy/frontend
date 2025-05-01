@@ -2,16 +2,10 @@
 
 header {
   background: #fff;
-  // 나머지 스타일들...
-}
-
-header {
-  background: #fff;
   width: 100vw;
   height: 40px;
   display: flex;
   justify-content: center;
-  align-items: center;
   .headerWrap {
     width: 1080px;
     height: inherit;
@@ -28,14 +22,29 @@ header {
     }
     .btnWrap {
       display: flex;
-      justify-content: center;
+      padding: 0 20px;
       align-items: center;
-      width: 164px;
+      justify-content: space-between;
       height: 40px;
       gap: 20px;
       background: variables.$primary-color;
       color: #fff;
       font-size: 14px;
+      text-align: center;
+
+      .loginBtn {
+        width: 39px;
+      }
+
+      .myPageBtn {
+        width: 65px;
+      }
+
+      a {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 }
