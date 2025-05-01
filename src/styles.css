@@ -2,6 +2,23 @@
 @import 'tw-animate-css';
 
 @theme inline {
+  --color-bg-primary: #F18100;
+  --color-bg-secondary: #004483;
+  --color-bg-gray: #DDD;
+  --color-bg-muted: #FAFAFA;
+
+  --color-primary: #FD9D02;
+  --color-secondary: #004483;
+  --color-gray: #666;
+  --color-muted: #999;
+  --color-black: #333;
+
+  --color-btn-dark: #333;
+  --color-btn-gray: #999;
+  --color-btn-muted: #DDD;
+  --color-btn-secondary: #FAFAFA;
+
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -12,11 +29,8 @@
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
@@ -40,6 +54,22 @@
 }
 
 :root {
+  --primary: #FD9D02; 
+  --secondary: #004483; 
+  --gray: #DDDDDD; 
+  --muted: #FAFAFA; 
+  --white: #FFFFFF; 
+
+  --black: #333333; 
+
+  --font-black: #333333; 
+  --font-primary: #FD9D02; 
+  --font-gray: #666666; 
+  --font-muted: #999999; 
+
+  --primary-foreground: #FD9D02; 
+  
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -47,12 +77,9 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #fd9d02;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground: #666
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
