@@ -1,9 +1,9 @@
-import '../styles/main.scss';
+import styles from '@/styles/main/main.module.scss';
 
 export default function Home() {
   return (
     <main>
-      <div className='main-banner'>
+      <div className={styles.mainBanner}>
         <span>한양대학교 ERICA 융합산업대학원</span>
         <span>미술치료학과</span>
         <span>DEPARTMENT OF ART THERAPY</span>
@@ -13,7 +13,7 @@ export default function Home() {
           통합과 재통합을 돕는 미술치료전문가를 양성합니다.
         </span>
       </div>
-      <div className='main-content'>
+      <div className={styles.mainContent}>
         <h1> Home - 메인 페이지</h1>
       </div>
     </main>
