@@ -12,11 +12,11 @@ export default function Header() {
         </ul>
 
         <ul className={styles.btnWrap}>
-          <li>
-            <a href='#'>로그인</a>
+          <li className={styles.loginBtn}>
+            <a href='/signin'>로그인</a>
           </li>
-          <li>
-            <a href='#'>마이페이지</a>
+          <li className={styles.myPageBtn}>
+            <a href='/my-page'>마이페이지</a>
           </li>
         </ul>
       </div>

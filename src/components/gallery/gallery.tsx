@@ -1,7 +1,7 @@
 import Arts from '@/components/gallery/arts/arts';
 import GalleryBanner from '@/components/gallery/gallery-banner';
 import Step from '@/components/ui/step';
-import { GALLERY_STEP_ITEMS } from '@/constants/ui/gallery';
+import { GALLERY_STEP_ITEMS } from '@/constants/gallery';
 import { useState } from 'react';
 
 export default function Gallery() {
