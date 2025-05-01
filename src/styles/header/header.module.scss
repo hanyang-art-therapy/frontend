@@ -1,4 +1,4 @@
-@use './variables';
+@use '../variables';
 
 header {
   background: #fff;
@@ -12,13 +12,13 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  .header-wrap {
+  .headerWrap {
     width: 1080px;
     height: inherit;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .site-wrap {
+    .siteWrap {
       li {
         a {
           color: variables.$primary-color;
@@ -26,7 +26,7 @@ header {
         }
       }
     }
-    .btn-wrap {
+    .btnWrap {
       display: flex;
       justify-content: center;
       align-items: center;
