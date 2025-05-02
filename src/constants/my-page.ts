@@ -1,7 +1,7 @@
 export const MY_PAGE_STEP_ITEMS = [
+  '내가 쓴 댓글',
+  '나의 게시물',
   '개인정보 관리',
-  '나의 게시물 관리',
-  '내가 쓴 댓글 관리',
 ];
 
 export const TABLE_MAP = {

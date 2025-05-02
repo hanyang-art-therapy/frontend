@@ -1,5 +1,5 @@
 import MyPage from '@/components/my-page/my-page';
-import type { MyComment, MyPage as MyPageType } from '@/types/my-page';
+import type { MyPage as MyPageType } from '@/types/my-page';
 
 export default function Page() {
   const ACCOUNT_MOCK_DATA = {
@@ -17,31 +17,5 @@ export default function Page() {
   //   createdAt: '2025-01-01',
   // };
 
-  const COMMENT_MOCK_DATA = [
-    {
-      artsNo: 1,
-      artName: '작품명 A',
-      reviewText: '리뷰 텍스트 A',
-      createdAt: '2025-05-01 11:00:36.172331+00',
-    },
-    {
-      artsNo: 2,
-      artName: '작품명 B',
-      reviewText: '리뷰 텍스트 B',
-      createdAt: '2025-05-01 11:00:36.172331+00',
-    },
-    {
-      artsNo: 3,
-      artName: '작품명 C',
-      reviewText: '리뷰 텍스트 C',
-      createdAt: '2025-05-01 11:00:36.172331+00',
-    },
-  ];
-
-  return (
-    <MyPage
-      accountData={ACCOUNT_MOCK_DATA as MyPageType}
-      commentData={COMMENT_MOCK_DATA as MyComment[]}
-    />
-  );
+  return <MyPage accountData={ACCOUNT_MOCK_DATA as MyPageType} />;
 }

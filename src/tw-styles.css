@@ -2,12 +2,12 @@
 @import 'tw-animate-css';
 
 @theme inline {
-  --color-bg-primary: #F18100;
+  --color-bg-primary: #FD9D02;
   --color-bg-secondary: #004483;
   --color-bg-gray: #DDD;
   --color-bg-muted: #FAFAFA;
 
-  --color-primary: #FD9D02;
+  --color-primary: #F18100;
   --color-secondary: #004483;
   --color-gray: #666;
   --color-muted: #999;
