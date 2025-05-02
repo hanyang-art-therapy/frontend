@@ -36,13 +36,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
   img {
     width: 142px;
   }
-  span {
+
+  .logoMajor {
     font-size: 18px;
     color: variables.$point-color;
+    font-weight: 700;
+  }
+
+  .logoSub {
+    font-size: 18px;
+    color: variables.$dark-color;
     font-weight: 700;
   }
 }

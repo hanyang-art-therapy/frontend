@@ -1,4 +1,5 @@
 import AuthLayout from '@/layouts/auth-layout';
+import MyPageLayout from '@/layouts/my-page-layout';
 import RootLayout from '@/layouts/root-layout';
 import GalleryPage from '@/pages/gallery/page';
 import SigninPage from '@/pages/signin/page';
@@ -31,6 +32,16 @@ const router = createBrowserRouter([
       {
         path: '/signin',
         element: <SigninPage />,
+      },
+    ],
+  },
+
+  {
+    element: <MyPageLayout />,
+    children: [
+      {
+        path: '/my-page',
+        element: <MyPage />,
       },
     ],
   },

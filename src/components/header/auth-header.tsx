@@ -1,11 +1,12 @@
-import Header from '@/components/header/header';
-import Nav from '@/components/nav/nav';
+import Logo from '@/components/ui/logo';
+import { useLocation } from 'react-router-dom';
 
 export default function AuthHeader() {
-  return (
-    <div>
-      <Header />
-      <Nav />
-    </div>
-  );
+  const location = useLocation();
+
+  if (location.pathname === '/signin') {
+    return <Logo subName='로그인' />;
+  }
+
+  return <Logo subName='회원가입' />;
 }

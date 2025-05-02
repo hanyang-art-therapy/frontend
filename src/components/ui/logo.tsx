@@ -8,8 +8,8 @@ export default function Logo({ subName }: LogoProps) {
   return (
     <a href='/' className={styles.logo}>
       <img src='/images/logo.webp' alt='logo' />
-      <span>미술치료학과</span>
-      {subName && <span>{subName}</span>}
+      <span className={styles.logoMajor}>미술치료학과</span>
+      {subName && <p className={styles.logoSub}>{subName}</p>}
     </a>
   );
 }
