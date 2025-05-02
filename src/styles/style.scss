@@ -1,4 +1,5 @@
 @forward './variables';
+@forward './main/main.module.scss';
 
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
 
@@ -16,11 +17,69 @@ $padding-base: 16px;
 body {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
   -ms-overflow-style: none;
 }
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+@layer utilities{
+  .title-b-108{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 108px;
+    font-weight: 700;
+  }
+  .title-b-52{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 52px;
+    font-weight: 700;
+  }
+  .title-b-32{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+  }
+  .title-b-24{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .title-b-18{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .title-m-18{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .title-b-16{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .title-b-14{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .text-r-18{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .text-r-16{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .text-r-14{
+    font-family: 'Pretendard', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+  }
 }

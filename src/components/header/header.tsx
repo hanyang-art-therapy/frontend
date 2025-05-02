@@ -1,25 +1,15 @@
-// 코드가 너무 길어지는 것 이외에도 책임 분리가 필요하면 top-header, bottom-header 2개의 컴포넌트로 분리
-import styles from '@/styles/header/header.module.scss';
-
 export default function Header() {
   return (
-    <header>
-      <div className={styles.headerWrap}>
-        <ul className={styles.siteWrap}>
-          <li>
-            <a href='#'>사이트맵</a>
-          </li>
-        </ul>
-
-        <ul className={styles.btnWrap}>
-          <li className={styles.loginBtn}>
-            <a href='/signin'>로그인</a>
-          </li>
-          <li className={styles.myPageBtn}>
-            <a href='/my-page'>마이페이지</a>
-          </li>
-        </ul>
+    <header className="w-full h-[40px] flex justify-center mx-auto bg-white fixed top-0 left-0 z-[2000]">
+      <div className="w-[1080px] h-full flex items-center justify-between text-sm font-bold">
+        <div className="text-[#F18100]">
+          <a href="/sitemap" className="hover:opacity-80">사이트맵</a>
+        </div>
+        <div className="flex gap-5 !px-5 leading-[40px] bg-[#FD9D02] text-[#fff]">
+          <a href="/login" className="hover:opacity-80">로그인</a>
+          <a href="/MyPage" className="hover:opacity-80">마이페이지</a>
+        </div>
       </div>
     </header>
   );
-}
+};
