@@ -1,7 +1,9 @@
+import AuthLayout from '@/layouts/auth-layout';
 import RootLayout from '@/layouts/root-layout';
 import GalleryPage from '@/pages/gallery/page';
-import Home from '@/pages/page';
+import SigninPage from '@/pages/signin/page';
 import MyPage from '@/pages/my-page/page';
+import Home from '@/pages/page';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -19,6 +21,16 @@ const router = createBrowserRouter([
       {
         path: '/my-page',
         element: <MyPage />,
+      },
+    ],
+  },
+
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: '/signin',
+        element: <SigninPage />,
       },
     ],
   },

@@ -2,23 +2,6 @@
 
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
 
-// 전체 선택자
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-ul,
-li {
-  list-style: none;
-}
-
 // 변수 (variable)
 $primary-color: #fd9d02;
 $point-color: #004483;

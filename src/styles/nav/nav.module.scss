@@ -1,45 +1,48 @@
 @use '../variables';
 
-nav {
+.navContainer {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+
   .iconWrap {
-    width: 1080px;
+    max-width: 1080px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 0;
 
-    li {
-      a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 4px;
-        img {
-          width: 142px;
-        }
-        span {
-          font-size: 18px;
-          color: variables.$point-color;
+    .menuWrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      li {
+        a {
+          color: variables.$dark-color;
           font-weight: 700;
         }
       }
     }
   }
-  .menuWrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    li {
-      a {
-        color: variables.$dark-color;
-        font-weight: 700;
-      }
-    }
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  img {
+    width: 142px;
+  }
+  span {
+    font-size: 18px;
+    color: variables.$point-color;
+    font-weight: 700;
   }
 }

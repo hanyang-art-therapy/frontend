@@ -1,3 +1,4 @@
+import Logo from '@/components/ui/logo';
 import styles from '@/styles/nav/nav.module.scss';
 
 export default function Nav() {
@@ -5,14 +6,7 @@ export default function Nav() {
     <nav className={styles.navContainer}>
       <div className={styles.iconWrap}>
         {/* 왼쪽 로고 */}
-        <ul className={styles.logoWrap}>
-          <li>
-            <a href='/'>
-              <img src='/images/logo.webp' alt='logo' />
-              <span>미술치료학과</span>
-            </a>
-          </li>
-        </ul>
+        <Logo />
 
         {/* 오른쪽 메뉴 */}
         <ul className={styles.menuWrap}>
