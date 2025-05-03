@@ -4,10 +4,10 @@ import ContentsSection from '@/components/main-page/sections/contents-section';
 
 export default function MainPage () {
     return(
-        <main>
+        <>
             <HeroSection />
             <QuickLinksSection />
             <ContentsSection />
-        </main>
-    )
+        </>
+    );
 }

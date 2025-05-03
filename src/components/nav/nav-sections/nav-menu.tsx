@@ -1,8 +1,4 @@
-import About from '@/components/nav/nav-sections/nav-menu-list/about';
-import Activities from '@/components/nav/nav-sections/nav-menu-list/activities';
-import ArtTherapy from '@/components/nav/nav-sections/nav-menu-list/art-therapy';
-import Admission from '@/components/nav/nav-sections/nav-menu-list/admission';
-import HamburgerButton from '@/components/nav/nav-sections/nav-menu-list/hemburger-button'
+import HamburgerButton from '@/components/nav/nav-sections/nav-menu-btn/hemburger-button';
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import '@/tw-styles.css';
@@ -17,19 +13,41 @@ export default function NavMenu() {
         <ul className="flex gap-[30px] relative">
           <li className="relative group">
             <a href="#" className="main-menu">학과 소개</a>
-            <About />
+            <ul className="sub-menu text-r-16 group-hover:block">
+                <li><a href="#">미래상</a></li>
+                <li><a href="#">교수진</a></li>
+                <li><a href="#">교육 과정</a></li>
+                <li><a href="#">자격증</a></li>
+                <li><a href="#">졸업 후 전망</a></li>
+                <li><a href="#">MOU기관</a></li>
+                <li><a href="#">오시는 길</a></li>
+            </ul>
           </li>
           <li className="relative group">
             <a href="#" className="main-menu">임상활동</a>
-            <Activities />
+            <ul className="sub-menu text-r-16 group-hover:block">
+                <li><a href="#">발달장애</a></li>
+                <li><a href="#">유아</a></li>
+                <li><a href="#">아동</a></li>
+                <li><a href="#">청소년</a></li>
+                <li><a href="#">성인</a></li>
+                <li><a href="#">노인</a></li>
+            </ul>
           </li>
           <li className="relative group">
             <a href="/gallery" className="main-menu">ART+THERAPY 展</a>
-            <ArtTherapy />
+            <ul className="sub-menu text-r-16 group-hover:block">
+                <li><a href="#">전시 소개</a></li>
+                <li><a href="#">미술관 미술치료</a></li>
+                <li><a href="#">갤러리</a></li>
+            </ul>
           </li>
           <li className="relative group">
             <a href="#" className="main-menu">입학 안내</a>
-            <Admission />
+            <ul className="sub-menu text-r-16 group-hover:block">
+                <li><a href="#">장학금 혜택</a></li>
+                <li><a href="#">신입학생 모집</a></li>
+            </ul>
           </li>
           <li>
             <a href="#" className="main-menu">자유 게시판</a>
