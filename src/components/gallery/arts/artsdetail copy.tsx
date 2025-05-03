@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 
-// 더미데이터지만, 넣어보았습니다.
 const artworkImages = [
   {
     artsNo: 1,
