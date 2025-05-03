@@ -20,6 +20,10 @@ const router = createBrowserRouter([
         element: <GalleryPage />,
       },
       {
+        path: '/gallery:id',
+        element: <GalleryPage />,
+      },
+      {
         path: '/my-page',
         element: <MyPage />,
       },

@@ -12,7 +12,7 @@ export default function NavMenu() {
       <div className="hidden md:flex items-center gap-[50px] title-m-18">
         <ul className="flex gap-[30px] relative">
           <li className="relative group">
-            <a href="#" className="main-menu">학과 소개</a>
+            <p className="main-menu">학과 소개</p>
             <ul className="sub-menu text-r-16 group-hover:block">
                 <li><a href="#">미래상</a></li>
                 <li><a href="#">교수진</a></li>
@@ -24,7 +24,7 @@ export default function NavMenu() {
             </ul>
           </li>
           <li className="relative group">
-            <a href="#" className="main-menu">임상활동</a>
+            <p className="main-menu">임상활동</p>
             <ul className="sub-menu text-r-16 group-hover:block">
                 <li><a href="#">발달장애</a></li>
                 <li><a href="#">유아</a></li>
@@ -35,15 +35,15 @@ export default function NavMenu() {
             </ul>
           </li>
           <li className="relative group">
-            <a href="/gallery" className="main-menu">ART+THERAPY 展</a>
+            <p className="main-menu">ART+THERAPY 展</p>
             <ul className="sub-menu text-r-16 group-hover:block">
                 <li><a href="#">전시 소개</a></li>
                 <li><a href="#">미술관 미술치료</a></li>
-                <li><a href="#">갤러리</a></li>
+                <li><a href="/gallery">갤러리</a></li>
             </ul>
           </li>
           <li className="relative group">
-            <a href="#" className="main-menu">입학 안내</a>
+            <p className="main-menu">입학 안내</p>
             <ul className="sub-menu text-r-16 group-hover:block">
                 <li><a href="#">장학금 혜택</a></li>
                 <li><a href="#">신입학생 모집</a></li>
@@ -54,7 +54,7 @@ export default function NavMenu() {
           </li>
         </ul>
         <a href="#" className="block">
-          <Search className="w-[24px] h-[24px] text-[#333] hover:text-[var(--font-primary)]" />
+          <Search className="w-[24px] h-[24px] text-[#333] md:hover:text-[var(--white)]" />
         </a>
       </div>
 

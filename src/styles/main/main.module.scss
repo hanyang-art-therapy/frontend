@@ -13,4 +13,25 @@
     background: url(/images/banners/main-banner.jpg)no-repeat 0 0;
     background-size: cover;
   }
+
+  .text-shadow-style{
+    color: var(--white);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .blind{
+    font-size: 0;
+  }
+
+  .quick-style{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 220px;
+    background-color: pink;
+    border-radius: 50%;
+  }
+
 }

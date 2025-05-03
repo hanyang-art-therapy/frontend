@@ -6,9 +6,11 @@
     display: inline-block;
     color: var(--black);
     line-height: 60px;
+    transition: 0.1s;
+    cursor: pointer;
   }
   .main-menu:hover{
-    color: var(--font-primary);
+    color: var(--white);
   }
   .main-menu:hover::after{
     width: 100%;
@@ -18,9 +20,9 @@
     content: "";
     position: absolute;
     left: 0;
-    bottom: 5px;
+    bottom: 0;
     width: 0;
-    border-bottom: 3px solid var(--primary);
+    border-bottom: 3px solid var(--white);
     transition: 0.6s;
   }
   .sub-menu{
