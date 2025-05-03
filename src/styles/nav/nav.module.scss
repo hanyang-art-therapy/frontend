@@ -1,55 +1,23 @@
-@use '../variables';
+@import '@/tw-styles.css';
 
-.navContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.1);
-
-  .iconWrap {
-    max-width: 1080px;
+@layer utilities {
+  .main-menu{
+    position: relative;
+    display: inline-block;
+    color: var(--black);
+  }
+  .main-menu:hover{
+    color: var(--font-primary);
+  }
+  .main-menu::after{
+    content: "";
+    position: absolute;
+    width: 0;
+    border-bottom: 3px solid var(--primary);
+    transition: 0.8s;
+  }
+  .main-menu:hover:after{
     width: 100%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-
-    .menuWrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 30px;
-      li {
-        a {
-          color: variables.$dark-color;
-          font-weight: 700;
-        }
-      }
-    }
-  }
-}
-
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  img {
-    width: 142px;
-  }
-
-  .logoMajor {
-    font-size: 18px;
-    color: variables.$point-color;
-    font-weight: 700;
-  }
-
-  .logoSub {
-    font-size: 18px;
-    color: variables.$dark-color;
-    font-weight: 700;
+    transform: scaleX(1);
   }
 }
