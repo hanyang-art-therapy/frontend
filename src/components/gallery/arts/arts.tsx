@@ -1,43 +1,160 @@
 import styles from '@/styles/gallery/gallery.module.scss';
+import { Link } from 'react-router-dom';
 
+// 이미지 미리보기 리사이징하여 -sm 으로 저장하였습니다
 const artworkImages = [
-  '/images/arts/art1.webp',
-  '/images/arts/art2.webp',
-  '/images/arts/art3.webp',
-  '/images/arts/art4.webp',
-  '/images/arts/art5.webp',
-  '/images/arts/art6.webp',
-  '/images/arts/art7.webp',
-  '/images/arts/art8.webp',
-  '/images/arts/art9.webp',
-  '/images/arts/art10.webp',
-  '/images/arts/art11.webp',
-  '/images/arts/art12.webp',
-  '/images/arts/art13.webp',
-  '/images/arts/art14.webp',
-  '/images/arts/art15.webp',
-  '/images/arts/art16.webp',
-  '/images/arts/art17.webp',
-  '/images/arts/art18.webp',
-  '/images/arts/art19.webp',
+  {
+    id: 1,
+    artistName: '강송이',
+    cohort: '30기',
+    src: '/images/arts/art1-sm.webp',
+  },
+  {
+    id: 2,
+    artistName: '구교희',
+    cohort: '30기',
+    src: '/images/arts/art2-sm.webp',
+  },
+  {
+    id: 3,
+    artistName: '김도경',
+    cohort: '30기',
+    src: '/images/arts/art3-sm.webp',
+  },
+  {
+    id: 4,
+    artistName: '김도형',
+    cohort: '30기',
+    src: '/images/arts/art4-sm.webp',
+  },
+  {
+    id: 5,
+    artistName: '김보영',
+    cohort: '30기',
+    src: '/images/arts/art5-sm.webp',
+  },
+  {
+    id: 6,
+    artistName: '김이슬',
+    cohort: '30기',
+    src: '/images/arts/art6-sm.webp',
+  },
+  {
+    id: 7,
+    artistName: '김지은',
+    cohort: '30기',
+    src: '/images/arts/art7-sm.webp',
+  },
+  {
+    id: 8,
+    artistName: '김희경',
+    cohort: '30기',
+    src: '/images/arts/art8-sm.webp',
+  },
+  {
+    id: 9,
+    artistName: '남선미',
+    cohort: '30기',
+    src: '/images/arts/art9-sm.webp',
+  },
+  {
+    id: 10,
+    artistName: '류민아',
+    cohort: '30기',
+    src: '/images/arts/art10-sm.webp',
+  },
+  {
+    id: 11,
+    artistName: '마수민',
+    cohort: '30기',
+    src: '/images/arts/art11-sm.webp',
+  },
+  {
+    id: 12,
+    artistName: '문지윤',
+    cohort: '30기',
+    src: '/images/arts/art12-sm.webp',
+  },
+  {
+    id: 13,
+    artistName: '박다리아',
+    cohort: '30기',
+    src: '/images/arts/art13-sm.webp',
+  },
+  {
+    id: 14,
+    artistName: '박은하',
+    cohort: '30기',
+    src: '/images/arts/art14-sm.webp',
+  },
+  {
+    id: 15,
+    artistName: '박진호',
+    cohort: '30기',
+    src: '/images/arts/art15-sm.webp',
+  },
+  {
+    id: 16,
+    artistName: '백은희',
+    cohort: '30기',
+    src: '/images/arts/art16-sm.webp',
+  },
+  {
+    id: 17,
+    artistName: '성인경',
+    cohort: '30기',
+    src: '/images/arts/art17-sm.webp',
+  },
+  {
+    id: 18,
+    artistName: '소명희',
+    cohort: '30기',
+    src: '/images/arts/art18-sm.webp',
+  },
+  {
+    id: 19,
+    artistName: '유봉미',
+    cohort: '30기',
+    src: '/images/arts/art19-sm.webp',
+  },
+  {
+    id: 20,
+    artistName: '윤희정',
+    cohort: '30기',
+    src: '/images/arts/art20-sm.webp',
+  },
+  {
+    id: 21,
+    artistName: '조자영',
+    cohort: '30기',
+    src: '/images/arts/art21-sm.webp',
+  },
+  {
+    id: 22,
+    artistName: '조혜미',
+    cohort: '30기',
+    src: '/images/arts/art22-sm.webp',
+  },
+  {
+    id: 23,
+    artistName: '최지혜',
+    cohort: '30기',
+    src: '/images/arts/art23-sm.webp',
+  },
 ];
-
-/*
- * 이미지 리사이징 해야합니다.
- * 화면에는 320px X 320px 사이즈로 렌더링하는데
- * 원본 사진의 사이즈는 3000px X 3000px가 넘어가서 용량이 과도하게 큽니다.
- */
 
 export default function Arts() {
   return (
     <div className={styles.mainContent}>
       <div className={styles.galleryBoxInner}>
-        {artworkImages.map((src, i) => (
-          <div className={styles.artworkBox} key={i}>
+        {artworkImages.map((art) => (
+          <div className={styles.artworkBox} key={art.id}>
             <div className={styles.artwork}>
-              <img src={src} alt={`${i + 1}번 작품`} />
+              <Link to={`/gallery/${art.id}`}>
+                <img src={art.src} alt={art.artistName} />
+              </Link>
             </div>
-            <span>{i + 1}번 작품</span>
+            <span>{art.artistName}</span>
           </div>
         ))}
       </div>
