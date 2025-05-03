@@ -178,7 +178,6 @@ export default function Arts() {
               </Link>
             </div>
             <span>{art.artistName}</span>
-            <span>{art.artTitle}</span>
           </div>
         ))}
       </div>
