@@ -1,4 +1,5 @@
 import AuthHeader from '@/components/header/auth-header';
+import Footer from '@/components/footer/footer';
 import { Outlet } from 'react-router-dom';
 
 export default function AuthLayout() {
@@ -8,6 +9,7 @@ export default function AuthLayout() {
       <main className='w-full flex justify-center max-w-[1080px]'>
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 }

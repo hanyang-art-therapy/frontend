@@ -26,6 +26,10 @@ const router = createBrowserRouter([
         element: <ArtsDetail />,
       },
       {
+        path: '/gallery:id',
+        element: <GalleryPage />,
+      },
+      {
         path: '/my-page',
         element: <MyPage />,
       },

@@ -1,4 +1,4 @@
-import Logo from '@/components/ui/logo';
+import Logo from '@/components/nav/nav-sections/nav-logo';
 import { useLocation } from 'react-router-dom';
 
 export default function AuthHeader() {

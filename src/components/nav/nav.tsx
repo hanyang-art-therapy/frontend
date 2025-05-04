@@ -1,34 +1,12 @@
-import Logo from '@/components/ui/logo';
-import styles from '@/styles/nav/nav.module.scss';
+import Logo from '@/components/nav/nav-sections/nav-logo';
+import NavMenu from '@/components/nav/nav-sections/nav-menu';
 
-export default function Nav() {
+export default function Header() {
   return (
-    <nav className={styles.navContainer}>
-      <div className={styles.iconWrap}>
-        {/* 왼쪽 로고 */}
+    <nav className='w-full h-[60px] flex justify-center bg-white/50 nav-box-shadow fixed top-[40px] left-0 z-99 p-4'>
+      <div className='w-[1080px] h-full flex gap-[30px] items-center justify-between whitespace-nowrap'>
         <Logo />
-
-        {/* 오른쪽 메뉴 */}
-        <ul className={styles.menuWrap}>
-          <li>
-            <a href='#'>학과소개</a>
-          </li>
-          <li>
-            <a href='#'>임상활동</a>
-          </li>
-          <li>
-            <a href='/gallery'>ART+THERAPY 展</a>
-          </li>
-          <li>
-            <a href='#'>입학안내</a>
-          </li>
-          <li>
-            <a href='#'>자유게시판</a>
-          </li>
-          <li>
-            <a href='#'>돋보기</a>
-          </li>
-        </ul>
+        <NavMenu />
       </div>
     </nav>
   );
