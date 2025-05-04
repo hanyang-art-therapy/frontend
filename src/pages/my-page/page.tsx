@@ -10,12 +10,5 @@ export default function Page() {
     studentNo: '20251234',
   };
 
-  // const POST_MOCK_DATA = {
-  //   postId: '1234abcd',
-  //   title: '홍길동',
-  //   content: '1234abcd@gmail.com',
-  //   createdAt: '2025-01-01',
-  // };
-
   return <MyPage accountData={ACCOUNT_MOCK_DATA as MyPageType} />;
 }

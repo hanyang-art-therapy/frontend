@@ -3,10 +3,14 @@
 
 @theme inline {
   --color-bg-primary: #fd9d02;
+  --color-bg-primary: #fd9d02;
   --color-bg-secondary: #004483;
   --color-bg-gray: #ddd;
   --color-bg-muted: #fafafa;
+  --color-bg-gray: #ddd;
+  --color-bg-muted: #fafafa;
 
+  --color-primary: #f18100;
   --color-primary: #f18100;
   --color-secondary: #004483;
   --color-gray: #666;
@@ -15,6 +19,8 @@
 
   --color-btn-dark: #333;
   --color-btn-gray: #999;
+  --color-btn-muted: #ddd;
+  --color-btn-secondary: #fafafa;
   --color-btn-muted: #ddd;
   --color-btn-secondary: #fafafa;
 
@@ -58,7 +64,13 @@
   --gray: #dddddd;
   --muted: #fafafa;
   --white: #ffffff;
+  --primary: #fd9d02;
+  --secondary: #004483;
+  --gray: #dddddd;
+  --muted: #fafafa;
+  --white: #ffffff;
 
+  --black: #333333;
   --black: #333333;
 
   --font-black: #333333;
@@ -66,7 +78,7 @@
   --font-gray: #666666;
   --font-muted: #999999;
 
-  --primary-foreground: #f18100;
+  --primary-foreground: #fd9d02;
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -78,9 +90,10 @@
   --primary-foreground: oklch(0.985 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted-foreground: #666;
+  --muted-foreground: #666;
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: #ff4d00;
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -102,6 +115,7 @@
 @layer base {
   html {
     font-family: 'Pretendard Variable', system-ui, sans-serif;
+    color: var(--color-black);
   }
 }
 
@@ -347,5 +361,123 @@
     height: 220px;
     background-color: pink;
     border-radius: 50%;
+  }
+}
+
+@layer base {
+  html {
+    font-family: 'Pretendard Variable', system-ui, sans-serif;
+    color: var(--color-black);
+  }
+}
+
+@layer utilities {
+  .title-b-108 {
+    font-size: 108px;
+    font-weight: 700;
+  }
+
+  .title-b-52 {
+    font-size: 52px;
+    font-weight: 700;
+  }
+
+  .title-b-32 {
+    font-size: 32px;
+    font-weight: 700;
+  }
+  .title-b-24 {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .title-b-18 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .title-m-18 {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .title-b-16 {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .title-b-14 {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .text-r-18 {
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .text-r-16 {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .text-r-14 {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .min-h-screen-vh {
+    @apply min-h-[calc(100vh-187px)];
+  }
+
+  /* 텍스트 반응형 클래스 - md 사이즈 */
+  @media (min-width: 768px) {
+    .md\:title-b-108 {
+      font-size: 108px;
+      font-weight: 700;
+    }
+
+    .md\:title-b-52 {
+      font-size: 52px;
+      font-weight: 700;
+    }
+
+    .md\:title-b-32 {
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .md\:title-b-24 {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .md\:title-b-18 {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .md\:title-m-18 {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .md\:title-b-16 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .md\:title-b-14 {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .md\:text-r-18 {
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    .md\:text-r-16 {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .md\:text-r-14 {
+      font-size: 14px;
+      font-weight: 400;
+    }
   }
 }
