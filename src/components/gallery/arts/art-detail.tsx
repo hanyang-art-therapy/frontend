@@ -209,8 +209,6 @@ const artworkImages = [
   },
 ];
 
-// 보더 확인 - border border-[#f00]
-
 export default function ArtsDetail() {
   const { artsNo } = useParams();
   const art = artworkImages.find((item) => item.artsNo === Number(artsNo));
@@ -218,8 +216,8 @@ export default function ArtsDetail() {
   if (!art) return <div>작품을 찾을 수 없습니다.</div>;
 
   return (
-    <div className='h-100% w-100% text-center flex justify-between j'>
-      <div className='w-1080px'>
+    <div className='text-center flex justify-between'>
+      <div className='md:max-w-[1080px] w-full mx-auto'>
         <div className='w-full h-[78px] flex items-center pt-[40px] pb-[20px] border-b-[2px] border-b-[#DDD]'>
           <ul className='w-full flex justify-between text-[32px] font-bold '>
             <a href='/gallery'>

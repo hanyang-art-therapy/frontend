@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 
 export default function MyPageLayout() {
   return (
-    <div className='min-h-screen flex flex-col w-full'>
+    <div className='min-h-screen-vh flex flex-col w-full'>
       <MyPageHeader />
-      <main className='w-full flex justify-center max-w-[1080px]'>
+      <main className='w-full flex justify-center max-w-[1080px] mx-auto'>
         <Outlet />
       </main>
       <Footer />

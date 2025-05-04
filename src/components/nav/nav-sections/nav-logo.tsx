@@ -1,19 +1,17 @@
-type LogoProps = {
-  subName?: string;
-};
+import { Link } from 'react-router-dom';
 
-export default function Logo({ subName }: LogoProps) {
+export default function Logo({ subName }: { subName?: string }) {
   return (
     <h1>
-      <a href='/'>
+      <Link to='/' className='flex items-center'>
         <img
           src='/images/logo.webp'
           alt='한양대학교 에리카 미술치료학과'
           className='min-w-[220px] h-[30px] object-contain'
         />
 
-        {subName && <p className='text-r-14'>{subName}</p>}
-      </a>
+        {subName && <p className='title-b-18'>{subName}</p>}
+      </Link>
     </h1>
   );
 }
