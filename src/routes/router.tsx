@@ -1,8 +1,10 @@
 import AuthLayout from '@/layouts/auth-layout';
 import MyPageLayout from '@/layouts/my-page-layout';
 import RootLayout from '@/layouts/root-layout';
+import SignInPage from '@/pages/(auth)/sign-in/page';
+import SignUpPage from '@/pages/(auth)/sign-up/page';
+import FindMyPage from '@/pages/(auth)/find-my/page';
 import GalleryPage from '@/pages/gallery/page';
-import SigninPage from '@/pages/signin/page';
 import MyPage from '@/pages/my-page/page';
 import Home from '@/pages/page';
 import { createBrowserRouter } from 'react-router-dom';
@@ -20,14 +22,9 @@ const router = createBrowserRouter([
         path: '/gallery',
         element: <GalleryPage />,
       },
-      // id가 아닌 artsNo으로 바꿈
       {
         path: '/gallery/:artsNo',
         element: <ArtsDetail />,
-      },
-      {
-        path: '/gallery:id',
-        element: <GalleryPage />,
       },
       {
         path: '/my-page',
@@ -40,8 +37,16 @@ const router = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       {
-        path: '/signin',
-        element: <SigninPage />,
+        path: '/sign-in',
+        element: <SignInPage />,
+      },
+      {
+        path: '/sign-up',
+        element: <SignUpPage />,
+      },
+      {
+        path: '/find-my',
+        element: <FindMyPage />,
       },
     ],
   },
