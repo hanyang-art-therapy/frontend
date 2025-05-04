@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import '@/tw-styles.css';
 
 export default function HamburgerButton({ onClick }: { onClick: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,11 +10,14 @@ export default function HamburgerButton({ onClick }: { onClick: () => void }) {
 
   return (
     <>
-        <button className={`hamburger ${isOpen ? 'open' : ''}`} onClick={handleToggle} aria-label="모바일 메뉴 열기">
+      <button
+        className={`hamburger ${isOpen ? 'open' : ''}`}
+        onClick={handleToggle}
+        aria-label='모바일 메뉴 열기'>
         <span></span>
         <span></span>
         <span></span>
-        </button>
+      </button>
     </>
   );
 }
