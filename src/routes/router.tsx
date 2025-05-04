@@ -6,7 +6,7 @@ import SigninPage from '@/pages/signin/page';
 import MyPage from '@/pages/my-page/page';
 import Home from '@/pages/page';
 import { createBrowserRouter } from 'react-router-dom';
-import ArtsDetail from '@/components/gallery/arts/artsdetail copy';
+import ArtsDetail from '@/components/gallery/arts/art-detail';
 
 const router = createBrowserRouter([
   {

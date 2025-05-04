@@ -222,7 +222,7 @@ export default function ArtsDetail() {
       <div className='w-1080px'>
         <div className='w-full h-[78px] flex items-center pt-[40px] pb-[20px] border-b-[2px] border-b-[#DDD]'>
           <ul className='w-full flex justify-between text-[32px] font-bold '>
-            <a href='/galley'>
+            <a href='/gallery'>
               <li>2025</li>
             </a>
             <a href='/gallery'>
@@ -246,7 +246,7 @@ export default function ArtsDetail() {
           <div className='flex  flex-col justify-center items-center'>
             <img src={art.src} alt={art.artistName} className='w-[1080px]' />
             <span className='self-end py-[10px] pb-[30px] text=[#5A5A5A]'>
-              Acrylic on canvas 100×80cm
+              Acrylic on canvas 100x80cm
             </span>
             <div className='flex w-[1080px] h-[auto] p-[30px] flex-col items-start gap-[10px] rounded-[4px] border border-[#B6B5B5] bg-white mb-[100px]'>
               <h2 className='w-full text-[24px] font-bold pb-[20px] text-left'>
