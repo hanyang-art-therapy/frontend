@@ -62,11 +62,11 @@
   --black: #333333;
 
   --font-black: #333333;
-  --font-primary: #F18100;
+  --font-primary: #f18100;
   --font-gray: #666666;
   --font-muted: #999999;
 
-  --primary-foreground: #F18100;
+  --primary-foreground: #f18100;
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -217,7 +217,7 @@
 }
 
 @layer utilities {
-  .main-menu{
+  .main-menu {
     position: relative;
     display: inline-block;
     color: var(--black);
@@ -225,15 +225,15 @@
     transition: 0.3s ease-in-out;
     cursor: pointer;
   }
-  .main-menu:hover{
+  .main-menu:hover {
     color: var(--white);
   }
-  .main-menu:hover::after{
+  .main-menu:hover::after {
     width: 100%;
     transform: scaleX(1);
   }
-  .main-menu:after{
-    content: "";
+  .main-menu:after {
+    content: '';
     position: absolute;
     left: 0;
     bottom: 0;
@@ -241,7 +241,7 @@
     border-bottom: 3px solid var(--white);
     transition: 0.6s;
   }
-  .sub-menu{
+  .sub-menu {
     position: absolute;
     top: 100%;
     left: 0;
@@ -249,16 +249,16 @@
     background: var(--primary);
     z-index: 100;
     display: none;
-    li{
+    li {
       margin-bottom: 10px;
-      a{
+      a {
         color: var(--white);
       }
     }
-    li:last-child{
+    li:last-child {
       margin: 0;
     }
-    li:hover>a{
+    li:hover > a {
       opacity: 0.7;
     }
   }
@@ -275,7 +275,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-
 
   .hamburger {
     width: 24px;
@@ -294,30 +293,59 @@
       left: 0;
     }
   }
-  
+
   .hamburger span:nth-child(1) {
     top: 0;
   }
-  
+
   .hamburger span:nth-child(2) {
     top: 8px;
   }
-  
+
   .hamburger span:nth-child(3) {
     top: 16px;
   }
-  
+
   .hamburger.open span:nth-child(1) {
     top: 8px;
     transform: rotate(45deg);
   }
-  
+
   .hamburger.open span:nth-child(2) {
     opacity: 0;
   }
-  
+
   .hamburger.open span:nth-child(3) {
     top: 8px;
     transform: rotate(-45deg);
+  }
+
+  .nav-box-shadow {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .banner-bg {
+    background: url(/images/banners/main-banner.jpg) no-repeat 0 0;
+    background-size: cover;
+  }
+
+  .text-shadow-style {
+    color: var(--white);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .blind {
+    font-size: 0;
+  }
+
+  .quick-style {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 220px;
+    background-color: pink;
+    border-radius: 50%;
   }
 }
