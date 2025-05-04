@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 
 export default function AuthLayout() {
   return (
-    <div className='min-h-screen flex flex-col w-full'>
+    <div className='min-h-screen-vh flex flex-col w-full'>
       <AuthHeader />
-      <main className='w-full flex justify-center max-w-[1080px]'>
+      <main>
         <Outlet />
       </main>
       <Footer />
