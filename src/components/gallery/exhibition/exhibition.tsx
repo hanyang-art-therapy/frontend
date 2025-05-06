@@ -51,7 +51,7 @@ export default function Exhibition() {
 
         <section className='mb-12'>
           <h3 className='text-2xl font-semibold mb-4'>
-            미술치료와 ART+THERAPY
+            2025 한양대 ERICA 융합산업대학원 미술치료학과 미술전시
           </h3>
           <p className='text-lg text-gray-700'>
             미술치료는 예술을 통해 감정을 표현하고 심리적, 정서적 문제를
@@ -66,10 +66,13 @@ export default function Exhibition() {
         <section>
           <h3 className='text-2xl font-semibold mb-4'>전시 일정 및 위치</h3>
           <p className='text-lg text-gray-700 mb-4'>
-            <strong>일정</strong>: 2025년 5월 17일 - 2025년 5월 25일
+            <strong>일정</strong>: 2025년 5월 17일(토) ~ 5월 22일(목)
           </p>
           <p className='text-lg text-gray-700 mb-4'>
-            <strong>장소</strong>: 한양대학교 융합산업대학원 미술치료학과 전시실
+            <strong>장소</strong>: 한양대학교 ERICA 아고라 전시장
+          </p>
+          <p className='text-lg text-gray-700 mb-4'>
+            <strong>오프닝</strong>: 2025년 5월 17일 (토) 오후 3시
           </p>
         </section>
 
