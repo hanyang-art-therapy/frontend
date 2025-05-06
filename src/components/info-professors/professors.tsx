@@ -76,7 +76,7 @@ const Professors: React.FC = () => {
         {professors.map((prof, index) => (
           <div
             key={index}
-            className='bg-white shadow-md rounded-xl p-4 text-center cursor-pointer transform hover:-translate-y-2 transition-transform duration-300 ease-in-out'>
+            className='group bg-white shadow-md rounded-xl p-4 text-center cursor-pointer transform hover:-translate-y-2 transition-transform duration-300 ease-in-out hover:bg-[var(--primary)]'>
             {prof.image && (
               <img
                 src={prof.image}
@@ -84,16 +84,20 @@ const Professors: React.FC = () => {
                 className='w-32 h-32 object-cover rounded-full mx-auto mb-4'
               />
             )}
-            <h3 className='text-lg font-semibold'>{prof.name}</h3>
-            <p className='text-gray-600'>{prof.position}</p>
+            <h3 className='text-lg font-semibold group-hover:text-white group-hover:text-xl transition-all duration-300'>
+              {prof.name}
+            </h3>
+            <p className='text-gray-600 group-hover:text-black group-hover:font-bold transition-all duration-300'>
+              {prof.position}
+            </p>
             {prof.major && (
               <p className='text-sm text-gray-500 mt-1'>{prof.major}</p>
             )}
             {prof.email && (
-              <p className='text-sm text-blue-600 mt-1'>
+              <p className='text-sm text-black-600 mt-1'>
                 <a
                   href={`mailto:${prof.email}`}
-                  className='underline hover:text-blue-800'>
+                  className='no-underline text-inherit'>
                   {prof.email}
                 </a>
               </p>
