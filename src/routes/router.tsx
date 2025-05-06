@@ -13,6 +13,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import ArtsDetail from '@/components/gallery/arts/art-detail';
 import Exhibition from '@/components/gallery/exhibition/exhibition';
 import Arts from '@/components/gallery/arts/arts';
+import UnderConstructionPage from '@/components/404/under-construction-page';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: '/404',
+        element: <UnderConstructionPage />,
       },
       {
         path: '/gallery',

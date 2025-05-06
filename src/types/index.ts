@@ -78,3 +78,14 @@ export type ArtArtistRel = {
   description: string; // 작품 설명
   artistNo: number; // 작가 ID
 };
+
+// 교수진
+export type Professor = {
+  name: string;
+  position: string;
+  major: string;
+  email?: string;
+  phone?: string;
+  image?: string;
+  bio?: string;
+};
