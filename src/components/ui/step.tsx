@@ -1,10 +1,9 @@
-import type { Dispatch, SetStateAction } from 'react';
 import { cn } from '@/lib/utils';
 
 type StepProps = {
-  items: string[];
+  items: { label: string; path: string }[];
   step: string;
-  setStep: Dispatch<SetStateAction<string>>;
+  setStep: (step: string) => void;
 };
 
 export default function Step({ items, step, setStep }: StepProps) {
@@ -16,12 +15,12 @@ export default function Step({ items, step, setStep }: StepProps) {
             key={index}
             className={cn(
               'w-1/3 border-l border-r border-gray-300 first:border-r-0 last:border-l-0 hover:bg-orange-100 hover:text-primary transition-all duration-300',
-              step === item && 'bg-orange-50 text-primary'
+              step === item.label && 'bg-orange-50 text-primary'
             )}>
             <button
-              onClick={() => setStep(item)}
+              onClick={() => setStep(item.label)}
               className='w-full h-full flex items-center justify-center text-[18px] cursor-pointer font-medium'>
-              {item}
+              {item.label}
             </button>
           </li>
         ))}
