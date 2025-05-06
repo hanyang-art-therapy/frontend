@@ -1,6 +1,6 @@
 import { Contact, BookOpen, HeartHandshake, Palette } from 'lucide-react';
 
-export const QuickLink = [
+export const QUICK_LINK = [
     {
         id: 1,
         icon: Contact,

@@ -1,4 +1,4 @@
-export const ExhibitionOverview = [
+export const EXHIBITION_OVERVIEW = [
     {
         id: 1,
         title: 'Art Therapy Exhibition 1',

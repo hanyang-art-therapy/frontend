@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Plus } from 'lucide-react'
-import { ExhibitionOverview } from '@/constants/exhibition'
-import { CommunityPosts } from '@/constants/community'
+import { EXHIBITION_OVERVIEW } from '@/constants/exhibition'
+import { COMMUNITY_POSTS } from '@/constants/community'
 
 export default function ContentsSection() {
   return (
@@ -20,11 +20,11 @@ export default function ContentsSection() {
 
           {/* 전시회 리스트 */}
           <ul className="h-[300px] flex gap-[20px]">
-            {ExhibitionOverview.map((ExhibitionOverview) => (
-              <li key={ExhibitionOverview.id} className="w-[200px] h-[300px]">
+            {EXHIBITION_OVERVIEW.map((EXHIBITION_OVERVIEW) => (
+              <li key={EXHIBITION_OVERVIEW.id} className="w-[200px] h-[300px]">
                 {/* 전시회 포스터 이미지(클릭 시 전시 소개 상세 페이지로 이동 가능) */}
-                <a href={`/exhibition/${ExhibitionOverview.id}`} className="text-r-16 hover:opacity-70 transition object-cover">
-                  <img src={ExhibitionOverview.imageUrl} alt={ExhibitionOverview.title} />
+                <a href={`/exhibition/${EXHIBITION_OVERVIEW.id}`} className="text-r-16 hover:opacity-70 transition object-cover">
+                  <img src={EXHIBITION_OVERVIEW.imageUrl} alt={EXHIBITION_OVERVIEW.title} />
                 </a>
               </li>
             ))}
@@ -43,16 +43,16 @@ export default function ContentsSection() {
 
           {/* 게시물 리스트 */}
           <ul className="h-[300px] divide-y divide-btn-muted border-y border-btn-dark">
-            {CommunityPosts.map((CommunityPosts) => (
-              <li key={CommunityPosts.id} className="grid grid-cols-[auto_1fr_auto] gap-[20px] items-center leading-[49px]  px-[20px] text-r-16">
+            {COMMUNITY_POSTS.map((COMMUNITY_POSTS) => (
+              <li key={COMMUNITY_POSTS.id} className="grid grid-cols-[auto_1fr_auto] gap-[20px] items-center leading-[49px]  px-[20px] text-r-16">
                 {/* 번호 */}
-                <span className="title-b-14">{CommunityPosts.id}</span>
+                <span className="title-b-14">{COMMUNITY_POSTS.id}</span>
                 {/* 제목 (클릭 시 상세 페이지로 이동 가능) */}
-                <a href={`/community/${CommunityPosts.id}`} className="text-r-16 hover:opacity-70 transition truncate">
-                  {CommunityPosts.title}
+                <a href={`/community/${COMMUNITY_POSTS.id}`} className="text-r-16 hover:opacity-70 transition truncate">
+                  {COMMUNITY_POSTS.title}
                 </a>
                 {/* 날짜 */}
-                <span className="text-r-16 text-muted">{CommunityPosts.date}</span>
+                <span className="text-r-16 text-muted">{COMMUNITY_POSTS.date}</span>
               </li>
             ))}
           </ul>

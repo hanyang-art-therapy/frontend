@@ -1,4 +1,4 @@
-export const CommunityPosts = [
+export const COMMUNITY_POSTS = [
     { 
         id: 3,
         title: '미리보기입니다. 제목이 긴 경우 넘치면 말줄임표로 처리됩니다.',

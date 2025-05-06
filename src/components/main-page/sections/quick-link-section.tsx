@@ -1,11 +1,11 @@
-import { QuickLink } from '@/constants/quick-link';
+import { QUICK_LINK } from '@/constants/quick-link';
 
 export default function QuickLinksSection() {
   return (
     <section className='w-full flex justify-center'>
       <h3 className='blind'>바로가기 메뉴</h3>
       <ul className='w-[1080px] flex justify-between py-[60px]'>
-        {QuickLink.map(({ title, path, icon: Icon, bgClass }) => (
+        {QUICK_LINK.map(({ title, path, icon: Icon, bgClass }) => (
           <li>
             <a href={path} className={`quick-style ${bgClass}`}>
               <Icon className="w-[50px] h-[50px]" />
