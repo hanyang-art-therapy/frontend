@@ -41,26 +41,27 @@ export default function EmailSection({
   };
 
   return (
-    <div className='py-[20px] space-y-2.5 border-b border-bg-gray'>
+    <div className='py-[20px] space-y-2.5 border-b border-bg-gray '>
       <label className='title-b-16 flex items-center'>
         이메일 <Required />
       </label>
+
       <div className='flex items-center gap-[30px]'>
-        <div className='flex gap-2.5 h-[45px] items-center'>
+        <div className='flex gap-2.5 h-auto md:h-[45px] items-center flex-col md:flex-row'>
           {/* 이메일 ID */}
           <Input
             {...register('emailId')}
-            className='w-[200px] h-full'
+            className='w-[200px] h-[45px]'
             placeholder='이메일을 입력해주세요.'
           />
 
           {/* @ */}
-          <span className='text-r-16'>@</span>
+          <span className='text-r-16 hidden md:block'>@</span>
 
           {/* 이메일 도메인 */}
           <Input
             {...register('emailDomain')}
-            className='w-[200px] h-full'
+            className='w-[200px] h-[45px]'
             placeholder='직접 입력'
             value={domainValue}
             onChange={(e) => setValue('emailDomain', e.target.value)}

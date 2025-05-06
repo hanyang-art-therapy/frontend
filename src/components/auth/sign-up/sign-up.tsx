@@ -1,5 +1,6 @@
 import SignUpProgress from '@/components/auth/sign-up/sign-up-progress';
 import SignUpStep1 from '@/components/auth/sign-up/step-1/sign-up-step-1';
+import SignUpSkeleton from '@/components/auth/sign-up/sign-up-skeleton';
 import { lazy, Suspense, useState } from 'react';
 
 const SignUpStep2 = lazy(
@@ -17,13 +18,14 @@ export default function SignUp() {
     <>
       <SignUpProgress progress={progress} />
 
-      <div className='w-full flex justify-center max-w-[1080px] mx-auto'>
+      <div className='w-full flex justify-center max-w-[1080px] mx-auto px-4 md:px-0'>
         {progress === 1 && <SignUpStep1 setProgress={setProgress} />}
 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<SignUpSkeleton />}>
           {progress === 2 && <SignUpStep2 setProgress={setProgress} />}
-          {progress === 3 && <SignUpStep3 />}
         </Suspense>
+
+        {progress === 3 && <SignUpStep3 />}
       </div>
     </>
   );

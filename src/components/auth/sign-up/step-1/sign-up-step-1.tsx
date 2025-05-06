@@ -102,7 +102,7 @@ export default function SignUpStep1({
         {/* 동의 여부 라디오 버튼 - default: 동의함 */}
         <RadioGroup
           defaultValue='agree'
-          className='flex space-x-[30px] justify-end'
+          className='flex md:space-x-[30px] space-x-2 justify-end'
           onValueChange={setAgreement}>
           <div className='flex items-center space-x-1.5'>
             <label htmlFor='agree' className='title-b-16'>
