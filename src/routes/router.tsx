@@ -9,6 +9,7 @@ import MyPage from '@/pages/my-page/page';
 import Home from '@/pages/page';
 import { createBrowserRouter } from 'react-router-dom';
 import ArtsDetail from '@/components/gallery/arts/art-detail';
+import NotFound from '@/pages/not-found';
 
 const router = createBrowserRouter([
   {
