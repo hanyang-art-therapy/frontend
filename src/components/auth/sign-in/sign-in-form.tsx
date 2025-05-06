@@ -1,17 +1,33 @@
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function LoginForm() {
-  const [username, setUsername] = useState('');
+  const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
+  const [isUserIdRemember, setIsUserIdRemember] = useState(false);
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+      setUserId(userId);
+      setIsUserIdRemember(true);
+    }
+  }, []);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    console.log({ username, password });
+    console.log({ username: userId, password });
+
+    if (isUserIdRemember) {
+      localStorage.setItem('userId', userId);
+    } else {
+      localStorage.removeItem('userId');
+    }
   };
 
   return (
@@ -22,8 +38,8 @@ export default function LoginForm() {
         type='text'
         className='w-full py-[13px] px-[15px] h-[45px] border border-[#aaa] rounded bg-bg-muted'
         placeholder='아이디'
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={userId}
+        onChange={(e) => setUserId(e.target.value)}
       />
 
       <Input
@@ -37,7 +53,11 @@ export default function LoginForm() {
       <div>
         <div className='flex items-center mt-2'>
           <div className='flex items-center space-x-2'>
-            <Checkbox id='remember' />
+            <Checkbox
+              id='remember'
+              checked={isUserIdRemember}
+              onCheckedChange={() => setIsUserIdRemember(!isUserIdRemember)}
+            />
             <label htmlFor='remember' className='text-r-14'>
               아이디 저장
             </label>

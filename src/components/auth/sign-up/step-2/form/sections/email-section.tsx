@@ -1,18 +1,22 @@
 import { Input } from '@/components/ui/input';
 import Required from '@/components/ui/required';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import EmailDomainSelect from '@/components/auth/common/email-domain-select';
 import type { SignUpFormValues } from '@/schemas/sign-up/sign-up-schema';
 import type {
+  FieldErrors,
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
 } from 'react-hook-form';
+
+type EmailSectionProps = {
+  register: UseFormRegister<SignUpFormValues>;
+  setValue: UseFormSetValue<SignUpFormValues>;
+  watch: UseFormWatch<SignUpFormValues>;
+  selectedDomain: string;
+  setSelectedDomain: (value: string) => void;
+  errors: FieldErrors<SignUpFormValues>;
+};
 
 export default function EmailSection({
   register,
@@ -20,13 +24,8 @@ export default function EmailSection({
   watch,
   selectedDomain,
   setSelectedDomain,
-}: {
-  register: UseFormRegister<SignUpFormValues>;
-  setValue: UseFormSetValue<SignUpFormValues>;
-  watch: UseFormWatch<SignUpFormValues>;
-  selectedDomain: string;
-  setSelectedDomain: (value: string) => void;
-}) {
+  errors,
+}: EmailSectionProps) {
   const isCustomDomain = selectedDomain === 'custom';
   const watchEmailDomain = watch('emailDomain');
   const domainValue = isCustomDomain ? watchEmailDomain : selectedDomain;
@@ -52,7 +51,7 @@ export default function EmailSection({
           <Input
             {...register('emailId')}
             className='w-[200px] h-full'
-            placeholder='이메일 아이디를 입력해주세요.'
+            placeholder='이메일을 입력해주세요.'
           />
 
           {/* @ */}
@@ -69,18 +68,17 @@ export default function EmailSection({
           />
 
           {/* 이메일 도메인 선택 */}
-          <Select onValueChange={handleEmailDomainChange}>
-            <SelectTrigger className='w-[200px] h-[45px]'>
-              <SelectValue className='h-[45px]' placeholder='선택하세요' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='gmail.com'>gmail.com</SelectItem>
-              <SelectItem value='naver.com'>naver.com</SelectItem>
-              <SelectItem value='daum.net'>daum.net</SelectItem>
-              <SelectItem value='custom'>직접 입력</SelectItem>
-            </SelectContent>
-          </Select>
+          <EmailDomainSelect
+            value={selectedDomain}
+            onValueChange={handleEmailDomainChange}
+          />
         </div>
+
+        {(errors.emailId || errors.emailDomain) && (
+          <p className='text-destructive text-r-14'>
+            {errors.emailId?.message || errors.emailDomain?.message}
+          </p>
+        )}
       </div>
     </div>
   );
