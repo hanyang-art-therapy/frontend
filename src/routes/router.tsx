@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/gallery',
-        element: <GalleryPage />, // 이 안에 Outlet 필수!
+        element: <GalleryPage />,
         children: [
           {
             index: true,

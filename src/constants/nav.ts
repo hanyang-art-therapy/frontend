@@ -29,8 +29,8 @@ export const NAV_MENU = [
     path: '/gallery',
     submenu: [
       { title: '전시 소개', path: '/gallery/exhibition' },
-      { title: '미술관 미술치료', path: '#' },
-      { title: '갤러리', path: '/gallery' },
+      { title: '미술관 미술치료', path: '/gallery/arttherapy' },
+      { title: '갤러리', path: '/gallery/arts' },
     ],
   },
   {
