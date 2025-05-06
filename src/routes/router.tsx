@@ -1,5 +1,4 @@
 import AuthLayout from '@/layouts/auth-layout';
-import MyPageLayout from '@/layouts/my-page-layout';
 import RootLayout from '@/layouts/root-layout';
 import NotFound from '@/pages/not-found/page';
 import SignInPage from '@/pages/(auth)/sign-in/page';
@@ -52,16 +51,6 @@ const router = createBrowserRouter([
       {
         path: '/find-my',
         element: <FindMyPage />,
-      },
-    ],
-  },
-
-  {
-    element: <MyPageLayout />,
-    children: [
-      {
-        path: '/my-page',
-        element: <MyPage />,
       },
     ],
   },

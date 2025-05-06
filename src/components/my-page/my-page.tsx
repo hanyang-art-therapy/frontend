@@ -16,7 +16,7 @@ export default function MyPage({ accountData }: MyPageProps) {
   const [step, setStep] = useState(MY_PAGE_STEP_ITEMS[0]);
 
   return (
-    <>
+    <div className='mt-15'>
       <Step items={MY_PAGE_STEP_ITEMS} step={step} setStep={setStep} />
 
       <div className='w-full max-w-[1080px] mx-auto mt-15'>
@@ -31,6 +31,6 @@ export default function MyPage({ accountData }: MyPageProps) {
           <Account accountData={accountData} />
         )}
       </div>
-    </>
+    </div>
   );
 }
