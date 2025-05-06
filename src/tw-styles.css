@@ -230,6 +230,7 @@
   }
 }
 
+/* Nav Style */
 @layer utilities {
   .main-menu {
     position: relative;
@@ -240,7 +241,7 @@
     cursor: pointer;
   }
   .main-menu:hover {
-    color: var(--white);
+    color: var(--font-primary);
   }
   .main-menu:hover::after {
     width: 100%;
@@ -250,9 +251,9 @@
     content: '';
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 5px;
     width: 0;
-    border-bottom: 3px solid var(--white);
+    border-bottom: 3px solid var(--font-primary);
     transition: 0.6s;
   }
   .sub-menu {
@@ -357,10 +358,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 5px;
     width: 220px;
     height: 220px;
-    background-color: pink;
     border-radius: 50%;
+    color: var(--white);
+    transition: transform 0.3s ease-in-out;
+  }
+  .quick-style:hover {
+    transform: scale(1.05);
   }
 }
 
