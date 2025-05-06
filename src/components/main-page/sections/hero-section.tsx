@@ -1,9 +1,9 @@
 export default function HeroSection() {
   return (
-    <section className='w-full h-[450px] flex justify-center relative banner-bg'>
+    <section className='w-full h-[400px] flex justify-center relative banner-bg'>
       <div className='w-full h-full inset-0 bg-black/10 absolute'></div>
       <div className='w-[1080px] h-full flex flex-col justify-center items-center text-shadow-style relative'>
-        <div className='flex flex-col gap-[20px] absolute top-[130px] left-0'>
+        <div className='flex flex-col absolute top-[90px] left-0'>
           <p className='flex gap-[20px] items-center'>
             <span className='title-b-32'>한양대학교 ERICA</span>
             <span className='title-b-24'>융합산업대학원</span>

@@ -37,7 +37,7 @@ export default function NavMenu() {
         </ul>
 
         <Link to='#' className='block'>
-          <Search className='w-[24px] h-[24px] text-black md:hover:text-white' />
+          <Search className='w-[24px] h-[24px] text-black md:hover:text-primary' />
         </Link>
       </div>
 
