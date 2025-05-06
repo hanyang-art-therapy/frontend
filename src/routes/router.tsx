@@ -1,15 +1,14 @@
+import ArtsDetail from '@/components/gallery/arts/art-detail';
 import AuthLayout from '@/layouts/auth-layout';
 import RootLayout from '@/layouts/root-layout';
-import NotFound from '@/pages/not-found/page';
+import FindMyPage from '@/pages/(auth)/find-my/page';
 import SignInPage from '@/pages/(auth)/sign-in/page';
 import SignUpPage from '@/pages/(auth)/sign-up/page';
-import FindMyPage from '@/pages/(auth)/find-my/page';
 import GalleryPage from '@/pages/gallery/page';
 import MyPage from '@/pages/my-page/page';
+import NotFoundPage from '@/pages/not-found/page';
 import Home from '@/pages/page';
 import { createBrowserRouter } from 'react-router-dom';
-import ArtsDetail from '@/components/gallery/arts/art-detail';
-import NotFound from '@/pages/not-found';
 
 const router = createBrowserRouter([
   {
@@ -33,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: '*',
-        element: <NotFound />,
+        element: <NotFoundPage />,
       },
     ],
   },
