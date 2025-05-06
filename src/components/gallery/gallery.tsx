@@ -12,7 +12,9 @@ export default function Gallery() {
       <GalleryBanner />
       <Step items={GALLERY_STEP_ITEMS} step={step} setStep={setStep} />
 
-      {step === '갤러리' && <Arts />}
+      <div className='md:max-w-[1080px] w-full mx-auto'>
+        {step === GALLERY_STEP_ITEMS[2] && <Arts />}
+      </div>
     </>
   );
 }

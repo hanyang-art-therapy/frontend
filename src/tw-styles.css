@@ -9,7 +9,6 @@
   --color-bg-muted: #fafafa;
 
   --color-primary: #f18100;
-  --color-primary: #f18100;
   --color-secondary: #004483;
   --color-gray: #666;
   --color-muted: #999;
@@ -113,6 +112,10 @@
   html {
     font-family: 'Pretendard Variable', system-ui, sans-serif;
     color: var(--color-black);
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -337,7 +340,7 @@
   }
 
   .banner-bg {
-    background: url(/images/banners/main-banner.jpg) no-repeat 0 0;
+    background: url(/images/banners/main-banner.webp) no-repeat 0 0;
     background-size: cover;
   }
 

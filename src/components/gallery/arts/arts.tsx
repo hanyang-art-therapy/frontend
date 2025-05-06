@@ -1,5 +1,5 @@
-import styles from '@/styles/gallery/gallery.module.scss';
-import { Link } from 'react-router-dom';
+import ArtsList from '@/components/gallery/arts/arts-list';
+import ArtsSearch from '@/components/gallery/arts/arts-search';
 
 // 이미지 미리보기 리사이징하여 -sm 으로 저장하였습니다
 const artworkImages = [
@@ -78,7 +78,7 @@ const artworkImages = [
     artistName: '마수민',
     artTitle: '나를 향해 가는길',
     cohort: '30기',
-    src: '/images/arts/art11-sm.webp',
+    src: '/images/arts/art12-sm.webp',
   },
   {
     id: 12,
@@ -168,19 +168,9 @@ const artworkImages = [
 
 export default function Arts() {
   return (
-    <div className={styles.mainContent}>
-      <div className={styles.galleryBoxInner}>
-        {artworkImages.map((art) => (
-          <div className={styles.artworkBox} key={art.id}>
-            <div className={styles.artwork}>
-              <Link to={`/gallery/${art.id}`}>
-                <img src={art.src} alt={art.artistName} />
-              </Link>
-            </div>
-            <span>{art.artistName}</span>
-          </div>
-        ))}
-      </div>
-    </div>
+    <>
+      <ArtsSearch />
+      <ArtsList data={artworkImages} />
+    </>
   );
 }
