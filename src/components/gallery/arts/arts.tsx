@@ -1,4 +1,4 @@
-import styles from '@/styles/gallery/gallery.module.scss';
+// gallery.scss 제거후 태일윈드 적용
 import { Link } from 'react-router-dom';
 
 // 이미지 미리보기 리사이징하여 -sm 으로 저장하였습니다
@@ -168,19 +168,19 @@ const artworkImages = [
 
 export default function Arts() {
   return (
-    <div className={styles.mainContent}>
-      <div className={styles.galleryBoxInner}>
-        {artworkImages.map((art) => (
-          <div className={styles.artworkBox} key={art.id}>
-            <div className={styles.artwork}>
-              <Link to={`/gallery/${art.id}`}>
-                <img src={art.src} alt={art.artistName} />
-              </Link>
-            </div>
-            <span>{art.artistName}</span>
+    <div className='flex flex-col justify-center items-center w-[1080px]'>
+    <div className='flex flex-wrap justify-center gap-[58px]'>
+      {artworkImages.map((art) => (
+        <div className='w-[320px] h-[320px] bg-[var(-btn-dark)]' key={art.id}>
+          <div className='w-[100%] h-[100%] overflow-hidden'>
+            <Link to={`/gallery/${art.id}`}>
+              <img src={art.src} alt={art.artistName} className='w-full h-full object-cover cursor-pointer' />
+            </Link>
           </div>
-        ))}
-      </div>
+          <span className='w-full flex justify-center items-center p-[12px] text-[var(-black)]-700'>{art.artistName}</span>
+        </div>
+      ))}
     </div>
+  </div>
   );
 }
