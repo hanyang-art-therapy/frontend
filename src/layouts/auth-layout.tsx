@@ -6,7 +6,7 @@ export default function AuthLayout() {
   return (
     <div className='min-h-screen flex flex-col w-full'>
       <AuthHeader />
-      <main className='min-h-[calc(100vh-400px)]'>
+      <main>
         <Outlet />
       </main>
       <Footer />

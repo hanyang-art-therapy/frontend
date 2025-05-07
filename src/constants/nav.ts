@@ -4,9 +4,9 @@ export const NAV_MENU = [
     path: '#',
     submenu: [
       { title: '미래상', path: '#' },
-      { title: '교수진', path: '#' },
+      { title: '교수진', path: '/intro/professors' },
       { title: '교육 과정', path: '#' },
-      { title: '자격증', path: '#' },
+      { title: '자격증', path: '/intro/certificates' },
       { title: '졸업 후 전망', path: '#' },
       { title: 'MOU기관', path: '#' },
       { title: '오시는 길', path: '#' },

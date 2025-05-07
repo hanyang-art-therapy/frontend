@@ -56,7 +56,7 @@ export type Files = {
   filesNo: number; // 파일 ID
   name: string; // 파일명
   url: string; // 파일 경로
-  size: number; // 파일 크기
+  filesSize: number; // 파일 크기
   useYn: boolean; // 사용 여부
   deleteYn: boolean; // 삭제 여부
   extension: string; // 파일 확장자

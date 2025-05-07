@@ -19,6 +19,7 @@ export default function NavMenu() {
                   <Link to={menu.path} className='main-menu'>
                     {menu.title}
                   </Link>
+
                   <ul className='sub-menu text-r-16 group-hover:block'>
                     {menu.submenu.map((submenu, subIndex) => (
                       <li key={subIndex}>
@@ -54,8 +55,8 @@ export default function NavMenu() {
 
       {/* 슬라이드 다운 */}
       <div
-        className={`menu-wrapper absolute top-full left-0 w-full bg-white text-black px-8 py-8 md:hidden z-50 ${
-          isSlideOpen ? 'open' : ''
+        className={`menu-wrapper absolute top-full left-0 w-full bg-white text-black  md:hidden z-50 ${
+          isSlideOpen ? 'open px-8 py-8' : ''
         }`}>
         <ul className='flex flex-col gap-4 text-[18px]'>
           {NAV_MENU.map((menu, index) => (

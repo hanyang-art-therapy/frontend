@@ -1,4 +1,4 @@
-import { QUICK_LINK } from '@/constants/quick-link';
+import { QUICK_LINK } from '@/constants/main/quick-link';
 
 export default function QuickLinksSection() {
   return (
@@ -8,9 +8,11 @@ export default function QuickLinksSection() {
         {QUICK_LINK.map(({ title, path, icon: Icon, bgClass }) => (
           <li>
             <a href={path} className={`quick-style ${bgClass}`}>
-              <Icon className="w-[50px] h-[50px]" />
+              <Icon className='w-[50px] h-[50px]' />
               <strong className='title-b-24 mb-[5px]'>{title}</strong>
-              <span className='border border-white py-[6px] px-[8px] text-r-14'>자세히보기</span>
+              <span className='border border-white py-[6px] px-[8px] text-r-14'>
+                자세히보기
+              </span>
             </a>
           </li>
         ))}

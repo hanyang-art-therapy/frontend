@@ -1,15 +1,20 @@
-import AuthLayout from '@/layouts/auth-layout';
-import MyPageLayout from '@/layouts/my-page-layout';
-import RootLayout from '@/layouts/root-layout';
-import NotFound from '@/pages/not-found/page';
-import SignInPage from '@/pages/(auth)/sign-in/page';
-import SignUpPage from '@/pages/(auth)/sign-up/page';
-import FindMyPage from '@/pages/(auth)/find-my/page';
-import GalleryPage from '@/pages/gallery/page';
-import MyPage from '@/pages/my-page/page';
-import Home from '@/pages/page';
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import ArtsDetail from '@/components/gallery/arts/art-detail';
+
+import { AuthLayout, RootLayout } from '@/layouts';
+import NotFoundPage from '@/pages/not-found/page';
+import Home from '@/pages/page';
+import lazyElement from '@/components/common/lazy-element';
+
+// LAZY LOADING
+const GalleryPage = lazy(() => import('@/pages/gallery/page'));
+const ArtsDetailPage = lazy(() => import('@/pages/gallery/[arts-no]/page'));
+const FindMyPage = lazy(() => import('@/pages/(auth)/find-my/page'));
+const SignInPage = lazy(() => import('@/pages/(auth)/sign-in/page'));
+const SignUpPage = lazy(() => import('@/pages/(auth)/sign-up/page'));
+const MyPage = lazy(() => import('@/pages/my-page/page'));
+const ProfessorsPage = lazy(() => import('@/pages/intro/professors/page'));
+const CertificatesPage = lazy(() => import('@/pages/intro/certificates/page'));
 
 const router = createBrowserRouter([
   {
@@ -21,47 +26,49 @@ const router = createBrowserRouter([
       },
       {
         path: '/gallery',
-        element: <GalleryPage />,
+        element: lazyElement(GalleryPage),
       },
       {
         path: '/gallery/:artsNo',
-        element: <ArtsDetail />,
+        element: lazyElement(ArtsDetailPage),
       },
       {
         path: '/my-page',
-        element: <MyPage />,
+        element: lazyElement(MyPage),
+      },
+      {
+        path: '/intro',
+        children: [
+          {
+            path: 'professors',
+            element: lazyElement(ProfessorsPage),
+          },
+          {
+            path: 'certificates',
+            element: lazyElement(CertificatesPage),
+          },
+        ],
       },
       {
         path: '*',
-        element: <NotFound />,
+        element: <NotFoundPage />,
       },
     ],
   },
-
   {
     element: <AuthLayout />,
     children: [
       {
         path: '/sign-in',
-        element: <SignInPage />,
+        element: lazyElement(SignInPage),
       },
       {
         path: '/sign-up',
-        element: <SignUpPage />,
+        element: lazyElement(SignUpPage),
       },
       {
         path: '/find-my',
-        element: <FindMyPage />,
-      },
-    ],
-  },
-
-  {
-    element: <MyPageLayout />,
-    children: [
-      {
-        path: '/my-page',
-        element: <MyPage />,
+        element: lazyElement(FindMyPage),
       },
     ],
   },

@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { SIGN_UP_AGREEMENT } from '@/constants/sign-up';
+import { SIGN_UP_AGREEMENT } from '@/constants/auth/sign-up';
 import { cn } from '@/lib/utils';
 import { type Dispatch, type SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -102,7 +102,7 @@ export default function SignUpStep1({
         {/* 동의 여부 라디오 버튼 - default: 동의함 */}
         <RadioGroup
           defaultValue='agree'
-          className='flex space-x-[30px] justify-end'
+          className='flex md:space-x-[30px] space-x-2 justify-end'
           onValueChange={setAgreement}>
           <div className='flex items-center space-x-1.5'>
             <label htmlFor='agree' className='title-b-16'>

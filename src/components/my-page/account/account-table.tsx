@@ -1,4 +1,4 @@
-import { TABLE_MAP } from '@/constants/my-page';
+import { TABLE_MAP } from '@/constants/my-page/my-page';
 import { MyPage as MyPageType } from '@/types/my-page';
 
 export default function AccountTable({

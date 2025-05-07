@@ -1,4 +1,3 @@
-// gallery.scss 제거후 태일윈드 적용
 import { Link } from 'react-router-dom';
 
 // 이미지 미리보기 리사이징하여 -sm 으로 저장하였습니다
@@ -78,7 +77,7 @@ const artworkImages = [
     artistName: '마수민',
     artTitle: '나를 향해 가는길',
     cohort: '30기',
-    src: '/images/arts/art11-sm.webp',
+    src: '/images/arts/art12-sm.webp',
   },
   {
     id: 12,

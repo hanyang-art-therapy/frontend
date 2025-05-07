@@ -4,7 +4,7 @@ import Account from '@/components/my-page/account/account';
 import MyPosts from '@/components/my-page/post/my-posts';
 import MyReview from '@/components/my-page/review/my-review';
 import Step from '@/components/ui/step';
-import { MY_PAGE_STEP_ITEMS } from '@/constants/my-page';
+import { MY_PAGE_STEP_ITEMS } from '@/constants/my-page/my-page';
 import type { MyPage as MyPageType } from '@/types/my-page';
 import { useState } from 'react';
 
@@ -16,7 +16,7 @@ export default function MyPage({ accountData }: MyPageProps) {
   const [step, setStep] = useState(MY_PAGE_STEP_ITEMS[0]);
 
   return (
-    <>
+    <div className='pt-[60px] md:min-h-[calc(100vh-394px)]'>
       <Step items={MY_PAGE_STEP_ITEMS} step={step} setStep={setStep} />
 
       <div className='w-full max-w-[1080px] mx-auto mt-15'>
@@ -31,6 +31,6 @@ export default function MyPage({ accountData }: MyPageProps) {
           <Account accountData={accountData} />
         )}
       </div>
-    </>
+    </div>
   );
 }

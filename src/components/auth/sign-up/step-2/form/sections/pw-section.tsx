@@ -11,7 +11,7 @@ export default function PwSection({
   errors: FieldErrors<SignUpFormValues>;
 }) {
   return (
-    <div className='py-[20px] border-b border-bg-gray flex gap-[30px]'>
+    <div className='py-[20px] border-b border-bg-gray flex gap-[30px] flex-col md:flex-row'>
       <div className='space-y-2.5'>
         <label className='title-b-16 flex items-center'>
           비밀번호 <Required nbsp />

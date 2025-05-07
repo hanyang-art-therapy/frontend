@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { Dot } from 'lucide-react';
-import { SIGN_UP_PROGRESS } from '@/constants/sign-up';
+import { SIGN_UP_PROGRESS } from '@/constants/auth/sign-up';
 
 export default function SignUpProgress({ progress }: { progress: number }) {
   return (

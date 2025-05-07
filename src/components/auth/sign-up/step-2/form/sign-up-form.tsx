@@ -1,5 +1,3 @@
-'use client';
-
 import {
   EmailSection,
   PwSection,
@@ -7,7 +5,7 @@ import {
   UserIdSection,
   UserNameSection,
   UserTypeSection,
-} from '@/components/auth/sign-up/step-2/sign-up-form/sections';
+} from '@/components/auth/sign-up/step-2/form/sections';
 import { Button } from '@/components/ui/button';
 import {
   signUpSchema,
@@ -24,11 +22,13 @@ export default function SignUpForm({
 }) {
   const [selectedDomain, setSelectedDomain] = useState('hanyang.ac.kr');
   const [userType, setUserType] = useState('member');
+
   const {
     register,
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors, isValid },
   } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
@@ -45,6 +45,7 @@ export default function SignUpForm({
     });
 
     setProgress(3);
+    reset();
   };
 
   return (
@@ -59,6 +60,7 @@ export default function SignUpForm({
         watch={watch}
         selectedDomain={selectedDomain}
         setSelectedDomain={setSelectedDomain}
+        errors={errors}
       />
 
       {userType === 'member' && (
