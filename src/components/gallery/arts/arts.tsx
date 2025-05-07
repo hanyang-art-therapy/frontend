@@ -1,5 +1,4 @@
 import ArtsList from '@/components/gallery/arts/arts-list';
-import ArtsSearch from '@/components/gallery/arts/arts-search';
 
 // 이미지 미리보기 리사이징하여 -sm 으로 저장하였습니다
 const artworkImages = [
@@ -168,9 +167,8 @@ const artworkImages = [
 
 export default function Arts() {
   return (
-    <>
-      <ArtsSearch />
+    <div className='flex flex-col gap-4 pt-[30px]'>
       <ArtsList data={artworkImages} />
-    </>
+    </div>
   );
 }

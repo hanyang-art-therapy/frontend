@@ -19,6 +19,7 @@ export default function NavMenu() {
                   <Link to={menu.path} className='main-menu'>
                     {menu.title}
                   </Link>
+
                   <ul className='sub-menu text-r-16 group-hover:block'>
                     {menu.submenu.map((submenu, subIndex) => (
                       <li key={subIndex}>

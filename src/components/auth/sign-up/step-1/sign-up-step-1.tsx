@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { SIGN_UP_AGREEMENT } from '@/constants/sign-up';
+import { SIGN_UP_AGREEMENT } from '@/constants/auth/sign-up';
 import { cn } from '@/lib/utils';
 import { type Dispatch, type SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

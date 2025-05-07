@@ -10,7 +10,7 @@ export default function Logo({ subName }: { subName?: string }) {
           className='min-w-[220px] h-[30px] object-contain'
         />
 
-        {subName && <p className='title-b-18 pt-[2px]'>{subName}</p>}
+        {subName && <p className='title-b-18'>{subName}</p>}
       </Link>
     </h1>
   );

@@ -4,7 +4,7 @@ import Account from '@/components/my-page/account/account';
 import MyPosts from '@/components/my-page/post/my-posts';
 import MyReview from '@/components/my-page/review/my-review';
 import Step from '@/components/ui/step';
-import { MY_PAGE_STEP_ITEMS } from '@/constants/my-page';
+import { MY_PAGE_STEP_ITEMS } from '@/constants/my-page/my-page';
 import type { MyPage as MyPageType } from '@/types/my-page';
 import { useState } from 'react';
 

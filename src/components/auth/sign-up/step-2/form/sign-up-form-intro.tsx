@@ -1,5 +1,5 @@
 import Required from '@/components/ui/required';
-import { SIGN_UP_STEP_2 } from '@/constants/sign-up';
+import { SIGN_UP_STEP_2 } from '@/constants/auth/sign-up';
 
 export default function SignUpFormIntro() {
   const { section1 } = SIGN_UP_STEP_2;
