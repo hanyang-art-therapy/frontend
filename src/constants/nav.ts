@@ -1,11 +1,11 @@
 export const NAV_MENU = [
   {
-    title: '학과 소개',
+    title: '학과소개',
     path: '#',
     submenu: [
       { title: '미래상', path: '#' },
       { title: '교수진', path: '/intro/professors' },
-      { title: '교육 과정', path: '#' },
+      { title: '교육과정', path: '#' },
       { title: '자격증', path: '/intro/certificates' },
       { title: '졸업 후 전망', path: '#' },
       { title: 'MOU기관', path: '#' },
@@ -25,16 +25,16 @@ export const NAV_MENU = [
     ],
   },
   {
-    title: 'ART+THERAPY 展',
+    title: 'ART+THERAPY展',
     path: '/gallery',
     submenu: [
-      { title: '전시 소개', path: '#' },
+      { title: '전시개요', path: '/gallery?step=intro' },
       { title: '미술관 미술치료', path: '#' },
       { title: '갤러리', path: '/gallery' },
     ],
   },
   {
-    title: '입학 안내',
+    title: '입학안내',
     path: '#',
     submenu: [
       { title: '장학금 혜택', path: '#' },
@@ -42,7 +42,7 @@ export const NAV_MENU = [
     ],
   },
   {
-    title: '자유 게시판',
+    title: '자유게시판',
     path: '#',
     submenu: [],
   },

@@ -16,9 +16,9 @@ export default function NavMenu() {
             <li key={index} className='relative group'>
               {menu.submenu.length > 0 ? (
                 <>
-                  <Link to={menu.path} className='main-menu'>
+                  <span className="main-menu">
                     {menu.title}
-                  </Link>
+                  </span>
 
                   <ul className='sub-menu text-r-16 group-hover:block'>
                     {menu.submenu.map((submenu, subIndex) => (
@@ -29,24 +29,26 @@ export default function NavMenu() {
                   </ul>
                 </>
               ) : (
-                <a href={menu.path} className='main-menu'>
+                <span className="main-menu">
                   {menu.title}
-                </a>
+                </span>
               )}
             </li>
           ))}
         </ul>
 
         <Link to='#' className='block'>
+          <span className='blind'>검색</span>
           <Search className='w-[24px] h-[24px] text-black md:hover:text-primary' />
         </Link>
       </div>
 
       {/* 모바일 메뉴 버튼 */}
       <div className='flex items-center gap-4 md:hidden'>
-        <a href='#'>
+        <Link to='#' className='block'>
+          <span className='blind'>검색</span>
           <Search className='w-[24px] h-[24px]' />
-        </a>
+        </Link>
         <HamburgerButton
           onClick={() => setIsSlideOpen(!isSlideOpen)}
           aria-label='모바일 메뉴 열기'
@@ -58,7 +60,7 @@ export default function NavMenu() {
         className={`menu-wrapper absolute top-full left-0 w-full bg-white text-black  md:hidden z-50 ${
           isSlideOpen ? 'open px-8 py-8' : ''
         }`}>
-        <ul className='flex flex-col gap-4 text-[18px]'>
+        <ul className='flex flex-col gap-4 title-m-18'>
           {NAV_MENU.map((menu, index) => (
             <li key={index}>
               <Link to={menu.path}>{menu.title}</Link>

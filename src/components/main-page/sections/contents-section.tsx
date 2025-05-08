@@ -13,7 +13,7 @@ export default function ContentsSection() {
             <h2 className='title-b-24'>올해의 전시 활동</h2>
             {/* 임시 - [전시 소개]로 이동 */}
             <Link
-              to='/exhibition'
+              to='/gallery?step=intro'
               aria-label='더보기'
               className='p-2 rounded-full hover:bg-btn-muted transition'>
               <Plus className='w-6 h-6 text-btn-dark' />
@@ -23,10 +23,10 @@ export default function ContentsSection() {
           {/* 전시회 리스트 */}
           <ul className='h-[300px] flex gap-[20px]'>
             {EXHIBITION_OVERVIEW.map((EXHIBITION_OVERVIEW) => (
-              <li key={EXHIBITION_OVERVIEW.id} className='w-[200px] h-[300px]'>
+              <li key={`${EXHIBITION_OVERVIEW.id}/${EXHIBITION_OVERVIEW.title}`} className='w-[200px] h-[300px]'>
                 {/* 전시회 포스터 이미지(클릭 시 전시 소개 상세 페이지로 이동 가능) */}
                 <a
-                  href={`/exhibition/${EXHIBITION_OVERVIEW.id}`}
+                  href='/gallery?step=intro'
                   className='text-r-16 hover:opacity-70 transition object-cover'>
                   <img
                     src={EXHIBITION_OVERVIEW.imageUrl}

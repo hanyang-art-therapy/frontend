@@ -9,7 +9,7 @@ import {
   MapPin,
 } from 'lucide-react';
 
-export const GALLERY_STEP_ITEMS = ['전시소개', '미술관 미술치료', '갤러리'];
+export const GALLERY_STEP_ITEMS = ['전시개요', '미술관 미술치료', '갤러리'];
 
 export const GALLERY_INTRO = {
   title: '전시 소개',

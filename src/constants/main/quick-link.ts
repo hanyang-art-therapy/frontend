@@ -5,7 +5,7 @@ export const QUICK_LINK = [
         id: 1,
         icon: Contact,
         title: '교수진 소개',
-        path: '#', // 실제 경로로 교체
+        path: '/intro/professors', // 실제 경로로 교체
         bgClass: 'bg-bg-secondary/80',
     },
     {

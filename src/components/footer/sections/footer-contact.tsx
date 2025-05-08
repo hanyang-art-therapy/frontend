@@ -6,8 +6,8 @@ export default function Contact() {
   return (
     <>
       <div className='w-full flex justify-center border-t border-t-[#aaa]'>
-        <div className='w-full md:max-w-[1080px] py-[15px] flex justify-between items-center title-b-16'>
-          <ul className='flex gap-[30px] text-black'>
+        <div className='w-full md:max-w-[1080px] py-[15px] px-[20px] md:px-0 flex justify-between md:items-center flex-col md:flex-row gap-[30px] md:gap-auto title-b-16'>
+          <ul className='flex gap-[10px] md:gap-[30px] flex-col md:flex-row text-black '>
             <li>
               <label className='text-primary'>{EMAIL.label} </label>
               <a href={EMAIL.href} className='hover:opacity-70'>
@@ -23,8 +23,8 @@ export default function Contact() {
             </li>
           </ul>
 
-          <ul className='flex items-center gap-[15px]'>
-            <label className='text-primary'>{SNS.label}</label>
+          <ul className='flex items-center gap-[15px] justify-end'>
+            <li><label className='text-primary'>{SNS.label}</label></li>
             <li>
               <a
                 href={SNS.INSTAGRAM.href}
