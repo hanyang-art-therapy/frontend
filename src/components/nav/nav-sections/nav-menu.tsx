@@ -1,11 +1,17 @@
 import HamburgerButton from '@/components/nav/nav-sections/nav-menu-btn/hamburger-button';
 import { NAV_MENU } from '@/constants/nav';
 import { Search } from 'lucide-react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function NavMenu() {
   const [isSlideOpen, setIsSlideOpen] = useState(false);
+  const location = useLocation();
+
+  /* 경로가 바뀔 때마다 슬라이드 메뉴 닫기 */
+  useEffect(() => {
+    setIsSlideOpen(false);
+  }, [location]);
 
   return (
     <>
@@ -56,11 +62,11 @@ export default function NavMenu() {
       </div>
 
       {/* 슬라이드 다운 */}
-      <div
-        className={`menu-wrapper absolute top-full left-0 w-full bg-white text-black  xl:hidden z-50 ${
-          isSlideOpen ? 'open px-8 py-8' : 'px-8 py-8'
-        }`}>
-        <ul className='flex flex-col gap-4 t-m-18'>
+      <div 
+        className={`menu-wrapper absolute top-full left-0 w-full bg-white text-black  xl:hidden z-50
+        ${isSlideOpen ? 'open' : '0'}
+      `}>
+        <ul className='flex flex-col gap-4 t-m-18 p-8'>
           {NAV_MENU.map((menu, index) => (
             <li key={index}>
               <Link to={menu.path}>{menu.title}</Link>

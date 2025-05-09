@@ -6,10 +6,12 @@ export default function Address() {
   return (
     <>
       <div className='w-full flex justify-center border-t border-t-gray'>
-        <address className='w-full max-w-[1260px] pt-[20px] pb-[50px] md:t-r-14 text-[10px] not-italic leading-[24px] text-muted'>
-          홈페이지 책임자 : {manager.responsible} / 홈페이지 관리자 :{' '}
-          {manager.admin} / 홈페이지 담당자 : {manager.contact}
-          <br />
+        <address className='w-full max-w-[1260px] pt-[20px] pb-[50px] px-[20px] xl:px-0 flex flex-col gap-[5px] t-r-14 not-italic text-gray-9'>
+          <div className='flex flex-wrap whitespace-nowrap'>
+            <span className='mr-[3px]'>홈페이지 책임자 : {manager.responsible} / </span>
+            <span className='mr-[3px]'> 홈페이지 관리자 : {manager.admin} / </span>
+            <span> 홈페이지 담당자 : {manager.contact}</span>
+          </div>
           {copyright}
         </address>
       </div>
