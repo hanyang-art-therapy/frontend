@@ -1,13 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { ART_WORKS_CONTACT } from '@/constants/gallery/art-details';
 import DetailReviews from './detail/detail-reviews';
+import ArtDetailNoResult from './detail/no-result/art-detail-no-result';
 
 export default function ArtsDetail() {
   const { artsNo } = useParams();
 
   const art = ART_WORKS_CONTACT.find((item) => item.artsNo === Number(artsNo));
 
-  if (!art) return <div>작품을 찾을 수 없습니다.</div>;
+  if (!art) return <ArtDetailNoResult />;
 
   return (
     <div className='text-center flex justify-between'>

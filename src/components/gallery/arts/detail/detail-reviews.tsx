@@ -9,6 +9,7 @@ import DetailTextarea from '@/components/gallery/arts/detail/detail-textarea';
 import ReviewCard from './reviews/reviews-card';
 import ImageModal from './reviews/reviews-modal';
 import UploadedReviews from './reviews/reviews-upload-reviews';
+import ReviewNoResult from './no-result/review-no-result';
 
 interface Comment {
   text: string;
@@ -115,11 +116,15 @@ export default function DetailReviews() {
   };
 
   const art = ART_WORKS_CONTACT.find((item) => item.artsNo === Number(artsNo));
-  if (!art) return <div>댓글을 찾을 수 없습니다.</div>;
+  if (!art) return <ReviewNoResult />;
 
   return (
     <div className='flex w-full flex-col items-start gap-[10px]'>
-      <h2 className='text-[20px] font-bold text-left'>미술관 미술치료</h2>
+      <h2 className='text-[20px] font-bold text-left'>
+        미술관 미술치료
+        {/* 댓글 수 표시 */}
+        <span className='text-bg-primary ml-2'>({comments.length})</span>{' '}
+      </h2>
       {/* 댓글 작성 폼 */}
       <div className='w-full flex flex-col gap-[10px] min-h-[210px] pt-[40px]'>
         <div className='flex w-full border border-[var(--gray)] p-[20px] gap-[20px] pb-[22px]'>
