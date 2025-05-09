@@ -22,7 +22,7 @@ export default function SignUpStep2({
         <SignUpFormIntro />
       </section>
 
-      <section className='border-t border-bg-gray'>
+      <section className='border-t border-bg-gray-d'>
         <SignUpForm setProgress={setProgress} />
       </section>
     </div>

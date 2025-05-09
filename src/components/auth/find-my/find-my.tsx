@@ -58,14 +58,14 @@ export default function FindMy() {
       <Step items={FIND_MY_STEP_ITEMS} step={step} setStep={setStep} />
 
       <div className='w-[1080px] mx-auto pt-[60px] space-y-[30px] md:min-h-[calc(100vh-394px)]'>
-        <h1 className='title-b-24'>{step}</h1>
-        <p className='text-b-18'>
+        <h1 className='t-b-24'>{step}</h1>
+        <p className='t-b-18'>
           회원님의 정보를 각 항목에 맞게 입력해주세요.
         </p>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className='border-t border-bg-gray mt-[30px]'>
+          className='border-t border-bg-gray-d mt-[30px]'>
           <EmailSection
             register={register}
             setValue={setValue}

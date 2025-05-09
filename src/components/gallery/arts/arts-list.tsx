@@ -26,7 +26,7 @@ export default function ArtsList({
             </Link>
           </div>
 
-          <p className='title-b-24 text-center'>
+          <p className='t-b-24 text-center'>
             {art.cohort} {art.artistName}
           </p>
         </li>

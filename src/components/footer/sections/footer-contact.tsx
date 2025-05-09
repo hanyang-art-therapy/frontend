@@ -6,7 +6,7 @@ export default function Contact() {
   return (
     <>
       <div className='w-full flex justify-center border-t border-t-[#aaa]'>
-        <div className='w-full md:max-w-[1080px] py-[15px] px-[20px] md:px-0 flex justify-between md:items-center flex-col md:flex-row gap-[30px] md:gap-auto title-b-16'>
+        <div className='w-full max-w-[1260px] py-[15px] px-[20px] md:px-0 flex justify-between md:items-center flex-col md:flex-row gap-[30px] md:gap-auto t-b-16'>
           <ul className='flex gap-[10px] md:gap-[30px] flex-col md:flex-row text-black '>
             <li>
               <label className='text-primary'>{EMAIL.label} </label>

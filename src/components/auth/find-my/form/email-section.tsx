@@ -40,8 +40,8 @@ export default function EmailSection({
   };
 
   return (
-    <div className='py-[20px] flex flex-col gap-[10px] border-b border-bg-gray'>
-      <label className='title-b-16'>이메일</label>
+    <div className='py-[20px] flex flex-col gap-[10px] border-b border-bg-gray-d'>
+      <label className='t-b-16'>이메일</label>
       <div className='flex gap-2.5 h-[45px] items-center'>
         <Input
           {...register('emailId')}
@@ -49,7 +49,7 @@ export default function EmailSection({
           placeholder='이메일을 입력해주세요'
         />
 
-        <span className='text-r-16'>@</span>
+        <span className='t-r-16'>@</span>
 
         <Input
           {...register('emailDomain')}
@@ -67,7 +67,7 @@ export default function EmailSection({
       </div>
 
       {(errors.emailId || errors.emailDomain) && (
-        <p className='text-destructive text-r-14'>
+        <p className='text-destructive t-r-14'>
           {errors.emailId?.message || errors.emailDomain?.message}
         </p>
       )}

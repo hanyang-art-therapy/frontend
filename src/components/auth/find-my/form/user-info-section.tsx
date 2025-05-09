@@ -20,8 +20,8 @@ export default function UserInfoSection({
   const label = isIdFind ? '이름' : '아이디'; // 아이디 찾기면 이름, 비밀번호 찾기면 아이디
 
   return (
-    <div className='py-[20px] flex flex-col gap-[10px] border-b border-bg-gray'>
-      <label htmlFor={fieldName} className='title-b-16'>
+    <div className='py-[20px] flex flex-col gap-[10px] border-b border-bg-gray-d'>
+      <label htmlFor={fieldName} className='t-b-16'>
         {label}
       </label>
       <Input
@@ -32,12 +32,12 @@ export default function UserInfoSection({
       />
       {isIdFind
         ? errors.userName && (
-            <p className='text-destructive text-r-14'>
+            <p className='text-destructive t-r-14'>
               {errors.userName.message}
             </p>
           )
         : errors.userId && (
-            <p className='text-destructive text-r-14'>
+            <p className='text-destructive t-r-14'>
               {errors.userId.message}
             </p>
           )}

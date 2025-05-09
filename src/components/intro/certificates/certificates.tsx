@@ -18,7 +18,7 @@ export default function Certificates() {
           <li
             key={certificate.title}
             className='bg-white shadow-md rounded-xl p-4 mb-4'>
-            <h3 className='title-b-18 mb-2 flex items-center gap-2'>
+            <h3 className='t-b-18 mb-2 flex items-center gap-2'>
               <CircleCheck className='text-primary' /> {certificate.title}
             </h3>
 

@@ -11,9 +11,9 @@ export default function PwSection({
   errors: FieldErrors<SignUpFormValues>;
 }) {
   return (
-    <div className='py-[20px] border-b border-bg-gray flex gap-[30px] flex-col md:flex-row'>
+    <div className='py-[20px] border-b border-bg-gray-d flex gap-[30px] flex-col md:flex-row'>
       <div className='space-y-2.5'>
-        <label className='title-b-16 flex items-center'>
+        <label className='t-b-16 flex items-center'>
           비밀번호 <Required nbsp />
         </label>
         <Input
@@ -24,14 +24,14 @@ export default function PwSection({
           {...register('password')}
         />
         {errors.password && (
-          <p className='text-destructive text-r-14'>
+          <p className='text-destructive t-r-14'>
             {errors.password.message}
           </p>
         )}
       </div>
 
       <div className='space-y-2.5'>
-        <label className='title-b-16 flex items-center'>
+        <label className='t-b-16 flex items-center'>
           비밀번호 확인 <Required nbsp />
         </label>
         <Input
@@ -42,7 +42,7 @@ export default function PwSection({
           {...register('confirmPassword')}
         />
         {errors.confirmPassword && (
-          <p className='text-destructive text-r-14'>
+          <p className='text-destructive t-r-14'>
             {errors.confirmPassword.message}
           </p>
         )}
