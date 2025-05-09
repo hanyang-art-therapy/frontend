@@ -11,7 +11,7 @@ export default function ArtsDetail() {
 
   return (
     <div className='text-center flex justify-between'>
-      <div className='md:max-w-[1080px] w-full mx-auto mt-[50px]'>
+      <div className='md:max-w-[1080px] w-full mx-auto mt-[60px]'>
         <div className='w-full h-[78px] flex items-center pt-[40px] pb-[20px] border-b-[2px] border-b-[#DDD]'>
           <ul className='w-full flex justify-between text-[32px] font-bold '>
             <li>
@@ -39,21 +39,20 @@ export default function ArtsDetail() {
             <img
               src={art.src}
               alt={art.artistName}
-              className='w-[1080px] py-[10px]'
+              className='w-[720px] py-[10px]'
             />
-            <span className='self-end py-[10px] pb-[30px] text=[#5A5A5A]'>
+            <span className='self-end px-[180px] pb-[30px] text=[#5A5A5A]'>
               Acrylic on canvas 100x80cm
             </span>
-            <div className='flex w-[1080px] h-[auto] p-[30px] flex-col items-start gap-[10px] rounded-[4px]  bg-white mb-[100px]'>
+            <div className='flex w-[1080px] h-[auto] p-[20px] flex-col items-start gap-[10px] border border-[#ddd] mb-[100px]'>
               <h2 className='w-full text-[24px] font-bold pb-[20px] text-left'>
                 작품 설명
               </h2>
-              <div className='text-[#000] text-[20px]  text-left leading-[3.5] p-[10px]'>
+              <div className='text-black text-[20px]  text-left leading-[3.5] p-[10px]'>
                 {art.artDetail}
               </div>
             </div>
 
-            {/* 여기 */}
             <DetailReviews />
           </div>
         </div>
