@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent } from 'react';
 import { Image, Navigation } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface DetailTextareaProps {
   comment: string;
@@ -30,12 +31,12 @@ export default function DetailTextarea({
           <Image size={16} color='#fff' />
           <input type='file' hidden accept='image/*' onChange={onImageChange} />
         </label>
-        <button
+        <Button
           type='submit'
           className='inline-flex items-center gap-2 text-sm font-bold text-white bg-[var(--primary)] px-4 py-2 rounded-full'>
           댓글 업로드
           <Navigation size={16} color='#fff' />
-        </button>
+        </Button>
       </div>
     </form>
   );
