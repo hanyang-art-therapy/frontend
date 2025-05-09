@@ -15,6 +15,10 @@ export default function DetailTextarea({
   onImageChange,
   onCommentSubmit,
 }: DetailTextareaProps) {
+  const handleImageButtonClick = () => {
+    document.getElementById('imageInput')?.click(); // 파일 input 클릭 이벤트 트리거
+  };
+
   return (
     <form onSubmit={onCommentSubmit} className='flex-1 flex flex-col gap-4'>
       <textarea
@@ -26,14 +30,23 @@ export default function DetailTextarea({
         className='w-full h-[150px] border border-[var(--gray)] px-3 py-2 text-sm focus:outline-none focus:ring-0'
       />
       <div className='py-[20px] flex justify-end flex-wrap gap-[20px]'>
-        <label className='cursor-pointer inline-flex items-center gap-2 text-sm font-bold text-white bg-[var(--primary)] px-4 py-2 rounded-full'>
+        <Button
+          type='button'
+          className='inline-flex items-center gap-2 text-xs font-bold text-white bg-[var(--primary)] px-4 py-2 rounded-full'
+          onClick={handleImageButtonClick}>
           이미지 첨부
           <Image size={16} color='#fff' />
-          <input type='file' hidden accept='image/*' onChange={onImageChange} />
-        </label>
+        </Button>
+        <input
+          id='imageInput'
+          type='file'
+          hidden
+          accept='image/*'
+          onChange={onImageChange}
+        />
         <Button
           type='submit'
-          className='inline-flex items-center gap-2 text-sm font-bold text-white bg-[var(--primary)] px-4 py-2 rounded-full'>
+          className='inline-flex items-center gap-2 text-xs font-bold text-white bg-[var(--primary)] px-4 py-2 rounded-full'>
           댓글 업로드
           <Navigation size={16} color='#fff' />
         </Button>
