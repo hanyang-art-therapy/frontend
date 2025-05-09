@@ -9,8 +9,8 @@ export default function QuickLinksSection() {
           <li key={`${path}/${title}`} className='quick-style'>
             <a href={path} className={bgClass}>
               <Icon className='icon'/>
-              <strong className='text-size-18'>{title}</strong>
-              <span className='text-size-14'>{text}</span>
+              <strong className='t-b-18'>{title}</strong>
+              <span className='t-r-14'>{text}</span>
             </a>
           </li>
         ))}

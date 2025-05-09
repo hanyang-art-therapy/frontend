@@ -53,7 +53,7 @@ export default function ContentsSection() {
           </div>
 
           {/* 게시물 리스트 */}
-          <ul className='h-[300px] divide-y divide-btn-gray-fa border-y border-btn-dark'>
+          <ul className='h-[300px] divide-y divide-gray-9 border-y-[2px] border-gray-6'>
             {COMMUNITY_POSTS.map((COMMUNITY_POSTS) => (
               <li
                 key={COMMUNITY_POSTS.id}
@@ -63,11 +63,11 @@ export default function ContentsSection() {
                 {/* 제목 (클릭 시 상세 페이지로 이동 가능) */}
                 <a
                   href={`/community/${COMMUNITY_POSTS.id}`}
-                  className='t-r-16 hover:opacity-70 transition truncate'>
+                  className='t-r-18 hover:opacity-70 transition truncate'>
                   {COMMUNITY_POSTS.title}
                 </a>
                 {/* 날짜 */}
-                <span className='t-r-16 text-muted'>
+                <span className='t-r-14 text-gray-9'>
                   {COMMUNITY_POSTS.date}
                 </span>
               </li>
