@@ -11,17 +11,17 @@ export default function MainSkeleton() {
 
           {/* Quick Links Section Skeleton */}
           <section className="w-full flex justify-center">
-            <ul className="w-full max-w-[1160px] flex justify-between py-[60px] px-[20px] xl:px-0">
+            <ul className="quick-list">
               {QUICK_LINK.map((_, i) => (
-                <li key={i}>
-                  <Skeleton className="quick-skeleton-style"/>
+                <li key={i} className="quick-skeleton-style">
+                  <Skeleton className="w-full h-full"/>
                 </li>
               ))}
             </ul>
           </section>
     
           {/* Contents Section Skeleton */}
-          <section className="w-full h-[460px] bg-gray-50 rounded-md">
+          <section className="w-full h-[480px]">
             <Skeleton className="w-full h-full" />
           </section>
         </>
