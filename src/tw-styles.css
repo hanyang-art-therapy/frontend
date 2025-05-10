@@ -525,5 +525,11 @@
       font-weight: bold;
       margin-top: 30px;
     }
+
+    @media (max-width: 768px) {
+      > span {
+        font-size: 40px;
+      }
+    }
   }
 }
