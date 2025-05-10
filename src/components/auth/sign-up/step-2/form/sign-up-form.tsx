@@ -70,7 +70,7 @@ export default function SignUpForm({
       <div className='flex justify-center mt-[60px]'>
         <Button
           type='submit'
-          className='w-[200px] h-[50px]'
+          className='w-full md:w-[200px] h-[50px]'
           disabled={!isValid}>
           가입하기
         </Button>

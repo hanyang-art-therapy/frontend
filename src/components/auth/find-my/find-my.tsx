@@ -13,11 +13,13 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function FindMy() {
-  const findId = FIND_MY_STEP_ITEMS[0]; // 아이디 찾기
-
-  const [step, setStep] = useState(findId); // 현재 진행 단계
+  const [findId, findPw] = FIND_MY_STEP_ITEMS; // 아이디 찾기
+  const [step, setStep] = useState(findId.value); // 현재 진행 단계
   const [selectedDomain, setSelectedDomain] = useState('hanyang.ac.kr'); // 이메일 도메인
-  const [isPwDialogOpen, setIsPwDialogOpen] = useState(false); // 비밀번호 찾기 모달 열림 여부
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // 비밀번호 찾기 모달 열림 여부
+  const [foundId, setFoundId] = useState<string | null>(null); // 찾은 아이디
+
+  const isFindId = step === findId.value;
 
   const {
     register,
@@ -41,13 +43,17 @@ export default function FindMy() {
   const onSubmit = (data: FindMyFormValues) => {
     const email = `${data.emailId}@${data.emailDomain}`;
 
-    if (step === findId) {
+    if (isFindId) {
       // 아이디 찾기 API 호출
+      const response = 'ApiResponse';
+      setFoundId(response);
+      console.log(response);
       console.log({ userName: data.userName, email });
+      setIsDialogOpen(true);
     } else {
       // 비밀번호 찾기 API 호출
       console.log({ userId: data.userId, email });
-      setIsPwDialogOpen(true);
+      setIsDialogOpen(true);
     }
 
     reset();
@@ -57,11 +63,9 @@ export default function FindMy() {
     <>
       <Step items={FIND_MY_STEP_ITEMS} step={step} setStep={setStep} />
 
-      <div className='w-[1080px] mx-auto pt-[60px] space-y-[30px] md:min-h-[calc(100vh-394px)]'>
-        <h1 className='t-b-24'>{step}</h1>
-        <p className='t-b-18'>
-          회원님의 정보를 각 항목에 맞게 입력해주세요.
-        </p>
+      <div className='md:max-w-[1280px] md:px-0 px-5 mx-auto pt-[60px] space-y-[30px] md:min-h-[calc(100vh-394px)]'>
+        <h1 className='t-b-24'>{isFindId ? findId.label : findPw.label}</h1>
+        <p className='t-b-18'>회원님의 정보를 각 항목에 맞게 입력해주세요.</p>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -79,7 +83,7 @@ export default function FindMy() {
             register={register}
             errors={errors}
             step={step}
-            findId={findId}
+            findId={findId.value}
           />
 
           <div className='flex justify-center mt-[60px]'>
@@ -87,14 +91,15 @@ export default function FindMy() {
               type='submit'
               className='w-[200px] h-[50px]'
               disabled={!isValid}>
-              {step}
+              {isFindId ? '아이디 찾기' : '비밀번호 찾기'}
             </Button>
           </div>
         </form>
 
         <FindMyPwDialog
-          isPwDialogOpen={isPwDialogOpen}
-          setIsPwDialogOpen={setIsPwDialogOpen}
+          isDialogOpen={isDialogOpen}
+          setIsDialogOpen={setIsDialogOpen}
+          foundId={foundId}
         />
       </div>
     </>
