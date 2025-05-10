@@ -29,7 +29,7 @@ export const NAV_MENU = [
     path: '/gallery',
     submenu: [
       { title: '전시개요', path: '/gallery?step=intro' },
-      { title: '미술관 미술치료', path: '#' },
+      { title: '미술관 미술치료', path: '/gallery?step=therapy' },
       { title: '갤러리', path: '/gallery' },
     ],
   },
