@@ -2,8 +2,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function LazySkeleton() {
   return (
-    <div className='flex flex-col md:max-w-[1080px] min-h-screen-vh w-full mx-auto '>
-      <Skeleton className='m-16 h-[500px] rounded-xl' />
+    <div className='w-full max-w-[1260px] h-full flex flex-col mx-auto px-[20px] xl:px-0 mt-[80px] mb-[]'>
+      <Skeleton className='m-full h-[80vh] rounded-xl' />
     </div>
   );
 }

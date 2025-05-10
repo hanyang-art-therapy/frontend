@@ -36,7 +36,7 @@ export default function LoginForm() {
       className='w-full space-y-[20px] md:p-0 px-[15px]'>
       <Input
         type='text'
-        className='w-full py-[13px] px-[15px] h-[45px] border border-[#aaa] rounded bg-bg-muted'
+        className='w-full py-[13px] px-[15px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
         placeholder='아이디'
         value={userId}
         onChange={(e) => setUserId(e.target.value)}
@@ -44,7 +44,7 @@ export default function LoginForm() {
 
       <Input
         type='current-password'
-        className='w-full py-[13px] px-[15px] h-[45px] border border-[#aaa] rounded bg-bg-muted'
+        className='w-full py-[13px] px-[15px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
         placeholder='비밀번호'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -58,7 +58,7 @@ export default function LoginForm() {
               checked={isUserIdRemember}
               onCheckedChange={() => setIsUserIdRemember(!isUserIdRemember)}
             />
-            <label htmlFor='remember' className='text-r-14'>
+            <label htmlFor='remember' className='t-r-14'>
               아이디 저장
             </label>
           </div>
@@ -66,13 +66,13 @@ export default function LoginForm() {
           <div className='ml-auto flex'>
             <Link
               to='/sign-up'
-              className='text-r-14 pr-[10px] hover:underline cursor-pointer'>
+              className='t-r-14 pr-[10px] hover:underline cursor-pointer'>
               회원가입
             </Link>
-            <span className='text-r-14'>|</span>
+            <span className='t-r-14'>|</span>
             <Link
               to='/find-my'
-              className='text-r-14 pl-[10px] hover:underline cursor-pointer'>
+              className='t-r-14 pl-[10px] hover:underline cursor-pointer'>
               아이디 / 비밀번호 찾기
             </Link>
           </div>

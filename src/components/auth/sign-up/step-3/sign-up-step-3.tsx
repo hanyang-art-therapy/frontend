@@ -13,8 +13,8 @@ export default function SignUpStep3() {
   return (
     <div className='flex w-full h-full flex-col gap-[60px]'>
       <span className='space-y-[30px]'>
-        <p className='title-b-24'>회원가입이 완료되었습니다!</p>
-        <p className='text-r-18'>
+        <p className='t-b-24'>회원가입이 완료되었습니다!</p>
+        <p className='t-r-18'>
           로그인 화면으로 돌아가 다시 로그인을 해주세요.
         </p>
       </span>

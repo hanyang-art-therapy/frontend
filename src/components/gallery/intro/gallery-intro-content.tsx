@@ -45,7 +45,7 @@ export default function GalleryIntroContent() {
           {participants.description.map((text) => (
             <li
               key={text.subDescription}
-              className='bg-bg-muted p-6 rounded-lg'>
+              className='bg-bg-gray-fa p-6 rounded-lg'>
               <h3 className='font-semibold text-lg mb-2'>{text.subTitle}</h3>
               <p className='text-gray'>{text.subDescription}</p>
             </li>
@@ -81,7 +81,7 @@ export default function GalleryIntroContent() {
           {schedule.description.map(
             ({ icon: Icon, subTitle, subDescription }) => (
               <li className='flex items-start gap-4'>
-                <Icon className='h-5 w-5 text-bg-muted0 mt-1' />
+                <Icon className='h-5 w-5 text-bg-gray-fa0 mt-1' />
                 <div>
                   <h3 className='font-semibold'>{subTitle}</h3>
                   <p className='text-gray'>{subDescription}</p>

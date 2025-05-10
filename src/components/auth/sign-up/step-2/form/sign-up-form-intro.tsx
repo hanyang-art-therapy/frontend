@@ -6,9 +6,9 @@ export default function SignUpFormIntro() {
 
   return (
     <div>
-      <h2 className='title-b-24'>{section1.title}</h2>
-      <p className='text-r-18'>{section1.description}</p>
-      <p className='text-right text-r-16'>
+      <h2 className='t-b-24'>{section1.title}</h2>
+      <p className='t-r-18'>{section1.description}</p>
+      <p className='text-right t-r-16'>
         (<Required />) {section1.required}
       </p>
     </div>

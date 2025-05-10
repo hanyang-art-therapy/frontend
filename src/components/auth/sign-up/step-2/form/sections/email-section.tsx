@@ -41,8 +41,8 @@ export default function EmailSection({
   };
 
   return (
-    <div className='py-[20px] space-y-2.5 border-b border-bg-gray '>
-      <label className='title-b-16 flex items-center'>
+    <div className='py-[20px] space-y-2.5 border-b border-bg-gray-d '>
+      <label className='t-b-16 flex items-center'>
         이메일 <Required />
       </label>
 
@@ -56,7 +56,7 @@ export default function EmailSection({
           />
 
           {/* @ */}
-          <span className='text-r-16 hidden md:block'>@</span>
+          <span className='t-r-16 hidden md:block'>@</span>
 
           {/* 이메일 도메인 */}
           <Input
@@ -76,7 +76,7 @@ export default function EmailSection({
         </div>
 
         {(errors.emailId || errors.emailDomain) && (
-          <p className='text-destructive text-r-14'>
+          <p className='text-destructive t-r-14'>
             {errors.emailId?.message || errors.emailDomain?.message}
           </p>
         )}

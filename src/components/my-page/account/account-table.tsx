@@ -15,14 +15,14 @@ export default function AccountTable({
   };
 
   return (
-    <div className='mb-[20px]w-full mx-auto rounded-[5px] border border-muted bg-bg-muted shadow-lg'>
+    <div className='mb-[20px]w-full mx-auto rounded-[5px] border border-muted bg-bg-gray-fa shadow-lg'>
       <table className='w-full border-collapse'>
         <tbody>
           {Object.entries(TABLE_MAP).map(([label, key]) => (
             <tr
               key={key}
-              className='border-b-[1px] border-bg-gray last:border-b-0 md:h-[45px] transition-colors hover:bg-orange-50'>
-              <td className='text-black font-bold text-center md:w-[250px] border-r-[1px] border-bg-gray'>
+              className='border-b-[1px] border-bg-gray-d last:border-b-0 md:h-[45px] transition-colors hover:bg-orange-50'>
+              <td className='text-black font-bold text-center md:w-[250px] border-r-[1px] border-bg-gray-d'>
                 {label}
               </td>
 

@@ -11,7 +11,7 @@ export default function Step({ items, step, setStep }: StepProps) {
   const width = `${100 / items.length || 1}%`;
 
   return (
-    <div className='h-[50px] border-b w-full flex justify-center border-b-bg-gray'>
+    <div className='h-[50px] border-b w-full flex justify-center border-b-bg-gray-d'>
       <ul className='flex w-full justify-between max-w-[1080px]'>
         {items.map((item, index) => {
           return (

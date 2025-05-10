@@ -1,12 +1,13 @@
-import { lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { AuthLayout, RootLayout } from '@/layouts';
 import NotFoundPage from '@/pages/not-found/page';
-import Home from '@/pages/page';
 import lazyElement from '@/components/common/lazy-element';
+import MainSkeleton from '@/components/main-page/main-skeleton';
 
 // LAZY LOADING
+const HomePage = lazy(() => import('@/pages/page'));
 const GalleryPage = lazy(() => import('@/pages/gallery/page'));
 const ArtsDetailPage = lazy(() => import('@/pages/gallery/[arts-no]/page'));
 const FindMyPage = lazy(() => import('@/pages/(auth)/find-my/page'));
@@ -22,7 +23,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />,
+        element: (
+          <Suspense fallback={<MainSkeleton />}>
+            <HomePage />
+          </Suspense>
+        ),
       },
       {
         path: '/gallery',

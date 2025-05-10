@@ -19,10 +19,10 @@ export default function Nav() {
   return (
     <nav
       className={`
-        w-full h-[60px] flex justify-center fixed top-[40px] left-0 z-98 p-4 nav-box-shadow transition-colors duration-300
+        w-full h-[60px] flex justify-center transition-colors duration-300 nav-box-shadow mx-auto fixed top-[40px] left-0 z-98
         ${scrolled ? 'bg-white' : 'bg-white/50'}
       `}>
-      <div className='w-[1080px] h-full flex gap-[30px] items-center justify-between whitespace-nowrap'>
+      <div className='w-full max-w-[1260px] h-full p-[20px] xl:p-0 flex gap-[30px] items-center justify-between whitespace-nowrap'>
         <Logo />
         <NavMenu />
       </div>

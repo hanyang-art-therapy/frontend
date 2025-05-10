@@ -11,8 +11,8 @@ export default function StudentNoSection({
   errors: FieldErrors<SignUpFormValues>;
 }) {
   return (
-    <div className='py-[20px] space-y-2.5 border-b border-bg-gray'>
-      <label className='title-b-16 flex items-center'>
+    <div className='py-[20px] space-y-2.5 border-b border-bg-gray-d'>
+      <label className='t-b-16 flex items-center'>
         학번 <Required nbsp />
       </label>
       <div className='flex gap-[30px] h-[45px]'>
@@ -23,7 +23,7 @@ export default function StudentNoSection({
         />
       </div>
       {errors.studentNo && (
-        <p className='text-destructive text-r-14'>{errors.studentNo.message}</p>
+        <p className='text-destructive t-r-14'>{errors.studentNo.message}</p>
       )}
     </div>
   );

@@ -15,15 +15,15 @@ export default function ProfessorsContent() {
             />
           )}
 
-          <h3 className='title-b-18'>{professor.name}</h3>
+          <h3 className='t-b-18'>{professor.name}</h3>
           <p>{professor.position}</p>
 
           {professor.major && (
-            <p className='text-r-14 mt-1'>{professor.major}</p>
+            <p className='t-r-14 mt-1'>{professor.major}</p>
           )}
 
           {professor.email && (
-            <p className='text-r-14 text-primary mt-1'>
+            <p className='t-r-14 text-primary mt-1'>
               <a
                 href={`mailto:${professor.email}`}
                 className='underline hover:text-primary/80 cursor-pointer'>
@@ -33,7 +33,7 @@ export default function ProfessorsContent() {
           )}
 
           {professor.phone && (
-            <p className='text-r-14 text-gray mt-1'>
+            <p className='t-r-14 text-gray mt-1'>
               <a
                 href={`tel:${professor.phone}`}
                 className='underline hover:text-gray/80 cursor-pointer'>

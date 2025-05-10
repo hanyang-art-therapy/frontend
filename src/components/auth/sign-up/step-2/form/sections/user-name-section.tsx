@@ -11,8 +11,8 @@ export default function UserNameSection({
   errors: FieldErrors<SignUpFormValues>;
 }) {
   return (
-    <div className='py-[20px] space-y-2.5 border-b border-bg-gray'>
-      <label className='title-b-16 flex items-center'>
+    <div className='py-[20px] space-y-2.5 border-b border-bg-gray-d'>
+      <label className='t-b-16 flex items-center'>
         이름 <Required nbsp />
       </label>
       <Input
@@ -22,7 +22,7 @@ export default function UserNameSection({
       />
 
       {errors.userName && (
-        <p className='text-destructive text-r-14'>{errors.userName.message}</p>
+        <p className='text-destructive t-r-14'>{errors.userName.message}</p>
       )}
     </div>
   );
