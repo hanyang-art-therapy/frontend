@@ -13,23 +13,22 @@ type MyPageProps = {
 };
 
 export default function MyPage({ accountData }: MyPageProps) {
-  const [step, setStep] = useState(MY_PAGE_STEP_ITEMS[0]);
+  const [reviews, posts, account] = MY_PAGE_STEP_ITEMS;
+  const [step, setStep] = useState(reviews.value);
 
   return (
     <div className='pt-[60px] md:min-h-[calc(100vh-394px)]'>
       <Step items={MY_PAGE_STEP_ITEMS} step={step} setStep={setStep} />
 
-      <div className='w-full max-w-[1080px] mx-auto mt-15'>
+      <div className='w-full md:max-w-[1280px] mx-auto md:mt-15 mt-10 px-5 md:px-0'>
         {/* 내가 쓴 리뷰 관리 */}
-        {step === MY_PAGE_STEP_ITEMS[0] && <MyReview />}
+        {step === reviews.value && <MyReview />}
 
         {/* 게시물 관리 */}
-        {step === MY_PAGE_STEP_ITEMS[1] && <MyPosts />}
+        {step === posts.value && <MyPosts />}
 
         {/* 개인정보 관리 */}
-        {step === MY_PAGE_STEP_ITEMS[2] && (
-          <Account accountData={accountData} />
-        )}
+        {step === account.value && <Account accountData={accountData} />}
       </div>
     </div>
   );

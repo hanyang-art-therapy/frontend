@@ -6,18 +6,21 @@ export const findMySchema = z
     userName: z
       .string()
       .min(1, { message: '이름을 입력해주세요' })
-      .max(10, { message: '이름은 10자 이하이어야 합니다' })
+      .max(20, { message: '이름은 20자 이하이어야 합니다' })
       .nullable(),
     userId: z
       .string()
       .min(1, { message: '아이디를 입력해주세요' })
-      .max(15, { message: '아이디는 15자 이하이어야 합니다' })
+      .max(50, { message: '아이디는 50자 이하이어야 합니다' })
       .nullable(),
     emailId: z
       .string()
       .min(1, { message: '이메일을 입력해주세요' })
-      .max(20, { message: '이메일은 20자 이하이어야 합니다' }),
-    emailDomain: z.string().min(1, { message: '이메일 도메인을 입력해주세요' }),
+      .max(100, { message: '이메일은 100자 이하이어야 합니다' }),
+    emailDomain: z
+      .string()
+      .min(1, { message: '이메일 도메인을 입력해주세요' })
+      .max(100, { message: '이메일 도메인은 100자 이하이어야 합니다' }),
   })
   .refine((data) => {
     // 이름 또는 아이디 중 하나만 입력해야 함

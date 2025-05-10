@@ -57,16 +57,14 @@ export default function FindMyPwDialog({
           {foundId && (
             <Button
               variant='secondary'
-              className='w-1/2 md:title-b-18 title-b-14'
+              className='w-1/2 t-b-18'
               disabled={isCopied}
               onClick={handleCopyToClipboard}>
               {isCopied ? '복사 완료' : '클립보드에 복사'}
             </Button>
           )}
 
-          <Button
-            className='w-1/2 md:title-b-18 title-b-14'
-            onClick={() => navigate('/sign-in')}>
+          <Button className='w-1/2 t-b-18' onClick={() => navigate('/sign-in')}>
             로그인 페이지로 이동
           </Button>
         </AlertDialogFooter>
