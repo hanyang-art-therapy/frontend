@@ -1,24 +1,14 @@
-import MainSkeleton from '@/components/main-page/main-skeleton';
-import { lazy, Suspense } from 'react';
+import HeroSection from '@/components/main-page/sections/hero-section';
+import QuickLinksSection from '@/components/main-page/sections/quick-link-section';
+import ContentsSection from '@/components/main-page/sections/contents-section';
 
-const HeroSection = lazy(
-  () => import('@/components/main-page/sections/hero-section')
-);
-
-const QuickLinksSection = lazy(
-  () => import('@/components/main-page/sections/quick-link-section')
-);
-
-const ContentsSection = lazy(
-  () => import('@/components/main-page/sections/contents-section')
-);
 
 export default function MainPage() {
   return (
-    <Suspense fallback={<MainSkeleton />}>
+    <>
       <HeroSection />
       <QuickLinksSection />
       <ContentsSection />
-    </Suspense>
+    </>
   );
 }
