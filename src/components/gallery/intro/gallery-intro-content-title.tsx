@@ -15,12 +15,12 @@ export default function GalleryIntroContentTitle({
   subTitle,
 }: GalleryIntroTitleProps) {
   return (
-    <h3 className='title-b-24 flex flex-col gap-1'>
+    <h3 className='t-b-24 flex flex-col gap-1'>
       <div className='flex items-center gap-3'>
         <Icon className='h-5 w-5 text-primary' />
         <p>{title}</p>
       </div>
-      {subTitle && <p className='text-muted title-m-18'>{subTitle}</p>}
+      {subTitle && <p className='text-muted t-m-18'>{subTitle}</p>}
     </h3>
   );
 }

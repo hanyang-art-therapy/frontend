@@ -13,7 +13,7 @@ export default function GalleryTheorapyContentTitle({
 }: GalleryTheorapyContentTitleProps) {
   return (
     <div className='mb-12 text-center'>
-      <h2 className='mb-2 title-b-24 md:title-b-32'>
+      <h2 className='mb-2 t-b-32'>
         <span
           className={cn('text-black', strong === 'first' && 'text-primary')}>
           {firstTitle}{' '}

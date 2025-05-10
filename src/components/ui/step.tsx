@@ -26,9 +26,7 @@ export default function Step({ items, step, setStep }: StepProps) {
                 onClick={() => setStep(item.value)}
                 className={cn(
                   'w-full h-full flex items-center justify-center cursor-pointer',
-                  step === item.value
-                    ? 'title-b-14 md:title-b-18'
-                    : 'text-r-14 md:text-r-18'
+                  step === item.value ? 't-b-18' : 't-r-18'
                 )}>
                 {item.label}
               </button>

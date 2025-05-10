@@ -40,7 +40,7 @@ export default function GalleryTheorapy() {
                 {renderTextWithBold(text)}
               </p>
             ))}
-            <p className='md:title-m-18 title-m-14 text-primary'>
+            <p className='t-m-18 text-primary'>
               {GALLERY_THERAPY_INTRO.strong}
             </p>
           </div>
@@ -100,7 +100,7 @@ export default function GalleryTheorapy() {
                   <p className='mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white'>
                     {section.number}
                   </p>
-                  <p className='md:title-b-24 title-b-18'>{section.title}</p>
+                  <p className='t-b-24'>{section.title}</p>
                 </h3>
 
                 <div className='space-y-3 pl-11 text-gray'>

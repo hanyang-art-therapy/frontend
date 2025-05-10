@@ -22,7 +22,7 @@ export default function Nav() {
         w-full h-[60px] flex justify-center transition-colors duration-300 nav-box-shadow mx-auto fixed top-[40px] left-0 z-98
         ${scrolled ? 'bg-white' : 'bg-white/50'}
       `}>
-      <div className='w-full max-w-[1260px] h-full p-[20px] xl:p-0 flex gap-[30px] items-center justify-between whitespace-nowrap'>
+      <div className='w-full md:max-w-[1260px] h-full p-[20px] xl:p-0 flex gap-[30px] items-center justify-between whitespace-nowrap'>
         <Logo />
         <NavMenu />
       </div>

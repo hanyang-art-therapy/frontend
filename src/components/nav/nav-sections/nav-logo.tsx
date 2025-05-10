@@ -7,10 +7,10 @@ export default function Logo({ subName }: { subName?: string }) {
         <img
           src='/images/logo.webp'
           alt='한양대학교 에리카 미술치료학과'
-          className='min-w-[210px] h-[30px] object-contain'
+          className='min-w-[210px] h-[30px] object-contain md:pl-0 pl-5'
         />
 
-        {subName && <p className='t-b-18'>{subName}</p>}
+        {subName && <p className='t-b-18 hidden md:inline'>{subName}</p>}
       </Link>
     </h1>
   );
