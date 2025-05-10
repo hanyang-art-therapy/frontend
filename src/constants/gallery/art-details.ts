@@ -207,3 +207,94 @@ export const ART_WORKS_CONTACT = [
     src: '/images/arts/art23-sm.webp',
   },
 ];
+// 예시 이미지
+export const EX_IMGS = [
+  '/images/example/works.jpeg',
+  '/images/example/works2.jpeg',
+  '/images/example/works3.jpeg',
+];
+
+export interface DummyComment {
+  artsNo: number;
+  userName: string;
+  reviewText: string;
+  files: {
+    filesNo: number;
+    name: string;
+    url: string;
+    filesSize: number;
+    extension: string;
+    filesType: string;
+  }[];
+}
+
+// 더미데이터 - API반영 수정하기
+export const ART_DUMMY_CONTACT: DummyComment[] = [
+  {
+    artsNo: 1,
+    userName: '임다은',
+    reviewText:
+      '중심의 분홍빛에서 따뜻한 고요함이 느껴졌습니다. 마치 나를 안아주는 감정 같았어요.중심의 분홍빛에서 따뜻한 고요함이 느껴졌습니다. 마치 나를 안아주는 감정 같았어요.중심의 분홍빛에서 따뜻한 고요함이 느껴졌습니다. 마치 나를 안아주는 감정 같았어요.중심의 분홍빛에서 따뜻한 고요함이 느껴졌습니다. 마치 나를 안아주는 감정 같았어요.중심의 분홍빛에서 따뜻한 고요함이 느껴졌습니다. 마치 나를 안아주는 감정 같았어요.',
+    files: [
+      {
+        filesNo: 789,
+        name: '그림.png',
+        url: EX_IMGS[0],
+        filesSize: 204800,
+        extension: 'png',
+        filesType: 'REVIEW',
+      },
+    ],
+  },
+  {
+    artsNo: 2,
+    userName: '유희태',
+    reviewText:
+      '관계 속에서 흔들리는 감정의 줄기를 저도 한번 표현해보고 싶어졌어요. 당신의 그림이 제 안의 감정을 불러일으켰습니다.',
+    files: [
+      {
+        filesNo: 456,
+        name: '123.jpg',
+        url: EX_IMGS[1],
+        filesSize: 102400,
+        extension: 'jpg',
+        filesType: 'REVIEW',
+      },
+      {
+        filesNo: 789,
+        name: '그림.png',
+        url: 'https://domain.com/files/789.png',
+        filesSize: 204800,
+        extension: 'png',
+        filesType: 'REVIEW',
+      },
+    ],
+  },
+  {
+    artsNo: 3,
+    userName: '김경아',
+    reviewText:
+      '"단절 속의 연결"이라는 말이 마음에 오래 남았어요. 저도 그 감정의 결을 따라 손을 움직여 봤습니다.',
+    files: [
+      {
+        filesNo: 456,
+        name: '123.jpg',
+        url: EX_IMGS[2],
+        filesSize: 102400,
+        extension: 'jpg',
+        filesType: 'REVIEW',
+      },
+      {
+        filesNo: 789,
+        name: '그림.png',
+        url: 'https://domain.com/files/789.png',
+        filesSize: 204800,
+        extension: 'png',
+        filesType: 'REVIEW',
+      },
+    ],
+  },
+];
+
+// 이미지 없을 때
+export const NO_IMG = '/images/icons/noIMG.svg';
