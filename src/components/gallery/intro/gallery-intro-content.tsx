@@ -2,8 +2,7 @@ import GalleryIntroContentTitle from '@/components/gallery/intro/gallery-intro-c
 import { GALLERY_INTRO } from '@/constants/gallery/gallery';
 
 export default function GalleryIntroContent() {
-  const { intro, purpose, participants, artTherapy, schedule, guide } =
-    GALLERY_INTRO;
+  const { intro, purpose, participants, artTherapy, guide } = GALLERY_INTRO;
 
   return (
     <div className=' mx-auto px-4 py-12 grid gap-16'>
@@ -76,7 +75,7 @@ export default function GalleryIntroContent() {
       </section>
 
       {/* 전시 일정 및 위치 */}
-      <section className='grid md:grid-cols-[1fr_3fr] gap-8'>
+      {/* <section className='grid md:grid-cols-[1fr_3fr] gap-8'>
         <GalleryIntroContentTitle icon={schedule.icon} title={schedule.title} />
         <ul className='space-y-6'>
           {schedule.description.map(
@@ -91,7 +90,7 @@ export default function GalleryIntroContent() {
             )
           )}
         </ul>
-      </section>
+      </section> */}
 
       {/* 관람 안내 */}
       <section className='grid md:grid-cols-[1fr_3fr] gap-8'>
