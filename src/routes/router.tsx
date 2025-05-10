@@ -16,6 +16,7 @@ const SignUpPage = lazy(() => import('@/pages/(auth)/sign-up/page'));
 const MyPage = lazy(() => import('@/pages/my-page/page'));
 const ProfessorsPage = lazy(() => import('@/pages/intro/professors/page'));
 const CertificatesPage = lazy(() => import('@/pages/intro/certificates/page'));
+const ResetPwPage = lazy(() => import('@/pages/my-page/reset-pw/page'));
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,16 @@ const router = createBrowserRouter([
       },
       {
         path: '/my-page',
-        element: lazyElement(MyPage),
+        children: [
+          {
+            path: '',
+            element: lazyElement(MyPage),
+          },
+          {
+            path: 'reset-pw',
+            element: lazyElement(ResetPwPage),
+          },
+        ],
       },
       {
         path: '/intro',

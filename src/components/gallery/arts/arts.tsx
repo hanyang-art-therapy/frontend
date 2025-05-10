@@ -1,185 +1,20 @@
-import { Link } from 'react-router-dom';
-
-// 이미지 미리보기 리사이징하여 -sm 으로 저장하였습니다
-const artworkImages = [
-  {
-    id: 1,
-    artistName: '강송이',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art1-sm.webp',
-  },
-  {
-    id: 2,
-    artistName: '구교희',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art2-sm.webp',
-  },
-  {
-    id: 3,
-    artistName: '김도경',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art3-sm.webp',
-  },
-  {
-    id: 4,
-    artistName: '김도형',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art4-sm.webp',
-  },
-  {
-    id: 5,
-    artistName: '김보영',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art5-sm.webp',
-  },
-  {
-    id: 6,
-    artistName: '김이슬',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art6-sm.webp',
-  },
-  {
-    id: 7,
-    artistName: '김지은',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art7-sm.webp',
-  },
-  {
-    id: 8,
-    artistName: '김희경',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art8-sm.webp',
-  },
-  {
-    id: 9,
-    artistName: '남선미',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art9-sm.webp',
-  },
-  {
-    id: 10,
-    artistName: '류민아',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art10-sm.webp',
-  },
-  {
-    id: 11,
-    artistName: '마수민',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art12-sm.webp',
-  },
-  {
-    id: 12,
-    artistName: '문지윤',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art12-sm.webp',
-  },
-  {
-    id: 13,
-    artistName: '박다리아',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art13-sm.webp',
-  },
-  {
-    id: 14,
-    artistName: '박은하',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art14-sm.webp',
-  },
-  {
-    id: 15,
-    artistName: '박진호',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art15-sm.webp',
-  },
-  {
-    id: 16,
-    artistName: '백은희',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art16-sm.webp',
-  },
-  {
-    id: 17,
-    artistName: '성인경',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art17-sm.webp',
-  },
-  {
-    id: 18,
-    artistName: '소명희',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art18-sm.webp',
-  },
-  {
-    id: 19,
-    artistName: '유봉미',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art19-sm.webp',
-  },
-  {
-    id: 20,
-    artistName: '윤희정',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art20-sm.webp',
-  },
-  {
-    id: 21,
-    artistName: '조자영',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art21-sm.webp',
-  },
-  {
-    id: 22,
-    artistName: '조혜미',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art22-sm.webp',
-  },
-  {
-    id: 23,
-    artistName: '최지혜',
-    artTitle: '나를 향해 가는길',
-    cohort: '30기',
-    src: '/images/arts/art23-sm.webp',
-  },
-];
+import { ART_CONTENT } from '@/constants/gallery/art';
+import { useState } from 'react';
+import ArtsList from '@/components/gallery/arts/arts-list';
+import ArtsSearch from '@/components/gallery/arts/arts-search';
 
 export default function Arts() {
+  const [filteredArts, setFilteredArts] = useState(ART_CONTENT);
+
   return (
-    <div className='flex flex-col justify-center items-center w-[1080px]'>
-    <div className='flex flex-wrap justify-center gap-[58px]'>
-      {artworkImages.map((art) => (
-        <div className='w-[320px] h-[320px] bg-[var(-btn-dark)]' key={art.id}>
-          <div className='w-[100%] h-[100%] overflow-hidden'>
-            <Link to={`/gallery/${art.id}`}>
-              <img src={art.src} alt={art.artistName} className='w-full h-full object-cover cursor-pointer' />
-            </Link>
-          </div>
-          <span className='w-full flex justify-center items-center p-[12px] text-[var(-black)]-700'>{art.artistName}</span>
-        </div>
-      ))}
+    <div className='flex flex-col justify-center items-center px-5 md:px-0'>
+      <ArtsSearch arts={ART_CONTENT} setFilteredArts={setFilteredArts} />
+
+      <ul className='grid-cols-1  grid md:grid-cols-3 md:w-full md:gap-x-[90px] gap-y-[50px]  pt-[68px]'>
+        {filteredArts.map((art) => (
+          <ArtsList key={art.artsNo} art={art} />
+        ))}
+      </ul>
     </div>
-  </div>
   );
 }

@@ -42,18 +42,19 @@ export default function EmailSection({
   return (
     <div className='py-[20px] flex flex-col gap-[10px] border-b border-bg-gray-d'>
       <label className='t-b-16'>이메일</label>
-      <div className='flex gap-2.5 h-[45px] items-center'>
+
+      <div className='flex gap-2.5 h-auto md:h-[45px] items-start md:items-center flex-col md:flex-row'>
         <Input
           {...register('emailId')}
-          className='w-[200px] h-full'
+          className='w-[200px] h-[45px]'
           placeholder='이메일을 입력해주세요'
         />
 
-        <span className='t-r-16'>@</span>
+        <span className='t-r-16 hidden md:block'>@</span>
 
         <Input
           {...register('emailDomain')}
-          className='w-[200px] h-full'
+          className='w-[200px] h-[45px]'
           placeholder='직접 입력'
           value={domainValue}
           onChange={(e) => setValue('emailDomain', e.target.value)}

@@ -15,18 +15,20 @@ export default function AccountTable({
   };
 
   return (
-    <div className='mb-[20px]w-full mx-auto rounded-[5px] border border-muted bg-bg-gray-fa shadow-lg'>
-      <table className='w-full border-collapse'>
+    <div className='mb-[20px] w-full rounded-[5px] border border-muted bg-bg-gray-fa'>
+      <table className='w-full table-fixed'>
         <tbody>
           {Object.entries(TABLE_MAP).map(([label, key]) => (
             <tr
               key={key}
-              className='border-b-[1px] border-bg-gray-d last:border-b-0 md:h-[45px] transition-colors hover:bg-orange-50'>
-              <td className='text-black font-bold text-center md:w-[250px] border-r-[1px] border-bg-gray-d'>
+              className='border-b-[1px] border-bg-gray-d last:border-b-0 md:h-[45px] h-[35px] hover:bg-primary/10'>
+              <td className='t-b-16 rounded-[5px] title-b-14 text-center w-[80px] md:w-[250px] border-r-[1px] border-bg-gray-d'>
                 {label}
               </td>
 
-              <td className='text-gray pl-[20px]'>{renderMyData(key)}</td>
+              <td className='text-gray rounded-[5px] text-r-14 md:text-r-16 px-4 md:px-[20px] truncate'>
+                {renderMyData(key)}
+              </td>
             </tr>
           ))}
         </tbody>

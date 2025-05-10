@@ -1,36 +1,20 @@
 import { Link } from 'react-router-dom';
-// import type { Art } from '@/types/gallery/art';
+import type { Art } from '@/types/gallery/art';
 
-export default function ArtsList({
-  data,
-}: {
-  data: {
-    id: number;
-    artistName: string;
-    artTitle: string;
-    cohort: string;
-    src: string;
-  }[];
-}) {
+export default function ArtsList({ art }: { art: Art }) {
   return (
-    <ul className=' flex flex-wrap gap-[60px] justify-between'>
-      {data.map((art) => (
-        <li className='space-y-5' key={art.id}>
-          <div>
-            <Link to={`/gallery/${art.id}`}>
-              <img
-                src={art.src}
-                className='w-[300px] h-[300px] object-cover'
-                alt={art.artistName}
-              />
-            </Link>
-          </div>
+    <li>
+      <Link to={`/gallery/${art.artsNo}`} className='space-y-5'>
+        <img
+          src={art.files.url}
+          alt={art.artName}
+          className='w-[400px] h-[400px] object-cover'
+        />
 
-          <p className='t-b-24 text-center'>
-            {art.cohort} {art.artistName}
-          </p>
-        </li>
-      ))}
-    </ul>
+        <p className='t-b-24 text-center leading-[24px]'>
+          {art.artist.artistName}
+        </p>
+      </Link>
+    </li>
   );
 }

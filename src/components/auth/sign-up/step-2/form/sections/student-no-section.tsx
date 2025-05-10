@@ -17,6 +17,9 @@ export default function StudentNoSection({
       </label>
       <div className='flex gap-[30px] h-[45px]'>
         <Input
+          type='number'
+          inputMode='numeric'
+          pattern='[0-9]*'
           className='w-[200px] h-[45px]'
           placeholder='학번을 입력해주세요.'
           {...register('studentNo')}

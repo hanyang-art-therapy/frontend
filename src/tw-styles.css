@@ -113,10 +113,9 @@
 @layer base {
   @font-face {
     font-family: 'Pretendard';
-    src:
-      url('/fonts/pretendard/Pretendard-Bold.woff2') format('woff2'),
-      url('/fonts/pretendard/Pretendard-Bold.woff')  format('woff'),
-      url('/fonts/pretendard/Pretendard-Bold.ttf')   format('truetype');
+    src: url('/fonts/pretendard/Pretendard-Bold.woff2') format('woff2'),
+      url('/fonts/pretendard/Pretendard-Bold.woff') format('woff'),
+      url('/fonts/pretendard/Pretendard-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -124,10 +123,9 @@
 
   @font-face {
     font-family: 'Pretendard';
-    src:
-      url('/fonts/pretendard/Pretendard-Medium.woff2') format('woff2'),
-      url('/fonts/pretendard/Pretendard-Medium.woff')  format('woff'),
-      url('/fonts/pretendard/Pretendard-Medium.ttf')   format('truetype');
+    src: url('/fonts/pretendard/Pretendard-Medium.woff2') format('woff2'),
+      url('/fonts/pretendard/Pretendard-Medium.woff') format('woff'),
+      url('/fonts/pretendard/Pretendard-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -135,10 +133,9 @@
 
   @font-face {
     font-family: 'Pretendard';
-    src:
-      url('/fonts/pretendard/Pretendard-Regular.woff2') format('woff2'),
-      url('/fonts/pretendard/Pretendard-Regular.woff')  format('woff'),
-      url('/fonts/pretendard/Pretendard-Regular.ttf')   format('truetype');
+    src: url('/fonts/pretendard/Pretendard-Regular.woff2') format('woff2'),
+      url('/fonts/pretendard/Pretendard-Regular.woff') format('woff'),
+      url('/fonts/pretendard/Pretendard-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -148,7 +145,7 @@
     font-family: 'Pretendard', system-ui, sans-serif;
     color: var(--color-black);
   }
-  
+
   ::-webkit-scrollbar {
     display: none;
   }
@@ -156,23 +153,68 @@
 
 /* font Style */
 @layer utilities {
-  .t-b-108 { font-size: clamp(72px, calc(51.888px + 4.6753vw), 108px); font-weight: 700; }
-  .t-b-52 { font-size: clamp(36px, calc(27.0649px + 2.0779vw), 52px); font-weight: 700; }
-  .t-b-32 { font-size: clamp(24px, calc(19.5325px + 1.0390vw), 32px); font-weight: 700; }
-  .t-b-24 { font-size: clamp(20px, calc(17.7662px + 0.5195vw), 24px); font-weight: 700; }
-  .t-b-18 { font-size: clamp(16px, calc(13.3247px + 0.3896vw), 18px); font-weight: 700; }
-  .t-b-16 { font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px); font-weight: 700;}
-  .t-b-14 { font-size: clamp(12px, calc(10.8831px + 0.2597vw), 14px); font-weight: 700;}
+  .t-b-108 {
+    font-size: clamp(72px, calc(51.888px + 4.6753vw), 108px);
+    font-weight: 700;
+  }
+  .t-b-52 {
+    font-size: clamp(36px, calc(27.0649px + 2.0779vw), 52px);
+    font-weight: 700;
+  }
+  .t-b-32 {
+    font-size: clamp(24px, calc(19.5325px + 1.039vw), 32px);
+    font-weight: 700;
+  }
+  .t-b-24 {
+    font-size: clamp(20px, calc(17.7662px + 0.5195vw), 24px);
+    font-weight: 700;
+  }
+  .t-b-18 {
+    font-size: clamp(16px, calc(13.3247px + 0.3896vw), 18px);
+    font-weight: 700;
+  }
+  .t-b-16 {
+    font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+    font-weight: 700;
+  }
+  .t-b-14 {
+    font-size: clamp(12px, calc(10.8831px + 0.2597vw), 14px);
+    font-weight: 700;
+  }
 
-  .t-m-32 { font-size: clamp(24px, calc(19.5325px + 1.0390vw), 32px); font-weight: 500; }
-  .t-m-24 { font-size: clamp(20px, calc(17.7662px + 0.5195vw), 24px); font-weight: 500; }
-  .t-m-18 { font-size: clamp(16px, calc(13.3247px + 0.3896vw), 18px); font-weight: 500; }
-  .t-m-16 { font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px); font-weight: 500; }
+  .t-m-32 {
+    font-size: clamp(24px, calc(19.5325px + 1.039vw), 32px);
+    font-weight: 500;
+  }
+  .t-m-24 {
+    font-size: clamp(20px, calc(17.7662px + 0.5195vw), 24px);
+    font-weight: 500;
+  }
+  .t-m-18 {
+    font-size: clamp(16px, calc(13.3247px + 0.3896vw), 18px);
+    font-weight: 500;
+  }
+  .t-m-16 {
+    font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+    font-weight: 500;
+  }
 
-  .t-r-18 { font-size: clamp(15px, calc(13.3247px + 0.3896vw), 18px); font-weight: 400; }
-  .t-r-16 { font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px); font-weight: 400; }
-  .t-r-14 { font-size: clamp(12px, calc(10.8831px + 0.2597vw), 14px); font-weight: 400; }
-  .t-r-12 { font-size: clamp(10px, calc(8.8831px + 0.2597vw), 12px); font-weight: 400; }
+  .t-r-18 {
+    font-size: clamp(15px, calc(13.3247px + 0.3896vw), 18px);
+    font-weight: 400;
+  }
+  .t-r-16 {
+    font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+    font-weight: 400;
+  }
+  .t-r-14 {
+    font-size: clamp(12px, calc(10.8831px + 0.2597vw), 14px);
+    font-weight: 400;
+  }
+  .t-r-12 {
+    font-size: clamp(10px, calc(8.8831px + 0.2597vw), 12px);
+    font-weight: 400;
+  }
 
   .min-h-screen-vh {
     @apply min-h-[calc(100vh-187px)];
@@ -268,9 +310,15 @@
       left: 0;
     }
 
-    span:nth-child(1) { top: 0; }
-    span:nth-child(2) { top: 8px; }
-    span:nth-child(3) { top: 16px; }
+    span:nth-child(1) {
+      top: 0;
+    }
+    span:nth-child(2) {
+      top: 8px;
+    }
+    span:nth-child(3) {
+      top: 16px;
+    }
 
     &.open {
       span:nth-child(1) {
@@ -476,6 +524,12 @@
       font-size: 80px;
       font-weight: bold;
       margin-top: 30px;
+    }
+
+    @media (max-width: 768px) {
+      > span {
+        font-size: 40px;
+      }
     }
   }
 }

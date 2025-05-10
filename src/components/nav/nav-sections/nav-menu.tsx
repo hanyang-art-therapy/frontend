@@ -1,7 +1,7 @@
 import HamburgerButton from '@/components/nav/nav-sections/nav-menu-btn/hamburger-button';
 import { NAV_MENU } from '@/constants/nav';
 import { Search } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function NavMenu() {
@@ -22,22 +22,22 @@ export default function NavMenu() {
             <li key={index} className='relative group'>
               {menu.submenu.length > 0 ? (
                 <>
-                  <span className="main-menu">
+                  <Link to={menu.path} className='main-menu'>
                     {menu.title}
-                  </span>
+                  </Link>
 
                   <ul className='sub-menu t-r-16 group-hover:block'>
                     {menu.submenu.map((submenu, subIndex) => (
                       <li key={subIndex}>
-                        <a href={submenu.path}>{submenu.title}</a>
+                        <Link to={submenu.path}>{submenu.title}</Link>
                       </li>
                     ))}
                   </ul>
                 </>
               ) : (
-                <span className="main-menu">
+                <Link to={menu.path} className='main-menu'>
                   {menu.title}
-                </span>
+                </Link>
               )}
             </li>
           ))}
@@ -62,7 +62,7 @@ export default function NavMenu() {
       </div>
 
       {/* 슬라이드 다운 */}
-      <div 
+      <div
         className={`menu-wrapper absolute top-full left-0 w-full bg-white text-black  xl:hidden z-50
         ${isSlideOpen ? 'open' : '0'}
       `}>
