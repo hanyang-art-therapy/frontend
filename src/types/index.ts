@@ -48,7 +48,7 @@ export type Arts = {
   artName: string; // 작품명
   caption: string; // 캡션
   artType: 'SINGLE' | 'GROUP'; // 작품 타입
-  uploaded_at: string; // 업로드 일자
+  createdAt: string; // 업로드 일자
 };
 
 // 파일
