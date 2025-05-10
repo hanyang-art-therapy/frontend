@@ -34,7 +34,7 @@ interface DummyComment {
 
 export default function DetailReviews() {
   const { artsNo } = useParams();
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  // const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState<Comment[]>([]);
@@ -78,13 +78,13 @@ export default function DetailReviews() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file);
+      // setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
     }
   };
 
   const handleImageDelete = () => {
-    setImageFile(null);
+    // setImageFile(null);
     setImagePreview(null);
   };
 
@@ -111,7 +111,7 @@ export default function DetailReviews() {
       setComments([...comments, newComment]);
       setComment('');
       setImagePreview(null);
-      setImageFile(null);
+      // setImageFile(null);
     }
   };
 

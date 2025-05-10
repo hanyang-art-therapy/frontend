@@ -1,5 +1,3 @@
-import React from 'react';
-
 function ReviewNoResult() {
   return (
     <div className='w-[1260px] mx-auto flex flex-col items-center justify-center py-16 text-center bg-gray-50 border border-gray-200 rounded-lg'>

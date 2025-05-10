@@ -2,8 +2,7 @@ import GalleryIntroContentTitle from '@/components/gallery/intro/gallery-intro-c
 import { GALLERY_INTRO } from '@/constants/gallery/gallery';
 
 export default function GalleryIntroContent() {
-  const { intro, purpose, participants, artTherapy, schedule, guide } =
-    GALLERY_INTRO;
+  const { intro, purpose, participants, artTherapy, guide } = GALLERY_INTRO;
 
   return (
     <div className=' mx-auto px-4 py-12 grid gap-16'>
