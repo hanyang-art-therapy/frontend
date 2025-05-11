@@ -22,7 +22,7 @@ export default function UploadedReviews({
       {comments.map((comment, index) => (
         <div
           key={index}
-          className='flex flex-row items-start gap-4 bg-white rounded-lg shadow-lg w-full p-4'>
+          className='flex flex-row md:flex-col items-start gap-4 bg-white rounded-lg shadow-lg w-full p-4'>
           <img
             src={comment.image || NO_IMG}
             alt='업로드 이미지'

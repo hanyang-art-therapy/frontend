@@ -15,7 +15,7 @@ export default function ReviewCard({
   onImageClick,
 }: ReviewCardProps) {
   return (
-    <div className='flex flex-row items-start gap-4 bg-white rounded-lg shadow-lg p-4 w-full'>
+    <div className='flex flex-row md:flex-col items-start gap-4 bg-white rounded-lg shadow-lg p-4 w-full'>
       <img
         src={image || NO_IMG}
         alt='리뷰 이미지'
