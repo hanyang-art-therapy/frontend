@@ -22,7 +22,7 @@ export default function ReviewCard({
         className='w-[100px] h-[100px] md:w-[200px] md:h-[200px] object-cover cursor-pointer'
         onClick={onImageClick}
       />
-      <div className='flex flex-col justify-start'>
+      <div className='flex flex-col justify-start text-start'>
         <h3 className='font-bold md:text-lg mb-2 text-start'>
           {userName || '익명'}
         </h3>

@@ -12,7 +12,7 @@ export default function ArtsDetail() {
 
   return (
     <div className='text-center flex justify-between p-4'>
-      <div className='md:max-w-[1080px] w-full mx-auto mt-[60px]'>
+      <div className='md:max-w-[1080px] w-full mx-auto mt-[30px] md:mt-[60px]'>
         <div className='w-full h-[78px] flex items-center pt-[40px] pb-[20px] border-b-[2px] border-b-[#DDD]'>
           <ul className='w-full flex justify-between md:text-[32px] font-bold '>
             <li>
