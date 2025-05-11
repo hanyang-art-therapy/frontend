@@ -11,7 +11,7 @@ export default function ArtsDetail() {
   if (!art) return <ArtDetailNoResult />;
 
   return (
-    <div className='text-center flex justify-between  p-4 '>
+    <div className='text-center flex justify-between p-4'>
       <div className='md:max-w-[1080px] w-full mx-auto mt-[60px]'>
         <div className='w-full h-[78px] flex items-center pt-[40px] pb-[20px] border-b-[2px] border-b-[#DDD]'>
           <ul className='w-full flex justify-between md:text-[32px] font-bold '>
@@ -36,7 +36,7 @@ export default function ArtsDetail() {
           </ul>
         </div>
         <div>
-          <div className='flex  flex-col justify-center items-center'>
+          <div className='flex flex-col justify-center items-center'>
             <img
               src={art.src}
               alt={art.artistName}

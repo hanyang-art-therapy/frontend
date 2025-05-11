@@ -297,4 +297,4 @@ export const ART_DUMMY_CONTACT: DummyComment[] = [
 ];
 
 // 이미지 없을 때
-export const NO_IMG = '/images/icons/noIMG.svg';
+export const NO_IMG = '/images/icons/noIMG.jpg';

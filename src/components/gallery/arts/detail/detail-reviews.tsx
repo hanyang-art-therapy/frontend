@@ -126,7 +126,7 @@ export default function DetailReviews() {
         <span className='text-bg-primary ml-2'>({comments.length})</span>{' '}
       </h2>
       {/* 댓글 작성 폼 */}
-      <div className='flex md:flex-row w-full border border-[var(--gray-9)] p-[10px] gap-[10px] md:p-[20px] md:gap-[20px] md:pb-[22px]'>
+      <div className='flex md:flex-row w-full border border-[var(--gray-9)] p-[10px] gap-[10px] md:p-[20px] md:gap-[20px] md:pb-[22px] rounded-sm'>
         {/* 이미지 미리보기 */}
         <div className='w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative md:border md:border-gray-9-300 rounded bg-[#f9f9f9] flex items-center justify-center'>
           {imagePreview ? (
@@ -175,9 +175,9 @@ export default function DetailReviews() {
             }
           />
         ))}
+        {/* 업로드 댓글 - 분리 완료 */}
         <UploadedReviews comments={comments} onImageClick={openImageModal} />
       </div>
-      {/* 업로드 댓글 - 분리 완료 */}
 
       {/* 모달 - 분리 완료 */}
       {modalImage && selectedComment && (

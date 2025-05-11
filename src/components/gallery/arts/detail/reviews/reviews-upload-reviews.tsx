@@ -1,4 +1,3 @@
-// components/gallery/arts/detail/uploaded-comments-list.tsx
 import { NO_IMG } from '@/constants/gallery/art-details';
 
 interface UploadedCommentsListProps {
@@ -26,11 +25,11 @@ export default function UploadedReviews({
           <img
             src={comment.image || NO_IMG}
             alt='업로드 이미지'
-            className='w-[100px] h-[100px] md:w-[200px] md:h-[200px] object-cover cursor-pointer'
+            className='w-[100px] h-[100px] md:w-[200px] md:h-[200px] object-cover cursor-pointer '
             onClick={() => onImageClick(comment.image || NO_IMG, comment)}
           />
-          <div className='flex flex-col justify-start'>
-            <h3 className='font-bold text-lg mb-2 text-start'>
+          <div className='flex flex-col justify-start text-start'>
+            <h3 className='font-bold text-lg mb-2'>
               {comment.userName || '익명'}
             </h3>
             <p className='text-[var(--black)] md:text-[16px]'>
