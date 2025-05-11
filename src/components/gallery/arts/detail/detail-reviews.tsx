@@ -126,37 +126,38 @@ export default function DetailReviews() {
         <span className='text-bg-primary ml-2'>({comments.length})</span>{' '}
       </h2>
       {/* 댓글 작성 폼 */}
-      <div className='w-full flex flex-col gap-[10px] min-h-[210px] pt-[40px]'>
-        <div className='flex w-full border border-[var(--gray)] p-[20px] gap-[20px] pb-[22px]'>
-          <div className='w-[150px] h-[150px] relative border border-gray-300 rounded bg-[#f9f9f9] flex items-center justify-center'>
-            {/* 미리보기 */}
-            {imagePreview ? (
-              <>
-                <img
-                  src={imagePreview}
-                  alt='미리보기'
-                  className='w-full h-full object-cover rounded'
-                />
-                <button
-                  onClick={handleImageDelete}
-                  className='absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-opacity-80'
-                  aria-label='이미지 삭제'>
-                  ×
-                </button>
-              </>
-            ) : (
-              <span className='text-sm text-gray-400'>이미지 미리보기</span>
-            )}
-          </div>
-          <DetailTextarea
-            comment={comment}
-            onCommentChange={handleCommentChange}
-            onImageChange={handleImageChange}
-            onCommentSubmit={handleCommentSubmit}
-          />
+      <div className='flex md:flex-col w-full border border-[var(--gray-9)] p-[10px] gap-[10px] md:p-[20px] md:gap-[20px] md:pb-[22px]'>
+        {/* 이미지 미리보기 */}
+        <div className='w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative md:border md:border-gray-9-300 rounded bg-[#f9f9f9] flex items-center justify-center'>
+          {imagePreview ? (
+            <>
+              <img
+                src={imagePreview}
+                alt='미리보기'
+                className='w-full h-full object-cover rounded'
+              />
+              <button
+                onClick={handleImageDelete}
+                className='absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-opacity-80'
+                aria-label='이미지 삭제'>
+                ×
+              </button>
+            </>
+          ) : (
+            <span className='text-sm text-gray-400'>이미지 미리보기</span>
+          )}
         </div>
+
+        {/* 텍스트 입력 영역 */}
+        <DetailTextarea
+          comment={comment}
+          onCommentChange={handleCommentChange}
+          onImageChange={handleImageChange}
+          onCommentSubmit={handleCommentSubmit}
+        />
       </div>
-      <div className='w-full grid grid-cols-4 gap-10'>
+
+      <div className='w-full md:grid md:grid-cols-4 gap-10'>
         {/* 더미 댓글 - 분리 완료 */}
         {ART_DUMMY_CONTACT.map((item: DummyComment) => (
           <ReviewCard
@@ -174,7 +175,9 @@ export default function DetailReviews() {
             }
           />
         ))}
-        {/* 업로드 댓글 - 분리 완료 */}
+      </div>
+      {/* 업로드 댓글 - 분리 완료 */}
+      <div className='w-full md:grid md:grid-cols-4 gap-10'>
         <UploadedReviews comments={comments} onImageClick={openImageModal} />
       </div>
 

@@ -22,23 +22,23 @@ export default function UploadedReviews({
       {comments.map((comment, index) => (
         <div
           key={index}
-          className='flex flex-col items-center gap-2 bg-white rounded-lg shadow-lg'>
-          <div className='relative'>
-            <img
-              src={comment.image || NO_IMG}
-              alt='업로드 이미지'
-              className='w-[200px] h-[200px] object-cover cursor-pointer'
-              onClick={() => onImageClick(comment.image || NO_IMG, comment)}
-            />
+          className='flex flex-row items-start gap-4 bg-white rounded-lg shadow-lg w-full p-4'>
+          <img
+            src={comment.image || NO_IMG}
+            alt='업로드 이미지'
+            className='w-[100px] h-[100px] md:w-[200px] md:h-[200px] object-cover cursor-pointer'
+            onClick={() => onImageClick(comment.image || NO_IMG, comment)}
+          />
+          <div className='flex flex-col justify-start'>
+            <h3 className='font-bold text-lg mb-2 text-start'>
+              {comment.userName || '익명'}
+            </h3>
+            <p className='text-[var(--black)] md:text-[16px]'>
+              {comment.reviewText.length > 40
+                ? `${comment.reviewText.slice(0, 40)}...`
+                : comment.reviewText}
+            </p>
           </div>
-          <h3 className='font-bold text-lg mb-2'>
-            {comment.userName || '익명'}
-          </h3>
-          <p className='text-[var(--black)] text-[16px] p-[10px]'>
-            {comment.reviewText.length > 40
-              ? `${comment.reviewText.slice(0, 40)}...`
-              : comment.reviewText}
-          </p>
         </div>
       ))}
     </>

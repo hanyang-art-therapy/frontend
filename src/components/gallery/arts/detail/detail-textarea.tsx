@@ -20,23 +20,24 @@ export default function DetailTextarea({
   };
 
   return (
-    <form onSubmit={onCommentSubmit} className='flex-1 flex flex-col gap-4'>
+    <form onSubmit={onCommentSubmit} className='md:flex-1 flex flex-col gap-4'>
       <textarea
         name='reviewText'
         id='reviewText'
         placeholder='감상평을 작성해주세요.'
         value={comment}
         onChange={onCommentChange}
-        className='w-full h-[150px] border border-[var(--gray)] px-3 py-2 text-sm focus:outline-none focus:ring-0'
+        className='h-[100px] md:w-full md:h-[150px] border border-[var(--gray-9)] px-3 py-2 text-sm focus:outline-none focus:ring-0'
       />
-      <div className='py-[20px] flex justify-end flex-wrap gap-[20px]'>
+      <div className='w-full flex justify-end items-center gap-2 flex-nowrap'>
         <Button
           type='button'
-          className='inline-flex items-center gap-2 text-xs font-bold text-white bg-[var(--primary)] px-4 py-2 rounded-full'
+          className='flex items-center gap-1 text-[10px] md:text-xs font-bold text-white bg-[var(--primary)] px-2.5 md:px-4 py-1 md:py-2 rounded-full whitespace-nowrap w-[120px]'
           onClick={handleImageButtonClick}>
           이미지 첨부
-          <Image size={16} color='#fff' />
+          <Image size={12} className='w-3 h-3 md:w-4 md:h-4' color='#fff' />
         </Button>
+
         <input
           id='imageInput'
           type='file'
@@ -44,11 +45,16 @@ export default function DetailTextarea({
           accept='image/*'
           onChange={onImageChange}
         />
+
         <Button
           type='submit'
-          className='inline-flex items-center gap-2 text-xs font-bold text-white bg-[var(--primary)] px-4 py-2 rounded-full'>
+          className='flex items-center gap-1 text-[10px] md:text-xs font-bold text-white bg-[var(--primary)] px-2.5 md:px-4 py-1 md:py-2 rounded-full whitespace-nowrap w-[120px]'>
           댓글 업로드
-          <Navigation size={16} color='#fff' />
+          <Navigation
+            size={12}
+            className='w-3 h-3 md:w-4 md:h-4'
+            color='#fff'
+          />
         </Button>
       </div>
     </form>
