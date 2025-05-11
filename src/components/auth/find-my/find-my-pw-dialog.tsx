@@ -43,7 +43,7 @@ export default function FindMyPwDialog({
             {foundId ? (
               <div className='flex flex-col'>
                 찾으시는 아이디는 다음과 같습니다.{' '}
-                <span className='text-primary title-b-18 text-center py-12'>
+                <span className='text-primary t-m-18 text-center py-12'>
                   {foundId}
                 </span>
               </div>
@@ -53,7 +53,7 @@ export default function FindMyPwDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
 
-        <AlertDialogFooter className='flex flex-row'>
+        <AlertDialogFooter className='flex flex-row justify-center'>
           {foundId && (
             <Button
               variant='secondary'
