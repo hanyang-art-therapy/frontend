@@ -27,8 +27,22 @@ export default function DetailTextarea({
         placeholder='감상평을 작성해주세요.'
         value={comment}
         onChange={onCommentChange}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault(); // 줄바꿈 방지
+            const form = e.currentTarget.form;
+            if (form) {
+              const submitEvent = new Event('submit', {
+                bubbles: true,
+                cancelable: true,
+              });
+              form.dispatchEvent(submitEvent);
+            }
+          }
+        }}
         className='h-[100px] md:w-full md:h-[150px] border border-[var(--gray-9)] px-3 py-2 text-sm focus:outline-none focus:ring-0'
       />
+
       <div className='w-full flex justify-end items-center gap-2 flex-nowrap'>
         <Button
           type='button'
