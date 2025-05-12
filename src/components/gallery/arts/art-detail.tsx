@@ -33,16 +33,16 @@ export default function ArtsDetail() {
               <li>{art.artName}</li>
             </div>
             <li className='flex gap-[16px]'>
-              <h2>{art.artistName}</h2>
-              <h2>{art.cohort}</h2>
+              <h2>{art.artist.artistName}</h2>
+              <h2>{art.artist.cohort}</h2>
             </li>
           </ul>
         </div>
         <div>
           <div className='flex flex-col justify-center items-center'>
             <img
-              src={art.src}
-              alt={art.artistName}
+              src={art.file.url}
+              alt={art.artist.artistName}
               className='w-full md:w-[720px] py-[10px]'
             />
             <span className='self-end md:px-[180px] pb-[30px] text=[#5A5A5A]'>
