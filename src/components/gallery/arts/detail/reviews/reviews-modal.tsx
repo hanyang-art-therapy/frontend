@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Image } from 'lucide-react';
 import { NO_IMG } from '@/constants/gallery/art-details';
 import { Button } from '@/components/ui/button';
 Button;
@@ -57,16 +56,16 @@ export default function ImageModal({
       <div
         className='bg-white rounded-lg shadow-lg p-5 w-full h-full md:w-[80%] max-w-[1260px] md:h-[100%] flex items-center relative'
         onClick={(e) => e.stopPropagation()}>
-        <div className='flex flex-col md:flex-row items-center justify-center md:justify-start'>
+        <div className='flex flex-col md:flex-row items-center justify-center md:justify-start md:w-full'>
           {modalImage && modalImage !== NO_IMG && (
             <img
               src={modalImage}
               alt='확대 이미지'
-              className='w-[400px] md:w-full md:max-h-[700px] object-contain mb-4'
+              className='w-[400px] md:flex-2 md:max-h-[700px] object-contain mb-4'
             />
           )}
 
-          <div className='md:flex md:flex-col  md:text-start md:p-10'>
+          <div className='md:flex md:flex-col md:text-start md: flex-2 w-full'>
             <h3 className='font-bold text-lg mb-2'>
               {selectedComment?.userName ?? '익명'}
             </h3>
@@ -79,7 +78,7 @@ export default function ImageModal({
                 rows={5}
               />
             ) : (
-              <p className='text-sm mb-4 md:w-[80%] pb-[20px] md:text-start'>
+              <p className='text-sm mb-4 md:w-[90%] pb-[20px] text-start'>
                 {selectedComment.reviewText}
               </p>
             )}

@@ -16,6 +16,7 @@ interface Comment {
   image: string | null;
   userName: string;
   reviewText: string;
+  timestamp: number;
 }
 
 interface DummyComment {
@@ -136,12 +137,12 @@ export default function DetailReviews() {
         image: imagePreview || '',
         userName,
         reviewText: comment,
+        timestamp: Date.now(), // timestamp 추가
       };
 
       setComments([...comments, newComment]);
       setComment('');
       setImagePreview(null);
-      // setImageFile(null);
     }
   };
 
@@ -205,6 +206,7 @@ export default function DetailReviews() {
                 image: item.files[0]?.url || '',
                 userName: item.userName,
                 reviewText: item.reviewText,
+                timestamp: Date.now(),
               })
             }
           />

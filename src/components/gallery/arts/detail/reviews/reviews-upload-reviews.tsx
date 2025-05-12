@@ -10,6 +10,7 @@ interface Comment {
   image: string | null;
   userName: string;
   reviewText: string;
+  timestamp: number;
 }
 
 export default function UploadedReviews({
@@ -28,10 +29,16 @@ export default function UploadedReviews({
             alt='업로드 이미지'
             className='w-[100px] h-[100px] md:w-[200px] md:h-[200px] object-cover'
           />
-          <div className='flex flex-col justify-start text-start'>
-            <h3 className='font-bold md:text-lg mb-2 text-start'>
-              {comment.userName || '익명'}
-            </h3>
+
+          <div className='flex flex-col justify-start text-start w-full p-1'>
+            <div className='flex justify-between items-center w-full'>
+              <h3 className='font-bold md:text-lg mb-2 text-start flex-grow'>
+                {comment.userName || '익명'}
+              </h3>
+              <p className='color--gray md:text-lg mb-2 text-end t-r-14'>
+                {new Date(comment.timestamp).toLocaleString()}
+              </p>
+            </div>
             {/* 모바일(md 미만)에서: 40자 제한 */}
             <p className='text-[var(--black)] text-[14px] md:hidden'>
               {comment.reviewText.length > 40
