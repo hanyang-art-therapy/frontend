@@ -360,7 +360,7 @@
           align-items: center;
           gap: 10px;
           width: 100%;
-          height: 70px;
+          height: 60px;
 
           .icon {
             display: block;
@@ -388,7 +388,7 @@
         }
         > * {
           width: 100%;
-          height: 70px;
+          height: 60px;
           border-radius: 0;
         }
       }
@@ -399,8 +399,8 @@
 
       .quick-style {
         display: block;
-        width: clamp(135px, calc(23.33px + 13.89vw), 190px);
-        height: clamp(135px, calc(23.33px + 13.89vw), 190px);
+        width: clamp(135px, calc(23.33px + 13.89vw), 200px);
+        height: clamp(135px, calc(23.33px + 13.89vw), 200px);
         border-radius: 50%;
         overflow: hidden;
 
@@ -421,7 +421,6 @@
 
           strong {
             margin-top: 7px;
-            font-weight: 700;
             color: var(--white);
             white-space: pre-line;
             text-align: center;
@@ -431,11 +430,12 @@
             display: none;
           }
         }
+
       }
 
       .quick-skeleton-style {
-        width: clamp(135px, calc(23.33px + 13.89vw), 190px);
-        height: clamp(135px, calc(23.33px + 13.89vw), 190px);
+        width: clamp(135px, calc(23.33px + 13.89vw), 200px);
+        height: clamp(135px, calc(23.33px + 13.89vw), 200px);
         border-radius: 50%;
         overflow: hidden;
       }
@@ -444,8 +444,8 @@
     @media (min-width: 1024px) {
       .quick-style {
         display: block;
-        width: 190px;
-        height: 190px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
         overflow: hidden;
         transition: transform 0.3s ease-in-out;
@@ -459,8 +459,8 @@
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          width: 190px;
-          height: 190px;
+          width: 100%;
+          height: 100%;
 
           .icon {
             width: 60px;
@@ -471,7 +471,6 @@
 
           strong {
             margin-top: 7px;
-            font-weight: 700;
             color: var(--white);
           }
 
@@ -486,8 +485,8 @@
       }
 
       .quick-skeleton-style {
-        width: 190px;
-        height: 190px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
         overflow: hidden;
       }

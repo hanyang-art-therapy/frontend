@@ -14,13 +14,13 @@ export default function QuickLinksSection() {
               {isExternal ? (
                 <a href={path} className={bgClass} target="_blank" rel="noopener noreferrer">
                   <Icon className="icon" aria-hidden="true" />
-                  <strong className="t-b-18">{title}</strong>
+                  <strong className="t-m-18">{title}</strong>
                   <span className="t-r-14">{text}</span>
                 </a>
               ) : (
                 <Link to={path} className={bgClass}>
                   <Icon className="icon" aria-hidden="true" />
-                  <strong className="t-b-18">{title}</strong>
+                  <strong className="t-m-18">{title}</strong>
                   <span className="t-r-14">{text}</span>
                 </Link>
               )}
