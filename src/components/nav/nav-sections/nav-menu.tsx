@@ -63,7 +63,7 @@ export default function NavMenu() {
 
       {/* 모바일 슬라이드 메뉴 */}
       <div
-        className={`menu-wrapper nav-box-shadow absolute top-full left-0 w-full bg-white text-black xl:hidden z-50 ${
+        className={`menu-wrapper nav-box-shadow absolute top-full left-0 w-full bg-white text-black xl:hidden z-9 ${
           isSlideOpen ? 'open' : ''
         }`}
       >
