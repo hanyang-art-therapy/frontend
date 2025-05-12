@@ -42,15 +42,45 @@ export default function DetailReviews() {
   // 모달 관련 상태
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
-
+  // 모달열기
   const openImageModal = (imageUrl: string, comment: Comment) => {
     setModalImage(imageUrl || null);
     setSelectedComment(comment);
   };
-
+  // 모달닫기
   const closeImageModal = () => {
     setModalImage(null);
     setSelectedComment(null);
+  };
+  // 모달 내용 수정
+  const handleCommentEdit = (newText: string) => {
+    if (!selectedComment) return;
+
+    const confirmEdit = window.confirm('댓글을 수정하시겠습니까?');
+    if (confirmEdit) {
+      const updatedComments = comments.map((c) =>
+        c === selectedComment ? { ...c, text: newText, reviewText: newText } : c
+      );
+      setComments(updatedComments);
+      setSelectedComment({
+        ...selectedComment,
+        text: newText,
+        reviewText: newText,
+      });
+    }
+  };
+
+  // 모달 댓글 삭제
+  const handleCommentDelete = () => {
+    if (!selectedComment) return;
+
+    const confirmDelete = window.confirm('정말 이 댓글을 삭제하시겠습니까?');
+
+    if (confirmDelete) {
+      const updatedComments = comments.filter((c) => c !== selectedComment);
+      setComments(updatedComments);
+      closeImageModal(); // 삭제 후 모달 닫기
+    }
   };
 
   const handlePrevComment = () => {
@@ -122,11 +152,13 @@ export default function DetailReviews() {
     <div className='flex w-full flex-col items-start gap-[10px]'>
       <h2 className='text-[20px] font-bold text-left'>
         미술관 미술치료
-        {/* 댓글 수 표시 */}
-        <span className='text-bg-primary ml-2'>({comments.length})</span>{' '}
+        {comments.length > 0 && (
+          <span className='text-bg-primary ml-2'>({comments.length})</span>
+        )}
       </h2>
+
       {/* 댓글 작성 폼 */}
-      <div className='flex md:flex-row w-full border border-[var(--gray-9)] p-[10px] gap-[10px] md:p-[20px] md:gap-[20px] md:pb-[22px] rounded-sm'>
+      <div className='flex md:flex-row w-full border border-[var(--gray-9)] p-[10px] gap-[10px] md:p-[20px] md:gap-[20px] md:pb-[22px] rounded-sm mb-[20px]'>
         {/* 이미지 미리보기 */}
         <div className='w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative md:border md:border-gray-9-300 rounded bg-[#f9f9f9] flex items-center justify-center'>
           {imagePreview ? (
@@ -144,7 +176,9 @@ export default function DetailReviews() {
               </button>
             </>
           ) : (
-            <span className='text-sm text-gray-400'>이미지 미리보기</span>
+            <span className='text-xs md:text-sm text-gray-400'>
+              이미지 미리보기
+            </span>
           )}
         </div>
 
@@ -176,6 +210,7 @@ export default function DetailReviews() {
           />
         ))}
         {/* 업로드 댓글 - 분리 완료 */}
+
         <UploadedReviews comments={comments} onImageClick={openImageModal} />
       </div>
 
@@ -188,11 +223,13 @@ export default function DetailReviews() {
           onClose={closeImageModal}
           onPrev={handlePrevComment}
           onNext={handleNextComment}
+          onDelete={handleCommentDelete}
           isFirst={comments.findIndex((c) => c === selectedComment) === 0}
           isLast={
             comments.findIndex((c) => c === selectedComment) ===
             comments.length - 1
           }
+          onEdit={handleCommentEdit}
         />
       )}
     </div>
