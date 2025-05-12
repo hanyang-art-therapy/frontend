@@ -6,11 +6,13 @@ import { Link, useLocation } from 'react-router-dom';
 
 export default function NavMenu() {
   const [isSlideOpen, setIsSlideOpen] = useState(false);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const location = useLocation();
 
   /* 경로가 바뀔 때마다 슬라이드 메뉴 닫기 */
   useEffect(() => {
     setIsSlideOpen(false);
+    setOpenIndex(null);
   }, [location]);
 
   return (
@@ -56,22 +58,52 @@ export default function NavMenu() {
           <Search className='w-[24px] h-[24px]' />
         </Link>
         <HamburgerButton
+          isOpen={isSlideOpen}
           onClick={() => setIsSlideOpen(!isSlideOpen)}
-          aria-label='모바일 메뉴 열기'
         />
       </div>
 
-      {/* 슬라이드 다운 */}
+      {/* 모바일 메뉴 슬라이드 다운 */}
       <div
-        className={`menu-wrapper absolute top-full left-0 w-full bg-white text-black  xl:hidden z-50
-        ${isSlideOpen ? 'open' : '0'}
-      `}>
-        <ul className='flex flex-col gap-4 t-m-18 p-8'>
-          {NAV_MENU.map((menu, index) => (
-            <li key={index}>
-              <Link to={menu.path}>{menu.title}</Link>
-            </li>
-          ))}
+        className={`menu-wrapper nav-box-shadow absolute top-full left-0 w-full bg-white text-black xl:hidden z-50 ${
+          isSlideOpen ? 'open' : ''
+        }`}
+      >
+        <ul className="flex flex-col gap-4 p-8">
+          {NAV_MENU.map((menu, index) => {
+            const hasSub = menu.submenu.length > 0;
+            const isOpen = openIndex === index;
+
+            return (
+              <li key={index}>
+                {hasSub ? (
+                  <details open={isOpen}>
+                    <summary
+                      className="cursor-pointer flex justify-between t-m-18"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setOpenIndex(prev => (prev === index ? null : index));
+                      }}
+                    >
+                      <span>{menu.title}</span>
+                      <span className={`ml-2 transition-transform duration-600 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
+                    </summary>
+                    <ul className={`mt-2 t-m-18 menu-wrapper ${isOpen ? 'open' : ''}`}>
+                      {menu.submenu.map((sub, subIndex) => (
+                        <li key={subIndex} className="px-[10px] py-[8px]">
+                          <Link to={sub.path}>{sub.title}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                ) : (
+                  <Link to={menu.path} className="t-m-18">
+                    {menu.title}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </>
