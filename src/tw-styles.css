@@ -145,7 +145,7 @@
     font-family: 'Pretendard', system-ui, sans-serif;
     color: var(--color-black);
   }
-
+  
   ::-webkit-scrollbar {
     display: none;
   }
@@ -231,23 +231,18 @@
     transition: 0.3s ease-in-out;
     cursor: pointer;
 
-    &:hover {
-      color: var(--font-primary);
-
-      &::after {
-        width: 100%;
-        transform: scaleX(1);
-      }
-    }
-
     &::after {
       content: '';
       position: absolute;
       left: 0;
       bottom: 5px;
       width: 0;
-      border-bottom: 3px solid var(--font-primary);
+      border-bottom: 3px solid var(--bg-primary);
       transition: 0.6s;
+    }
+    &:hover {
+      color: var(--primary);
+      &::after { width: 100%; transform: scaleX(1); }
     }
   }
 
@@ -256,24 +251,23 @@
     top: 100%;
     left: 0;
     padding: 20px 30px 20px 20px;
-    background: var(--primary);
+    background: var(--bg-primary);
     z-index: 100;
     display: none;
 
-    li {
-      margin-bottom: 10px;
+    li { margin-bottom: 10px; }
+    li:last-child { margin-bottom: 0; }
+    li:hover>a { opacity: 0.7; }
+    li>a { color: var(--white); }
+  }
 
-      &:last-child {
-        margin: 0;
-      }
+  .search-btn{
+    width: 24px;
+    height: 24px;
+    transition: 0.3s ease-in-out;
 
-      &:hover > a {
-        opacity: 0.7;
-      }
-
-      a {
-        color: var(--white);
-      }
+    &:hover{
+      color: var(--primary);
     }
   }
 
@@ -308,30 +302,16 @@
       background: var(--black);
       transition: all 0.3s ease;
       left: 0;
-    }
 
-    span:nth-child(1) {
-      top: 0;
-    }
-    span:nth-child(2) {
-      top: 8px;
-    }
-    span:nth-child(3) {
-      top: 16px;
+      &:nth-child(1) { top: 0; }
+      &:nth-child(2) { top: 8px; }
+      &:nth-child(3) { top: 16px; }
     }
 
     &.open {
-      span:nth-child(1) {
-        top: 8px;
-        transform: rotate(45deg);
-      }
-      span:nth-child(2) {
-        opacity: 0;
-      }
-      span:nth-child(3) {
-        top: 8px;
-        transform: rotate(-45deg);
-      }
+      span:nth-child(1) { top: 8px; transform: rotate(45deg); }
+      span:nth-child(2) { opacity: 0; }
+      span:nth-child(3) { top: 8px; transform: rotate(-45deg); }
     }
   }
 
@@ -524,12 +504,6 @@
       font-size: 80px;
       font-weight: bold;
       margin-top: 30px;
-    }
-
-    @media (max-width: 768px) {
-      > span {
-        font-size: 40px;
-      }
     }
   }
 }

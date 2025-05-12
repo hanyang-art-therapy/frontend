@@ -45,7 +45,7 @@ export default function NavMenu() {
 
         <Link to='#' className='block'>
           <span className='blind'>검색</span>
-          <Search className='w-[24px] h-[24px] text-black md:hover:text-primary' />
+          <Search className='search-btn' />
         </Link>
       </div>
 
