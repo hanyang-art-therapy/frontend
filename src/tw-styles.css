@@ -394,7 +394,7 @@
       }
     }
 
-    @media (min-width: 768px) and (max-width: 1023px) {
+    @media (min-width: 768px) and (max-width: 1024px) {
       padding: 60px 20px;
 
       .quick-style {
@@ -441,7 +441,7 @@
       }
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: 1025px) {
       .quick-style {
         display: block;
         width: 200px;
