@@ -1,9 +1,10 @@
-// www.test.com/gallery 라우트의 페이지입니다.
+
+import Gallery from '@/components/gallery/gallery';
 
 export default function GalleryPage() {
   return (
-    <div>
-      <h1>Gallery</h1>
+    <div className='w-full h-full flex flex-col justify-center items-center'>
+      <Gallery />
     </div>
   );
 }

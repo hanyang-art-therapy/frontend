@@ -1,0 +1,77 @@
+import EmailDomainSelect from '@/components/auth/common/email-domain-select';
+import { Input } from '@/components/ui/input';
+import type { FindMyFormValues } from '@/schemas/find-my/find-my-schema';
+import type {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
+
+type EmailSectionProps = {
+  register: UseFormRegister<FindMyFormValues>;
+  setValue: UseFormSetValue<FindMyFormValues>;
+  watch: UseFormWatch<FindMyFormValues>;
+  selectedDomain: string;
+  setSelectedDomain: (value: string) => void;
+  errors: FieldErrors<FindMyFormValues>;
+};
+
+export default function EmailSection({
+  register,
+  setValue,
+  watch,
+  selectedDomain,
+  setSelectedDomain,
+  errors,
+}: EmailSectionProps) {
+  const watchEmailDomain = watch('emailDomain');
+  const isCustomDomain = selectedDomain === 'custom';
+  const domainValue = isCustomDomain ? watchEmailDomain : selectedDomain;
+
+  const handleEmailDomainChange = (value: string) => {
+    setSelectedDomain(value);
+
+    if (value !== 'custom') {
+      setValue('emailDomain', value);
+    } else {
+      setValue('emailDomain', '');
+    }
+  };
+
+  return (
+    <div className='py-[20px] flex flex-col gap-[10px] border-b border-bg-gray-d'>
+      <label className='t-b-16'>이메일</label>
+
+      <div className='flex gap-2.5 h-auto md:h-[45px] items-start md:items-center flex-col md:flex-row'>
+        <Input
+          {...register('emailId')}
+          className='w-[200px] h-[45px]'
+          placeholder='이메일을 입력해주세요'
+        />
+
+        <span className='t-r-16 hidden md:block'>@</span>
+
+        <Input
+          {...register('emailDomain')}
+          className='w-[200px] h-[45px]'
+          placeholder='직접 입력'
+          value={domainValue}
+          onChange={(e) => setValue('emailDomain', e.target.value)}
+          disabled={selectedDomain !== 'custom' && selectedDomain !== ''}
+        />
+
+        <EmailDomainSelect
+          value={selectedDomain}
+          onValueChange={handleEmailDomainChange}
+        />
+      </div>
+
+      {(errors.emailId || errors.emailDomain) && (
+        <p className='text-destructive t-r-14'>
+          {errors.emailId?.message || errors.emailDomain?.message}
+        </p>
+      )}
+    </div>
+  );
+}
