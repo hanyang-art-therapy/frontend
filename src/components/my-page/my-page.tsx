@@ -20,7 +20,7 @@ export default function MyPage({ accountData }: MyPageProps) {
     <div className='pt-[60px] md:min-h-[calc(100vh-394px)]'>
       <Step items={MY_PAGE_STEP_ITEMS} step={step} setStep={setStep} />
 
-      <div className='w-full md:max-w-[1280px] mx-auto md:mt-15 mt-10 px-5 md:px-0'>
+      <div className='w-full md:max-w-[1260px] mx-auto md:mt-15 mt-10 px-5 md:px-0'>
         {/* 내가 쓴 리뷰 관리 */}
         {step === reviews.value && <MyReview />}
 

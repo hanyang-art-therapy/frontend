@@ -20,7 +20,7 @@ export default function Gallery() {
       <GalleryBanner />
       <Step items={GALLERY_STEP_ITEMS} step={step} setStep={setStep} />
 
-      <div className='md:max-w-[1280px] w-full mx-auto'>
+      <div className='md:max-w-[1260px] w-full mx-auto'>
         {step === intro.value && <GalleryIntro />}
         {step === theorapy.value && <GalleryTheorapy />}
         {step === arts.value && <Arts />}
