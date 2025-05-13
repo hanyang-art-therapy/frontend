@@ -10,7 +10,9 @@ export default function Logo({ subName }: { subName?: string }) {
           className='min-w-[210px] h-[30px] object-contain'
         />
 
-        {subName && <p className='t-b-18 hidden md:inline'>{subName}</p>}
+        {subName && (
+          <p className='t-b-18 hidden md:inline mt-[2px]'>{subName}</p>
+        )}
       </Link>
     </h1>
   );

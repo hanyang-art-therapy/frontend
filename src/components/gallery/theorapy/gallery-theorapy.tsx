@@ -3,7 +3,7 @@ import {
   GALLERY_THERAPY_ACADEMIC,
   GALLERY_THERAPY_INTRO,
   GALLERY_THERAPY_THEORY,
-} from '@/constants/gallery/gallery-therapy';
+} from '@/constants/gallery/therapy';
 
 const renderTextWithBold = (text: string) => {
   const parts = text.split('<b>');
@@ -36,7 +36,7 @@ export default function GalleryTheorapy() {
 
           <div className='mx-auto md:max-w-[720px] space-y-6 text-gray'>
             {GALLERY_THERAPY_INTRO.content.map((text, index) => (
-              <p key={index} className='md:text-r-18 text-r-14'>
+              <p key={index} className='t-r-18'>
                 {renderTextWithBold(text)}
               </p>
             ))}
@@ -57,7 +57,7 @@ export default function GalleryTheorapy() {
           />
 
           <div className='mx-auto md:max-w-[720px] rounded-xl bg-white p-8 shadow-sm'>
-            <p className='text-gray md:text-r-16 text-r-14'>
+            <p className='text-gray t-r-16'>
               {renderTextWithBold(GALLERY_THERAPY_THEORY.description)}
             </p>
 
@@ -70,8 +70,8 @@ export default function GalleryTheorapy() {
                     key={index}
                     className='flex flex-col items-center rounded-lg bg-bg-muted p-4 text-center'>
                     <Icon className='mb-4 h-12 w-12 text-primary' />
-                    <h3 className='mb-2 title-b-16'>{card.title}</h3>
-                    <p className='text-gray text-r-14'>
+                    <h3 className='mb-2 t-b-16'>{card.title}</h3>
+                    <p className='text-gray t-r-14'>
                       {renderTextWithBold(card.description)}
                     </p>
                   </div>
@@ -95,8 +95,8 @@ export default function GalleryTheorapy() {
             {GALLERY_THERAPY_ACADEMIC.sections.map((section) => (
               <div
                 key={section.number}
-                className='border-b border-bg-gray py-12'>
-                <h3 className='mb-4 flex items-center text-xl font-bold'>
+                className='border-b border-bg-gray-d py-12'>
+                <h3 className='mb-4 flex items-center t-b-18'>
                   <p className='mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white'>
                     {section.number}
                   </p>
@@ -105,7 +105,7 @@ export default function GalleryTheorapy() {
 
                 <div className='space-y-3 pl-11 text-gray'>
                   {section.content.map((text) => (
-                    <p key={text} className='md:text-r-18 text-r-14'>
+                    <p key={text} className='t-r-18'>
                       {renderTextWithBold(text)}
                     </p>
                   ))}

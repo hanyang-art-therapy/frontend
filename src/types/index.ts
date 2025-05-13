@@ -78,3 +78,11 @@ export type ArtArtistRel = {
   description: string; // 작품 설명
   artistNo: number; // 작가 ID
 };
+
+export type ApiError = {
+  message: string;
+};
+
+export type MessageResponse = {
+  message: string;
+};

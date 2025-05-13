@@ -4,7 +4,7 @@ import { CircleCheck } from 'lucide-react';
 
 export default function Certificates() {
   return (
-    <div className='md:max-w-[1260px] mx-auto mt-15 pt-[60px]'>
+    <div className='md:max-w-[1260px] mx-auto mt-15 pt-[60px] md:px-0 px-5'>
       <IntroTitle title='자격사항' />
       <p className='mb-4 p-4 text-gray'>
         미술치료는 예술적 표현을 통해 정서적·심리적 치유를 돕는 전문 분야로,

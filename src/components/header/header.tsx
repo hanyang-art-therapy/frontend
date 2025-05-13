@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import AuthLinks from '@/components/header/links/auth-links';
 
 export default function Header() {
   return (
@@ -9,14 +10,7 @@ export default function Header() {
             사이트맵
           </Link>
         </div>
-        <div className='flex gap-5 px-5 leading-[40px] bg-bg-primary text-white t-m-16'>
-          <Link to='/sign-in' className='hover:opacity-70'>
-            로그인
-          </Link>
-          <Link to='/sign-up' className='hover:opacity-70'>
-            회원가입
-          </Link>
-        </div>
+        <AuthLinks />
       </div>
     </header>
   );
