@@ -47,7 +47,7 @@ export default function UploadedReviews({
                 : comment.reviewText}
             </p>
 
-            <div className='hidden md:block h-[160px] overflow-hidden'>
+            <div className='hidden md:block h-[100px] overflow-hidden'>
               <p className='text-[var(--black)] md:text-[16px] leading-tight'>
                 {comment.reviewText}
               </p>
