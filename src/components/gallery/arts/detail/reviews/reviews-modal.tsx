@@ -21,7 +21,7 @@ interface ImageModalProps {
   isLast: boolean;
 }
 
-export default function ImageModal({
+export default function ReviewsModal({
   modalImage,
   selectedComment,
   onClose,
@@ -54,7 +54,7 @@ export default function ImageModal({
       className='fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80 md:mt-[100px] '
       onClick={onClose}>
       <div
-        className='bg-white rounded-lg shadow-lg p-5 w-full h-full md:w-[80%] max-w-[1280px] md:h-[100%] flex items-center relative'
+        className='bg-white rounded-lg shadow-lg p-5 w-full h-full md:w-[80%] max-w-[1260px] md:h-[100%] flex items-center relative'
         onClick={(e) => e.stopPropagation()}>
         <div className='flex flex-col md:flex-row items-start justify-center md:justify-start md:w-full gap-10'>
           {modalImage && modalImage !== NO_IMG && (
@@ -73,7 +73,7 @@ export default function ImageModal({
             </h3>
             {isEditing ? (
               <textarea
-                className='h-[80px] w-[350px] md:w-[80%] border border-[var(--gray-9)] px-3 py-2 text-sm focus:outline-none focus:ring-0 mb-30 resize-none'
+                className='h-[80px] w-[350px] md:w-[80%] border border-gray-9 px-3 py-2 text-sm focus:outline-none focus:ring-0 mb-30 resize-none'
                 value={editedText}
                 onChange={handleTextChange}
                 rows={5}
@@ -93,7 +93,7 @@ export default function ImageModal({
               onClick={handleConfirmClick}
               variant='outline'
               size='default'
-              className='w-[80px] h-[36px] py-[14px] px-3 text-r-14 md:h-[40px] md:w-[80px] md:py-[14px] md:t-b-18 rounded-full'>
+              className='w-[80px] h-[36px] py-[14px] px-3 t-r-18 md:h-[40px] md:w-[80px] md:py-[14px] rounded-full'>
               확인
             </Button>
           ) : (
@@ -101,7 +101,7 @@ export default function ImageModal({
               onClick={handleEditClick}
               variant='secondary'
               size='default'
-              className='w-[80px] h-[36px] py-[14px] px-3 text-r-14 md:h-[40px] md:w-[80px] text-white  md:py-[14px] md:t-b-18 rounded-full'>
+              className='w-[80px] h-[36px] py-[14px] px-3 t-r-18 md:h-[40px] md:w-[80px] text-white  md:py-[14px] rounded-full'>
               수정
             </Button>
           )}
@@ -110,7 +110,7 @@ export default function ImageModal({
             onClick={onDelete}
             variant='destructive'
             size='default'
-            className='w-[80px] h-[36px] py-[14px] px-3 text-r-14 text-white md:h-[40px] md:w-[80px] md:py-[14px] md:t-b-18 rounded-full'>
+            className='w-[80px] h-[36px] py-[14px] px-3 t-r-18 text-white md:h-[40px] md:w-[80px] md:py-[14px] rounded-full'>
             삭제
           </Button>
 
@@ -118,7 +118,7 @@ export default function ImageModal({
             onClick={onClose}
             variant='gray'
             size='default'
-            className='w-[80px] h-[36px] py-[14px] px-3 text-r-14 text-white md:h-[40px] md:w-[80px] md:py-[14px] md:t-b-18 rounded-full'>
+            className='w-[80px] h-[36px] py-[14px] px-3 t-r-18 text-white md:h-[40px] md:w-[80px] md:py-[14px] rounded-full'>
             닫기
           </Button>
         </div>

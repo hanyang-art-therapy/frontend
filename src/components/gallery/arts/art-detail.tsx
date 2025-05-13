@@ -13,7 +13,7 @@ export default function ArtsDetail() {
 
   return (
     <div className='text-center flex justify-between p-4'>
-      <div className='md:max-w-[1280px] w-full mx-auto mt-[30px] md:mt-[60px]'>
+      <div className='md:max-w-[1260px] w-full mx-auto mt-[30px] md:mt-[60px]'>
         <div className='w-full h-[78px] flex items-center pt-[40px] pb-[20px] border-b-[2px] border-b-[#DDD]'>
           <ul className='w-full flex justify-between t-b-32 font-bold'>
             <li>
@@ -46,7 +46,7 @@ export default function ArtsDetail() {
               alt={art.artist.artistName}
               className='w-full md:w-[720px] py-[10px]'
             />
-            <span className='self-end md:px-[180px] pb-[30px] text=[#5A5A5A]'>
+            <span className='self-end md:px-[180px] pb-[30px] text-gray-6'>
               {art.caption}
             </span>
             <div className='flex md:max-w-[1080px] h-[auto] p-[20px] flex-col items-start gap-[10px] border border-[#ddd] mb-[40px] md:mb-[100px]'>
@@ -54,7 +54,7 @@ export default function ArtsDetail() {
                 작품 설명
               </h2>
               {/* t-b-20 추가 요청 드린 뒤 변경하기 */}
-              <div className='text-black t-b-18 text-left leading-[2] md:leading-[3.5] p-[10px]'>
+              <div className='text-black t-r-18 text-left leading-[2] md:leading-[3.5] p-[10px]'>
                 {art.description}
               </div>
             </div>

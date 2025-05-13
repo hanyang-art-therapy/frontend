@@ -12,7 +12,7 @@ export default function Step({ items, step, setStep }: StepProps) {
 
   return (
     <div className='h-[50px] border-b w-full flex justify-center border-b-bg-gray-d'>
-      <ul className='flex w-full justify-between md:max-w-[1280px]'>
+      <ul className='flex w-full justify-between md:max-w-[1260px]'>
         {items.map((item, index) => {
           return (
             <li

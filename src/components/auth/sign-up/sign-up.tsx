@@ -18,7 +18,7 @@ export default function SignUp() {
     <>
       <SignUpProgress progress={progress} />
 
-      <div className='w-full flex justify-center md:max-w-[1280px] mx-auto px-5 md:px-0'>
+      <div className='w-full flex justify-center md:max-w-[1260px] mx-auto px-5 md:px-0'>
         {progress === 1 && <SignUpStep1 setProgress={setProgress} />}
 
         <Suspense fallback={<SignUpSkeleton />}>

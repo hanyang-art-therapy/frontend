@@ -63,7 +63,7 @@ export default function FindMy() {
     <>
       <Step items={FIND_MY_STEP_ITEMS} step={step} setStep={setStep} />
 
-      <div className='md:max-w-[1280px] md:px-0 px-5 mx-auto pt-[60px] space-y-[30px] md:min-h-[calc(100vh-394px)]'>
+      <div className='md:max-w-[1260px] md:px-0 px-5 mx-auto pt-[60px] space-y-[30px] md:min-h-[calc(100vh-394px)]'>
         <h1 className='t-b-24'>{isFindId ? findId.label : findPw.label}</h1>
         <p className='t-b-18'>회원님의 정보를 각 항목에 맞게 입력해주세요.</p>
 

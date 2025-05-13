@@ -1,7 +1,7 @@
 import { NO_IMG } from '@/constants/gallery/art-details';
 import { formatTimeStamp } from '@/lib/utils';
 
-interface UploadedCommentsListProps {
+interface UploadedReviewsProps {
   comments: Comment[];
   onImageClick: (imageUrl: string, comment: Comment) => void;
 }
@@ -17,7 +17,7 @@ interface Comment {
 export default function UploadedReviews({
   comments,
   onImageClick,
-}: UploadedCommentsListProps) {
+}: UploadedReviewsProps) {
   return (
     <>
       {comments.map((comment, index) => (

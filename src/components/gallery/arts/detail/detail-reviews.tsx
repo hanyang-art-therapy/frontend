@@ -8,7 +8,7 @@ import {
 import DetailTextarea from '@/components/gallery/arts/detail/detail-textarea';
 import ReviewCard from './reviews/reviews-card';
 import ImageModal from './reviews/reviews-modal';
-import UploadedReviews from './reviews/reviews-upload-reviews';
+import UploadedReviews from './reviews/uploaded-reviews';
 import ReviewNoResult from './no-result/review-no-result';
 
 interface Comment {
@@ -180,9 +180,7 @@ export default function DetailReviews() {
               </button>
             </>
           ) : (
-            <span className='t-r-14 md:t-r-16 text-gray-400'>
-              이미지 미리보기
-            </span>
+            <span className='t-r-16 text-gray-9'>이미지 미리보기</span>
           )}
         </div>
 
