@@ -46,7 +46,7 @@ export default function ArtsDetail() {
               alt={art.artist.artistName}
               className='w-full md:w-[720px] py-[10px]'
             />
-            <span className='self-end md:px-[180px] pb-[30px] text-gray-6'>
+            <span className='self-end md:px-[280px] pb-[30px] text-gray-6'>
               {art.caption}
             </span>
             <div className='flex md:max-w-[1080px] h-[auto] p-[20px] flex-col items-start gap-[10px] border border-[#ddd] mb-[40px] md:mb-[100px]'>

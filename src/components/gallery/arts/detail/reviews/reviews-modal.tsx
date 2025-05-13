@@ -62,7 +62,7 @@ export default function ReviewsModal({
               src={modalImage}
               alt='확대 이미지'
               className={`w-[400px] md:flex-2 md:max-h-[700px] object-contain mb-4 flex-shrink-0 ${
-                isEditing ? 'mt-[106px]' : ''
+                isEditing ? 'mt-[106px] md:mt-0' : ''
               }`}
             />
           )}
@@ -73,7 +73,7 @@ export default function ReviewsModal({
             </h3>
             {isEditing ? (
               <textarea
-                className='h-[80px] w-[350px] md:w-[80%] border border-gray-9 px-3 py-2 text-sm focus:outline-none focus:ring-0 mb-30 resize-none'
+                className='h-[80px] w-[350px] md:w-[90%] border border-gray-9 px-3 py-2 text-sm focus:outline-none focus:ring-0 mb-30 resize-none t-r-16'
                 value={editedText}
                 onChange={handleTextChange}
                 rows={5}
