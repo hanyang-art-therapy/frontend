@@ -41,14 +41,14 @@ export default function UploadedReviews({
               </p>
             </div>
 
-            <p className='text-[var(--black)] text-[14px] md:hidden'>
+            <p className='text-black text-[14px] md:hidden'>
               {comment.reviewText.length > 40
                 ? `${comment.reviewText.slice(0, 40)}...`
                 : comment.reviewText}
             </p>
 
-            <div className='hidden md:block h-[100px] overflow-hidden'>
-              <p className='text-[var(--black)] md:text-[16px] leading-tight'>
+            <div className='hidden md:block h-[120px] overflow-hidden'>
+              <p className='text-black md:text-[16px] leading-tight'>
                 {comment.reviewText}
               </p>
             </div>

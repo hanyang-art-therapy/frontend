@@ -33,7 +33,7 @@ export default function ReviewCard({
         </p>
 
         {/* 데스크탑(md 이상)에서: 높이 160px 변경(확대) */}
-        <div className='hidden md:block h-[100px] overflow-hidden'>
+        <div className='hidden md:block h-[120px] overflow-hidden'>
           <p className='t-r-16 leading-tight'>{reviewText}</p>
         </div>
       </div>
