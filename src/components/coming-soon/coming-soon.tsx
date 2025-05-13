@@ -6,7 +6,7 @@ export function ComingSoonPage() {
 
     return (
         <div className='min-h-screen-vh mt-15 flex flex-col items-center justify-center'>
-            <div className="w-full max-w-[1080px] text-center">
+            <div className="w-full max-w-[1260px] px-[20px] xl:px-0 text-center">
                 <h1 className="t-b-52 mb-4">COMING SOON <span className='whitespace-nowrap'>...💻🔨</span></h1>
                 <p className="md:text-r-16 text-gray mb-12 whitespace-pre-line">
                     현재 해당 페이지는 준비중입니다.<br/>
