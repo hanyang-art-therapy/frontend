@@ -37,7 +37,8 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-border: var(--border);
+  --color-destructive-background: var(--destructive-background);
+  --color-destructive-border: var(--destructive-border);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);
@@ -75,8 +76,7 @@
   --black: #333;
   --white: #fff;
 
-  --primary-foreground: #f18100;
-
+  --primary-background: #fef8f2;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -91,6 +91,10 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: #ff4d00;
+  --destructive-background: #fff6f2;
+  --destructive-border: rgba(255, 77, 0, 0.3);
+  --success: #1a83e4;
+  --success-background: #f3f9fd;
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -148,6 +152,16 @@
   
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  /* number input 증감 버튼 제거 */
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
   }
 }
 
@@ -217,7 +231,7 @@
   }
 
   .min-h-screen-vh {
-    @apply min-h-[calc(100vh-187px)];
+    @apply min-h-[calc(100vh-400px)];
   }
 }
 
