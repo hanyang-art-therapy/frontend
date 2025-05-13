@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export default function descriptionNoResult() {
+export default function ArtDetailNoResult() {
   return (
     <div className='w-[1260px] h-[1000px] mx-auto flex flex-col items-center justify-center py-16 text-center bg-gray-50 border border-gray-200 rounded-lg cursor-pointer'>
       <h3 className='text-2xl font-semibold text-gray-800'>
