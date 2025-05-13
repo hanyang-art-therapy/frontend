@@ -6,7 +6,7 @@ export default function NotFound() {
 
   return (
     <div className='min-h-screen-vh mt-15 flex flex-col items-center justify-center'>
-      <div className='w-full max-w-[1080px] text-center'>
+      <div className='w-full max-w-[1260px] px-[20px] xl:px-0 text-center'>
         {/* <div className='text-[112px] animate-bounce'>🚧</div> */}
         <img
           src='/images/404.png'

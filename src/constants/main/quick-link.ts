@@ -1,10 +1,10 @@
-import { Contact, BookOpen, ScanHeart, Palette, MessageSquareHeart } from 'lucide-react';
+import { Contact, BookOpen, ScanHeart, Palette, Smile } from 'lucide-react';
 
 export const QUICK_LINK = [
     {
         id: 1,
-        icon: MessageSquareHeart,
-        title: '미술심리치료\n날다',
+        icon: Smile,
+        title: '미술심리상담\n날다',
         text: '사이트로 이동',
         path: 'https://arttherapynalda.com/',
         bgClass: 'bg-bg-secondary/80',
@@ -22,7 +22,7 @@ export const QUICK_LINK = [
         icon: BookOpen,
         title: '교육과정',
         text: '자세히 보기',
-        path: '/*', // 실제 경로로 교체
+        path: '/coming-soon',
         bgClass: 'bg-bg-primary/76',
     },
     {
@@ -30,7 +30,7 @@ export const QUICK_LINK = [
         icon: ScanHeart,
         title: '임상활동',
         text: '자세히 보기',
-        path: '/*', // 실제 경로로 교체
+        path: '/coming-soon',
         bgClass: 'bg-bg-primary/84',
     },
         {
