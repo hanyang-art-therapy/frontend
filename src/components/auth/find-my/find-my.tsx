@@ -1,3 +1,4 @@
+import { findMyIdMocking, findMyPasswordMocking } from '@/apis/find-my';
 import FindMyPwDialog from '@/components/auth/find-my/find-my-pw-dialog';
 import EmailSection from '@/components/auth/find-my/form/email-section';
 import UserInfoSection from '@/components/auth/find-my/form/user-info-section';
@@ -11,6 +12,8 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { handleApiError } from '@/components/common/error-handler';
+import { toast } from 'sonner';
 
 export default function FindMy() {
   const [findId, findPw] = FIND_MY_STEP_ITEMS; // 아이디 찾기
@@ -39,21 +42,36 @@ export default function FindMy() {
     },
   });
 
-  // TODO: API 호출 로직 추가
-  const onSubmit = (data: FindMyFormValues) => {
-    const email = `${data.emailId}@${data.emailDomain}`;
+  const onSubmit = async (data: FindMyFormValues) => {
+    const { userId, userName, emailId, emailDomain } = data;
+    const email = `${emailId}@${emailDomain}`;
 
-    if (isFindId) {
-      // 아이디 찾기 API 호출
-      const response = 'ApiResponse';
-      setFoundId(response);
-      console.log(response);
-      console.log({ userName: data.userName, email });
-      setIsDialogOpen(true);
-    } else {
-      // 비밀번호 찾기 API 호출
-      console.log({ userId: data.userId, email });
-      setIsDialogOpen(true);
+    if (isFindId && userName) {
+      try {
+        const response = await findMyIdMocking({
+          email,
+          userName,
+        });
+
+        setFoundId(response.message);
+
+        setIsDialogOpen(true);
+      } catch (error) {
+        toast.error(handleApiError(error));
+      }
+    }
+
+    if (!isFindId && userId && email) {
+      try {
+        await findMyPasswordMocking({
+          userId,
+          email,
+        });
+
+        setIsDialogOpen(true);
+      } catch (error) {
+        toast.error(handleApiError(error));
+      }
     }
 
     reset();

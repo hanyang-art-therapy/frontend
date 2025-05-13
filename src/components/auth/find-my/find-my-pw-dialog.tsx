@@ -8,7 +8,6 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 type FindMyPwDialogProps = {
   isDialogOpen: boolean;
@@ -23,15 +22,6 @@ export default function FindMyPwDialog({
 }: FindMyPwDialogProps) {
   const navigate = useNavigate();
 
-  const [isCopied, setIsCopied] = useState(false);
-
-  const handleCopyToClipboard = () => {
-    if (foundId) {
-      navigator.clipboard.writeText(foundId);
-      setIsCopied(true);
-    }
-  };
-
   return (
     <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <AlertDialogContent className='md:max-w-[500px]'>
@@ -41,29 +31,22 @@ export default function FindMyPwDialog({
           </AlertDialogTitle>
           <AlertDialogDescription>
             {foundId ? (
-              <div className='flex flex-col'>
-                찾으시는 아이디는 다음과 같습니다.{' '}
+              <span className='flex flex-col'>
+                <span>찾으시는 아이디는 다음과 같습니다.</span>
                 <span className='text-primary t-m-18 text-center py-12'>
                   {foundId}
                 </span>
-              </div>
+              </span>
             ) : (
-              '임시 비밀번호를 전송하였습니다. 작성한 이메일로 임시 비밀번호를 확인해주세요.'
+              <span>
+                임시 비밀번호를 전송하였습니다. 작성한 이메일로 임시 비밀번호를
+                확인해주세요.
+              </span>
             )}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter className='flex flex-row justify-center'>
-          {foundId && (
-            <Button
-              variant='secondary'
-              className='w-1/2 t-b-18'
-              disabled={isCopied}
-              onClick={handleCopyToClipboard}>
-              {isCopied ? '복사 완료' : '클립보드에 복사'}
-            </Button>
-          )}
-
           <Button className='w-1/2 t-b-18' onClick={() => navigate('/sign-in')}>
             로그인 페이지로 이동
           </Button>

@@ -26,8 +26,10 @@ export default function ResetPwDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>변경 완료</AlertDialogTitle>
           <AlertDialogDescription>
-            <p>비밀번호 변경이 완료되었습니다.</p>
-            <p>변경하신 비밀번호로 로그인해주세요.</p>
+            <div className='space-y-2'>
+              <p>비밀번호 변경이 완료되었습니다.</p>
+              <p>변경하신 비밀번호로 로그인해주세요.</p>
+            </div>
           </AlertDialogDescription>
         </AlertDialogHeader>
 

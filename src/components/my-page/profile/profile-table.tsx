@@ -1,17 +1,17 @@
 import { TABLE_MAP } from '@/constants/my-page/my-page';
-import { MyPage as MyPageType } from '@/types/my-page';
+import type { MyProfileData } from '@/types/my-page';
 
-export default function AccountTable({
-  accountData,
+export default function ProfileTable({
+  myProfile,
 }: {
-  accountData: MyPageType;
+  myProfile: MyProfileData;
 }) {
   const renderMyData = (key: string) => {
     if (key === 'role') {
-      return accountData.studentNo ? '미술치료학과 구성원' : '일반 회원';
+      return myProfile.studentNo ? '미술치료학과 구성원' : '일반 회원';
     }
 
-    return accountData[key as keyof MyPageType];
+    return myProfile[key as keyof MyProfileData];
   };
 
   return (

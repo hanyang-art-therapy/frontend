@@ -1,15 +1,18 @@
 import { ArtArtistRel, Artist, Arts, Review, User } from '@/types';
 
-export type MyPage = Pick<User, 'userId' | 'userName' | 'email' | 'studentNo'> &
+export type MyProfileData = Pick<
+  User,
+  'userId' | 'userName' | 'email' | 'studentNo'
+> &
   Pick<Artist, 'cohort'>;
 
-export type MyReview = Pick<
+export type MyReviewData = Pick<
   Review,
   'reviewNo' | 'artsNo' | 'reviewText' | 'createdAt'
 > &
   Pick<Arts, 'artName'>;
 
-export type MyPost = Pick<Review, 'artsNo' | 'createdAt'> &
+export type MyPostData = Pick<Review, 'artsNo' | 'createdAt'> &
   Pick<Arts, 'artName' | 'artType'> &
   Pick<ArtArtistRel, 'description'>;
 
