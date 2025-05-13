@@ -2,7 +2,7 @@ import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { AuthLayout, RootLayout } from '@/layouts';
-import ComingSoon from '@/pages/coming-soon-page/page';
+import ComingSoon from '@/pages/coming-soon/page';
 import NotFoundPage from '@/pages/not-found/page';
 import lazyElement from '@/components/common/lazy-element';
 import MainSkeleton from '@/components/main-page/main-skeleton';
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: '/coming-soon-page',
+        path: '/coming-soon',
         element: <ComingSoon />,
       },
       {

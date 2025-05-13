@@ -22,7 +22,7 @@ export const QUICK_LINK = [
         icon: BookOpen,
         title: '교육과정',
         text: '자세히 보기',
-        path: '/coming-soon-page',
+        path: '/coming-soon',
         bgClass: 'bg-bg-primary/76',
     },
     {
@@ -30,7 +30,7 @@ export const QUICK_LINK = [
         icon: ScanHeart,
         title: '임상활동',
         text: '자세히 보기',
-        path: '/coming-soon-page',
+        path: '/coming-soon',
         bgClass: 'bg-bg-primary/84',
     },
         {
