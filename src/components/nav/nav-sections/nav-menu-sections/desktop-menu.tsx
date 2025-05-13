@@ -2,15 +2,18 @@ import { Link } from 'react-router-dom';
 import { NAV_MENU } from '@/constants/nav';
 
 export default function DesktopMenu() {
-  return(
+  return (
     <ul className="flex gap-[30px] relative">
-      {NAV_MENU.map((menu, index) => (
-        <li key={index} className="relative group">
-          {menu.submenu.length > 0 ? (
-            <>
-              <Link to={menu.path} className="main-menu">
-                {menu.title}
-              </Link>
+      {NAV_MENU.map((menu, index) => {
+        const hasSub = menu.submenu?.length > 0;
+
+        return (
+          <li key={index} className="relative group">
+            <Link to={menu.path} className="main-menu">
+              {menu.title}
+            </Link>
+
+            {hasSub && (
               <ul className="sub-menu t-r-16 group-hover:block">
                 {menu.submenu.map((sub, subIndex) => (
                   <li key={subIndex}>
@@ -18,14 +21,10 @@ export default function DesktopMenu() {
                   </li>
                 ))}
               </ul>
-            </>
-          ) : (
-            <Link to={menu.path} className="main-menu">
-              {menu.title}
-            </Link>
-          )}
-        </li>
-      ))}
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 }
