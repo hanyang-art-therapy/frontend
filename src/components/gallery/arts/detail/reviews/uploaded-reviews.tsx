@@ -25,7 +25,7 @@ export default function UploadedReviews({
           key={index}
           className='flex flex-row md:flex-col items-center gap-4 bg-white rounded-lg shadow-lg p-4 w-full cursor-pointer'
           onClick={() => onImageClick(comment.image || NO_IMG, comment)}>
-          <div className='w-[200px] h-[120px] md:w-[200px] md:h-[200px] overflow-hidden rounded pt-[10px]'>
+          <div className='w-[200px] h-[120px] md:w-[260px] md:h-[200px] overflow-hidden rounded pt-[10px]'>
             <img
               src={comment.image || NO_IMG}
               alt='업로드 이미지'
