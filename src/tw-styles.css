@@ -167,8 +167,8 @@
 
 /* font Style */
 @layer utilities {
-  .t-b-108 {
-    font-size: clamp(72px, calc(51.888px + 4.6753vw), 108px);
+  .t-b-80 {
+    font-size: clamp(38px, calc(14.545px + 5.455vw), 80px);
     font-weight: 700;
   }
   .t-b-52 {
@@ -237,6 +237,12 @@
 
 /* Class Style */
 @layer utilities {
+  .blind {
+    font-size: 0;
+    position: absolute;
+    top: -99999;
+  }
+
   .main-menu {
     position: relative;
     display: inline-block;
@@ -354,24 +360,13 @@
     }
   }
 
-  .nav-box-shadow {
+  .box-shadow-style {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .banner-bg {
-    background: url(/images/banners/main-banner.webp) no-repeat 0 0;
-    background-size: cover;
   }
 
   .text-shadow-style {
     color: var(--white);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  .blind {
-    font-size: 0;
-    position: absolute;
-    top: -99999;
   }
 
   .quick-list {
@@ -531,15 +526,21 @@
     }
   }
 
+  .banner-bg {
+    background: url(/images/banners/main-banner.webp) no-repeat 0 0;
+    background-size: cover;
+  }
+
   .gallery-banner-bg {
     background: url(/images/banners/gallery-banner.webp) no-repeat 0 0;
     background-size: cover;
+    height: clamp(200px, calc(88.33px + 25.97vw), 400px);
 
     > span {
+      top: 50%;
+      transform: translateY(-50%);
       color: var(--white);
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-      font-size: 80px;
-      font-weight: bold;
       margin-top: 30px;
     }
   }
