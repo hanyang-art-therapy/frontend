@@ -7,7 +7,7 @@ import {
 } from '@/constants/gallery/art-details';
 import DetailTextarea from '@/components/gallery/arts/detail/detail-textarea';
 import ReviewCard from './reviews/reviews-card';
-import ImageModal from './reviews/reviews-modal';
+import ReviewsModal from './reviews/reviews-modal';
 import UploadedReviews from './reviews/uploaded-reviews';
 import ReviewNoResult from './no-result/review-no-result';
 
@@ -36,6 +36,9 @@ interface DummyComment {
 export default function DetailReviews() {
   const { artsNo } = useParams();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [modalimagePreview, setModalImagePreview] = useState<string | null>(
+    null
+  );
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState<Comment[]>([]);
 
@@ -70,6 +73,14 @@ export default function DetailReviews() {
         text: newText,
         reviewText: newText,
       });
+    }
+  };
+
+  // Null || 익명일 때 이미지 업로드
+  const ModalImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setModalImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -116,7 +127,6 @@ export default function DetailReviews() {
       setImagePreview(URL.createObjectURL(file));
     }
   };
-
   // 이미지 삭제
   const handleImageDelete = () => {
     setImagePreview(null);
@@ -163,8 +173,8 @@ export default function DetailReviews() {
       </h2>
 
       {/* 댓글 작성 */}
-      <div className='flex md:flex-row w-full border border-gray-9 p-[10px] gap-[10px] md:p-[20px] md:gap-[20px] md:pb-[22px] rounded-sm mb-[20px]'>
-        <div className='w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative md:border md:border-gray-9-300 rounded bg-[#f9f9f9] flex items-center justify-center'>
+      <div className='flex md:flex-row w-full border border-bg-gray-d p-[10px] gap-[10px] md:p-[20px] md:gap-[20px] md:pb-[22px] rounded-sm mb-[20px]'>
+        <div className='w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative rounded bg-[#f9f9f9] flex items-center justify-center'>
           {imagePreview ? (
             <>
               <img
@@ -180,16 +190,20 @@ export default function DetailReviews() {
               </button>
             </>
           ) : (
-            <span className='t-r-16 text-gray-9'>이미지 미리보기</span>
+            <span className='t-r-14 md:t-r-16 text-gray-9 rounded-sm'>
+              이미지 미리보기
+            </span>
           )}
         </div>
 
-        <DetailTextarea
-          comment={comment}
-          onCommentChange={handleCommentChange}
-          onImageChange={handleImageChange}
-          onCommentSubmit={handleCommentSubmit}
-        />
+        <div className='w-[70%] md:w-[90%]'>
+          <DetailTextarea
+            comment={comment}
+            onCommentChange={handleCommentChange}
+            onImageChange={handleImageChange}
+            onCommentSubmit={handleCommentSubmit}
+          />
+        </div>
       </div>
 
       <div className='w-full md:grid md:grid-cols-4 justify-center items-center gap-10'>
@@ -215,14 +229,16 @@ export default function DetailReviews() {
       </div>
 
       {modalImage && selectedComment && (
-        <ImageModal
+        <ReviewsModal
           modalImage={modalImage}
           selectedComment={selectedComment}
           image={modalImage}
+          onModalImageChange={ModalImageChange} // 이미지 변경 함수 추가
           onClose={closeImageModal}
           onPrev={handlePrevComment}
           onNext={handleNextComment}
           onDelete={handleCommentDelete}
+          modalImagePreview={modalimagePreview}
           isFirst={comments.findIndex((c) => c === selectedComment) === 0}
           isLast={
             comments.findIndex((c) => c === selectedComment) ===
