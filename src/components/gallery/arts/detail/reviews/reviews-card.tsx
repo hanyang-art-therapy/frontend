@@ -21,7 +21,7 @@ export default function ReviewCard({
       <img
         src={image || NO_IMG}
         alt='리뷰 이미지'
-        className='w-[100px] h-[100px] md:w-[260px] md:h-[200px] object-cover'
+        className='w-[200px] h-[120px] md:w-[200px] md:h-[200px] overflow-hidden rounded pt-[10px]'
       />
       <div className='flex flex-col justify-start text-start'>
         <h3 className='t-b-16 mb-2 text-start'>{userName || '익명'}</h3>
