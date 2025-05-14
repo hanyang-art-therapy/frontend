@@ -4,7 +4,7 @@ import { NO_IMG } from '@/constants/gallery/art-details';
 
 interface ImageModalProps {
   modalImage: string | null;
-  modalImagePreview?: string | null;
+  modalImagePreview?: string | null; // 이미지 업로드 후 미리보기용
   selectedComment: {
     userName: string;
     reviewText: string;
@@ -28,28 +28,10 @@ export default function ReviewsModal({
   onClose,
   onEdit,
   onDelete,
-  onModalImageChange,
-  modalImagePreview,
 }: ImageModalProps) {
   const [editedText, setEditedText] = useState(selectedComment.reviewText);
   const [isEditing, setIsEditing] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(true); // 버튼 가시성 상태 추가
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-
-    onModalImageChange?.(e); // 외부 전달된 onChange도 호출
-  };
-  const handlePreviewDelete = () => {
-    setPreviewImage(null);
-  };
 
   useEffect(() => {
     setEditedText(selectedComment.reviewText);
@@ -58,13 +40,13 @@ export default function ReviewsModal({
 
   const handleEditClick = () => {
     setIsEditing(true);
-    setIsButtonVisible(false);
+    setIsButtonVisible(false); // 수정 클릭 시 버튼 숨기기
   };
 
   const handleConfirmClick = () => {
     onEdit(editedText);
     setIsEditing(false);
-    setIsButtonVisible(true);
+    setIsButtonVisible(true); // 확인 후 버튼 보이게 하기
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -73,21 +55,10 @@ export default function ReviewsModal({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
-      e.preventDefault();
-      handleConfirmClick();
+      e.preventDefault(); // 엔터 키 기본 동작 방지
+      handleConfirmClick(); // 엔터 키가 눌리면 확인 버튼 동작
     }
   };
-
-  useEffect(() => {
-    setEditedText(selectedComment.reviewText);
-    setIsEditing(false);
-  }, [selectedComment]);
-
-  useEffect(() => {
-    if (modalImagePreview) {
-      setPreviewImage(modalImagePreview);
-    }
-  }, [modalImagePreview]);
 
   return (
     <div
@@ -96,42 +67,16 @@ export default function ReviewsModal({
       <div
         className={`bg-white rounded-lg shadow-lg p-5 w-full h-full md:w-[80%] max-w-[1260px] md:h-[100%] flex items-center relative`}
         onClick={(e) => e.stopPropagation()}>
-        <div className='flex flex-col md:flex-row items-start justify-center md:justify-start md:w-full gap-[20px]'>
-          <div className='w-full md:w-1/2 h-auto relative flex items-center justify-center border rounded bg-gray-50'>
-            {(modalImage && modalImage !== NO_IMG) || previewImage ? (
-              <>
-                <img
-                  src={modalImagePreview ?? previewImage ?? modalImage!}
-                  alt='리뷰 이미지'
-                  className='max-w-full max-h-[500px] rounded'
-                />
-
-                {previewImage && (
-                  <button
-                    onClick={handlePreviewDelete}
-                    className='absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded'>
-                    삭제
-                  </button>
-                )}
-              </>
-            ) : (
-              <div className='flex flex-col items-center justify-center p-4 gap-2'>
-                <p className='text-sm text-gray-600'>
-                  이미지가 없습니다. 업로드해보세요.
-                </p>
-                <label className='cursor-pointer px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark'>
-                  이미지 업로드
-                  <input
-                    type='file'
-                    accept='image/*'
-                    onChange={handleImageChange}
-                    className='hidden'
-                  />
-                </label>
-              </div>
-            )}
-          </div>
-
+        <div className='flex flex-col md:flex-row items-start justify-center md:justify-start md:w-full'>
+          {modalImage && modalImage !== NO_IMG && (
+            <img
+              src={modalImage}
+              alt='확대 이미지'
+              className={`w-[400px] max-h-[400px] md:flex-2 md:max-h-[700px] object-contain mb-4 flex-shrink-0 ${
+                isEditing ? 'mt-[106px] md:mt-0' : ''
+              }`}
+            />
+          )}
           <div className='md:flex md:flex-col md:text-start md:flex-2 w-full max-h-[600px] overflow-auto'>
             <h3 className='t-b-18 mb-2'>
               {selectedComment?.userName ?? '익명'}
