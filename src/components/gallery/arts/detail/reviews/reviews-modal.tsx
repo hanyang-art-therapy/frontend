@@ -67,7 +67,7 @@ export default function ReviewsModal({
       <div
         className={`bg-white rounded-lg shadow-lg p-5 w-full h-full md:w-[80%] max-w-[1260px] md:h-[100%] flex items-center relative`}
         onClick={(e) => e.stopPropagation()}>
-        <div className='flex flex-col md:flex-row items-start justify-center md:justify-start md:w-full'>
+        <div className='flex flex-col md:flex-row items-start justify-center md:justify-start md:w-full md:gap-[40px]'>
           {modalImage && modalImage !== NO_IMG && (
             <img
               src={modalImage}
