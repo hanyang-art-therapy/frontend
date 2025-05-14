@@ -58,7 +58,7 @@ export default function MobileMenu() {
   }, [location]);
 
   return (
-    <div className='menu-wrapper nav-box-shadow absolute top-full left-0 w-full bg-white text-black xl:hidden z-9 open'>
+    <div className='menu-wrapper box-shadow-style absolute top-full left-0 w-full bg-white text-black xl:hidden z-9 open'>
       <ul className='flex flex-col gap-4 p-8'>
         {NAV_MENU.map((menu, index) => (
           <li key={index}>
