@@ -3,13 +3,15 @@ interface HamburgerButtonProps {
   onClick: () => void;
 }
 
-export default function HamburgerButton({ isOpen, onClick }: HamburgerButtonProps) {
+export default function HamburgerButton({
+  isOpen,
+  onClick,
+}: HamburgerButtonProps) {
   return (
     <button
       className={`hamburger ${isOpen ? 'open' : ''}`}
       onClick={onClick}
-      aria-label="모바일 메뉴 열기"
-    >
+      aria-label='모바일 메뉴 열기'>
       <span></span>
       <span></span>
       <span></span>

@@ -9,19 +9,23 @@ export default function QuickLinksSection() {
         {QUICK_LINK.map(({ id, icon: Icon, title, text, path, bgClass }) => {
           const isExternal = /^https?:\/\//.test(path);
 
-          return(
-            <li key={id} className="quick-style">
+          return (
+            <li key={id} className='quick-style'>
               {isExternal ? (
-                <a href={path} className={bgClass} target="_blank" rel="noopener noreferrer">
-                  <Icon className="icon" aria-hidden="true" />
-                  <strong className="t-m-18">{title}</strong>
-                  <span className="t-r-14">{text}</span>
+                <a
+                  href={path}
+                  className={bgClass}
+                  target='_blank'
+                  rel='noopener noreferrer'>
+                  <Icon className='icon' aria-hidden='true' />
+                  <strong className='t-m-18'>{title}</strong>
+                  <span className='t-r-14'>{text}</span>
                 </a>
               ) : (
                 <Link to={path} className={bgClass}>
-                  <Icon className="icon" aria-hidden="true" />
-                  <strong className="t-m-18">{title}</strong>
-                  <span className="t-r-14">{text}</span>
+                  <Icon className='icon' aria-hidden='true' />
+                  <strong className='t-m-18'>{title}</strong>
+                  <span className='t-r-14'>{text}</span>
                 </Link>
               )}
             </li>

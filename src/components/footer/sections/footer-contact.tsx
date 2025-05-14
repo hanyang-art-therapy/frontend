@@ -24,7 +24,9 @@ export default function Contact() {
           </ul>
 
           <ul className='flex items-center gap-[15px]'>
-            <li><label className='text-primary'>{SNS.label}</label></li>
+            <li>
+              <label className='text-primary'>{SNS.label}</label>
+            </li>
             <li>
               <a
                 href={SNS.INSTAGRAM.href}

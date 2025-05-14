@@ -23,7 +23,9 @@ export default function ContentsSection() {
           {/* 전시회 리스트 */}
           <ul className='flex gap-[30px]'>
             {EXHIBITION_OVERVIEW.map((EXHIBITION_OVERVIEW) => (
-              <li key={`${EXHIBITION_OVERVIEW.id}/${EXHIBITION_OVERVIEW.title}`} className='w-full'>
+              <li
+                key={`${EXHIBITION_OVERVIEW.id}/${EXHIBITION_OVERVIEW.title}`}
+                className='w-full'>
                 {/* 전시회 포스터 이미지(클릭 시 전시 소개 상세 페이지로 이동 가능) */}
                 <a
                   href='/gallery?step=intro'
