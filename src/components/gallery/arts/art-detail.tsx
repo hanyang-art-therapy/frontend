@@ -38,7 +38,7 @@ export default function ArtsDetail() {
               <img
                 src={art.file.url}
                 alt={art.artist.artistName}
-                className='w-full md:w-[720px]'
+                className='w-full md:w-[720px] my-[20px]'
               />
             </div>
             {/* 작품 상세 박스 */}
