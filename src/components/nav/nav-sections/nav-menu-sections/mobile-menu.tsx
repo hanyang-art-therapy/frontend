@@ -34,7 +34,9 @@ function MenuItem({
         <ul className={`menu-wrapper mt-2 t-m-18 ${isOpen ? 'open' : ''}`}>
           {menu.submenu.map((sub: any, i: number) => (
             <li key={i} className='px-[10px] py-[8px]'>
-              <Link to={sub.path}>{sub.title}</Link>
+              <Link to={sub.path} className='block hover:opacity-70'>
+                {sub.title}
+              </Link>
             </li>
           ))}
         </ul>
