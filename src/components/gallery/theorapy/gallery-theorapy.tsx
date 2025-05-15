@@ -24,7 +24,7 @@ const renderTextWithBold = (text: string) => {
 
 export default function GalleryTheorapy() {
   return (
-    <div className='mx-auto md:px-0 px-[20px] pt-15 grid gap-16'>
+    <div className='mx-auto md:px-0 px-5 pt-15 grid gap-16'>
       {/* 미술관 미술치료로의 초대 */}
       <section className='pb-16'>
         <div>

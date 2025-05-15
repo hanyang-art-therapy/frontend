@@ -6,7 +6,7 @@ export default function Address() {
   return (
     <>
       <div className='w-full flex justify-center border-t border-t-gray'>
-        <address className='w-full max-w-[1260px] pt-[20px] pb-[50px] px-[20px] xl:px-0 flex flex-col gap-[5px] t-r-14 not-italic text-gray-9'>
+        <address className='w-full max-w-[1260px] pt-[20px] pb-[50px] px-5 xl:px-0 flex flex-col gap-[5px] t-r-14 not-italic text-gray-9'>
           <div className='flex flex-wrap whitespace-nowrap'>
             <span className='mr-[3px]'>
               홈페이지 책임자 : {manager.responsible} /{' '}

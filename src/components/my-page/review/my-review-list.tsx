@@ -17,7 +17,7 @@ export default function MyReviewList({
             className='border-b border-b-black border-muted last:border-b-0 hover:bg-primary/10 hover:text-bg-primary transition-all duration-300'>
             <Link
               to={`/gallery/${review.artsNo}`}
-              className='flex items-center gap-4 md:gap-[30px] px-1 md:px-[20px] py-[13px] cursor-pointer'>
+              className='flex items-center gap-4 md:gap-[30px] px-1 md:px-5 py-[13px] cursor-pointer'>
               <p className='px-1 text-gray md:min-w-20'>갤러리</p>
 
               <div className='flex-1 min-w-0'>

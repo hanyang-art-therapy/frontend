@@ -26,7 +26,7 @@ export default function ProfileTable({
                 {label}
               </td>
 
-              <td className='text-gray rounded-[5px] text-r-14 md:text-r-16 px-4 md:px-[20px] truncate'>
+              <td className='text-gray rounded-[5px] text-r-14 md:text-r-16 px-4 md:px-5 truncate'>
                 {renderMyData(key)}
               </td>
             </tr>

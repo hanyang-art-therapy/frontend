@@ -13,7 +13,7 @@ export default function MyPostList({ posts }: { posts: MyPostData[] }) {
             className='border-b border-b-black border-muted last:border-b-0 hover:bg-primary/10 hover:text-bg-primary transition-all duration-300'>
             <Link
               to={`/gallery/${post.artsNo}`}
-              className='flex items-center gap-4 md:gap-[30px] px-1 md:px-[20px] py-[13px] cursor-pointer'>
+              className='flex items-center gap-4 md:gap-[30px] px-1 md:px-5 py-[13px] cursor-pointer'>
               <p className='px-1 text-gray md:min-w-20'>갤러리</p>
 
               <p className='t-m-18 flex-1 truncate'>{post.artName}</p>
