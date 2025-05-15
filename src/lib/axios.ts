@@ -60,8 +60,8 @@ apiInstance.interceptors.response.use(
           window.location.href = '/sign-in';
         }
 
-        // 에러처리 해야함
-        console.error('액세스 토큰 재발급 실패', refreshError);
+        useAuthStore.getState().clearAccessToken();
+        window.location.href = '/sign-in';
       }
     }
 
