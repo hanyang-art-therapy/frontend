@@ -200,6 +200,7 @@
     font-size: clamp(24px, calc(19.5325px + 1.039vw), 32px);
     font-weight: 500;
   }
+
   .t-m-24 {
     font-size: clamp(20px, calc(17.7662px + 0.5195vw), 24px);
     font-weight: 500;
@@ -228,6 +229,21 @@
   .t-r-12 {
     font-size: clamp(10px, calc(8.8831px + 0.2597vw), 12px);
     font-weight: 400;
+  }
+
+  .t-sign-in-banner-highlight {
+    font-size: clamp(26px, calc(13.478px + 3.056vw), 52px);
+    font-weight: 700;
+  }
+
+  .t-sign-in-banner-description {
+    font-size: clamp(16px, calc(9.739px + 1.974vw), 32px);
+    font-weight: 700;
+  }
+
+  .t-m-sign-up-progress {
+    font-size: clamp(14px, calc(12.434px + 0.4545vw), 18px);
+    font-weight: 500;
   }
 
   .min-h-screen-vh {
@@ -540,5 +556,10 @@
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
       margin-top: 30px;
     }
+  }
+
+  .sign-in-banner-bg {
+    background: url(/images/banners/sign-in-banner.webp) no-repeat 0 0;
+    background-size: cover;
   }
 }

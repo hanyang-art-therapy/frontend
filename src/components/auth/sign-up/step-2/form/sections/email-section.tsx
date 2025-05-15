@@ -1,4 +1,4 @@
-import { checkCodeMocking, checkEmailMocking } from '@/apis/auth/sign-up';
+import { checkCode, checkEmail } from '@/apis/auth/sign-up';
 import EmailDomainSelect from '@/components/auth/common/email-domain-select';
 import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
@@ -79,7 +79,7 @@ export default function EmailSection({
   const handleEmailConfirm = async () => {
     if (domainValue && domainValue.trim()) {
       try {
-        await checkEmailMocking({ email: `${watchEmailId}@${domainValue}` });
+        await checkEmail({ email: `${watchEmailId}@${domainValue}` });
         toast.success('인증번호가 전송되었습니다. 메일함을 확인해주세요');
         setIsEmailConfirming(true);
         setTimeLeft(300);
@@ -95,7 +95,7 @@ export default function EmailSection({
     if (!inputValue) return;
 
     try {
-      const response = await checkCodeMocking({ verificationCode: inputValue });
+      const response = await checkCode({ verificationCode: inputValue });
 
       setIsEmailValid(true);
       setIsEmailConfirming(false);
@@ -113,7 +113,7 @@ export default function EmailSection({
   const handleEmailVerifyResend = async () => {
     if (domainValue && domainValue.trim()) {
       try {
-        await checkEmailMocking({ email: `${watchEmailId}@${domainValue}` });
+        await checkEmail({ email: `${watchEmailId}@${domainValue}` });
         toast.success('인증번호가 전송되었습니다. 메일함을 확인해주세요');
       } catch (error) {
         toast.error(handleApiError(error));
@@ -177,24 +177,26 @@ export default function EmailSection({
           </div>
 
           {isEmailConfirming && (
-            <div className='flex items-center gap-5'>
-              <Input
-                disabled={!isEmailConfirming}
-                onBlur={handleEmailVerifyBlur}
-                placeholder='인증번호를 입력해주세요'
-                className='w-[200px] h-[45px]'
-              />
+            <div className='flex  gap-2.5 flex-col'>
+              <div className='flex items-center gap-2.5'>
+                <Input
+                  disabled={!isEmailConfirming}
+                  onBlur={handleEmailVerifyBlur}
+                  placeholder='인증번호를 입력해주세요'
+                  className='w-[200px] h-[45px]'
+                />
 
-              <Button
-                size='sm'
-                type='button'
-                className='h-[45px]'
-                disabled={!isResendingAble}
-                onClick={handleEmailVerifyResend}>
-                재전송
-              </Button>
+                <Button
+                  size='sm'
+                  type='button'
+                  className='h-[45px]'
+                  disabled={!isResendingAble}
+                  onClick={handleEmailVerifyResend}>
+                  재전송
+                </Button>
+              </div>
 
-              <div className='t-r-16'>
+              <div className='t-r-16 pl-2'>
                 {timeLeft > 0 ? (
                   <span className='text-primary t-r-14'>
                     {formatTimeLeft(timeLeft)}

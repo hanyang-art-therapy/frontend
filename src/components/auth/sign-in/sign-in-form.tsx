@@ -3,7 +3,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signInMocking } from '@/apis/auth/sign-in';
+import { signIn } from '@/apis/auth/sign-in';
 import { useAuthStore } from '@/store/auth';
 import { handleApiError } from '@/components/common/error-handler';
 import { toast } from 'sonner';
@@ -30,10 +30,11 @@ export default function SignInForm() {
     e.preventDefault();
 
     try {
-      const response = await signInMocking(userId, password);
+      const response = await signIn(userId, password);
       setAccessToken(response.accessToken);
       setUserNo(response.userNo);
       navigate('/');
+      toast.success(response.message);
 
       if (isUserIdRemember) {
         localStorage.setItem('userId', userId);
@@ -49,10 +50,10 @@ export default function SignInForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className='w-full space-y-[20px] md:p-0 px-[15px]'>
+      className='w-full space-y-[20px] md:p-0 px-[20px]'>
       <Input
         type='text'
-        className='w-full py-[13px] px-[15px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
+        className='w-full py-[13px] px-[20px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
         placeholder='아이디'
         value={userId}
         onChange={(e) => setUserId(e.target.value)}
@@ -60,7 +61,7 @@ export default function SignInForm() {
 
       <Input
         type='current-password'
-        className='w-full py-[13px] px-[15px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
+        className='w-full py-[13px] px-[20px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
         placeholder='비밀번호'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
