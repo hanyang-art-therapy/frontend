@@ -3,7 +3,7 @@ import { QUICK_LINK } from '@/constants/main/quick-link';
 
 export default function QuickLinksSection() {
   return (
-    <section className='w-full flex justify-center'>
+    <section className='w-full flex justify-center px-[20px] xl:px-0'>
       <h3 className='blind'>바로가기 메뉴</h3>
       <ul className='quick-list'>
         {QUICK_LINK.map(({ id, icon: Icon, title, text, path, bgClass }) => {

@@ -2,11 +2,11 @@ import { PROFESSORS } from '@/constants/intro/professors';
 
 export default function ProfessorsContent() {
   return (
-    <ul className='grid md:grid-cols-3 gap-6'>
+    <ul className='grid md:grid-cols-3 gap-[30px]'>
       {PROFESSORS.map((professor) => (
         <li
           key={professor.name + professor.image}
-          className='shadow-lg rounded-xl p-4 text-center transform hover:-translate-y-2 transition-transform duration-300 ease-in-out'>
+          className='shadow-md rounded-xl p-[30px] text-center transform hover:-translate-y-2 transition-transform duration-300 ease-in-out'>
           {professor.image && (
             <img
               src={professor.image}
@@ -18,9 +18,7 @@ export default function ProfessorsContent() {
           <h3 className='t-b-18'>{professor.name}</h3>
           <p>{professor.position}</p>
 
-          {professor.major && (
-            <p className='t-r-14 mt-1'>{professor.major}</p>
-          )}
+          {professor.major && <p className='t-r-14 mt-1'>{professor.major}</p>}
 
           {professor.email && (
             <p className='t-r-14 text-primary mt-1'>
