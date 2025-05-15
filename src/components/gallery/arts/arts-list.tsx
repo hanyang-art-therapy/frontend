@@ -1,9 +1,15 @@
-import { Link } from 'react-router-dom';
 import type { Art } from '@/types/gallery/art';
+import { RefObject } from 'react';
+import { Link } from 'react-router-dom';
 
-export default function ArtsList({ art }: { art: Art }) {
+type ArtsListProps = {
+  art: Art;
+  lastItemRef: RefObject<HTMLLIElement | null> | null;
+};
+
+export default function ArtsList({ art, lastItemRef }: ArtsListProps) {
   return (
-    <li>
+    <li ref={lastItemRef}>
       <Link to={`/gallery/${art.artsNo}`} className='space-y-5'>
         <img
           src={art.files.url}
@@ -12,7 +18,7 @@ export default function ArtsList({ art }: { art: Art }) {
         />
 
         <p className='t-b-24 text-center leading-[24px]'>
-          {art.artist.artistName}
+          {art.artist.length > 1 ? '공동 작품' : art.artist[0].artistName}
         </p>
       </Link>
     </li>

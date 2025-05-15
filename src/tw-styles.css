@@ -149,7 +149,7 @@
     font-family: 'Pretendard', system-ui, sans-serif;
     color: var(--color-black);
   }
-  
+
   ::-webkit-scrollbar {
     display: none;
   }
@@ -200,6 +200,7 @@
     font-size: clamp(24px, calc(19.5325px + 1.039vw), 32px);
     font-weight: 500;
   }
+
   .t-m-24 {
     font-size: clamp(20px, calc(17.7662px + 0.5195vw), 24px);
     font-weight: 500;
@@ -230,6 +231,21 @@
     font-weight: 400;
   }
 
+  .t-sign-in-banner-highlight {
+    font-size: clamp(26px, calc(13.478px + 3.056vw), 52px);
+    font-weight: 700;
+  }
+
+  .t-sign-in-banner-description {
+    font-size: clamp(16px, calc(9.739px + 1.974vw), 32px);
+    font-weight: 700;
+  }
+
+  .t-m-sign-up-progress {
+    font-size: clamp(14px, calc(12.434px + 0.4545vw), 18px);
+    font-weight: 500;
+  }
+
   .min-h-screen-vh {
     @apply min-h-[calc(100vh-400px)];
   }
@@ -257,7 +273,10 @@
     }
     &:hover {
       color: var(--primary);
-      &::after { width: 100%; transform: scaleX(1); }
+      &::after {
+        width: 100%;
+        transform: scaleX(1);
+      }
     }
   }
 
@@ -270,18 +289,26 @@
     z-index: 8;
     display: none;
 
-    li { margin-bottom: 10px; }
-    li:last-child { margin-bottom: 0; }
-    li:hover>a { opacity: 0.7; }
-    li>a { color: var(--white); }
+    li {
+      margin-bottom: 10px;
+    }
+    li:last-child {
+      margin-bottom: 0;
+    }
+    li:hover > a {
+      opacity: 0.7;
+    }
+    li > a {
+      color: var(--white);
+    }
   }
 
-  .search-btn{
+  .search-btn {
     width: 24px;
     height: 24px;
     transition: 0.3s ease-in-out;
 
-    &:hover{
+    &:hover {
       color: var(--primary);
     }
   }
@@ -303,15 +330,29 @@
       transition: all 0.3s ease;
       left: 0;
 
-      &:nth-child(1) { top: 0; }
-      &:nth-child(2) { top: 8px; }
-      &:nth-child(3) { top: 16px; }
+      &:nth-child(1) {
+        top: 0;
+      }
+      &:nth-child(2) {
+        top: 8px;
+      }
+      &:nth-child(3) {
+        top: 16px;
+      }
     }
 
     &.open {
-      span:nth-child(1) { top: 8px; transform: rotate(45deg); }
-      span:nth-child(2) { opacity: 0; }
-      span:nth-child(3) { top: 8px; transform: rotate(-45deg); }
+      span:nth-child(1) {
+        top: 8px;
+        transform: rotate(45deg);
+      }
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      span:nth-child(3) {
+        top: 8px;
+        transform: rotate(-45deg);
+      }
     }
   }
 
@@ -444,7 +485,6 @@
             display: none;
           }
         }
-
       }
 
       .quick-skeleton-style {
@@ -518,5 +558,10 @@
       font-weight: bold;
       margin-top: 30px;
     }
+  }
+
+  .sign-in-banner-bg {
+    background: url(/images/banners/sign-in-banner.webp) no-repeat 0 0;
+    background-size: cover;
   }
 }

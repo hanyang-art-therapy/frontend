@@ -1,24 +1,44 @@
 import apiInstance from '@/lib/axios';
+import type { ArtsPagination } from '@/types';
+import type { Art, ArtDetail, ArtsRequest } from '@/types/gallery/art';
 import axios from 'axios';
 
-// GET /gallery/arts
-export const getArts = async () => {
-  const response = await apiInstance.get('/gallery/arts');
+// GET 작품 전체 조회 /gallery/arts
+export const getArts = async ({
+  lastId,
+  year,
+  cohort,
+}: ArtsRequest): Promise<ArtsPagination<Art>> => {
+  const response = await apiInstance.get('/galleries/arts', {
+    params: { lastId, year, cohort },
+  });
+
   return response.data;
 };
 
-export const getArtsMocking = async () => {
-  const response = await axios.get('/gallery/arts');
+export const getArtsMocking = async ({
+  lastId,
+  year,
+  cohort,
+}: ArtsRequest): Promise<ArtsPagination<Art>> => {
+  const response = await axios.get('/galleries/arts', {
+    params: { lastId, year, cohort },
+  });
+
   return response.data;
 };
 
-// GET /gallery/arts/:id
-export const getArt = async (artNo: number) => {
-  const response = await apiInstance.get(`/gallery/arts/${artNo}`);
+// GET /gallery/arts/:artsNo
+export const getArtDetail = async (artsNo: number): Promise<ArtDetail> => {
+  const response = await apiInstance.get(`/galleries/arts/${artsNo}`);
+
   return response.data;
 };
 
-export const getArtMocking = async (artNo: number) => {
+export const getArtDetailMocking = async (
+  artNo: number
+): Promise<ArtDetail> => {
   const response = await axios.get(`/galleries/arts/${artNo}`);
+
   return response.data;
 };

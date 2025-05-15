@@ -22,7 +22,7 @@ export default function ProfileTable({
             <tr
               key={key}
               className='border-b-[1px] border-bg-gray-d last:border-b-0 md:h-[45px] h-[35px] hover:bg-primary/10'>
-              <td className='t-b-16 rounded-[5px] title-b-14 text-center w-[80px] md:w-[250px] border-r-[1px] border-bg-gray-d'>
+              <td className='t-b-16 rounded-[5px] t-b-14 text-center w-[80px] md:w-[250px] border-r-[1px] border-bg-gray-d'>
                 {label}
               </td>
 
