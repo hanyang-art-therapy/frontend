@@ -1,4 +1,4 @@
-import { checkStudentNoMocking } from '@/apis/auth/sign-up';
+import { checkStudentNo } from '@/apis/auth/sign-up';
 import { handleApiError } from '@/components/common/error-handler';
 import { Input } from '@/components/ui/input';
 import Required from '@/components/ui/required';
@@ -36,7 +36,7 @@ export default function StudentNoSection({
     onBlur(event);
 
     try {
-      await checkStudentNoMocking({
+      await checkStudentNo({
         studentNo: watchStudentNo,
       });
 

@@ -1,4 +1,4 @@
-import { checkIdMocking } from '@/apis/auth/sign-up';
+import { checkId } from '@/apis/auth/sign-up';
 import { handleApiError } from '@/components/common/error-handler';
 import { Input } from '@/components/ui/input';
 import Required from '@/components/ui/required';
@@ -34,7 +34,7 @@ export default function UserIdSection({
     onBlur(event);
 
     try {
-      await checkIdMocking({
+      await checkId({
         userId: watchUserId,
       });
 

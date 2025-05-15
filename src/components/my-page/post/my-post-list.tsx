@@ -14,13 +14,13 @@ export default function MyPostList({ posts }: { posts: MyPostData[] }) {
             <Link
               to={`/gallery/${post.artsNo}`}
               className='flex items-center gap-4 md:gap-[30px] px-1 md:px-5 py-[13px] cursor-pointer'>
-              <p className='px-1 text-gray md:min-w-20'>갤러리</p>
+              <p className='px-1 t-r-16 text-gray-6 md:min-w-20'>갤러리</p>
 
               <p className='t-m-18 flex-1 truncate'>{post.artName}</p>
               {post.artType === 'GROUP' && (
-                <p className='text-gray md:inline hidden'>공동작품</p>
+                <p className='text-gray-6 t-r-16 md:inline hidden'>공동작품</p>
               )}
-              <p className='text-muted t-r-16'>
+              <p className='text-gray-9 t-r-16'>
                 {formatTimeStamp(post.createdAt)}
               </p>
             </Link>

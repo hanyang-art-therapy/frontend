@@ -1,4 +1,4 @@
-import { findMyIdMocking, findMyPasswordMocking } from '@/apis/find-my';
+import { findMyId, findMyPassword } from '@/apis/find-my';
 import FindMyPwDialog from '@/components/auth/find-my/find-my-pw-dialog';
 import EmailSection from '@/components/auth/find-my/form/email-section';
 import UserInfoSection from '@/components/auth/find-my/form/user-info-section';
@@ -48,13 +48,12 @@ export default function FindMy() {
 
     if (isFindId && userName) {
       try {
-        const response = await findMyIdMocking({
+        const response = await findMyId({
           email,
           userName,
         });
 
         setFoundId(response.message);
-
         setIsDialogOpen(true);
       } catch (error) {
         toast.error(handleApiError(error));
@@ -63,12 +62,13 @@ export default function FindMy() {
 
     if (!isFindId && userId && email) {
       try {
-        await findMyPasswordMocking({
+        const response = await findMyPassword({
           userId,
           email,
         });
 
         setIsDialogOpen(true);
+        toast.success(response.message);
       } catch (error) {
         toast.error(handleApiError(error));
       }
@@ -81,7 +81,7 @@ export default function FindMy() {
     <>
       <Step items={FIND_MY_STEP_ITEMS} step={step} setStep={setStep} />
 
-      <div className='md:max-w-[1260px] md:px-0 px-5 mx-auto pt-[60px] space-y-[30px] md:min-h-[calc(100vh-394px)]'>
+      <div className='md:max-w-[1260px] xl:px-0 px-[20px] mx-auto pt-[60px] space-y-[30px] md:min-h-[calc(100vh-394px)]'>
         <h1 className='t-b-24'>{isFindId ? findId.label : findPw.label}</h1>
         <p className='t-b-18'>회원님의 정보를 각 항목에 맞게 입력해주세요.</p>
 

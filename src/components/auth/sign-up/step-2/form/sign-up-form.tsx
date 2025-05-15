@@ -1,4 +1,4 @@
-import { signUpMocking } from '@/apis/auth/sign-up';
+import { signUp } from '@/apis/auth/sign-up';
 import {
   EmailSection,
   PwSection,
@@ -45,16 +45,8 @@ export default function SignUpForm({
   const onSubmit = async (data: SignUpFormValues) => {
     const email = data.emailId + '@' + data.emailDomain;
 
-    console.log({
-      userId: data.userId,
-      password: data.password,
-      userName: data.userName,
-      email: data.emailId + '@' + data.emailDomain,
-      studentNo: data.studentNo,
-    });
-
     try {
-      await signUpMocking({
+      await signUp({
         userId: data.userId,
         password: data.password,
         userName: data.userName,

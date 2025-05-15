@@ -1,21 +1,23 @@
-import { signOutMocking } from '@/apis/auth/sign-out';
+import { signOut } from '@/apis/auth/sign-out';
 import { handleApiError } from '@/components/common/error-handler';
 import AuthLinksSkeleton from '@/components/header/links/auth-links-skeleton';
 import { useAuthStore } from '@/store/auth';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export default function AuthLinks() {
-  const { accessToken, clearAccessToken } = useAuthStore();
+  const { accessToken, reset } = useAuthStore();
 
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      await signOutMocking();
-      clearAccessToken();
+      const response = await signOut();
+      reset();
       navigate('/');
+      toast.success(response.message);
     } catch (error) {
-      alert(handleApiError(error));
+      toast.error(handleApiError(error));
     }
   };
 
@@ -24,7 +26,7 @@ export default function AuthLinks() {
   }
 
   return (
-    <div className='flex gap-5 px-5 leading-[40px] bg-bg-primary text-white'>
+    <div className='flex gap-5 px-5 leading-[40px] bg-bg-primary text-white t-b-14'>
       {accessToken ? (
         <button
           onClick={handleLogout}
