@@ -172,7 +172,7 @@
     font-weight: 700;
   }
   .t-b-52 {
-    font-size: clamp(36px, calc(27.0649px + 2.0779vw), 52px);
+    font-size: clamp(34px, calc(27.0649px + 2.0779vw), 52px);
     font-weight: 700;
   }
   .t-b-32 {
@@ -373,12 +373,11 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    max-width: 1160px;
+    max-width: 1260px;
     padding: 60px 0;
 
     @media (max-width: 767px) {
       flex-wrap: wrap;
-      padding: 60px 20px;
 
       .quick-style {
         display: block;
@@ -429,8 +428,6 @@
     }
 
     @media (min-width: 768px) and (max-width: 1024px) {
-      padding: 60px 20px;
-
       .quick-style {
         display: block;
         width: clamp(135px, calc(23.33px + 13.89vw), 200px);
