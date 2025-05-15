@@ -1,15 +1,39 @@
+import { getMyPostsMocking } from '@/apis/my-page/posts';
+import { getMyProfileMocking } from '@/apis/my-page/profile';
+import { getMyReviewsMocking } from '@/apis/my-page/reviews';
 import MyPage from '@/components/my-page/my-page';
-import type { MyPage as MyPageType } from '@/types/my-page';
+import type { MyPostData, MyProfileData, MyReviewData } from '@/types/my-page';
+import { useEffect, useState } from 'react';
 
 export default function Page() {
-  const ACCOUNT_MOCK_DATA: MyPageType = {
-    userId:
-      'acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321',
-    userName: '홍길동',
-    email: '1234abcd@gmail.com',
-    cohort: 25,
-    studentNo: '20251234',
-  };
+  const [myReviews, setMyReviews] = useState<MyReviewData[]>([]);
+  const [myPosts, setMyPosts] = useState<MyPostData[]>([]);
+  const [myProfile, setMyProfile] = useState<MyProfileData>(
+    {} as MyProfileData
+  );
 
-  return <MyPage accountData={ACCOUNT_MOCK_DATA} />;
+  useEffect(() => {
+    const fetchMyReviews = async () => {
+      const response = await getMyReviewsMocking();
+      setMyReviews(response);
+    };
+
+    const fetchMyPosts = async () => {
+      const response = await getMyPostsMocking();
+      setMyPosts(response);
+    };
+
+    const fetchMyProfile = async () => {
+      const response = await getMyProfileMocking();
+      setMyProfile(response);
+    };
+
+    fetchMyReviews();
+    fetchMyPosts();
+    fetchMyProfile();
+  }, []);
+
+  return (
+    <MyPage myProfile={myProfile} myReviews={myReviews} myPosts={myPosts} />
+  );
 }

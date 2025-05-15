@@ -6,7 +6,7 @@ import { COMMUNITY_POSTS } from '@/constants/main/community';
 export default function ContentsSection() {
   return (
     <section className='w-full flex justify-center py-[60px] bg-bg-gray-fa'>
-      <div className='w-[1260px] flex justify-between items-stert gap-[60px] flex-col lg:flex-row px-[20px] xl:px-0'>
+      <div className='w-[1260px] flex justify-between items-stert gap-[60px] flex-col lg:flex-row px-5 xl:px-0'>
         {/* 올해의 전시 활동 Content */}
         <div className='w-auto space-y-[20px]'>
           <div className='w-full flex justify-between items-center'>
@@ -23,7 +23,9 @@ export default function ContentsSection() {
           {/* 전시회 리스트 */}
           <ul className='flex gap-[30px]'>
             {EXHIBITION_OVERVIEW.map((EXHIBITION_OVERVIEW) => (
-              <li key={`${EXHIBITION_OVERVIEW.id}/${EXHIBITION_OVERVIEW.title}`} className='w-full'>
+              <li
+                key={`${EXHIBITION_OVERVIEW.id}/${EXHIBITION_OVERVIEW.title}`}
+                className='w-full'>
                 {/* 전시회 포스터 이미지(클릭 시 전시 소개 상세 페이지로 이동 가능) */}
                 <a
                   href='/gallery?step=intro'
@@ -57,7 +59,7 @@ export default function ContentsSection() {
             {COMMUNITY_POSTS.map((COMMUNITY_POSTS) => (
               <li
                 key={COMMUNITY_POSTS.id}
-                className='grid grid-cols-[auto_1fr_auto] gap-[20px] items-center leading-[49px]  px-[20px] t-r-16'>
+                className='grid grid-cols-[auto_1fr_auto] gap-[20px] items-center leading-[49px]  px-5 t-r-16'>
                 {/* 번호 */}
                 <span className='t-b-14'>{COMMUNITY_POSTS.id}</span>
                 {/* 제목 (클릭 시 상세 페이지로 이동 가능) */}

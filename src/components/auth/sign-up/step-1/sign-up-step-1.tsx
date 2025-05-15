@@ -73,7 +73,7 @@ export default function SignUpStep1({
                         'w-1/3 h-32 border-r border-bg-gray-d p-2 overflow-y-auto',
                         idx === 2 && 'border-r-0'
                       )}>
-                      <span className='title-r-16'>{detail.title}</span>
+                      <span className='t-r-16'>{detail.title}</span>
 
                       <ul className='space-y-1 mt-2'>
                         {detail.list.map((item, idx) => (

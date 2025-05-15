@@ -11,22 +11,22 @@ export default function Step({ items, step, setStep }: StepProps) {
   const width = `${100 / items.length || 1}%`;
 
   return (
-    <div className='h-[50px] border-b w-full flex justify-center border-b-bg-gray-d'>
-      <ul className='flex w-full justify-between md:max-w-[1280px]'>
+    <div className='w-full h-[50px] flex justify-center'>
+      <ul className='w-full md:max-w-[1260px] h-[50px] flex justify-between bg-bg-gray-fa'>
         {items.map((item, index) => {
           return (
             <li
               key={index}
               style={{ width }}
               className={cn(
-                'border-r border-gray-300 first:border-l-1 last:border-l-0 hover:bg-orange-100 hover:text-primary transition-all duration-300',
-                step === item.value && 'bg-orange-50 text-primary'
+                'hover:bg-orange-100 hover:text-primary transition-all duration-300 bg-bg-gray-fa text-gray-9',
+                step === item.value && 'bg-white text-black'
               )}>
               <button
                 onClick={() => setStep(item.value)}
                 className={cn(
                   'w-full h-full flex items-center justify-center cursor-pointer',
-                  step === item.value ? 't-b-18' : 't-r-18'
+                  step === item.value ? 't-m-18' : 't-r-18'
                 )}>
                 {item.label}
               </button>

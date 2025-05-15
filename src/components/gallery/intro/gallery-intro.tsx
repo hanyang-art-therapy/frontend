@@ -1,5 +1,5 @@
 import GalleryIntroContentTitle from '@/components/gallery/intro/gallery-intro-content-title';
-import { GALLERY_INTRO } from '@/constants/gallery/gallery';
+import { GALLERY_INTRO } from '@/constants/gallery/intro';
 
 export default function GalleryIntro() {
   const { intro, purpose, participants, artTherapy, schedule, guide } =
@@ -22,7 +22,7 @@ export default function GalleryIntro() {
   };
 
   return (
-    <div className='mx-auto md:px-0 px-[20px] pt-15 grid gap-16'>
+    <div className='mx-auto md:px-0 px-5 pt-15 grid gap-16'>
       {/* 전시 개요 */}
       <section className='grid md:grid-cols-[1fr_3fr] gap-4 md:gap-8'>
         <GalleryIntroContentTitle
@@ -33,7 +33,7 @@ export default function GalleryIntro() {
 
         <ul className='space-y-4'>
           {intro.content.map((text) => (
-            <li key={text} className='text-gray '>
+            <li key={text} className='text-gray'>
               {parseTextWithBold(text)}
             </li>
           ))}
@@ -45,7 +45,7 @@ export default function GalleryIntro() {
         <GalleryIntroContentTitle icon={purpose.icon} title={purpose.title} />
         <ul className='space-y-4'>
           {purpose.content.map(({ subTitle, description }) => (
-            <li key={subTitle} className='bg-bg-muted p-6 rounded-lg'>
+            <li key={subTitle} className='bg-bg-gray-fa p-6 rounded-lg'>
               <h3 className='font-semibold text-lg mb-2'>{subTitle}</h3>
               <p className='text-gray'>{description}</p>
             </li>
@@ -91,9 +91,9 @@ export default function GalleryIntro() {
         <ul className='space-y-6'>
           {schedule.content.map(({ icon: Icon, subTitle, description }) => (
             <li key={description} className='flex items-start gap-4'>
-              <Icon className='h-5 w-5 text-bg-muted0 mt-1' />
+              <Icon className='h-5 w-5 text-primary mt-1' />
               <div>
-                <h3 className='font-semibold'>{subTitle}</h3>
+                <h3 className='t-b-16'>{subTitle}</h3>
                 <p className='text-gray'>{description}</p>
               </div>
             </li>

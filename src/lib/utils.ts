@@ -19,6 +19,12 @@ export const formatTimeStamp = (timeStamp: string): string => {
   return `${year}-${month}-${day}`;
 };
 
+export const formatTimeLeft = (seconds: number) => {
+  const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const s = String(seconds % 60).padStart(2, '0');
+  return `${m}:${s}`;
+};
+
 /**
  * 비밀번호 유효성 검사
  * @param password - 비밀번호 문자열

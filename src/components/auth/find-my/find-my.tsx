@@ -1,3 +1,4 @@
+import { findMyId, findMyPassword } from '@/apis/find-my';
 import FindMyPwDialog from '@/components/auth/find-my/find-my-pw-dialog';
 import EmailSection from '@/components/auth/find-my/form/email-section';
 import UserInfoSection from '@/components/auth/find-my/form/user-info-section';
@@ -11,6 +12,8 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { handleApiError } from '@/components/common/error-handler';
+import { toast } from 'sonner';
 
 export default function FindMy() {
   const [findId, findPw] = FIND_MY_STEP_ITEMS; // 아이디 찾기
@@ -39,21 +42,36 @@ export default function FindMy() {
     },
   });
 
-  // TODO: API 호출 로직 추가
-  const onSubmit = (data: FindMyFormValues) => {
-    const email = `${data.emailId}@${data.emailDomain}`;
+  const onSubmit = async (data: FindMyFormValues) => {
+    const { userId, userName, emailId, emailDomain } = data;
+    const email = `${emailId}@${emailDomain}`;
 
-    if (isFindId) {
-      // 아이디 찾기 API 호출
-      const response = 'ApiResponse';
-      setFoundId(response);
-      console.log(response);
-      console.log({ userName: data.userName, email });
-      setIsDialogOpen(true);
-    } else {
-      // 비밀번호 찾기 API 호출
-      console.log({ userId: data.userId, email });
-      setIsDialogOpen(true);
+    if (isFindId && userName) {
+      try {
+        const response = await findMyId({
+          email,
+          userName,
+        });
+
+        setFoundId(response.message);
+        setIsDialogOpen(true);
+      } catch (error) {
+        toast.error(handleApiError(error));
+      }
+    }
+
+    if (!isFindId && userId && email) {
+      try {
+        const response = await findMyPassword({
+          userId,
+          email,
+        });
+
+        setIsDialogOpen(true);
+        toast.success(response.message);
+      } catch (error) {
+        toast.error(handleApiError(error));
+      }
     }
 
     reset();
@@ -63,7 +81,7 @@ export default function FindMy() {
     <>
       <Step items={FIND_MY_STEP_ITEMS} step={step} setStep={setStep} />
 
-      <div className='md:max-w-[1280px] md:px-0 px-5 mx-auto pt-[60px] space-y-[30px] md:min-h-[calc(100vh-394px)]'>
+      <div className='md:max-w-[1260px] xl:px-0 px-[20px] mx-auto pt-[60px] space-y-[30px] md:min-h-[calc(100vh-394px)]'>
         <h1 className='t-b-24'>{isFindId ? findId.label : findPw.label}</h1>
         <p className='t-b-18'>회원님의 정보를 각 항목에 맞게 입력해주세요.</p>
 

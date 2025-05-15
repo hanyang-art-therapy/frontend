@@ -5,10 +5,14 @@ import { SIGN_UP_PROGRESS } from '@/constants/auth/sign-up';
 export default function SignUpProgress({ progress }: { progress: number }) {
   return (
     <div className='border-b border-bg-gray-d w-screen flex h-[60px] mb-[60px]'>
-      <ul className='flex items-center md:max-w-[1280px] w-full md:px-5 justify-center md:justify-end mx-auto'>
+      <ul className='flex items-center md:max-w-[1260px] w-full xl:px-5 justify-center md:justify-end mx-auto'>
         {SIGN_UP_PROGRESS.map((item) => (
           <li key={item.id} className='flex items-center'>
-            <p className={cn('t-m-18', item.id === progress && 'text-primary')}>
+            <p
+              className={cn(
+                't-m-sign-up-progress',
+                item.id === progress && 'text-primary'
+              )}>
               <span className='md:inline hidden'>{item.number}</span>{' '}
               <span>{item.title}</span>
             </p>

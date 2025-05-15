@@ -2,12 +2,20 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { FormEvent, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signIn } from '@/apis/auth/sign-in';
+import { useAuthStore } from '@/store/auth';
+import { handleApiError } from '@/components/common/error-handler';
+import { toast } from 'sonner';
 
-export default function LoginForm() {
+export default function SignInForm() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [isUserIdRemember, setIsUserIdRemember] = useState(false);
+
+  const { setAccessToken, setUserNo } = useAuthStore();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userId = localStorage.getItem('userId');
@@ -18,25 +26,34 @@ export default function LoginForm() {
     }
   }, []);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    console.log({ username: userId, password });
+    try {
+      const response = await signIn(userId, password);
+      setAccessToken(response.accessToken);
+      setUserNo(response.userNo);
+      navigate('/');
+      toast.success(response.message);
 
-    if (isUserIdRemember) {
-      localStorage.setItem('userId', userId);
-    } else {
-      localStorage.removeItem('userId');
+      if (isUserIdRemember) {
+        localStorage.setItem('userId', userId);
+      } else {
+        localStorage.removeItem('userId');
+      }
+    } catch (error: unknown) {
+      const errorMessage = handleApiError(error);
+      toast.error(errorMessage);
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className='w-full space-y-[20px] md:p-0 px-[15px]'>
+      className='w-full space-y-[20px] md:p-0 px-[20px]'>
       <Input
         type='text'
-        className='w-full py-[13px] px-[15px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
+        className='w-full py-[13px] px-[20px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
         placeholder='아이디'
         value={userId}
         onChange={(e) => setUserId(e.target.value)}
@@ -44,7 +61,7 @@ export default function LoginForm() {
 
       <Input
         type='current-password'
-        className='w-full py-[13px] px-[15px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
+        className='w-full py-[13px] px-[20px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
         placeholder='비밀번호'
         value={password}
         onChange={(e) => setPassword(e.target.value)}

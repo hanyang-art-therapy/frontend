@@ -11,9 +11,10 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-bg-primary text-white shadow-xs hover:bg-bg-primary/80',
         destructive:
-          'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
+          'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 ',
         outline:
-          'border bg-bg-muted shadow-xs hover:bg-bg-muted/80 dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+          'border border-gray-3 bg-bg-gray-fa shadow-xs hover:bg-bg-gray-fa/80',
+        gray: 'border border-gray-300 bg-gray-3 text-gray-800 shadow-xs hover:bg-gray-600 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-600',
         secondary:
           'bg-bg-secondary/80 text-white shadow-xs hover:bg-secondary/60',
         ghost:
@@ -21,10 +22,10 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: 'h-[45px] w-[200px] py-[14px] has-[>svg]:px-3 t-b-18',
+        default: 'h-[45px] w-[200px] py-[14px] t-b-18',
         sm: 'h-[36px] py-[14px] px-3 has-[>svg]:px-2.5 text-r-14 text-white',
-        lg: 'h-10 px-6 has-[>svg]:px-4',
-        icon: 'size-9',
+        lg: 'h-10 px-6 has-[>svg]:px-4 t-m-18',
+        icon: 'size-9 px-auto',
       },
     },
     defaultVariants: {
@@ -49,7 +50,7 @@ function Button({
   return (
     <Comp
       data-slot='button'
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ className, variant, size }))}
       {...props}
     />
   );
