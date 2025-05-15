@@ -30,7 +30,7 @@ export default function ReviewsForm({
             />
             <button
               onClick={onImageDelete}
-              className='absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-opacity-80'
+              className='absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-opacity-70'
               aria-label='이미지 삭제'>
               ×
             </button>

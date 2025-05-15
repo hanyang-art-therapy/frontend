@@ -12,7 +12,7 @@ export default function AuthHeader() {
   const subName = subNameMap[location.pathname as keyof typeof subNameMap];
 
   return (
-    <header className='flex items-center h-15 nav-box-shadow w-screen z-10'>
+    <header className='flex items-center h-15 box-shadow-style w-screen z-10'>
       <div className='md:max-w-[1280px] w-full mx-auto p-[20px] xl:p-0 flex justify-start'>
         <Logo subName={subName} />
       </div>

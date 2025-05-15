@@ -16,13 +16,13 @@ export default function NavMenu() {
   return (
     <>
       {/* 데스크탑 메뉴 */}
-      <div className="hidden xl:flex items-center gap-[60px] t-m-18">
+      <div className='hidden xl:flex items-center gap-[60px] t-m-18'>
         <DesktopMenu />
         {/*<SearchButton />*/}
       </div>
 
       {/* 모바일 메뉴 버튼 */}
-      <div className="flex items-center gap-[15px] xl:hidden">
+      <div className='flex items-center gap-[15px] xl:hidden'>
         {/*<SearchButton />*/}
         <HamburgerButton
           isOpen={isSlideOpen}
