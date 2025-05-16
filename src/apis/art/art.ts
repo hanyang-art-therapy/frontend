@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+// import { supabase } from '@/lib/supabase';
 import type { ArtsPagination } from '@/types';
 import type { Art, ArtDetail, ArtsRequest } from '@/types/gallery/art';
 import axios from 'axios';
