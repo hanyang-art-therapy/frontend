@@ -10,11 +10,11 @@ export default function Art({ artDetail }: { artDetail: ArtDetailType }) {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex flex-col justify-between xl:flex-row pb-[40px] md:pb-[100px] gap-10 xl:gap-0'>
+      <div className='flex flex-col justify-between xl:flex-row pb-[60px] md:pb-[100px] gap-[60px] xl:gap-0'>
         {/* 작품 이미지 */}
         <ArtImage url={file.url} name={file.name} />
 
-        <div className='xl:w-[40%] space-y-10 md:space-y-15 md:w-[720px] mx-auto xl:mx-0'>
+        <div className='xl:w-[40%] w-full space-y-[60px] md:space-y-[100px] mx-auto xl:mx-0'>
           {/* 작품 상세 박스 */}
           <ArtInfo artName={artName} artist={artist} caption={caption} />
 

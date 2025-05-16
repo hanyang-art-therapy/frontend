@@ -7,6 +7,12 @@ export function ComingSoonPage() {
   return (
     <div className='min-h-screen-vh mt-15 flex flex-col items-center justify-center'>
       <div className='w-full max-w-[1260px] px-5 xl:px-0 text-center'>
+        <img
+          src='/images/coming-soon.png'
+          alt='404 Error'
+          className='mx-auto md:w-[213px] w-[150px] h-auto'
+        />
+
         <h1 className='t-b-52 mb-4'>
           COMING SOON <span className='whitespace-nowrap'>...💻🔨</span>
         </h1>
