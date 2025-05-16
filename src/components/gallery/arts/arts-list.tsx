@@ -7,13 +7,14 @@ type ArtsListProps = {
 
 export default function ArtsList({ art }: ArtsListProps) {
   if (!art) return null;
+
   return (
     <li>
       <Link to={`/gallery/${art.artsNo}`} className='space-y-5'>
         <img
           src={art.url}
           alt={art.artName}
-          className='w-auto min-w-[230px] h-auto aspect-1 object-cover'
+          className='w-[400px] h-[400px] object-cover'
         />
 
         <p className='t-b-24 text-center leading-[24px]'>

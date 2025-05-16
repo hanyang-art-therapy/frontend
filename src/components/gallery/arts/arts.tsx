@@ -48,7 +48,7 @@ export default function Arts() {
       {isLoading ? (
         <ArtListSkeleton />
       ) : (
-        <ul className='grid-cols-1 grid md:grid-cols-3 md:w-full md:gap-[5vw] pt-[68px]'>
+        <ul className='grid-cols-1 grid md:grid-cols-3 md:w-full gap-[5vw] pt-[68px]'>
           {filteredArts.map((art) => (
             <ArtsList key={art.artsNo} art={art} />
           ))}
