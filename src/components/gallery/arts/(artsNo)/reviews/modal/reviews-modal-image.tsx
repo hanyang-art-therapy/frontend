@@ -40,38 +40,35 @@ export default function ReviewsModalImage({
   };
 
   return (
-    <div className='w-full flex flex-col gap-4 md:flex-1 h-full md:max-h-[700px] md:min-w-[400px] object-contain'>
+    <div className='w-full flex flex-col gap-4 md:flex-1 min-w-[100px] md:min-w-[320px] xl:min-w-[400px] h-auto'>
       <span className='t-b-16'>첨부한 이미지</span>
 
       {/* 이미지 있음 */}
       {hasImage ? (
-        <div className='relative'>
+        <div className='relative w-full aspect-[4/3] max-h-[50vh] rounded overflow-hidden'>
           <img
             src={imageUrl}
             alt='리뷰 이미지'
             aria-label='리뷰 이미지'
-            className='w-full h-full  object-cover'
+            className='w-full h-full object-cover'
           />
 
           {isEditing && (
             <button
               onClick={handleReviewImageDelete}
-              className='absolute top-1 right-1 bg-black/80 hover:bg-black rounded-full w-6 h-6 flex items-center justify-center cursor-pointer'
+              className='absolute top-2 right-2 bg-black rounded-full w-7 h-7 flex items-center justify-center'
               aria-label='이미지 삭제'>
-              <X
-                className='w-4 h-4 hover:scale-110 transition-all duration-100'
-                color='white'
-              />
+              <X className='w-4 h-4 text-white hover:scale-110 transition-transform duration-150' />
             </button>
           )}
         </div>
       ) : (
-        !isEditing && '없음'
+        !isEditing && <span className='text-sm text-gray-500'>없음</span>
       )}
 
-      {/* 수정 중 이미지 업로드 */}
+      {/* 이미지 업로드 영역 */}
       {isEditing && !hasImage && (
-        <div className='relative border-2 border-dashed border-gray-9 rounded-[5px] p-4 h-[400px] flex items-center justify-center'>
+        <div className='relative w-full aspect-[4/3] border-2 border-dashed border-gray-300 rounded-md p-4 flex items-center justify-center'>
           <input
             type='file'
             accept='image/*'

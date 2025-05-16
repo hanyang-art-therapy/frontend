@@ -9,3 +9,8 @@ export type ResetPasswordRequest = {
   currentPassword: string;
   newPassword: string;
 };
+
+export type MyProfileResponse = Pick<
+  User,
+  'userId' | 'email' | 'userName' | 'studentNo' | 'role'
+>;

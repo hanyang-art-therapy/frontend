@@ -2,7 +2,10 @@ import { checkStudentNo } from '@/apis/auth/sign-up';
 import { handleApiError } from '@/components/common/error-handler';
 import { Input } from '@/components/ui/input';
 import Required from '@/components/ui/required';
-import type { SignUpFormValues } from '@/schemas/sign-up/sign-up-schema';
+import type {
+  MemberSignUpFormValues,
+  SignUpFormValues,
+} from '@/schemas/sign-up/sign-up-schema';
 import type { Dispatch, SetStateAction, FocusEvent } from 'react';
 import type {
   FieldErrors,
@@ -70,8 +73,10 @@ export default function StudentNoSection({
           {...rest}
         />
       </div>
-      {errors.studentNo && (
-        <p className='text-destructive t-r-14'>{errors.studentNo.message}</p>
+      {(errors as FieldErrors<MemberSignUpFormValues>).studentNo && (
+        <p className='text-destructive t-r-14'>
+          {(errors as FieldErrors<MemberSignUpFormValues>).studentNo?.message}
+        </p>
       )}
     </div>
   );

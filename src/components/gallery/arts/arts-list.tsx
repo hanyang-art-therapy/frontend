@@ -7,6 +7,7 @@ type ArtsListProps = {
 
 export default function ArtsList({ art }: ArtsListProps) {
   if (!art) return null;
+
   return (
     <li>
       <Link to={`/gallery/${art.artsNo}`} className='space-y-5'>

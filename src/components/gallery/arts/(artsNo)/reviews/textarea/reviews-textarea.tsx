@@ -28,7 +28,7 @@ export default function ReviewsTextarea({
   };
 
   return (
-    <div className='md:flex-1 flex flex-col gap-4 w-[70%] md:w-[90%]'>
+    <div className='flex-1 flex flex-col gap-4 w-[70%] md:w-[90%]'>
       <input
         ref={imageInputRef}
         id='imageInput'

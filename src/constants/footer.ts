@@ -33,5 +33,7 @@ export const FOOTER_ADDRESS = {
     contact: '교수 김은진',
   },
   copyright:
-    'Copyright @ 2025 Hanyang University Erica Art Thearpy. All Rights Reserved.',
+    'Copyrightⓒ2025 Hanyang University Erica Art Thearpy. All Rights Reserved.',
+  address:
+    '(우)15588 경기도 안산시 상록구 한양대학로 55 한양대학교 ERICA컨벤션센터 4층 407호',
 };

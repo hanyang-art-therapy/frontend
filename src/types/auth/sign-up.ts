@@ -1,9 +1,8 @@
 import type { User } from '@/types';
 
-export type SignUpRequest = Pick<
-  User,
-  'password' | 'userName' | 'email' | 'studentNo'
->;
+export type SignUpRequest = Pick<User, 'password' | 'userName' | 'email'> & {
+  studentNo?: string;
+};
 
 export type CheckStudentNoRequest = Pick<User, 'studentNo'>;
 
@@ -16,3 +15,5 @@ export type CheckCodeRequest = {
 export type SignUpResponse = {
   message: string;
 };
+
+export type UserType = 'member' | 'general';

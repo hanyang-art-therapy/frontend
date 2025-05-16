@@ -7,7 +7,7 @@ export default function ArtDescription({
     <div>
       <h2 className='text-left t-b-24 mb-[30px]'>작품 설명</h2>
       <div className='flex  flex-col items-start justify-start gap-[10px] rounded-[5px]'>
-        <div className='t-r-18 text-left leading-[2] md:leading-[2] md:p-[10px]'>
+        <div className='t-r-18 text-left leading-[2] md:leading-[2] md:p-[10px] whitespace-pre-line'>
           {description}
         </div>
       </div>

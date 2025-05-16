@@ -10,11 +10,14 @@ import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
 import {
   signUpSchema,
+  generalSignUpSchema,
   type SignUpFormValues,
+  type MemberSignUpFormValues,
 } from '@/schemas/sign-up/sign-up-schema';
+import type { UserType } from '@/types/auth/sign-up';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoaderCircle } from 'lucide-react';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -25,9 +28,10 @@ export default function SignUpForm({
 }) {
   const [selectedDomain, setSelectedDomain] = useState('hanyang.ac.kr');
   const [isLoading, setIsLoading] = useState(false);
-  const [userType, setUserType] = useState('member');
+  const [userType, setUserType] = useState<UserType>('member');
   const [isStudentNoValid, setIsStudentNoValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
+
   const {
     register,
     handleSubmit,
@@ -35,9 +39,13 @@ export default function SignUpForm({
     watch,
     reset,
     setError,
+    clearErrors,
+    trigger,
     formState: { errors, isValid },
   } = useForm<SignUpFormValues>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(
+      userType === 'member' ? signUpSchema : generalSignUpSchema
+    ),
     mode: 'onChange',
   });
 
@@ -51,7 +59,10 @@ export default function SignUpForm({
         password: data.password,
         userName: data.userName,
         email,
-        studentNo: data.studentNo,
+        studentNo:
+          userType === 'member'
+            ? (data as MemberSignUpFormValues).studentNo
+            : undefined,
       });
     } catch (error) {
       const errorMessage = handleApiError(error);
@@ -62,6 +73,24 @@ export default function SignUpForm({
     reset();
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (userType === 'general') {
+      clearErrors('studentNo');
+      setIsStudentNoValid(true);
+      reset(
+        { ...watch(), studentNo: undefined },
+        { keepErrors: false, keepDirty: true, keepTouched: true }
+      );
+      trigger();
+    }
+  }, [userType, clearErrors, setIsStudentNoValid, reset, watch, trigger]);
+
+  const isButtonDisabled =
+    isLoading ||
+    !isValid ||
+    (userType === 'member' && !isStudentNoValid) ||
+    !isEmailValid;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
@@ -80,8 +109,6 @@ export default function SignUpForm({
 
       <PwSection register={register} errors={errors} />
 
-      <UserNameSection register={register} errors={errors} />
-
       {userType === 'member' && (
         <StudentNoSection
           register={register}
@@ -92,13 +119,13 @@ export default function SignUpForm({
         />
       )}
 
+      <UserNameSection register={register} errors={errors} />
+
       <div className='flex justify-center mt-[60px]'>
         <Button
           type='submit'
           className='w-full md:w-[200px] h-[50px]'
-          disabled={
-            !isValid || !isStudentNoValid || !isEmailValid || isLoading
-          }>
+          disabled={isButtonDisabled}>
           가입하기
           {isLoading && <LoaderCircle className='w-6 h-6 ml-2 animate-spin' />}
         </Button>

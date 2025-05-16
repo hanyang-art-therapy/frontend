@@ -19,7 +19,7 @@ export default function ReviewsTextareaActions({
         type='button'
         onClick={() => imageInputRef.current?.click()}
         aria-label='이미지 첨부'
-        className='gap-[5px] t-b-16 bg-primary px-5 flex-1 md:flex-none w-auto rounded-[40px] whitespace-nowrap'>
+        className='gap-[5px] t-m-18 bg-primary px-5 flex-1 md:flex-none w-auto rounded-[40px] whitespace-nowrap'>
         이미지 첨부
         <Image size={12} className='w-3 h-3 md:w-5 md:h-5' color='#fff' />
       </Button>
@@ -28,7 +28,7 @@ export default function ReviewsTextareaActions({
         type='button'
         disabled={isLoading}
         onClick={handlePostReview}
-        className='gap-[5px] t-b-16 px-5 w-auto flex-1 md:flex-none bg-primary rounded-[40px]'>
+        className='gap-[5px] t-m-18 px-5 w-auto flex-1 md:flex-none bg-primary rounded-[40px] whitespace-nowrap'>
         댓글 업로드
         {isLoading ? (
           <LoaderCircle

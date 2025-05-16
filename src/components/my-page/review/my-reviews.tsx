@@ -8,6 +8,8 @@ export default function MyReveiws({
 }: {
   myReviews: MyReviewData[];
 }) {
+  if (myReviews.length === 0) return null;
+
   return (
     <>
       <MyPageHeader title='내가 쓴 댓글 관리' />
