@@ -1,11 +1,7 @@
-import { ArtArtistRel, Artist, Arts, Review, User } from '@/types';
+import { ArtArtistRel, Arts, Review, User } from '@/types';
 
-export type MyProfileData = Pick<
-  User,
-  'userId' | 'userName' | 'email' | 'studentNo'
-> &
-  Pick<Artist, 'cohort'>;
-
+// TODO: userId 추가
+export type MyProfileData = Pick<User, 'userName' | 'email' | 'studentNo'>;
 export type MyReviewData = Pick<
   Review,
   'reviewsNo' | 'artsNo' | 'reviewText' | 'createdAt'
