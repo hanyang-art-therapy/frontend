@@ -1,7 +1,7 @@
 import Arts from '@/components/gallery/arts/arts';
 import GalleryBanner from '@/components/gallery/gallery-banner';
 import GalleryIntro from '@/components/gallery/intro/gallery-intro';
-import GalleryTheorapy from '@/components/gallery/theorapy/gallery-theorapy';
+import GalleryTheorapy from '@/components/gallery/therapy/gallery-theorapy';
 import Step from '@/components/ui/step';
 import { GALLERY_STEP_ITEMS } from '@/constants/gallery/gallery';
 import { useState } from 'react';

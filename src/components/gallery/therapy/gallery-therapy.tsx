@@ -1,4 +1,4 @@
-import GalleryTheorapyContentTitle from '@/components/gallery/theorapy/gallery-theorapy-content-title';
+import GalleryTheorapyContentTitle from '@/components/gallery/therapy/gallery-therapy-content-title';
 import {
   GALLERY_THERAPY_ACADEMIC,
   GALLERY_THERAPY_INTRO,
