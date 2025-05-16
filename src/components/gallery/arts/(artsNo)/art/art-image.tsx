@@ -5,6 +5,10 @@ type ArtImageProps = {
 
 export default function ArtImage({ url, name }: ArtImageProps) {
   return (
-    <img src={url} alt={name} className='w-full md:w-[720px] mx-auto xl:mx-0' />
+    <img
+      src={url}
+      alt={name}
+      className='w-auto max-w-[720px] mx-auto xl:mx-0'
+    />
   );
 }

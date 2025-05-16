@@ -14,7 +14,7 @@ export default function Art({ artDetail }: { artDetail: ArtDetailType }) {
         {/* 작품 이미지 */}
         <ArtImage url={file.url} name={file.name} />
 
-        <div className='xl:w-[40%] space-y-10 md:space-y-15 md:w-[720px] mx-auto xl:mx-0'>
+        <div className='xl:w-[40%] w-full space-y-10 md:space-y-15 mx-auto xl:mx-0'>
           {/* 작품 상세 박스 */}
           <ArtInfo artName={artName} artist={artist} caption={caption} />
 

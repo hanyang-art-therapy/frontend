@@ -42,13 +42,13 @@ export default function Arts() {
   }, [arts, cohort]);
 
   return (
-    <div className='flex flex-col justify-center items-center px-5 md:px-0'>
+    <div className='flex flex-col justify-center items-center px-5 xl:px-0'>
       <ArtsSearch />
 
       {isLoading ? (
         <ArtListSkeleton />
       ) : (
-        <ul className='grid-cols-1 grid md:grid-cols-3 md:w-full md:gap-x-[90px] gap-y-[50px] pt-[68px]'>
+        <ul className='grid-cols-1 grid md:grid-cols-3 md:w-full md:gap-[5vw] pt-[68px]'>
           {filteredArts.map((art) => (
             <ArtsList key={art.artsNo} art={art} />
           ))}

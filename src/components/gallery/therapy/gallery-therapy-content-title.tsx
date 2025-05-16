@@ -12,7 +12,7 @@ export default function GallerytherapyContentTitle({
   strong,
 }: GallerytherapyContentTitleProps) {
   return (
-    <div className='mb-12 text-center'>
+    <div className='mb-[30px] text-center'>
       <h2 className='mb-2 t-b-32'>
         <span
           className={cn('text-black', strong === 'first' && 'text-primary')}>

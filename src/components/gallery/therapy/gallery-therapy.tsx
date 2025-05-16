@@ -24,9 +24,9 @@ const renderTextWithBold = (text: string) => {
 
 export default function Gallerytherapy() {
   return (
-    <div className='mx-auto md:px-0 px-5 pt-15 grid gap-16'>
+    <div className='mx-auto xl:px-0 px-5 md:pt-[100px] pt-[60px] grid md:gap-[100px] gap-[60px]'>
       {/* 미술관 미술치료로의 초대 */}
-      <section className='pb-16'>
+      <section>
         <div>
           <GallerytherapyContentTitle
             firstTitle={GALLERY_THERAPY_INTRO.title.first}
@@ -34,7 +34,7 @@ export default function Gallerytherapy() {
             strong='second'
           />
 
-          <div className='mx-auto md:max-w-[720px] space-y-6 text-gray'>
+          <div className='mx-auto space-y-[10px] text-gray'>
             {GALLERY_THERAPY_INTRO.content.map((text, index) => (
               <p key={index} className='t-r-18'>
                 {renderTextWithBold(text)}
@@ -48,7 +48,7 @@ export default function Gallerytherapy() {
       </section>
 
       {/* 미술관 미술치료의 이론적 근거 */}
-      <section className='bg-bg-muted py-16 mx-0'>
+      <section>
         <div>
           <GallerytherapyContentTitle
             firstTitle={GALLERY_THERAPY_THEORY.title.first}
@@ -56,12 +56,12 @@ export default function Gallerytherapy() {
             strong='second'
           />
 
-          <div className='mx-auto md:max-w-[720px] rounded-xl bg-white p-8 shadow-sm'>
-            <p className='text-gray t-r-16'>
+          <div className='mx-auto rounded-xl bg-white p-[30px] box-shadow-style'>
+            <p className='mx-auto w-auto max-w-[845px] text-gray-6 t-r-16 text-center'>
               {renderTextWithBold(GALLERY_THERAPY_THEORY.description)}
             </p>
 
-            <div className='mt-8 grid gap-6 md:grid-cols-2'>
+            <div className='mt-[30px] grid gap-5 md:grid-cols-2'>
               {GALLERY_THERAPY_THEORY.cards.map((card, index) => {
                 const Icon = card.icon;
 
@@ -83,7 +83,7 @@ export default function Gallerytherapy() {
       </section>
 
       {/* 미술관 미술치료의 학술적 이해 */}
-      <section className='py-16'>
+      <section>
         <div>
           <GallerytherapyContentTitle
             firstTitle={GALLERY_THERAPY_ACADEMIC.title.first}
@@ -91,7 +91,7 @@ export default function Gallerytherapy() {
             strong='second'
           />
 
-          <div className='mx-auto md:max-w-[720px]'>
+          <div className='mx-auto'>
             {GALLERY_THERAPY_ACADEMIC.sections.map((section) => (
               <div
                 key={section.number}
