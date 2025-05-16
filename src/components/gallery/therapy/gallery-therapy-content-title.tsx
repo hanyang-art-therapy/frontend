@@ -1,16 +1,16 @@
 import { cn } from '@/lib/utils';
 
-type GalleryTheorapyContentTitleProps = {
+type GallerytherapyContentTitleProps = {
   firstTitle: string;
   secondTitle: string;
   strong: 'first' | 'second';
 };
 
-export default function GalleryTheorapyContentTitle({
+export default function GallerytherapyContentTitle({
   firstTitle,
   secondTitle,
   strong,
-}: GalleryTheorapyContentTitleProps) {
+}: GallerytherapyContentTitleProps) {
   return (
     <div className='mb-12 text-center'>
       <h2 className='mb-2 t-b-32'>

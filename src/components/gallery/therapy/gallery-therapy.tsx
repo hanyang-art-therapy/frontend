@@ -1,4 +1,4 @@
-import GalleryTheorapyContentTitle from '@/components/gallery/therapy/gallery-therapy-content-title';
+import GallerytherapyContentTitle from '@/components/gallery/therapy/gallery-therapy-content-title';
 import {
   GALLERY_THERAPY_ACADEMIC,
   GALLERY_THERAPY_INTRO,
@@ -22,13 +22,13 @@ const renderTextWithBold = (text: string) => {
   });
 };
 
-export default function GalleryTheorapy() {
+export default function Gallerytherapy() {
   return (
     <div className='mx-auto md:px-0 px-5 pt-15 grid gap-16'>
       {/* 미술관 미술치료로의 초대 */}
       <section className='pb-16'>
         <div>
-          <GalleryTheorapyContentTitle
+          <GallerytherapyContentTitle
             firstTitle={GALLERY_THERAPY_INTRO.title.first}
             secondTitle={GALLERY_THERAPY_INTRO.title.second}
             strong='second'
@@ -50,7 +50,7 @@ export default function GalleryTheorapy() {
       {/* 미술관 미술치료의 이론적 근거 */}
       <section className='bg-bg-muted py-16 mx-0'>
         <div>
-          <GalleryTheorapyContentTitle
+          <GallerytherapyContentTitle
             firstTitle={GALLERY_THERAPY_THEORY.title.first}
             secondTitle={GALLERY_THERAPY_THEORY.title.second}
             strong='second'
@@ -85,7 +85,7 @@ export default function GalleryTheorapy() {
       {/* 미술관 미술치료의 학술적 이해 */}
       <section className='py-16'>
         <div>
-          <GalleryTheorapyContentTitle
+          <GallerytherapyContentTitle
             firstTitle={GALLERY_THERAPY_ACADEMIC.title.first}
             secondTitle={GALLERY_THERAPY_ACADEMIC.title.second}
             strong='second'
