@@ -19,14 +19,13 @@ export default function ReviewsModalTextArea({
 
       {isEditing ? (
         <textarea
-          className='min-w-[30vw] min-h-[400px] h-full rounded-[5px] w-full border resize border-gray-9 px-3 py-2 text-sm focus:outline-primary t-r-16 overflow-y-auto'
+          className='min-w-[30vw] min-h-[100px] md:min-h-[400px] h-full rounded-[5px] w-full border resize border-gray-9 px-3 py-2 text-sm focus:outline-primary t-r-16 overflow-y-auto'
           value={editedText}
           onChange={handleTextChange}
           onKeyDown={handleKeyDown}
-          autoFocus
         />
       ) : (
-        <p className='min-w-[30vw] max-h-[400px] md:max-h-[700px] overflow-auto t-r-16 md:pb-[20px] text-start overflow-y-auto'>
+        <p className='min-w-[30vw] max-h-[50vh] overflow-auto t-r-16 md:pb-[20px] text-start overflow-y-auto'>
           {editedText}
         </p>
       )}

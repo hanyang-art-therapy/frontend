@@ -48,7 +48,7 @@ export default function SignInForm() {
       <Input
         type='text'
         className='w-full py-[13px] px-[20px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
-        placeholder='이메일'
+        placeholder='이메일 (example@hanyang.ac.kr)'
         autoComplete='email'
         value={userEmail}
         onChange={(e) => setUserEmail(e.target.value)}
@@ -82,12 +82,12 @@ export default function SignInForm() {
               className='t-r-14 pr-[10px] hover:underline cursor-pointer'>
               회원가입
             </Link>
-            <span className='t-r-14'>|</span>
+            {/* <span className='t-r-14'>|</span>
             <Link
               to='/find-my'
               className='t-r-14 pl-[10px] hover:underline cursor-pointer'>
               아이디 / 비밀번호 찾기
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

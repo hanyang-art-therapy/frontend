@@ -29,7 +29,7 @@ export default function ReviewsImage({
           </button>
         </>
       ) : (
-        <span className='t-r-16 text-gray-9 rounded-sm'>이미지 미리보기</span>
+        <span className='t-r-14 text-gray-9 rounded-sm'>이미지 미리보기</span>
       )}
     </div>
   );

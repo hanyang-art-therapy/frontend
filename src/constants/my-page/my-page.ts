@@ -1,16 +1,15 @@
-import type { MyProfileData, MyPostData } from '@/types/my-page';
+import type { MyPostData } from '@/types/my-page';
 
 export const MY_PAGE_STEP_ITEMS = [
   { label: '내가 쓴 댓글', value: 'reviews' },
-  { label: '나의 게시물', value: 'posts' },
+  // { label: '나의 게시물', value: 'posts' },
   { label: '개인정보 관리', value: 'account' },
 ];
 
 export const TABLE_MAP = {
-  아이디: 'userId',
+  // 아이디: 'userId',
   이름: 'userName',
   이메일: 'email',
-  기수: 'cohort',
   학번: 'studentNo',
   구분: 'role',
 } as const;
@@ -171,12 +170,3 @@ export const POST_MOCK_DATA: MyPostData[] = [
     createdAt: '2025-05-01T11:00:36',
   },
 ];
-
-export const ACCOUNT_MOCK_DATA: MyProfileData = {
-  userId:
-    'acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321acbd4321',
-  userName: '홍길동',
-  email: '1234abcd@gmail.com',
-  cohort: 25,
-  studentNo: '20251234',
-};

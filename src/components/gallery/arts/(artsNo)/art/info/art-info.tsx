@@ -28,7 +28,7 @@ export default function ArtInfo({ artName, artist, caption }: ArtInfoProps) {
             <ArtInfoItem label='기수'>{artist[0].cohort}</ArtInfoItem>
           )}
 
-          <ArtInfoItem label='재료'>{caption}</ArtInfoItem>
+          <ArtInfoItem label='캡션'>{caption}</ArtInfoItem>
         </div>
       </div>
     </div>

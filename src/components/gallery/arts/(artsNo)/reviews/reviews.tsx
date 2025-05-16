@@ -129,6 +129,7 @@ export default function Reviews({ artName, artsNo }: ReviewsProps) {
           setIsDialogOpen={setIsDialogOpen}
           selectedReview={selectedReview}
           setSelectedReview={setSelectedReview}
+          fetchReviews={fetchReviews}
         />
       )}
     </div>
