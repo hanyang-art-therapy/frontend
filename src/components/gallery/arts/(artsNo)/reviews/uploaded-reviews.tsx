@@ -17,7 +17,7 @@ export default function UploadedReviews({
   setIsDialogOpen,
   setSelectedReview,
 }: UploadedReviewsProps) {
-  if (reviews.length === 0) return null;
+  if (!reviews.length) return null;
   if (isLoading) return <ReviewsSkeleton />;
 
   const handleButtonClick = (review: ArtReview) => {

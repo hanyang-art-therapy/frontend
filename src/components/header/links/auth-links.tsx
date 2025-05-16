@@ -1,33 +1,32 @@
+import { getUserId } from '@/apis/auth/init-auth';
 import { signOut } from '@/apis/auth/sign-out';
 import { handleApiError } from '@/components/common/error-handler';
-import AuthLinksSkeleton from '@/components/header/links/auth-links-skeleton';
-import { useAuthStore } from '@/store/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export default function AuthLinks() {
-  const { accessToken, reset } = useAuthStore();
+  const [userNo, setUserNo] = useState<string>();
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    getUserId().then((userNo) => {
+      setUserNo(userNo);
+    });
+  }, []);
 
   const handleLogout = async () => {
     try {
-      const response = await signOut();
-      reset();
-      navigate('/');
-      toast.success(response.message);
+      await signOut();
+      window.location.reload();
     } catch (error) {
       toast.error(handleApiError(error));
     }
   };
 
-  if (accessToken === undefined) {
-    return <AuthLinksSkeleton />;
-  }
-
   return (
     <div className='flex gap-5 px-5 leading-[40px] bg-bg-primary text-white t-b-14'>
-      {accessToken ? (
+      {userNo ? (
         <button
           onClick={handleLogout}
           className='hover:opacity-70 cursor-pointer'>
@@ -39,8 +38,10 @@ export default function AuthLinks() {
         </Link>
       )}
 
-      {accessToken ? (
-        <Link to='/my-page' className='hover:opacity-70'>
+      {userNo ? (
+        <Link
+          to='/my-page'
+          className={cn('hover:opacity-70', userNo && 'hidden')}>
           마이페이지
         </Link>
       ) : (

@@ -1,4 +1,4 @@
-import { postFileMocking } from '@/apis/art/review';
+import { postFile } from '@/apis/art/file';
 import type { ArtReview } from '@/types/gallery/review';
 import { X } from 'lucide-react';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
@@ -30,7 +30,7 @@ export default function ReviewsModalImage({
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const response = await postFileMocking(file);
+      const response = await postFile(file);
 
       setSelectedReview({
         ...selectedReview,

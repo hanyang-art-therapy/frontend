@@ -1,66 +1,79 @@
-import apiInstance from '@/lib/axios';
-import type { MessageResponse } from '@/types';
+import { supabase } from '@/lib/supabase';
 import type {
-  CheckCodeRequest,
   CheckEmailRequest,
-  CheckIdRequest,
   CheckStudentNoRequest,
   SignUpRequest,
 } from '@/types/auth/sign-up';
 
 // POST 회원가입 /user/sign-up
 export const signUp = async ({
-  userId,
   password,
   userName,
   email,
   studentNo,
 }: SignUpRequest) => {
-  await apiInstance.post('/user/sign-up', {
-    userId,
-    password,
-    userName,
+  const { data, error } = await supabase.auth.signUp({
     email,
-    studentNo,
+    password,
   });
+
+  if (error) {
+    throw error;
+  }
+
+  if (data) {
+    await supabase.from('users').insert({
+      userNo: data.user?.id,
+      password,
+      email,
+      userName,
+      studentNo,
+    });
+  }
 };
 
-// GET 아이디 중복검사 /user/check-id
-export const checkId = async ({ userId }: CheckIdRequest) => {
-  const response = await apiInstance.get('/user/check-id', {
-    params: { userId },
-  });
+export const checkEmail = async ({ email }: CheckEmailRequest) => {
+  const { data } = await supabase.from('users').select('*').eq('email', email);
 
-  return response.data;
+  if (data && data.length > 0) {
+    throw new Error('이미 등록된 이메일입니다.');
+  } else {
+    return true;
+  }
 };
 
 // GET 학번 중복검사 /user/check-studentNo
 export const checkStudentNo = async ({ studentNo }: CheckStudentNoRequest) => {
-  const response = await apiInstance.get('/user/check-studentNo', {
-    params: { studentNo },
-  });
+  const { data } = await supabase
+    .from('users')
+    .select('*')
+    .eq('studentNo', studentNo);
 
-  return response.data;
+  if (data && data.length > 0) {
+    throw new Error('이미 등록된 학번입니다.');
+  } else {
+    return true;
+  }
 };
 
 // POST 이메일 인증 발송 /user/check-email
-export const checkEmail = async ({
-  email,
-}: CheckEmailRequest): Promise<MessageResponse> => {
-  const response = await apiInstance.post('/user/check-email', {
-    email,
-  });
+// export const checkEmail = async ({
+//   email,
+// }: CheckEmailRequest): Promise<MessageResponse> => {
+//   const response = await apiInstance.post('/user/check-email', {
+//     email,
+//   });
 
-  return response.data;
-};
+//   return response.data;
+// };
 
 // POST 인증번호 확인 /user/check-code
-export const checkCode = async ({
-  verificationCode,
-}: CheckCodeRequest): Promise<MessageResponse> => {
-  const response = await apiInstance.post('/user/check-code', {
-    verificationCode,
-  });
+// export const checkCode = async ({
+//   verificationCode,
+// }: CheckCodeRequest): Promise<MessageResponse> => {
+//   const response = await apiInstance.post('/user/check-code', {
+//     verificationCode,
+//   });
 
-  return response.data;
-};
+//   return response.data;
+// };

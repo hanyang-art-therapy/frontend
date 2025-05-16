@@ -1,8 +1,5 @@
-import {
-  getReviewsMocking,
-  postFileMocking,
-  postReviewMocking,
-} from '@/apis/art/review';
+import { postFile } from '@/apis/art/file';
+import { getReviews, postReview } from '@/apis/art/review';
 import { handleApiError } from '@/components/common/error-handler';
 import ReviewsModal from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal';
 import ReviewsImage from '@/components/gallery/arts/(artsNo)/reviews/reviews-image';
@@ -34,9 +31,10 @@ export default function Reviews({ artName, artsNo }: ReviewsProps) {
     null
   );
 
+  // 리뷰 전체 조회
   const fetchReviews = useCallback(async () => {
     try {
-      const reviews = await getReviewsMocking(Number(artsNo));
+      const reviews = await getReviews(Number(artsNo));
       setReviews(reviews);
     } catch (error) {
       const errorMessage = handleApiError(error);
@@ -46,7 +44,7 @@ export default function Reviews({ artName, artsNo }: ReviewsProps) {
 
   useEffect(() => {
     fetchReviews();
-  }, []);
+  }, [isDialogOpen]);
 
   // 댓글 업로드
   const handlePostReview = async () => {
@@ -58,7 +56,7 @@ export default function Reviews({ artName, artsNo }: ReviewsProps) {
       setComment('');
       setPreviewUploadImage(null);
 
-      await postReviewMocking({
+      await postReview({
         artsNo: Number(artsNo),
         reviewText: comment,
         filesNo: uploadedFileNo,
@@ -79,16 +77,16 @@ export default function Reviews({ artName, artsNo }: ReviewsProps) {
     const file = e.target.files?.[0];
 
     if (file) {
-      const response = await postFileMocking(file);
+      const response = await postFile(file);
       setPreviewUploadImage(response[0].url);
-      setUploadedFileNo(response.map((file) => file.filesNo));
+      setUploadedFileNo([response[0].filesNo]);
     }
   };
 
   return (
     <div className='flex w-full flex-col items-start gap-[10px]'>
       {/* 미술관 미술치료 + 리뷰 개수 */}
-      <ReviewsTitle commentsLength={reviews.length} />
+      <ReviewsTitle commentsLength={reviews?.length || 0} />
 
       {/* 리뷰 작성 */}
       <div className='flex flex-col w-full border border-bg-gray-d p-[10px] gap-[20px] md:pb-[22px] rounded-sm'>
