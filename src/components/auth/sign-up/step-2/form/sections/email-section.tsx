@@ -90,6 +90,7 @@ export default function EmailSection({
             {...register('emailDomain')}
             className='w-[200px] h-[45px]'
             placeholder='직접 입력'
+            autoComplete='email'
             value={domainValue}
             onChange={(e) => setValue('emailDomain', e.target.value)}
             disabled={selectedDomain !== 'custom' && selectedDomain !== ''}
