@@ -22,7 +22,7 @@ export default function GalleryIntro() {
   };
 
   return (
-    <div className='mx-auto xl:px-0 px-5 pt-15 grid gap-[60px] md:gap-[100px]'>
+    <div className='mx-auto xl:px-0 px-5 md:pt-[100px] pt-[60px] grid gap-[60px] md:gap-[100px]'>
       {/* 전시 개요 */}
       <section className='grid md:grid-cols-[1fr_3fr]'>
         <GalleryIntroContentTitle
