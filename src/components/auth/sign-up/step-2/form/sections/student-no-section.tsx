@@ -36,9 +36,11 @@ export default function StudentNoSection({
     onBlur(event);
 
     try {
-      await checkStudentNo({
+      const response = await checkStudentNo({
         studentNo: watchStudentNo,
       });
+
+      console.log(response);
 
       setIsStudentNoValid(true);
     } catch (error) {

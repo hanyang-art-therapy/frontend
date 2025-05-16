@@ -1,27 +1,24 @@
+import { signIn } from '@/apis/auth/sign-in';
+import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signIn } from '@/apis/auth/sign-in';
-import { useAuthStore } from '@/store/auth';
-import { handleApiError } from '@/components/common/error-handler';
 import { toast } from 'sonner';
 
 export default function SignInForm() {
-  const [userId, setUserId] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isUserIdRemember, setIsUserIdRemember] = useState(false);
-
-  const { setAccessToken, setUserNo } = useAuthStore();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userId = localStorage.getItem('userId');
+    const userEmail = localStorage.getItem('userEmail');
 
-    if (userId) {
-      setUserId(userId);
+    if (userEmail) {
+      setUserEmail(userEmail);
       setIsUserIdRemember(true);
     }
   }, []);
@@ -30,16 +27,13 @@ export default function SignInForm() {
     e.preventDefault();
 
     try {
-      const response = await signIn(userId, password);
-      setAccessToken(response.accessToken);
-      setUserNo(response.userNo);
+      await signIn(userEmail.trim(), password);
       navigate('/');
-      toast.success(response.message);
 
       if (isUserIdRemember) {
-        localStorage.setItem('userId', userId);
+        localStorage.setItem('userEmail', userEmail);
       } else {
-        localStorage.removeItem('userId');
+        localStorage.removeItem('userEmail');
       }
     } catch (error: unknown) {
       const errorMessage = handleApiError(error);
@@ -54,15 +48,17 @@ export default function SignInForm() {
       <Input
         type='text'
         className='w-full py-[13px] px-[20px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
-        placeholder='아이디'
-        value={userId}
-        onChange={(e) => setUserId(e.target.value)}
+        placeholder='이메일'
+        autoComplete='email'
+        value={userEmail}
+        onChange={(e) => setUserEmail(e.target.value)}
       />
 
       <Input
-        type='current-password'
+        type='password'
         className='w-full py-[13px] px-[20px] h-[45px] border border-[#aaa] rounded bg-bg-gray-fa'
         placeholder='비밀번호'
+        autoComplete='current-password'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -76,7 +72,7 @@ export default function SignInForm() {
               onCheckedChange={() => setIsUserIdRemember(!isUserIdRemember)}
             />
             <label htmlFor='remember' className='t-r-14'>
-              아이디 저장
+              이메일 저장
             </label>
           </div>
 

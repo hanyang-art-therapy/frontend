@@ -3,7 +3,6 @@ import {
   EmailSection,
   PwSection,
   StudentNoSection,
-  UserIdSection,
   UserNameSection,
   UserTypeSection,
 } from '@/components/auth/sign-up/step-2/form/sections';
@@ -14,6 +13,7 @@ import {
   type SignUpFormValues,
 } from '@/schemas/sign-up/sign-up-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { LoaderCircle } from 'lucide-react';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -24,11 +24,10 @@ export default function SignUpForm({
   setProgress: Dispatch<SetStateAction<number>>;
 }) {
   const [selectedDomain, setSelectedDomain] = useState('hanyang.ac.kr');
+  const [isLoading, setIsLoading] = useState(false);
   const [userType, setUserType] = useState('member');
-  const [isUserIdValid, setIsUserIdValid] = useState(true);
   const [isStudentNoValid, setIsStudentNoValid] = useState(true);
-  const [isEmailValid, setIsEmailValid] = useState(false);
-
+  const [isEmailValid, setIsEmailValid] = useState(true);
   const {
     register,
     handleSubmit,
@@ -45,9 +44,10 @@ export default function SignUpForm({
   const onSubmit = async (data: SignUpFormValues) => {
     const email = data.emailId + '@' + data.emailDomain;
 
+    setIsLoading(true);
+
     try {
       await signUp({
-        userId: data.userId,
         password: data.password,
         userName: data.userName,
         email,
@@ -60,35 +60,27 @@ export default function SignUpForm({
 
     setProgress(3);
     reset();
+    setIsLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
       <UserTypeSection userType={userType} setUserType={setUserType} />
 
-      <UserIdSection
+      <EmailSection
         register={register}
+        setValue={setValue}
         watch={watch}
-        errors={errors}
         setError={setError}
-        setIsUserIdValid={setIsUserIdValid}
+        selectedDomain={selectedDomain}
+        setSelectedDomain={setSelectedDomain}
+        errors={errors}
+        setIsEmailValid={setIsEmailValid}
       />
 
       <PwSection register={register} errors={errors} />
 
       <UserNameSection register={register} errors={errors} />
-
-      <EmailSection
-        register={register}
-        setValue={setValue}
-        watch={watch}
-        selectedDomain={selectedDomain}
-        setSelectedDomain={setSelectedDomain}
-        isEmailValid={isEmailValid}
-        setIsEmailValid={setIsEmailValid}
-        setError={setError}
-        errors={errors}
-      />
 
       {userType === 'member' && (
         <StudentNoSection
@@ -105,9 +97,10 @@ export default function SignUpForm({
           type='submit'
           className='w-full md:w-[200px] h-[50px]'
           disabled={
-            !isValid || !isUserIdValid || !isStudentNoValid || !isEmailValid
+            !isValid || !isStudentNoValid || !isEmailValid || isLoading
           }>
           가입하기
+          {isLoading && <LoaderCircle className='w-6 h-6 ml-2 animate-spin' />}
         </Button>
       </div>
     </form>

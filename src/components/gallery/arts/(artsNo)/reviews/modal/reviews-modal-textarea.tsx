@@ -1,4 +1,3 @@
-import type { ArtReview } from '@/types/gallery/review';
 import type { ChangeEvent, KeyboardEvent } from 'react';
 
 type ReviewsModalTextAreaProps = {
@@ -6,7 +5,6 @@ type ReviewsModalTextAreaProps = {
   editedText: string;
   handleTextChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   handleKeyDown: (e: KeyboardEvent<HTMLTextAreaElement>) => void;
-  selectedReview: ArtReview;
 };
 
 export default function ReviewsModalTextArea({
@@ -14,7 +12,6 @@ export default function ReviewsModalTextArea({
   editedText,
   handleTextChange,
   handleKeyDown,
-  selectedReview,
 }: ReviewsModalTextAreaProps) {
   return (
     <div className='flex flex-col md:text-start md:flex-2 w-full gap-4'>
@@ -30,7 +27,7 @@ export default function ReviewsModalTextArea({
         />
       ) : (
         <p className='min-w-[30vw] max-h-[400px] md:max-h-[700px] overflow-auto t-r-16 md:pb-[20px] text-start overflow-y-auto'>
-          {selectedReview.reviewText}
+          {editedText}
         </p>
       )}
     </div>
