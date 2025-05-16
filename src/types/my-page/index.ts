@@ -8,7 +8,7 @@ export type MyProfileData = Pick<
 
 export type MyReviewData = Pick<
   Review,
-  'reviewNo' | 'artsNo' | 'reviewText' | 'createdAt'
+  'reviewsNo' | 'artsNo' | 'reviewText' | 'createdAt'
 > &
   Pick<Arts, 'artName'>;
 

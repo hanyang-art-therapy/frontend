@@ -1,6 +1,6 @@
 import type { Review, User, Files } from '@/types';
 
-export type ArtReview = Pick<Review, 'reviewNo' | 'createdAt' | 'reviewText'> &
+export type ArtReview = Pick<Review, 'reviewsNo' | 'createdAt' | 'reviewText'> &
   Pick<User, 'userName'> & {
     files: Pick<
       Files,
@@ -15,13 +15,13 @@ export type PostReviewRequest = Pick<Review, 'artsNo' | 'reviewText'> & {
 export type UploadFileResponse = Pick<
   Files,
   'filesNo' | 'name' | 'url' | 'filesSize' | 'extension' | 'filesType'
->[];
+>;
 
 export type PatchReviewRequest = Pick<
   Review,
-  'reviewNo' | 'artsNo' | 'reviewText'
+  'reviewsNo' | 'artsNo' | 'reviewText'
 > & {
   filesNo: number[] | null;
 };
 
-export type DeleteReviewRequest = Pick<Review, 'artsNo' | 'reviewNo'>;
+export type DeleteReviewRequest = Pick<Review, 'artsNo' | 'reviewsNo'>;

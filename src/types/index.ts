@@ -25,7 +25,7 @@ export type UserHistory = {
 
 // 작품 댓글
 export type Review = {
-  reviewNo: number; // 댓글 번호
+  reviewsNo: number; // 댓글 번호
   artsNo: number; // 작품 번호
   filesNo: number; // 파일 번호
   userNo: number; // 회원 번호

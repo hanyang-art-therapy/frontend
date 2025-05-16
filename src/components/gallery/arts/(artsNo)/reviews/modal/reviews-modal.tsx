@@ -1,4 +1,4 @@
-import { deleteReviewMocking, patchReviewMocking } from '@/apis/art/review';
+import { deleteReview, patchReview } from '@/apis/art/review';
 import { handleApiError } from '@/components/common/error-handler';
 import ReviewsModalActions from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal-actions';
 import ReviewsModalImage from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal-image';
@@ -6,6 +6,7 @@ import ReviewsModalTextArea from '@/components/gallery/arts/(artsNo)/reviews/mod
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -51,9 +52,9 @@ export default function ReviewsModal({
     setIsButtonVisible(true);
 
     try {
-      await patchReviewMocking({
+      await patchReview({
         artsNo: artsNo,
-        reviewNo: selectedReview.reviewNo,
+        reviewsNo: selectedReview.reviewsNo,
         reviewText: editedText,
         filesNo: selectedReview.files.map((file) => file.filesNo) ?? null,
       });
@@ -73,9 +74,9 @@ export default function ReviewsModal({
     setIsDialogOpen(false);
 
     try {
-      await deleteReviewMocking({
+      await deleteReview({
         artsNo: artsNo,
-        reviewNo: selectedReview.reviewNo,
+        reviewsNo: selectedReview.reviewsNo,
       });
 
       toast.success('리뷰가 삭제되었습니다.');
@@ -104,6 +105,7 @@ export default function ReviewsModal({
             <b className='font-bold'>{artName}</b> 작품 리뷰{' '}
             {isEditing && '수정'}
           </DialogTitle>
+          <DialogDescription />
         </DialogHeader>
 
         <div className='flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start gap-[60px]'>
@@ -119,7 +121,6 @@ export default function ReviewsModal({
             editedText={editedText}
             handleTextChange={handleTextChange}
             handleKeyDown={handleKeyDown}
-            selectedReview={selectedReview}
           />
         </div>
 

@@ -1,8 +1,6 @@
-import apiInstance from '@/lib/axios';
+import { supabase } from '@/lib/supabase';
 
 // DELETE /user/sign-out
 export const signOut = async () => {
-  const response = await apiInstance.delete('/user/sign-out');
-
-  return response.data;
+  await supabase.auth.signOut();
 };

@@ -1,6 +1,5 @@
-import axios from 'axios';
+import { supabase } from '@/lib/supabase';
 import { useAuthStore } from '@/store/auth';
-import { handleApiError } from '@/components/common/error-handler';
 
 // import apiInstance from '@/lib/axios';
 // const initAuthPromise: Promise<void> | null = null;
@@ -24,19 +23,21 @@ import { handleApiError } from '@/components/common/error-handler';
 //   return initAuthPromise;
 // };
 
-export const initializeAuth = async () => {
-  const { setAccessToken } = useAuthStore.getState();
+export const getUserId = async () => {
+  const { setUserNo } = useAuthStore.getState();
+  const { data } = await supabase.auth.getUser();
 
-  try {
-    const response = await axios.post('/user/refresh', null, {
-      withCredentials: true,
-      timeout: 10000,
-    });
-
-    const token = response.data.accessToken;
-
-    setAccessToken(token);
-  } catch (error) {
-    throw new Error(handleApiError(error));
+  if (data.user) {
+    setUserNo(data.user.id);
   }
+
+  return data.user?.id;
+};
+
+export const getUrl = async () => {
+  const { data } = supabase.storage
+    .from('images')
+    .getPublicUrl('uploads/art-2025-5.jpg');
+
+  return data.publicUrl;
 };
