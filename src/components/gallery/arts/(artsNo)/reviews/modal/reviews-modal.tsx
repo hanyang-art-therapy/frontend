@@ -27,6 +27,7 @@ type ReviewsModalProps = {
   setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
   selectedReview: ArtReview;
   setSelectedReview: Dispatch<SetStateAction<ArtReview>>;
+  fetchReviews: () => void;
 };
 
 export default function ReviewsModal({
@@ -36,6 +37,7 @@ export default function ReviewsModal({
   setIsDialogOpen,
   selectedReview,
   setSelectedReview,
+  fetchReviews,
 }: ReviewsModalProps) {
   const imageUrl = selectedReview.files?.[0]?.url;
 
@@ -79,6 +81,7 @@ export default function ReviewsModal({
         reviewsNo: selectedReview.reviewsNo,
       });
 
+      fetchReviews();
       toast.success('리뷰가 삭제되었습니다.');
     } catch (error) {
       const errorMessage = handleApiError(error);
@@ -98,17 +101,18 @@ export default function ReviewsModal({
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogContent className='max-w-[80vw] md:max-w-[90vw] xl:max-w-[80vw] w-full gap-10 md:gap-15 h-auto max-h-[90vh] pl-5 pb-5 pr-5 pt-10 xl:p-10 overflow-y-auto'>
-        <DialogHeader className='flex flex-row gap-4 max-h-[24px]'>
-          <DialogTitle className='t-m-24'>
-            {selectedReview.userName ?? '익명'}의{' '}
-            <b className='font-bold'>{artName}</b> 작품 리뷰{' '}
-            {isEditing && '수정'}
+      <DialogContent className='w-full max-w-[90vw] xl:max-w-[80vw] max-h-[80vh] h-auto p-5 md:p-10 gap-10 md:gap-15 overflow-y-auto border-none'>
+        <DialogHeader className='flex flex-row items-center'>
+          <DialogTitle className='space-x-2 t-b-24'>
+            <span>{selectedReview.userName ?? '익명'}의</span>
+            <b className='t-b-32 hidden sm:inline'>{artName}</b>
+            <span>작품 리뷰</span>
+            {isEditing && <span>수정</span>}
           </DialogTitle>
           <DialogDescription />
         </DialogHeader>
 
-        <div className='flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start gap-[60px]'>
+        <div className='flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start gap-6 md:gap-8 xl:gap-16 min-h-[20vh]'>
           <ReviewsModalImage
             isEditing={isEditing}
             imageUrl={imageUrl}
@@ -124,7 +128,6 @@ export default function ReviewsModal({
           />
         </div>
 
-        {/* 수정 버튼, 삭제 버튼 */}
         {isButtonVisible && (
           <ReviewsModalActions
             isEditing={isEditing}

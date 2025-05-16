@@ -1,7 +1,6 @@
 import { getUserId } from '@/apis/auth/init-auth';
 import { signOut } from '@/apis/auth/sign-out';
 import { handleApiError } from '@/components/common/error-handler';
-import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -39,9 +38,7 @@ export default function AuthLinks() {
       )}
 
       {userNo ? (
-        <Link
-          to='/my-page'
-          className={cn('hover:opacity-70', userNo && 'hidden')}>
+        <Link to='/my-page' className='hover:opacity-70'>
           마이페이지
         </Link>
       ) : (

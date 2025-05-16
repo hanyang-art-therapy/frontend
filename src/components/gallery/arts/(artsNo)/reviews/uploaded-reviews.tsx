@@ -2,7 +2,7 @@ import ReviewsSkeleton from '@/components/gallery/arts/(artsNo)/reviews/ui/revie
 import { NO_IMG } from '@/constants/gallery/art-details';
 import { formatTimeStamp } from '@/lib/utils';
 import type { ArtReview } from '@/types/gallery/review';
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 
 type UploadedReviewsProps = {
   isLoading: boolean;
@@ -26,37 +26,37 @@ export default function UploadedReviews({
   };
 
   return (
-    <div className='w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-center items-center gap-4 md:gap-8 mt-[30px]'>
+    <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8 mt-6 md:mt-8'>
       {reviews.map((review, index) => (
         <div
           key={index}
-          className='flex flex-row md:flex-col items-center gap-4 bg-white rounded-lg shadow-lg p-4 w-full cursor-pointer'
+          className='flex flex-col sm:flex-col rounded-[5px] shadow-lg p-3 sm:p-4 w-full cursor-pointer'
           onClick={() => handleButtonClick(review)}>
-          <div className='w-[200px] h-[120px] md:w-[260px] md:h-[200px] overflow-hidden pt-[10px]'>
-            <img
-              src={review.files?.[0]?.url || NO_IMG}
-              alt='업로드 이미지'
-              className='w-full h-full object-cover'
-            />
-          </div>
-
-          <div className='flex flex-col justify-start text-start w-full p-1 gap-4'>
-            <div className='flex justify-between items-center w-full '>
-              <h3 className='t-b-18 text-start flex-grow'>
-                {review.userName || '익명'}
-              </h3>
-
-              <p className='text-gray-9 text-end t-r-16'>
-                {formatTimeStamp(review.createdAt)}
-              </p>
+          <div className='flex flex-row sm:flex-col gap-3 sm:gap-0'>
+            <div className='w-[120px] sm:w-full aspect-square sm:mb-4 rounded flex justify-center items-center flex-shrink-0'>
+              <img
+                src={review.files?.[0]?.url || NO_IMG}
+                alt='업로드 이미지'
+                className='w-full h-full max-w-[120px] sm:max-w-[200px] max-h-[120px] sm:max-h-[200px] object-cover'
+              />
             </div>
 
-            <p className='t-r-14 md:hidden line-clamp-4'>{review.reviewText}</p>
+            <div className='flex flex-col justify-start text-start gap-2 sm:gap-3 flex-1'>
+              <div className='flex justify-between items-center'>
+                <h3 className='t-m-18 truncate max-w-[65%]'>
+                  {review.userName || '익명'}
+                </h3>
 
-            <div className='hidden md:block h-[120px] '>
-              <p className='t-r-16 leading-tight line-clamp-6'>
-                {review.reviewText}
-              </p>
+                <p className='text-gray-9 t-r-14'>
+                  {formatTimeStamp(review.createdAt)}
+                </p>
+              </div>
+
+              <div className='h-[72px] sm:h-[100px] md:h-[120px]'>
+                <p className='t-r-14 line-clamp-3 sm:line-clamp-4 md:line-clamp-5'>
+                  {review.reviewText}
+                </p>
+              </div>
             </div>
           </div>
         </div>

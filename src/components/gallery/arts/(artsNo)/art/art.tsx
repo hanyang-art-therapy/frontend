@@ -1,12 +1,20 @@
-import type { ArtDetail as ArtDetailType } from '@/types/gallery/art';
-import ArtImage from '@/components/gallery/arts/(artsNo)/art/art-image';
-import ArtInfo from '@/components/gallery/arts/(artsNo)/art/info/art-info';
 import ArtDescription from '@/components/gallery/arts/(artsNo)/art/art-description';
+import ArtImage from '@/components/gallery/arts/(artsNo)/art/art-image';
 import CoWorkDescription from '@/components/gallery/arts/(artsNo)/art/cowork/co-work-description';
+import ArtInfo from '@/components/gallery/arts/(artsNo)/art/info/art-info';
 import { COWORK_2025_ART_NO } from '@/constants/gallery/art-details';
+import type { ArtDetail as ArtDetailType } from '@/types/gallery/art';
+import { useEffect } from 'react';
 
 export default function Art({ artDetail }: { artDetail: ArtDetailType }) {
   const { file, description, artName, artist, caption, artsNo } = artDetail;
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
 
   return (
     <div className='flex flex-col'>

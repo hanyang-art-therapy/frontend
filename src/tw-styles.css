@@ -205,6 +205,7 @@
     font-size: clamp(20px, calc(17.7662px + 0.5195vw), 24px);
     font-weight: 500;
   }
+
   .t-m-18 {
     font-size: clamp(16px, calc(13.3247px + 0.3896vw), 18px);
     font-weight: 500;
@@ -561,5 +562,10 @@
   .sign-in-banner-bg {
     background: url(/images/banners/sign-in-banner.webp) no-repeat 0 0;
     background-size: cover;
+  }
+
+  .t-m-review-title {
+    font-size: clamp(16px, calc(17.7662px + 0.5195vw), 24px);
+    font-weight: 500;
   }
 }
