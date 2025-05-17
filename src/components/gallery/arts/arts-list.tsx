@@ -14,7 +14,7 @@ export default function ArtsList({ art }: ArtsListProps) {
         <img
           src={art.url}
           alt={art.artName}
-          className='w-[400px] h-[400px] object-cover'
+          className='md:min-w-[230px] h-auto aspect-[1/1] object-cover box-shadow-style'
         />
 
         <p className='t-b-24 text-center leading-[24px]'>
