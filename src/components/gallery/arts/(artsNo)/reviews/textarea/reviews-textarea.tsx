@@ -22,6 +22,8 @@ export default function ReviewsTextarea({
   handlePostReview,
 }: ReviewsTextareaProps) {
   const handleEnterKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (/Mobi|Android/i.test(navigator.userAgent)) return;
+
     if (e.nativeEvent.isComposing || e.key !== 'Enter' || e.shiftKey) return;
 
     handlePostReview();

@@ -1,8 +1,8 @@
 import { postFile } from '@/apis/art/file';
+import ReviewImageHeicSupport from '@/components/gallery/arts/(artsNo)/reviews/image/review-image-heic-support';
 import type { ArtReview } from '@/types/gallery/review';
 import { X } from 'lucide-react';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-
 type ReviewsModalImageProps = {
   isEditing: boolean;
   imageUrl: string;
@@ -39,6 +39,8 @@ export default function ReviewsModalImage({
     }
   };
 
+  console.log(imageUrl);
+
   return (
     <div className='w-full flex flex-col gap-4 md:flex-1 min-w-[100px] md:min-w-[320px] xl:min-w-[400px] h-auto'>
       <span className='t-b-16'>첨부한 이미지</span>
@@ -46,7 +48,7 @@ export default function ReviewsModalImage({
       {/* 이미지 있음 */}
       {hasImage ? (
         <div className='relative w-full aspect-[4/3] max-h-[50vh] rounded overflow-hidden'>
-          <img
+          <ReviewImageHeicSupport
             src={imageUrl}
             alt='리뷰 이미지'
             aria-label='리뷰 이미지'

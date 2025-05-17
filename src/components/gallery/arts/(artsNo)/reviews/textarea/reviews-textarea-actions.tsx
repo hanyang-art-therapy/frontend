@@ -21,7 +21,7 @@ export default function ReviewsTextareaActions({
         aria-label='이미지 첨부'
         className='gap-[5px] t-m-18 bg-primary px-5 flex-1 md:flex-none w-auto rounded-[40px] whitespace-nowrap'>
         이미지 첨부
-        <Image size={12} className='w-3 h-3 md:w-5 md:h-5' color='#fff' />
+        <Image size={20} className='!w-5 !h-5' color='#fff' />
       </Button>
 
       <Button
@@ -32,14 +32,14 @@ export default function ReviewsTextareaActions({
         댓글 업로드
         {isLoading ? (
           <LoaderCircle
-            size={12}
-            className='w-3 h-3 md:w-5 md:h-5 animate-spin'
+            size={20}
+            className='!w-5 !h-5 animate-spin'
             color='white'
           />
         ) : (
           <Navigation
-            size={12}
-            className='w-3 h-3 md:w-5 md:h-5'
+            size={20}
+            className='!w-5 !h-5'
             color='white'
             fill='white'
           />

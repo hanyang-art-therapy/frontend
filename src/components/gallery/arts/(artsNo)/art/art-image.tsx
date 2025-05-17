@@ -8,7 +8,7 @@ export default function ArtImage({ url, name }: ArtImageProps) {
     <img
       src={url}
       alt={name}
-      className='w-auto mx-auto xl:mx-0 box-shadow-style'
+      className='w-auto object-contain mx-auto xl:mx-0 drop-shadow-lg'
     />
   );
 }
