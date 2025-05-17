@@ -94,6 +94,7 @@ export default function ReviewsModal({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (/Mobi|Android/i.test(navigator.userAgent)) return;
     if (e.nativeEvent.isComposing || e.key !== 'Enter' || e.shiftKey) return;
 
     handleConfirmClick();
