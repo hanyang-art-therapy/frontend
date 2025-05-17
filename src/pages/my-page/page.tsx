@@ -6,6 +6,7 @@ import type { MyProfileData, MyReviewData } from '@/types/my-page';
 import { useEffect, useState } from 'react';
 
 export default function Page() {
+  const [isLoading, setIsLoading] = useState(true);
   const [myReviews, setMyReviews] = useState<MyReviewData[]>([]);
   // const [myPosts, setMyPosts] = useState<MyPostData[]>([]);
   const [myProfile, setMyProfile] = useState<MyProfileData>(
@@ -16,25 +17,25 @@ export default function Page() {
 
   useEffect(() => {
     if (!userNo) return;
-    const fetchMyReviews = async () => {
-      const response = await getMyReviews(userNo);
-      setMyReviews(response);
+
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const [reviews, profile] = await Promise.all([
+          getMyReviews(userNo),
+          getMyProfile(userNo),
+        ]);
+        setMyReviews(reviews);
+        setMyProfile(profile);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    // const fetchMyPosts = async () => {
-    //   const response = await getMyPostsMocking();
-    //   setMyPosts(response);
-    // };
+    fetchData();
+  }, [userNo]);
 
-    const fetchMyProfile = async () => {
-      const response = await getMyProfile(userNo);
-      setMyProfile(response);
-    };
-
-    fetchMyReviews();
-    // fetchMyPosts();
-    fetchMyProfile();
-  }, []);
-
-  return <MyPage myProfile={myProfile} myReviews={myReviews} />;
+  return (
+    <MyPage myProfile={myProfile} myReviews={myReviews} isLoading={isLoading} />
+  );
 }

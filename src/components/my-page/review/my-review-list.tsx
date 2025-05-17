@@ -5,9 +5,13 @@ import { Link } from 'react-router-dom';
 
 export default function MyReviewList({
   myReviews,
+  isLoading,
 }: {
   myReviews: MyReviewData[];
+  isLoading: boolean;
 }) {
+  if (isLoading) return null;
+
   return (
     <ul className='flex flex-col border-t border-b'>
       {myReviews.length ? (
