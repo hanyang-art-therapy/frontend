@@ -44,10 +44,10 @@ export default function ContentsSection() {
         {/* 자유 게시판 Content */}
         <div className='w-full space-y-[20px]'>
           <div className='flex justify-between items-center'>
-            <h2 className='t-b-24'>자유 게시판</h2>
+            <h2 className='t-b-24'>게시판</h2>
             {/* 임시 - [자유 게시판]으로 이동 */}
             <Link
-              to='/community'
+              to='/coming-soon'
               aria-label='더보기'
               className='p-2 rounded-full hover:bg-btn-gray-fa transition'>
               <Plus className='w-6 h-6 text-btn-dark' />
@@ -63,11 +63,11 @@ export default function ContentsSection() {
                 {/* 번호 */}
                 <span className='t-b-14'>{COMMUNITY_POSTS.id}</span>
                 {/* 제목 (클릭 시 상세 페이지로 이동 가능) */}
-                <a
-                  href={`/community/${COMMUNITY_POSTS.id}`}
+                <Link
+                  to={`coming-soon`}
                   className='t-r-18 hover:opacity-70 transition truncate'>
                   {COMMUNITY_POSTS.title}
-                </a>
+                </Link>
                 {/* 날짜 */}
                 <span className='t-r-14 text-gray-9'>
                   {COMMUNITY_POSTS.date}
