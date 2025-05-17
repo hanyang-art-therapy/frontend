@@ -16,12 +16,19 @@ export default function ArtInfo({ artName, artist, caption }: ArtInfoProps) {
           <ArtInfoItem label='작품명'>{artName}</ArtInfoItem>
 
           <ArtInfoItem label='작가명'>
-            {artist.map((name, index) => (
-              <span key={index}>
-                {name.artistName}
-                {index !== artist.length - 1 && ', '}
+            {artName === '잇다, 있다' ? (
+              <span>
+                김미경, 강희정, 김민영, 박은숙, 안정환, 장호진, 황현주, 김도형,
+                김지은, 마수민, 문지윤, 백은희
               </span>
-            ))}
+            ) : (
+              artist.map((name, index) => (
+                <span key={index}>
+                  {name.artistName}
+                  {index !== artist.length - 1 && ', '}
+                </span>
+              ))
+            )}
           </ArtInfoItem>
 
           {artist.length === 1 && (
