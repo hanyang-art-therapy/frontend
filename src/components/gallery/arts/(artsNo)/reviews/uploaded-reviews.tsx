@@ -1,3 +1,4 @@
+import ReviewImageHeicSupport from '@/components/gallery/arts/(artsNo)/reviews/image/review-image-heic-support';
 import ReviewsSkeleton from '@/components/gallery/arts/(artsNo)/reviews/ui/reviews-skeleton';
 import { NO_IMG } from '@/constants/gallery/art-details';
 import { formatTimeStamp } from '@/lib/utils';
@@ -34,7 +35,7 @@ export default function UploadedReviews({
           onClick={() => handleButtonClick(review)}>
           <div className='flex flex-row sm:flex-col gap-3 sm:gap-0'>
             <div className='w-[120px] sm:w-full aspect-square sm:mb-4 rounded flex justify-center items-center flex-shrink-0'>
-              <img
+              <ReviewImageHeicSupport
                 src={review.files?.[0]?.url || NO_IMG}
                 alt='업로드 이미지'
                 className='w-full h-full max-w-[120px] sm:max-w-[200px] max-h-[120px] sm:max-h-[200px] object-cover'

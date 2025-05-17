@@ -1,5 +1,7 @@
+import ReviewImageHeicSupport from '@/components/gallery/arts/(artsNo)/reviews/image/review-image-heic-support';
 import { X } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
+
 type ReviewsImageProps = {
   previewImage: string | null;
   setPreviewUploadImage: Dispatch<SetStateAction<string | null>>;
@@ -13,7 +15,7 @@ export default function ReviewsImage({
     <div className='w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative bg-btn-gray-fa flex items-center justify-center'>
       {previewImage ? (
         <>
-          <img
+          <ReviewImageHeicSupport
             src={previewImage}
             alt='미리보기'
             className='w-full h-full object-cover rounded'
