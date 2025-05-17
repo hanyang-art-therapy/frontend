@@ -8,10 +8,15 @@ import { useState } from 'react';
 type MyPageProps = {
   myProfile: MyProfileData;
   myReviews: MyReviewData[];
+  isLoading: boolean;
   // myPosts: MyPostData[];
 };
 
-export default function MyPage({ myProfile, myReviews }: MyPageProps) {
+export default function MyPage({
+  myProfile,
+  myReviews,
+  isLoading,
+}: MyPageProps) {
   const [reviews, account] = MY_PAGE_STEP_ITEMS;
   const [step, setStep] = useState(reviews.value);
 
@@ -21,7 +26,9 @@ export default function MyPage({ myProfile, myReviews }: MyPageProps) {
 
       <div className='w-full md:max-w-[1260px] mx-auto md:mt-15 mt-10 px-5 xl:px-0'>
         {/* 내가 쓴 리뷰 관리 */}
-        {step === reviews.value && <MyReviews myReviews={myReviews} />}
+        {step === reviews.value && (
+          <MyReviews myReviews={myReviews} isLoading={isLoading} />
+        )}
 
         {/* 게시물 관리 */}
         {/* {step === posts.value && <MyPosts myPosts={myPosts} />} */}

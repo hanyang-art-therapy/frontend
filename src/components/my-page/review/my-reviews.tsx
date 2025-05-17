@@ -5,15 +5,15 @@ import type { MyReviewData } from '@/types/my-page';
 
 export default function MyReveiws({
   myReviews,
+  isLoading,
 }: {
   myReviews: MyReviewData[];
+  isLoading: boolean;
 }) {
-  if (myReviews.length === 0) return null;
-
   return (
     <>
       <MyPageHeader title='내가 쓴 댓글 관리' />
-      <MyReviewList myReviews={myReviews} />
+      <MyReviewList myReviews={myReviews} isLoading={isLoading} />
       {/* <MyReviewPagination /> */}
     </>
   );
