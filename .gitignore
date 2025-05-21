@@ -30,3 +30,9 @@ dist-ssr
 # scss mpa files
 /styles/*.css
 *.css.map
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
