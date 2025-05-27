@@ -1,18 +1,12 @@
-import { getUserId } from '@/apis/auth/init-auth';
 import { signOut } from '@/apis/auth/sign-out';
 import { handleApiError } from '@/components/common/error-handler';
-import { useEffect, useState } from 'react';
+import { useAuthStore } from '@/store/auth';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export default function AuthLinks() {
-  const [userNo, setUserNo] = useState<string>();
-
-  useEffect(() => {
-    getUserId().then((userNo) => {
-      setUserNo(userNo);
-    });
-  }, []);
+  const { accessToken } = useAuthStore();
+  const isSignedIn = !!accessToken;
 
   const handleLogout = async () => {
     try {
@@ -24,8 +18,8 @@ export default function AuthLinks() {
   };
 
   return (
-    <div className='flex gap-5 px-5 leading-[40px] bg-bg-primary text-white t-b-14'>
-      {userNo ? (
+    <div className='flex gap-5 px-5 leading-[40px] xl:bg-bg-primary xl:text-white t-r-14'>
+      {isSignedIn ? (
         <button
           onClick={handleLogout}
           className='hover:opacity-70 cursor-pointer'>
@@ -37,7 +31,9 @@ export default function AuthLinks() {
         </Link>
       )}
 
-      {userNo ? (
+      <span>|</span>
+
+      {isSignedIn ? (
         <Link to='/my-page' className='hover:opacity-70'>
           마이페이지
         </Link>

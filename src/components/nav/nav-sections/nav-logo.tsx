@@ -5,9 +5,15 @@ export default function Logo({ subName }: { subName?: string }) {
     <h1>
       <Link to='/' className='flex items-center'>
         <img
-          src='/images/logo.webp'
+          src='/images/logo/desktop-logo.webp'
           alt='한양대학교 에리카 미술치료학과'
-          className='min-w-[210px] h-[30px] object-contain'
+          className='h-[30px] object-contain sm:block hidden'
+        />
+
+        <img
+          src='/images/logo/mobile-logo.png'
+          alt='한양대학교 에리카 미술치료학과'
+          className='h-[30px] object-contain sm:hidden block'
         />
 
         {subName && (

@@ -4,6 +4,10 @@
 @theme inline {
   --color-primary: #f18100;
   --color-secondary: #004483;
+  --color-black: #333;
+  --color-white: #fff;
+  --color-success: #1a83e4;
+
   --color-gray-6: #666;
   --color-gray-9: #999;
   --color-gray-3: #333;
@@ -17,9 +21,6 @@
   --color-btn-gray-9: #999;
   --color-btn-gray-d: #ddd;
   --color-btn-gray-fa: #fafafa;
-
-  --color-black: #333;
-  --color-white: #fff;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -171,26 +172,32 @@
     font-size: clamp(38px, calc(14.545px + 5.455vw), 80px);
     font-weight: 700;
   }
+
   .t-b-52 {
     font-size: clamp(34px, calc(27.0649px + 2.0779vw), 52px);
     font-weight: 700;
   }
+
   .t-b-32 {
     font-size: clamp(24px, calc(19.5325px + 1.039vw), 32px);
     font-weight: 700;
   }
+
   .t-b-24 {
     font-size: clamp(20px, calc(17.7662px + 0.5195vw), 24px);
     font-weight: 700;
   }
+
   .t-b-18 {
     font-size: clamp(16px, calc(13.3247px + 0.3896vw), 18px);
     font-weight: 700;
   }
+
   .t-b-16 {
     font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
     font-weight: 700;
   }
+
   .t-b-14 {
     font-size: clamp(12px, calc(10.8831px + 0.2597vw), 14px);
     font-weight: 700;
@@ -248,7 +255,7 @@
   }
 
   .min-h-screen-vh {
-    @apply min-h-[calc(100vh-400px)];
+    @apply min-h-[calc(100vh-450px)];
   }
 }
 
@@ -567,5 +574,12 @@
   .t-m-review-title {
     font-size: clamp(16px, calc(17.7662px + 0.5195vw), 24px);
     font-weight: 500;
+  }
+
+  .appear-section {
+    @apply opacity-0 max-h-0 pointer-events-none transition-all duration-500 ease-in-out;
+  }
+  .appear-section--visible {
+    @apply opacity-100 max-h-[500px] pointer-events-auto;
   }
 }

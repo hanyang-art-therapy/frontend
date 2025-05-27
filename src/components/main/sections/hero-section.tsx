@@ -1,6 +1,6 @@
 export default function HeroSection() {
   return (
-    <section className='w-full h-[400px] flex justify-center relative banner-bg'>
+    <section className='w-full h-[320px] sm:h-[400px] flex justify-center relative banner-bg'>
       <div className='w-full h-full inset-0 bg-black/10 absolute'></div>
       <div className='w-full max-w-[1260px] h-full flex flex-col justify-center items-center text-shadow-style relative'>
         <div className='xl:pl-0 pl-[20px] flex flex-col absolute top-[90px] left-0'>
@@ -13,7 +13,7 @@ export default function HeroSection() {
             <span className='t-m-32'>DEPARTMENT OF ART THERAPY</span>
           </h2>
         </div>
-        <p className='xl:px-0 px-5 t-r-18 sm:text-right leading-[24px] lg:leading-[32px] absolute bottom-[40px] right-0'>
+        <p className='xl:px-0 px-5 t-r-18 hidden sm:block sm:text-right leading-[24px] lg:leading-[32px] absolute bottom-[40px] right-0'>
           미술작품을 활용한 전문적인 미술치료전문가 양성, 심리치료의 도구로
           이미지와 창조가 반영되는
           <br className='hidden sm:block' />

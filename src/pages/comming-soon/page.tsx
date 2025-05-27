@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
-export function ComingSoonPage() {
+export default function ComingSoon() {
   const navigate = useNavigate();
 
   return (
@@ -14,7 +14,7 @@ export function ComingSoonPage() {
         />
 
         <h1 className='t-b-52 mb-4'>
-          COMING SOON <span className='whitespace-nowrap'>...💻🔨</span>
+          COMMING SOON <span className='whitespace-nowrap'>...💻🔨</span>
         </h1>
         <p className='md:text-r-16 text-gray mb-12 whitespace-pre-line'>
           현재 해당 페이지는 준비중입니다.

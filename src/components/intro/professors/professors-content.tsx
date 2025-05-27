@@ -1,46 +1,27 @@
-import { PROFESSORS } from '@/constants/intro/professors';
+import { getProfessors } from '@/apis/admin/professor';
+import type { ProfessorResponse } from '@/types/admin/professor';
+import { useEffect, useState } from 'react';
+import ProfessorsCard from './professors-card';
 
 export default function ProfessorsContent() {
+  const [professors, setProfessors] = useState<ProfessorResponse[]>([]);
+
+  useEffect(() => {
+    const fetchProfessors = async () => {
+      const response = await getProfessors();
+      setProfessors(response);
+    };
+
+    fetchProfessors();
+  }, []);
+
   return (
-    <ul className='grid md:grid-cols-3 gap-[30px]'>
-      {PROFESSORS.map((professor) => (
-        <li
-          key={professor.name + professor.image}
-          className='shadow-md rounded-xl p-[30px] text-center transform hover:-translate-y-2 transition-transform duration-300 ease-in-out'>
-          {professor.image && (
-            <img
-              src={professor.image}
-              alt={professor.name}
-              className='w-32 h-32 object-cover rounded-full mx-auto mb-4'
-            />
-          )}
-
-          <h3 className='t-b-18'>{professor.name}</h3>
-          <p>{professor.position}</p>
-
-          {professor.major && <p className='t-r-14 mt-1'>{professor.major}</p>}
-
-          {professor.email && (
-            <p className='t-r-14 text-primary mt-1'>
-              <a
-                href={`mailto:${professor.email}`}
-                className='underline hover:text-primary/80 cursor-pointer'>
-                {professor.email}
-              </a>
-            </p>
-          )}
-
-          {professor.phone && (
-            <p className='t-r-14 text-gray mt-1'>
-              <a
-                href={`tel:${professor.phone}`}
-                className='underline hover:text-gray/80 cursor-pointer'>
-                {professor.phone}
-              </a>
-            </p>
-          )}
-        </li>
-      ))}
+    <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[8vw] sm:gap-[4vw]'>
+      {professors.map((professor) => {
+        return (
+          <ProfessorsCard key={professor.professorNo} professor={professor} />
+        );
+      })}
     </ul>
   );
 }

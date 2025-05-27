@@ -1,13 +1,12 @@
-import type { Dispatch, SetStateAction } from 'react';
 import { cn } from '@/lib/utils';
 
 type StepProps = {
   items: { label: string; value: string }[];
   step: string;
-  setStep: Dispatch<SetStateAction<string>>;
+  onChange: (step: string) => void;
 };
 
-export default function Step({ items, step, setStep }: StepProps) {
+export default function Step({ items, step, onChange }: StepProps) {
   const width = `${100 / items.length || 1}%`;
 
   return (
@@ -23,7 +22,7 @@ export default function Step({ items, step, setStep }: StepProps) {
                 step === item.value && 'bg-white text-black'
               )}>
               <button
-                onClick={() => setStep(item.value)}
+                onClick={() => onChange(item.value)}
                 className={cn(
                   'w-full h-full flex items-center justify-center cursor-pointer',
                   step === item.value ? 't-m-18' : 't-r-18'
