@@ -3,19 +3,27 @@ import Required from '@/components/ui/required';
 import type { SignUpFormValues } from '@/schemas/sign-up/sign-up-schema';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
+type UserNameSectionProps = {
+  register: UseFormRegister<SignUpFormValues>;
+  errors: FieldErrors<SignUpFormValues>;
+};
+
 export default function UserNameSection({
   register,
   errors,
-}: {
-  register: UseFormRegister<SignUpFormValues>;
-  errors: FieldErrors<SignUpFormValues>;
-}) {
+}: UserNameSectionProps) {
   return (
-    <div className='py-[20px] space-y-2.5 border-b border-bg-gray-d'>
-      <label className='t-b-16 flex items-center'>
+    <div className='py-[20px] space-y-2.5 border-b border-bg-gray-d w-full'>
+      <label
+        aria-label='이름'
+        htmlFor='userName'
+        className='t-b-16 flex items-center'>
         이름 <Required nbsp />
       </label>
       <Input
+        id='userName'
+        aria-label='이름'
+        autoComplete='username'
         className='w-[200px] h-[45px]'
         placeholder='이름을 입력해주세요.'
         {...register('userName')}

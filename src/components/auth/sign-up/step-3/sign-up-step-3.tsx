@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export default function SignUpStep3() {
   const navigate = useNavigate();
@@ -12,9 +13,15 @@ export default function SignUpStep3() {
 
   return (
     <div className='flex w-full h-full flex-col gap-[60px]'>
-      <span className='space-y-[30px]'>
-        <p className='t-b-24'>회원가입이 완료되었습니다!</p>
-        <p className='t-r-18'>
+      <span className='space-y-[30px] text-center'>
+        <DotLottieReact
+          src='/images/lottie/sign-up.lottie'
+          loop
+          autoplay
+          className='w-auto sm:w-[400px] xl:w-[800px] mx-auto mb-0'
+        />
+        <p className='t-b-24 '>회원가입이 완료되었습니다!</p>
+        <p className='t-r-18 '>
           로그인 화면으로 돌아가 다시 로그인을 해주세요.
         </p>
       </span>

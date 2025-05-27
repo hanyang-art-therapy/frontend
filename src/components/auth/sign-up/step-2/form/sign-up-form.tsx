@@ -1,4 +1,4 @@
-import { signUp } from '@/apis/auth/sign-up';
+import { signUpSupabase } from '@/apis/auth/sign-up';
 import {
   EmailSection,
   PwSection,
@@ -6,13 +6,15 @@ import {
   UserNameSection,
   UserTypeSection,
 } from '@/components/auth/sign-up/step-2/form/sections';
+import AppearContainer from '@/components/auth/sign-up/step-2/form/ui/appear-container';
 import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
+import { getValidationStates } from '@/lib/helper/sign-up';
 import {
-  signUpSchema,
   generalSignUpSchema,
-  type SignUpFormValues,
+  signUpSchema,
   type MemberSignUpFormValues,
+  type SignUpFormValues,
 } from '@/schemas/sign-up/sign-up-schema';
 import type { UserType } from '@/types/auth/sign-up';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,7 +32,7 @@ export default function SignUpForm({
   const [isLoading, setIsLoading] = useState(false);
   const [userType, setUserType] = useState<UserType>('member');
   const [isStudentNoValid, setIsStudentNoValid] = useState(true);
-  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(false);
 
   const {
     register,
@@ -55,7 +57,7 @@ export default function SignUpForm({
     setIsLoading(true);
 
     try {
-      await signUp({
+      await signUpSupabase({
         password: data.password,
         userName: data.userName,
         email,
@@ -78,13 +80,9 @@ export default function SignUpForm({
     if (userType === 'general') {
       clearErrors('studentNo');
       setIsStudentNoValid(true);
-      reset(
-        { ...watch(), studentNo: undefined },
-        { keepErrors: false, keepDirty: true, keepTouched: true }
-      );
-      trigger();
+      reset({ ...watch(), studentNo: undefined });
     }
-  }, [userType, clearErrors, setIsStudentNoValid, reset, watch, trigger]);
+  }, [userType, clearErrors, setIsStudentNoValid, reset, watch]);
 
   const isButtonDisabled =
     isLoading ||
@@ -92,24 +90,47 @@ export default function SignUpForm({
     (userType === 'member' && !isStudentNoValid) ||
     !isEmailValid;
 
+  const { emailValid, passwordValid, confirmPasswordValid, studentNoValid } =
+    getValidationStates({
+      watch,
+      errors,
+      isEmailValid,
+      isStudentNoValid,
+      userType,
+    });
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <UserTypeSection userType={userType} setUserType={setUserType} />
 
       <EmailSection
-        register={register}
-        setValue={setValue}
-        watch={watch}
-        setError={setError}
+        isEmailValid={isEmailValid}
         selectedDomain={selectedDomain}
-        setSelectedDomain={setSelectedDomain}
         errors={errors}
+        register={register}
+        watch={watch}
+        setValue={setValue}
+        setError={setError}
         setIsEmailValid={setIsEmailValid}
+        setSelectedDomain={setSelectedDomain}
       />
 
-      <PwSection register={register} errors={errors} />
+      <AppearContainer show={emailValid}>
+        <PwSection
+          register={register}
+          errors={errors}
+          watch={watch}
+          trigger={trigger}
+        />
+      </AppearContainer>
 
-      {userType === 'member' && (
+      <AppearContainer
+        show={
+          emailValid &&
+          passwordValid &&
+          confirmPasswordValid &&
+          userType === 'member'
+        }>
         <StudentNoSection
           register={register}
           watch={watch}
@@ -117,13 +138,16 @@ export default function SignUpForm({
           setError={setError}
           setIsStudentNoValid={setIsStudentNoValid}
         />
-      )}
+      </AppearContainer>
 
-      <UserNameSection register={register} errors={errors} />
+      <AppearContainer show={studentNoValid}>
+        <UserNameSection register={register} errors={errors} />
+      </AppearContainer>
 
       <div className='flex justify-center mt-[60px]'>
         <Button
           type='submit'
+          aria-label='가입하기'
           className='w-full md:w-[200px] h-[50px]'
           disabled={isButtonDisabled}>
           가입하기

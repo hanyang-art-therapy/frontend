@@ -17,7 +17,7 @@ export default function SignUpStep2({
   }, []);
 
   return (
-    <div className='flex w-full flex-col gap-[10px]'>
+    <div className='flex w-full flex-col gap-[10px] mt-10 sm:mt-15'>
       <section className='space-y-4 w-full'>
         <SignUpFormIntro />
       </section>

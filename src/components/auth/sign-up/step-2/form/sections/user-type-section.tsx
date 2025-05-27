@@ -22,18 +22,24 @@ export default function UserTypeSection({
       </div>
 
       <RadioGroup
+        name='userType'
+        aria-label='구분'
         defaultValue={userType}
         onValueChange={handleUserTypeChange}
         className='flex gap-[30px]'>
         <div className='flex items-center gap-2'>
-          <RadioGroupItem value='member' id='member' />
+          <RadioGroupItem
+            aria-label='미술치료학과 구성원'
+            value='member'
+            id='member'
+          />
           <label htmlFor='member' className='t-r-16 cursor-pointer'>
             미술치료학과 구성원
           </label>
         </div>
 
         <div className='flex items-center gap-2'>
-          <RadioGroupItem value='general' id='general' />
+          <RadioGroupItem aria-label='일반인' value='general' id='general' />
           <label htmlFor='general' className='t-r-16 cursor-pointer'>
             일반인
           </label>

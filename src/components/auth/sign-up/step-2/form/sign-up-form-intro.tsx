@@ -5,7 +5,7 @@ export default function SignUpFormIntro() {
   const { section1 } = SIGN_UP_STEP_2;
 
   return (
-    <div>
+    <div className='md:space-y-[30px] sm:space-y-[15px] space-y-2'>
       <h2 className='t-b-24'>{section1.title}</h2>
       <p className='t-r-18'>{section1.description}</p>
       <p className='text-right t-r-16'>

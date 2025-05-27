@@ -18,8 +18,12 @@ export default function EmailDomainSelect({
   disabled,
 }: EmailDomainSelectProps) {
   return (
-    <Select onValueChange={onValueChange} value={value} disabled={disabled}>
-      <SelectTrigger className='w-[200px] h-[45px]'>
+    <Select
+      onValueChange={onValueChange}
+      value={value}
+      disabled={disabled}
+      name='emailDomain'>
+      <SelectTrigger className='w-[200px] h-[45px] t-r-16'>
         <SelectValue className='h-[45px]' placeholder='선택하세요' />
       </SelectTrigger>
 

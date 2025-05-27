@@ -17,7 +17,7 @@ export default function SignUpStep1({
   const [agreement, setAgreement] = useState('agree');
 
   return (
-    <div className='space-y-[50px]'>
+    <div className='space-y-[50px] mt-10 sm:mt-15'>
       {/* 메인 섹션 1 */}
       <section className='space-y-[30px]'>
         <h2 className='t-b-24'>{section1.title}</h2>
