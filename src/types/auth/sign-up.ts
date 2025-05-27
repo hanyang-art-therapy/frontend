@@ -4,6 +4,8 @@ export type SignUpRequest = Pick<User, 'password' | 'userName' | 'email'> & {
   studentNo?: string;
 };
 
+export type CheckUserIdRequest = Pick<User, 'userId'>;
+
 export type CheckStudentNoRequest = Pick<User, 'studentNo'>;
 
 export type CheckEmailRequest = Pick<User, 'email'>;

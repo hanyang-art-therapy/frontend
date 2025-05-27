@@ -1,9 +1,10 @@
 import { Arts, Files, Artist, ArtArtistRel } from '@/types';
 
-export type Art = Pick<Arts, 'artsNo' | 'artName'> &
-  Pick<Files, 'url'> & {
-    artists: Pick<Artist, 'artistName' | 'cohort'>[];
-  };
+export type Art = Pick<Arts, 'artsNo' | 'artName' | 'coDescription'> & {
+  files: Pick<Files, 'url'>;
+  artists: (Pick<Artist, 'artistName' | 'cohort'> &
+    Pick<ArtArtistRel, 'description'>)[];
+};
 
 export type ArtDetail = Pick<
   Arts,
