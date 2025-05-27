@@ -1,13 +1,12 @@
+import type { SignInRequest } from '@/types/auth/sign-in';
 import { http, HttpResponse } from 'msw';
 
-type LoginRequestBody = {
-  userId: string;
-  password: string;
-};
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const authHandlers = [
-  http.post('/user/sign-in', async ({ request }) => {
-    const { userId, password } = (await request.json()) as LoginRequestBody;
+  // POST 로그인
+  http.post(`${API_URL}/user/sign-in`, async ({ request }) => {
+    const { userId, password } = (await request.json()) as SignInRequest;
 
     if (userId === 'test' && password === 'test') {
       return HttpResponse.json(
@@ -28,22 +27,26 @@ export const authHandlers = [
     );
   }),
 
-  http.post('/user/refresh', async () => {
+  // POST REFRESH 토큰 갱신
+  http.post(`${API_URL}/user/refresh`, async () => {
     return HttpResponse.json({ accessToken: 'mock-access-token' });
   }),
 
-  http.post('/user/sign-up', async () => {
+  // POST 회원가입
+  http.post(`${API_URL}/user/sign-up`, async () => {
     return HttpResponse.json({}, { status: 200 });
   }),
 
-  http.delete('/user/sign-out', async () => {
+  // DELETE 로그아웃
+  http.delete(`${API_URL}/user/sign-out`, async () => {
     return HttpResponse.json(
       { message: '로그아웃 되었습니다.' },
       { status: 200 }
     );
   }),
 
-  http.get('/user/check-id', async ({ request }) => {
+  // GET 아이디 중복 검사
+  http.get(`${API_URL}/user/check-id`, async ({ request }) => {
     const url = new URL(request.url);
     const userId = url.searchParams.get('userId');
 
@@ -57,7 +60,8 @@ export const authHandlers = [
     return HttpResponse.json(true, { status: 200 });
   }),
 
-  http.get('/user/check-studentNo', async ({ request }) => {
+  // GET 학번 중복 검사
+  http.get(`${API_URL}/user/check-studentNo`, async ({ request }) => {
     const url = new URL(request.url);
     const studentNo = url.searchParams.get('studentNo');
 
@@ -71,34 +75,43 @@ export const authHandlers = [
     return HttpResponse.json(true, { status: 200 });
   }),
 
-  http.post('/user/check-code', async ({ request }) => {
-    const { verificationCode } = (await request.json()) as {
-      verificationCode: string;
-    };
+  // POST 이메일 인증 (이메일 중복 검사)
+  http.post(
+    `${API_URL}/user/check-email`,
+    async ({ request }: { request: Request }) => {
+      const req = await request.json();
 
-    if (verificationCode === '1111111111') {
-      return HttpResponse.json({ message: '인증되었습니다' }, { status: 200 });
-    }
+      if (req.email === 'test@hanyang.ac.kr') {
+        return HttpResponse.json(
+          { message: '이미 사용중인 이메일입니다.' },
+          { status: 409 }
+        );
+      }
 
-    return HttpResponse.json(
-      { message: '입력값이 올바르지 않습니다.' },
-      { status: 400 }
-    );
-  }),
-
-  http.post('/user/check-email', async ({ request }) => {
-    const { email } = (await request.json()) as { email: string };
-
-    if (email === 'test@test.com') {
       return HttpResponse.json(
-        { message: '이미 사용중인 이메일입니다.' },
-        { status: 409 }
+        { message: '기재하신 이메일 주소로 인증번호가 발송되었습니다.' },
+        { status: 200 }
       );
     }
+  ),
 
-    return HttpResponse.json(
-      { message: '확인 이메일이 발송되었습니다.' },
-      { status: 200 }
-    );
-  }),
+  // POST 이메일 인증 (인증 번호 확인)
+  http.post(
+    `${API_URL}/user/check-code`,
+    async ({ request }: { request: Request }) => {
+      const req = await request.json();
+
+      if (req.verificationCode === 'test') {
+        return HttpResponse.json(
+          { message: '인증되었습니다' },
+          { status: 200 }
+        );
+      }
+
+      return HttpResponse.json(
+        { message: '인증값이 올바르지 않습니다.' },
+        { status: 400 }
+      );
+    }
+  ),
 ];

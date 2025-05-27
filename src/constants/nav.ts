@@ -14,14 +14,14 @@ export const NAV_MENU = [
   },
   {
     title: '임상활동',
-    path: '#',
+    path: '/clinical/nd',
     submenu: [
-      { title: '- 발달장애', path: '/coming-soon' },
-      { title: '- 유아', path: '/coming-soon' },
-      { title: '- 아동', path: '/coming-soon' },
-      { title: '- 청소년', path: '/coming-soon' },
-      { title: '- 성인', path: '/coming-soon' },
-      { title: '- 노인', path: '/coming-soon' },
+      { title: '- 발달장애', path: '/clinical/nd' },
+      { title: '- 유아', path: '/clinical/infant' },
+      { title: '- 아동', path: '/clinical/child' },
+      { title: '- 청소년', path: '/clinical/adolescent' },
+      { title: '- 성인', path: '/clinical/adult' },
+      { title: '- 예방', path: '/clinical/prevention' },
     ],
   },
   {
@@ -42,8 +42,8 @@ export const NAV_MENU = [
     ],
   },
   {
-    title: '자유게시판',
-    path: '/coming-soon',
+    title: '공지사항',
+    path: '/notice',
     submenu: [],
   },
 ];

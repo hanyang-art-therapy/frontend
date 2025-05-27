@@ -2,12 +2,12 @@ import type { MyPostData } from '@/types/my-page';
 
 export const MY_PAGE_STEP_ITEMS = [
   { label: '내가 쓴 댓글', value: 'reviews' },
-  // { label: '나의 게시물', value: 'posts' },
+  { label: '나의 게시물', value: 'posts' },
   { label: '개인정보 관리', value: 'account' },
 ];
 
 export const TABLE_MAP = {
-  // 아이디: 'userId',
+  아이디: 'userId',
   이름: 'userName',
   이메일: 'email',
   학번: 'studentNo',

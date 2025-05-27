@@ -1,5 +1,5 @@
-import { getUserId } from '@/apis/auth/init-auth';
 import { supabase } from '@/lib/supabase';
+import apiInstance from '@/lib/axios';
 import type {
   ArtReview,
   DeleteReviewRequest,
@@ -9,24 +9,16 @@ import type {
 import axios from 'axios';
 
 // GET /gallery/arts/:artsNo/reviews
-// export const getReviews = async (artsNo: number): Promise<ArtReview[]> => {
-//   const response = await apiInstance.get(`/galleries/arts/${artsNo}/reviews`);
+export const getReviews = async (artsNo: number): Promise<ArtReview[]> => {
+  const response = await apiInstance.get(`/galleries/arts/${artsNo}/reviews`);
 
-//   return response.data.reviews;
-// };
+  return response.data.reviews;
+};
 
 export const getReviewsMocking = async (
   artsNo: number
 ): Promise<ArtReview[]> => {
   const response = await axios.get(`/galleries/arts/${artsNo}/reviews`);
-
-  return response.data.reviews;
-};
-
-export const getReviews = async (artsNo: number): Promise<ArtReview[]> => {
-  const response = await supabase.rpc('get_reviews', {
-    arts_no: artsNo,
-  });
 
   return response.data.reviews;
 };
@@ -59,16 +51,16 @@ export const postReviewMocking = async ({
 };
 
 export const postReview = async ({
+  userNo,
   artsNo,
   reviewText,
   filesNo,
-}: PostReviewRequest) => {
-  const userId = await getUserId();
+}: PostReviewRequest & { userNo: number }) => {
   const response = await supabase.from('reviews').insert({
     artsNo,
     reviewText,
     filesNo: filesNo[0],
-    userNo: userId,
+    userNo,
   });
 
   if (response.error) {
