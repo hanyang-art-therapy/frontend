@@ -1,13 +1,11 @@
 import ArtDescription from '@/components/gallery/arts/(artsNo)/art/art-description';
 import ArtImage from '@/components/gallery/arts/(artsNo)/art/art-image';
-import CoWorkDescription from '@/components/gallery/arts/(artsNo)/art/cowork/co-work-description';
 import ArtInfo from '@/components/gallery/arts/(artsNo)/art/info/art-info';
-import { COWORK_2025_ART_NO } from '@/constants/gallery/art-details';
 import type { ArtDetail as ArtDetailType } from '@/types/gallery/art';
 import { useEffect } from 'react';
 
 export default function Art({ artDetail }: { artDetail: ArtDetailType }) {
-  const { file, description, artName, artist, caption, artsNo } = artDetail;
+  const { file, description, artName, artist, caption } = artDetail;
 
   useEffect(() => {
     window.scrollTo({
@@ -30,7 +28,6 @@ export default function Art({ artDetail }: { artDetail: ArtDetailType }) {
           <ArtDescription description={description} />
         </div>
       </div>
-      {artsNo === COWORK_2025_ART_NO && <CoWorkDescription />}
     </div>
   );
 }

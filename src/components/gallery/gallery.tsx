@@ -8,18 +8,27 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 export default function Gallery() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [intro, therapy, arts] = GALLERY_STEP_ITEMS;
 
   const searchStep = searchParams.get('step') || arts.value;
 
   const [step, setStep] = useState(searchStep);
 
+  const handleStepChange = (step: string) => {
+    setSearchParams({ step });
+    setStep(step);
+  };
+
   return (
     <div className='w-full h-full flex flex-col justify-center items-center'>
       <GalleryBanner />
 
-      <Step items={GALLERY_STEP_ITEMS} step={step} setStep={setStep} />
+      <Step
+        items={GALLERY_STEP_ITEMS}
+        step={step}
+        onChange={handleStepChange}
+      />
 
       <div className='md:max-w-[1260px] w-full mx-auto'>
         {step === intro.value && <GalleryIntro />}

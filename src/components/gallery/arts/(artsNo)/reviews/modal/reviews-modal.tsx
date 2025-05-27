@@ -1,4 +1,4 @@
-import { deleteReview, patchReview } from '@/apis/art/review';
+import { deleteReview, patchReview } from '@/apis/gallery/review';
 import { handleApiError } from '@/components/common/error-handler';
 import ReviewsModalActions from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal-actions';
 import ReviewsModalImage from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal-image';
