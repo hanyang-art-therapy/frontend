@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { validatePassword } from '@/lib/utils';
+import { validatePassword } from '@/lib/helper/my-page';
 
 export const resetPwFormSchema = z
   .object({

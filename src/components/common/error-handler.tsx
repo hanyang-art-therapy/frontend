@@ -11,12 +11,8 @@ interface ApiError {
 }
 
 export const handleApiError = (error: unknown): string => {
-  // 일반 Error 객체 처리
-  if (error instanceof Error) {
-    return error.message;
-  }
-
   const apiError = error as ApiError;
+
   const errorData = apiError.response?.data;
 
   if (errorData?.message) {

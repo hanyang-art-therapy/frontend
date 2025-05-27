@@ -1,5 +1,5 @@
-import { postFile } from '@/apis/art/file';
-import { getReviews, postReview } from '@/apis/art/review';
+import { postFile } from '@/apis/gallery/file';
+import { getReviews, postReview } from '@/apis/gallery/review';
 import { handleApiError } from '@/components/common/error-handler';
 import ReviewsModal from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal';
 import ReviewsImage from '@/components/gallery/arts/(artsNo)/reviews/reviews-image';
@@ -7,6 +7,7 @@ import ReviewsTitle from '@/components/gallery/arts/(artsNo)/reviews/reviews-tit
 import ReviewsTextarea from '@/components/gallery/arts/(artsNo)/reviews/textarea/reviews-textarea';
 import ReviewsTextareaActions from '@/components/gallery/arts/(artsNo)/reviews/textarea/reviews-textarea-actions';
 import UploadedReviews from '@/components/gallery/arts/(artsNo)/reviews/uploaded-reviews';
+import { useAuthStore } from '@/store/auth';
 import type { ArtReview } from '@/types/gallery/review';
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
@@ -18,6 +19,8 @@ type ReviewsProps = {
 
 export default function Reviews({ artName, artsNo }: ReviewsProps) {
   const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const { userNo } = useAuthStore();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [comment, setComment] = useState('');
@@ -57,6 +60,7 @@ export default function Reviews({ artName, artsNo }: ReviewsProps) {
       setPreviewUploadImage(null);
 
       await postReview({
+        userNo: Number(userNo),
         artsNo: Number(artsNo),
         reviewText: comment,
         filesNo: uploadedFileNo,
@@ -91,11 +95,13 @@ export default function Reviews({ artName, artsNo }: ReviewsProps) {
       {/* 리뷰 작성 */}
       <div className='flex flex-col w-full border border-bg-gray-d p-[10px] gap-[20px] md:pb-[22px] rounded-sm'>
         <div className='flex gap-[10px]'>
+          {/* 리뷰 이미지 */}
           <ReviewsImage
             previewImage={previewUploadImage}
             setPreviewUploadImage={setPreviewUploadImage}
           />
 
+          {/* 리뷰 텍스트 편집기 */}
           <ReviewsTextarea
             comment={comment}
             imageInputRef={imageInputRef}
@@ -105,6 +111,7 @@ export default function Reviews({ artName, artsNo }: ReviewsProps) {
           />
         </div>
 
+        {/* 리뷰 텍스트 하단 버튼 (수정, 삭제, 닫기) */}
         <ReviewsTextareaActions
           isLoading={isLoading}
           imageInputRef={imageInputRef}

@@ -1,4 +1,4 @@
-import { postFile } from '@/apis/art/file';
+import { postFile } from '@/apis/gallery/file';
 import ReviewImageHeicSupport from '@/components/gallery/arts/(artsNo)/reviews/image/review-image-heic-support';
 import type { ArtReview } from '@/types/gallery/review';
 import { X } from 'lucide-react';
@@ -38,8 +38,6 @@ export default function ReviewsModalImage({
       });
     }
   };
-
-  console.log(imageUrl);
 
   return (
     <div className='w-full flex flex-col gap-4 md:flex-1 min-w-[100px] md:min-w-[320px] xl:min-w-[400px] h-auto'>

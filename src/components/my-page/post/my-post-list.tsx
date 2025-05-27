@@ -7,14 +7,16 @@ export default function MyPostList({ posts }: { posts: MyPostData[] }) {
   return (
     <ul className='flex flex-col border-t border-b border-t-black border-b-black'>
       {posts.length ? (
-        posts.map((post) => (
+        posts.map((post, index) => (
           <li
             key={post.artsNo}
             className='border-b border-b-black border-muted last:border-b-0 hover:bg-primary/10 hover:text-bg-primary transition-all duration-300'>
             <Link
               to={`/gallery/${post.artsNo}`}
               className='flex items-center gap-4 md:gap-[30px] px-1 md:px-5 py-[13px] cursor-pointer'>
-              <p className='px-1 t-r-16 text-gray-6 md:min-w-20'>갤러리</p>
+              <p className='px-1 t-r-16 md:min-w-[46px] text-center'>
+                {posts.length - index}
+              </p>
 
               <p className='t-m-18 flex-1 truncate'>{post.artName}</p>
               {post.artType === 'GROUP' && (

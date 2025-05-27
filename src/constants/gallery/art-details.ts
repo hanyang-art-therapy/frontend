@@ -20,7 +20,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-1.jpg',
-      url: '/images/arts/art-2025-1.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -53,7 +53,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-2.jpg',
-      url: '/images/arts/art-2025-2.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -76,7 +76,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-3.jpg',
-      url: '/images/arts/art-2025-3.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -99,7 +99,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-4.jpg',
-      url: '/images/arts/art-2025-4.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -123,7 +123,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-5.jpg',
-      url: '/images/arts/art-2025-5.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -146,7 +146,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-6.jpg',
-      url: '/images/arts/art-2025-6.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -169,7 +169,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-7.jpg',
-      url: '/images/arts/art-2025-7.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -192,7 +192,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-8.jpg',
-      url: '/images/arts/art-2025-8.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -215,7 +215,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-9.jpg',
-      url: '/images/arts/art-2025-9.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -238,7 +238,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-10.jpg',
-      url: '/images/arts/art-2025-10.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -261,7 +261,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-11.jpg',
-      url: '/images/arts/art-2025-11.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -284,7 +284,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-12.jpg',
-      url: '/images/arts/art-2025-12.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -307,7 +307,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-13.jpg',
-      url: '/images/arts/art-2025-13.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -330,7 +330,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-14.jpg',
-      url: '/images/arts/art-2025-14.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -353,7 +353,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-15.jpg',
-      url: '/images/arts/art-2025-15.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -376,7 +376,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-16.jpg',
-      url: '/images/arts/art-2025-16.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -399,7 +399,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-17.jpg',
-      url: '/images/arts/art-2025-17.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -422,7 +422,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-20.jpg',
-      url: '/images/arts/art-2025-18.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -445,7 +445,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-19.jpg',
-      url: '/images/arts/art-2025-19.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -468,7 +468,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-20.jpg',
-      url: '/images/arts/art-2025-20.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -491,7 +491,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-21.jpg',
-      url: '/images/arts/art-2025-21.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -514,7 +514,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-22.jpg',
-      url: '/images/arts/art-2025-22.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -537,7 +537,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-23.jpg',
-      url: '/images/arts/art-2025-23.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -615,7 +615,7 @@ export const ART_DETAILS: ArtDetail[] = [
     file: {
       filesNo: 999,
       name: 'art-2025-23.jpg',
-      url: '/images/arts/art-2025-23.jpg',
+      url: 'https://placehold.co/1000x1000',
       filesSize: 0,
       extension: 'jpg',
       filesType: 'ART',
@@ -634,7 +634,7 @@ export const REVIEW_CONTENT = {
         {
           filesNo: 456,
           name: '123.jpg',
-          url: '/images/arts/art-2025-3.jpg',
+          url: 'https://placehold.co/1000x1000',
           filesSize: 102400,
           extension: 'jpg',
           filesType: 'REVIEW',
@@ -661,7 +661,7 @@ export const UPLOAD_FILE_RESPONSE = [
   {
     filesNo: 123,
     name: 'art_image1.jpg',
-    url: '/images/arts/art-2025-1.jpg',
+    url: 'https://placehold.co/1000x1000',
     filesSize: 20480,
     extension: 'jpg',
     filesType: 'ART',

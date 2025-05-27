@@ -49,6 +49,7 @@ export type Arts = {
   artName: string; // 작품명
   caption: string; // 캡션
   artType: 'SINGLE' | 'GROUP'; // 작품 타입
+  coDescription: string | null; // 공동 작품 설명
   createdAt: string; // 업로드 일자 - TIMESTAMP
 };
 
@@ -81,8 +82,39 @@ export type ArtArtistRel = {
   description: string; // 작품 설명
 };
 
+// 공지사항
+export type Notice = {
+  noticeNo: number; // 공지사항 번호
+  userNo: number; // 회원 번호
+  filesNo: number; // 파일 번호
+  title: string; // 제목
+  content: string; // 내용
+  createdAt: string; // 작성 일자
+  category: string; // 카테고리
+  viewCount: number; // 조회수
+};
+
+export type Professor = {
+  professorNo: number; // 교수 번호
+  professorName: string; // 교수명
+  position: string | null; // 교수 직위
+  major: string | null; // 교수 전공
+  email: string | null; // 교수 이메일
+  tel: string | null; // 교수 전화번호
+  filesNo: number | null; // 파일 번호
+};
+
 export type MessageResponse = {
   message: string;
+};
+
+export type PaginationResponse<T> = {
+  content: T[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  isLast: boolean;
 };
 
 export type ArtsPagination<T> = {

@@ -54,13 +54,13 @@ apiInstance.interceptors.response.use(
           refreshError.response?.status === 403
         ) {
           // 토큰 제거
-          useAuthStore.getState().clearAccessToken();
+          useAuthStore.getState().reset();
 
           // 로그인 페이지로 리다이렉트
           window.location.href = '/sign-in';
         }
 
-        useAuthStore.getState().clearAccessToken();
+        useAuthStore.getState().reset();
         window.location.href = '/sign-in';
       }
     }
