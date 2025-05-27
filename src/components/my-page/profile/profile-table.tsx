@@ -15,7 +15,7 @@ export default function ProfileTable({
   };
 
   return (
-    <div className='mb-[20px] w-full rounded-[5px] border border-muted bg-bg-gray-fa'>
+    <div className='mb-[20px] w-full rounded-[5px] border border-bg-gray-d bg-bg-gray-fa box-shadow-style'>
       <table className='w-full table-fixed'>
         <tbody>
           {Object.entries(TABLE_MAP).map(([label, key]) => (

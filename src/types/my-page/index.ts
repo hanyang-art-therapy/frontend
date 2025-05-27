@@ -1,7 +1,10 @@
 import { ArtArtistRel, Arts, Review, User } from '@/types';
 
-// TODO: userId 추가
-export type MyProfileData = Pick<User, 'userName' | 'email' | 'studentNo'>;
+export type MyProfileData = Pick<
+  User,
+  'userId' | 'userName' | 'email' | 'role' | 'studentNo'
+>;
+
 export type MyReviewData = Pick<
   Review,
   'reviewsNo' | 'artsNo' | 'reviewText' | 'createdAt'
