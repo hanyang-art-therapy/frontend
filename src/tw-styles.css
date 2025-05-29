@@ -566,6 +566,22 @@
     }
   }
 
+  .clinical-banner-bg {
+    width: 100vw;
+    object-fit: cover;
+    height: clamp(300px, calc(88.33px + 25.97vw), 400px);
+
+    > span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--white);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+    }
+  }
+
   .sign-in-banner-bg {
     background: url(/images/banners/sign-in-banner.webp) no-repeat 0 0;
     background-size: cover;
