@@ -19,12 +19,22 @@ export const formatTimeStamp = (timeStamp: string): string => {
   return `${year}-${month}-${day}`;
 };
 
+/**
+ * 초를 분:초 형식으로 변환
+ * @param seconds - 초
+ * @returns 분:초 형식의 문자열
+ */
 export const formatTimeLeft = (seconds: number) => {
   const m = String(Math.floor(seconds / 60)).padStart(2, '0');
   const s = String(seconds % 60).padStart(2, '0');
   return `${m}:${s}`;
 };
 
+/**
+ * 작품 타입이 SINGLE인지 GROUP(공동작품)인지 확인
+ * @param artType
+ * @returns
+ */
 export const getIsArtTypeSingle = (artType: 'SINGLE' | 'GROUP') => {
   return artType === 'SINGLE';
 };

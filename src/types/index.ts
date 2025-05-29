@@ -123,3 +123,12 @@ export type ArtsPagination<T> = {
   totalElements: number;
   hasNext: boolean;
 };
+
+export type Content = {
+  title: string;
+  sections: {
+    title: string;
+    content?: string[];
+    points?: string[];
+  }[];
+};

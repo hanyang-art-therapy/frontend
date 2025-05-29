@@ -1,26 +1,11 @@
 import GalleryIntroContentTitle from '@/components/gallery/intro/gallery-intro-content-title';
 import { AnimatedSection, StaggeredList } from '@/components/ui/motion';
 import { GALLERY_INTRO } from '@/constants/gallery/intro';
+import { parseTextWithBold } from '@/lib/helper/text-bolder';
 
 export default function GalleryIntro() {
   const { intro, purpose, participants, artTherapy, schedule, guide } =
     GALLERY_INTRO;
-
-  const parseTextWithBold = (text: string) => {
-    const BOLD_START = '<b>';
-    const BOLD_END = '</b>';
-    const boldRegex = /(<b>.*?<\/b>)/g;
-    const parts = text.split(boldRegex);
-
-    return parts.map((part) => {
-      if (part.startsWith(BOLD_START) && part.endsWith(BOLD_END)) {
-        const boldText = part.slice(BOLD_START.length, -BOLD_END.length);
-        return <strong key={part}>{boldText}</strong>;
-      }
-
-      return part;
-    });
-  };
 
   return (
     <div className='mx-auto xl:px-0 px-5 md:pt-[100px] pt-[60px] grid gap-[60px] md:gap-[100px]'>
@@ -35,7 +20,7 @@ export default function GalleryIntro() {
         <StaggeredList
           className='space-y-[10px]'
           staggerDelay={0.08}
-          itemClassName='text-gray-6 t-r-16'>
+          itemClassName='t-r-16'>
           {intro.content.map((text) => (
             <span key={text}>{parseTextWithBold(text)}</span>
           ))}
@@ -55,7 +40,7 @@ export default function GalleryIntro() {
               <h3 className='font-semibold text-lg mb-[10px] t-b-24'>
                 {subTitle}
               </h3>
-              <p className='text-gray-6 t-r-16'>{description}</p>
+              <p className='t-r-16'>{description}</p>
             </>
           ))}
         </StaggeredList>
@@ -71,7 +56,7 @@ export default function GalleryIntro() {
         <StaggeredList
           className='space-y-[10px]'
           staggerDelay={0.08}
-          itemClassName='text-gray-6 t-r-16'>
+          itemClassName='t-r-16'>
           {participants.content.map((text) => (
             <span key={text}>{parseTextWithBold(text)}</span>
           ))}
@@ -89,7 +74,7 @@ export default function GalleryIntro() {
         <StaggeredList
           className='space-y-[10px]'
           staggerDelay={0.08}
-          itemClassName='text-gray-6 t-r-16'>
+          itemClassName='t-r-16'>
           {artTherapy.content.map((text) => (
             <span key={text}>{parseTextWithBold(text)}</span>
           ))}
@@ -125,7 +110,7 @@ export default function GalleryIntro() {
         <StaggeredList
           className='space-y-[10px]'
           staggerDelay={0.08}
-          itemClassName='text-gray-6 t-r-16'>
+          itemClassName='t-r-16'>
           {guide.content.map((text) => (
             <span key={text}>{parseTextWithBold(text)}</span>
           ))}

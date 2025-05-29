@@ -20,7 +20,32 @@ const MyPage = lazy(() => import('@/pages/my-page/page'));
 const ProfessorsPage = lazy(() => import('@/pages/intro/professors/page'));
 const CertificatesPage = lazy(() => import('@/pages/intro/certificates/page'));
 const ResetPwPage = lazy(() => import('@/pages/my-page/reset-pw/page'));
+
+// 임상치료
+const ClinicalPage = lazy(() => import('@/pages/clinical/page'));
+const DevelopmentalPage = lazy(
+  () => import('@/pages/clinical/developmental/page')
+);
+const InfantPage = lazy(() => import('@/pages/clinical/infant/page'));
+const ChildrenPage = lazy(() => import('@/pages/clinical/children/page'));
+const AdolescentPage = lazy(() => import('@/pages/clinical/adolescent/page'));
+const AdultPage = lazy(() => import('@/pages/clinical/adult/page'));
+const PreventionPage = lazy(() => import('@/pages/clinical/prevention/page'));
+
+// 입학안내
+const FreshmanPage = lazy(() => import('@/pages/enroll/freshman/page'));
+const ScholarshipPage = lazy(() => import('@/pages/enroll/scholarship/page'));
+
+// 공지사항
 const NoticePage = lazy(() => import('@/pages/notice/page'));
+
+// 관리자
+const AdminPage = lazy(() => import('@/pages/admin/page'));
+const AdminArtPage = lazy(() => import('@/pages/admin/art/page'));
+const AdminArtistPage = lazy(() => import('@/pages/admin/artist/page'));
+const AdminGalleryPage = lazy(() => import('@/pages/admin/gallery/page'));
+const AdminProfessorPage = lazy(() => import('@/pages/admin/professor/page'));
+const AdminUserPage = lazy(() => import('@/pages/admin/user/page'));
 
 const router = createBrowserRouter([
   {
@@ -72,6 +97,53 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: '/clinical',
+        children: [
+          {
+            path: '',
+            element: lazyElement(ClinicalPage),
+          },
+          {
+            path: 'developmental',
+            element: lazyElement(DevelopmentalPage),
+          },
+          {
+            path: 'infant',
+            element: lazyElement(InfantPage),
+          },
+          {
+            path: 'children',
+            element: lazyElement(ChildrenPage),
+          },
+          {
+            path: 'adolescent',
+            element: lazyElement(AdolescentPage),
+          },
+          {
+            path: 'adult',
+            element: lazyElement(AdultPage),
+          },
+          {
+            path: 'prevention',
+            element: lazyElement(PreventionPage),
+          },
+        ],
+      },
+      {
+        path: '/enroll',
+        element: lazyElement(FreshmanPage),
+        children: [
+          {
+            path: 'freshman',
+            element: lazyElement(FreshmanPage),
+          },
+          {
+            path: 'scholarship',
+            element: lazyElement(ScholarshipPage),
+          },
+        ],
+      },
+      {
         path: '/notice',
         element: lazyElement(NoticePage),
       },
@@ -82,6 +154,17 @@ const router = createBrowserRouter([
       {
         path: '*',
         element: <NotFoundPage />,
+      },
+      {
+        path: '/admin',
+        element: lazyElement(AdminPage),
+        children: [
+          { path: 'art', element: lazyElement(AdminArtPage) },
+          { path: 'artist', element: lazyElement(AdminArtistPage) },
+          { path: 'gallery', element: lazyElement(AdminGalleryPage) },
+          { path: 'professor', element: lazyElement(AdminProfessorPage) },
+          { path: 'user', element: lazyElement(AdminUserPage) },
+        ],
       },
     ],
   },

@@ -14,11 +14,11 @@ export const NAV_MENU = [
   },
   {
     title: '임상활동',
-    path: '/clinical/nd',
+    path: '/clinical',
     submenu: [
-      { title: '- 발달장애', path: '/clinical/nd' },
+      { title: '- 발달장애', path: '/clinical/developmental' },
       { title: '- 유아', path: '/clinical/infant' },
-      { title: '- 아동', path: '/clinical/child' },
+      { title: '- 아동', path: '/clinical/children' },
       { title: '- 청소년', path: '/clinical/adolescent' },
       { title: '- 성인', path: '/clinical/adult' },
       { title: '- 예방', path: '/clinical/prevention' },
@@ -35,10 +35,10 @@ export const NAV_MENU = [
   },
   {
     title: '입학안내',
-    path: '#',
+    path: '/enroll/freshman',
     submenu: [
-      { title: '- 신입학생 모집', path: '/coming-soon' },
-      { title: '- 장학금 혜택', path: '/coming-soon' },
+      { title: '- 신입학생 모집', path: '/enroll/freshman' },
+      { title: '- 장학금 혜택', path: '/enroll/scholarship' },
     ],
   },
   {

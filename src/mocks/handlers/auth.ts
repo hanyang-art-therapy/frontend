@@ -10,7 +10,28 @@ export const authHandlers = [
 
     if (userId === 'test' && password === 'test') {
       return HttpResponse.json(
-        { accessToken: 'mock-access-token', userNo: '1' },
+        {
+          accessToken: 'mock-access-token',
+          userNo: '1',
+          role: 'USER',
+        },
+        {
+          status: 200,
+          headers: {
+            'Set-Cookie':
+              'refreshToken=mock-refresh; HttpOnly; Path=/; Max-Age=86400',
+          },
+        }
+      );
+    }
+
+    if (userId === 'admin' && password === 'admin') {
+      return HttpResponse.json(
+        {
+          accessToken: 'mock-access-token',
+          userNo: '0',
+          role: 'ADMIN',
+        },
         {
           status: 200,
           headers: {
@@ -28,9 +49,7 @@ export const authHandlers = [
   }),
 
   // POST REFRESH 토큰 갱신
-  http.post(`${API_URL}/user/refresh`, async () => {
-    return HttpResponse.json({ accessToken: 'mock-access-token' });
-  }),
+  http.post(`${API_URL}/user/refresh`, async () => {}),
 
   // POST 회원가입
   http.post(`${API_URL}/user/sign-up`, async () => {

@@ -22,7 +22,8 @@ export default function AuthLinks() {
       {isSignedIn ? (
         <button
           onClick={handleLogout}
-          className='hover:opacity-70 cursor-pointer'>
+          className='hover:opacity-70 cursor-pointer'
+        >
           로그아웃
         </button>
       ) : (
@@ -31,7 +32,7 @@ export default function AuthLinks() {
         </Link>
       )}
 
-      <span>|</span>
+      <span className='pointer-events-none'>|</span>
 
       {isSignedIn ? (
         <Link to='/my-page' className='hover:opacity-70'>

@@ -38,7 +38,13 @@ export default function SignInForm() {
 
     try {
       const response = await signIn({ userId: userId.trim(), password });
-      navigate('/');
+
+      if (response.role === 'ADMIN') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
+
       setAccessToken(response.accessToken);
 
       if (isUserIdRemember) {
@@ -58,7 +64,8 @@ export default function SignInForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className='w-full space-y-[20px] md:p-0 px-[20px]'>
+      className='w-full space-y-[20px] md:p-0 px-[20px]'
+    >
       <div className='relative'>
         <Input
           type='text'
@@ -93,7 +100,8 @@ export default function SignInForm() {
           variant='ghost'
           onClick={() => setShowPassword((prev) => !prev)}
           className='absolute right-2 top-1/2 -translate-y-1/2'
-          tabIndex={-1}>
+          tabIndex={-1}
+        >
           {showPassword ? <EyeOff color='#333' /> : <Eye color='#333' />}
         </Button>
 
@@ -118,7 +126,8 @@ export default function SignInForm() {
           <div className='ml-auto flex'>
             <Link
               to='/sign-up'
-              className='t-r-14 pr-[10px] hover:underline cursor-pointer'>
+              className='t-r-14 pr-[10px] hover:underline cursor-pointer'
+            >
               회원가입
             </Link>
             {/* <span className='t-r-14'>|</span>
@@ -134,7 +143,8 @@ export default function SignInForm() {
       <Button
         type='submit'
         disabled={isLoading}
-        className='mt-[10px] h-[50px] w-full'>
+        className='mt-[10px] h-[50px] w-full'
+      >
         로그인
         {isLoading && <LoaderCircle className='w-4 h-4 ml-2 animate-spin' />}
       </Button>
