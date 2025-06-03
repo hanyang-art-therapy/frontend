@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'react-router-dom';
 import NoticeEditor from './notice-editor';
 import { useState } from 'react';
+import { NotepadText } from 'lucide-react';
 
 const categoryList = ['실습', '모집', '일반', '전시', '학술'];
 
@@ -31,11 +32,16 @@ export default function NoticeWrite() {
   };
 
   return (
-    <div className='min-h-screen-vh mt-15 flex flex-col items-center justify-center'>
+    <div className='h-full w-full max-w-[1260px] py-[80px] px-5 xl:px-0 mx-auto text-center'>
       <div className='w-full px-5 xl:px-0 text-center'>
-        <strong className='flex text-start py-[20px]'>
-          공지사항 게시물 작성하기
-        </strong>
+        <div className='flex justify-start items-center  gap-1 w-full pb-[18px]'>
+          <div className='p-2 rounded-[5px] text-white bg-secondary'>
+            <NotepadText size={24} strokeWidth={2} />
+          </div>
+          <strong className='p-2 text-[#666] font-medium t-b-24'>
+            게시물 작성
+          </strong>
+        </div>
         <div className='flex items-center gap-4 mb-4 overflow-x-auto'>
           {/* 제목 */}
           <div className='flex items-center gap-2 flex-grow'>
@@ -45,7 +51,7 @@ export default function NoticeWrite() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder='제목을 입력해주세요'
-              className='w-full border border-gray-300 rounded px-3 py-2'
+              className='w-[94%] border border-gray-300 rounded px-3 py-2'
             />
           </div>
           {/* 구분 */}

@@ -11,7 +11,7 @@ export default function NoticeEditor() {
         ref={editorRef}
         placeholder='내용을 입력해주세요'
         previewStyle='vertical'
-        height='400px'
+        height='550px'
         initialEditType='wysiwyg'
         useCommandShortcut={false}
       />
