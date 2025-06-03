@@ -3,14 +3,13 @@ import { Home, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface NoticeNavProps {
-  noticeNo: string;
+  noticeNo?: string;
 }
 
 export default function NoticeNav({ noticeNo }: NoticeNavProps) {
   const navigate = useNavigate();
 
-  const currentNo = Number(noticeNo);
-  // 실제 데이터 번호 넣기
+  const currentNo = noticeNo ? Number(noticeNo) : 0;
   const MAX_NOTICE_NO = 9;
 
   const handlePrevClick = () => {
@@ -58,7 +57,7 @@ export default function NoticeNav({ noticeNo }: NoticeNavProps) {
         <span className='t-r-16 group-hover:scale-110'>홈</span>
       </Button>
 
-      {currentNo < MAX_NOTICE_NO && (
+      {currentNo < 0 && MAX_NOTICE_NO && (
         <Button
           variant='outline'
           className='group transition-colors duration-200 xl:w-[200px] md:w-[120px] w-[96px] h-[32px] md:h-[46px] col-span-1'

@@ -8,8 +8,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'react-router-dom';
 import NoticeEditor from './notice-editor';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NotepadText } from 'lucide-react';
+import NoticeNav from '../notice-nav.tsx/notice-nav';
 
 const categoryList = ['실습', '모집', '일반', '전시', '학술'];
 
@@ -31,10 +32,16 @@ export default function NoticeWrite() {
     });
   };
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
   return (
     <div className='h-full w-full max-w-[1260px] pt-[100px] px-5 xl:px-0 mx-auto text-center'>
       <div className='w-full  text-center'>
-        <div className='flex justify-start items-center  gap-1 w-full pb-[18px]'>
+        <div className='flex justify-start  bitems-center  gap-1 w-full pb-[18px]'>
           <div className='p-2 rounded-[5px] text-white bg-secondary'>
             <NotepadText size={24} strokeWidth={2} />
           </div>
@@ -104,7 +111,8 @@ export default function NoticeWrite() {
 
         {/* 에디터 */}
         <NoticeEditor />
-        <div className='flex justify-end mt-4'>
+        <div className='flex justify-between mt-4'>
+          <NoticeNav />
           <Button
             type='button'
             className='h-[30px] md:h-[40px] w-[80px] md:w-[120px]'
