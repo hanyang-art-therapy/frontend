@@ -33,22 +33,22 @@ export default function NoticeList() {
   return (
     <div className='min-h-screen-vh mt-[10px] md:mt-[30px] flex flex-col items-center justify-start'>
       <div className='flex flex-col justify-start items-start w-full px-5 xl:px-0'>
-        <div className='flex justify-start items-center pb-[20px] gap-2 w-full'>
-          <div className='p-3 rounded-[5px] text-white bg-secondary'>
-            <Volume2 size={26} strokeWidth={2} />
+        <div className='flex  justify-start items-center pb-[20px] gap-2 w-full'>
+          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center  items-center text-white bg-secondary'>
+            <Volume2 size={30} strokeWidth={2} />
           </div>
           <strong className='p-2 text-[#666] font-medium t-b-32'>
             공지사항
           </strong>
-          <div className='p-4 bg-gray-100 rounded text-sm t-r-16 flex-1 min-w-0'>
-            본 게시판은 미술치료학과의 학사, 실습, 전시, 행사 등과 관련된 주요
-            공지사항을 안내합니다. 일정 확인 및 필수 제출 서류 등은 수시로
-            확인해주세요.
-          </div>
+        </div>
+        <div className='p-4 bg-gray-100 rounded text-sm t-r-16 flex-1 min-w-0'>
+          본 게시판은 미술치료학과의 학사, 실습, 전시, 행사 등과 관련된 주요
+          공지사항을 안내합니다. 일정 확인 및 필수 제출 서류 등은 수시로
+          확인해주세요.
         </div>
       </div>
 
-      <div className='w-full  md:px-5 md:xl:px-0 text-center'>
+      <div className='w-full  text-center'>
         {/* 구분 선택 && 검색바 */}
         <div className='flex w-full items-center gap-2 md:gap-4 mt-4 pb-[20px] md:pb-[32px]'>
           <Select

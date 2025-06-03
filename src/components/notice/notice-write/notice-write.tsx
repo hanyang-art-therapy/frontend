@@ -32,8 +32,8 @@ export default function NoticeWrite() {
   };
 
   return (
-    <div className='h-full w-full max-w-[1260px] py-[80px] px-5 xl:px-0 mx-auto text-center'>
-      <div className='w-full px-5 xl:px-0 text-center'>
+    <div className='h-full w-full max-w-[1260px] pt-[100px] px-5 xl:px-0 mx-auto text-center'>
+      <div className='w-full  text-center'>
         <div className='flex justify-start items-center  gap-1 w-full pb-[18px]'>
           <div className='p-2 rounded-[5px] text-white bg-secondary'>
             <NotepadText size={24} strokeWidth={2} />
@@ -42,10 +42,12 @@ export default function NoticeWrite() {
             게시물 작성
           </strong>
         </div>
-        <div className='flex items-center gap-4 mb-4 overflow-x-auto'>
+        <div className='flex flex-col md:flex-row gap-4 mb-4 overflow-x-auto'>
           {/* 제목 */}
-          <div className='flex items-center gap-2 flex-grow'>
-            <label className='font-semiboldwhitespace-nowrap'>제목</label>
+          <div className='flex items-center gap-2 flex-grow t-b-16'>
+            <label className='font-semiboldwhitespace-nowrap w-[30px]'>
+              제목
+            </label>
             <input
               type='text'
               value={title}
@@ -56,12 +58,14 @@ export default function NoticeWrite() {
           </div>
           {/* 구분 */}
           <div className='flex items-center gap-2'>
-            <label className='font-semiboldwhitespace-nowrap'>구분</label>
+            <label className='font-semiboldwhitespace-nowrap t-b-16 w-[30px]'>
+              구분
+            </label>
             <Select
               value={selectedCategory}
               onValueChange={(value) => handleCategoryChange(value)}
             >
-              <SelectTrigger className='border rounded w-[100px] px-3 py-2'>
+              <SelectTrigger className='border rounded w-[80px] md:w-[100px] px-1 py-0 md:px-3 md:py-2'>
                 <SelectValue placeholder='구분' />
               </SelectTrigger>
               <SelectContent>

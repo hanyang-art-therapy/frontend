@@ -44,17 +44,15 @@ export default function NoticeDetail({ data }: NoticeDetailProps) {
         >
           <div className='flex flex-col gap-4 mt-2 md:text-sm px-[20px]'>
             <h1 className='t-b-32 font-bold'>{notice.title}</h1>
-            <div className='md:flex md:flex-row t-r-14 md:p-[10px] flex gap-2 md:gap-4'>
-              <div className='flex items-center gap-2'>
+            <div className='md:flex md:flex-row t-r-14 md:p-[10px] flex gap-2 md:gap-4 flex-wrap'>
+              <div className='flex items-center gap-2 w-1/2 md:w-auto t-r-16'>
                 <strong className='text-shadow-gray-6'>구분</strong>
                 {notice.category}
-              </div>
-              <div className='flex items-center gap-2'>
                 <strong className='text-shadow-gray-6'>작성일</strong>
-
                 {new Date(notice.createdAt).toLocaleDateString('ko-KR')}
               </div>
-              <div className='flex items-center gap-2'>
+
+              <div className='flex items-center gap-2 w-1.5/2 md:w-auto t-r-16'>
                 <strong className='text-shadow-gray-6'>기간</strong>
                 {notice.periodStart
                   ? new Date(notice.periodStart).toLocaleDateString('ko-KR')
@@ -63,10 +61,7 @@ export default function NoticeDetail({ data }: NoticeDetailProps) {
                 {notice.periodEnd
                   ? new Date(notice.periodEnd).toLocaleDateString('ko-KR')
                   : '기간 없음'}
-              </div>
-              <div className='flex items-center gap-2'>
                 <strong className='text-shadow-gray-6'>조회수</strong>
-
                 {notice.viewCount}
               </div>
             </div>
