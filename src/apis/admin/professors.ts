@@ -4,7 +4,7 @@ import type {
   PostProfessorRequest,
   ProfessorResponse,
   PatchProfessorRequest,
-} from '@/types/admin/professor';
+} from '@/types/admin/professors';
 
 export const postProfessor = async ({
   professorName,

@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { PROFESSORS } from '@/constants/intro/professors';
-import type { PatchProfessorRequest } from '@/types/admin/professor';
+import type { PatchProfessorRequest } from '@/types/admin/professors';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
