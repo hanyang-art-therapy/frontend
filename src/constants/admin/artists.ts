@@ -1,4 +1,4 @@
-export const AdminArtistsMockData = [
+export const ADMIN_ARTISTS_MOCK_DATA = [
   {
     artistNo: 1,
     artistName: '강송희',

@@ -1,46 +1,19 @@
 import { http, HttpResponse } from 'msw';
-import { AdminArtistsMockData } from '@/constants/admin/artists';
+import { ADMIN_ARTISTS_MOCK_DATA } from '@/constants/admin/artists';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const adminArtistHandlers = [
-  // [POST] 작가 등록
-  http.get(
-    `${API_URL}/admin/notices`,
-    async ({ request }: { request: Request }) => {
-      const { artistName, studentNo, cohort } = await request.json();
-
-      if (studentNo === '000000000') {
-        return HttpResponse.json(
-          {
-            message: '이미 등록된 학번입니다.',
-          },
-          { status: 409 }
-        );
-      }
-
-      return HttpResponse.json({
-        status: 201,
-        message: '등록이 완료되었습니다.',
-        data: {
-          artistName,
-          studentNo,
-          cohort,
-        },
-      });
-    }
-  ),
-
   // [GET] 작가 전체 조회
   http.get(`${API_URL}/admin/artists`, async () => {
-    return HttpResponse.json(AdminArtistsMockData);
+    return HttpResponse.json(ADMIN_ARTISTS_MOCK_DATA);
   }),
 
-  // [GET] 작가 개별(상세) 조회
+  // [GET] 작가 상세 조회
   http.get(`${API_URL}/admin/artists/:artistNo`, async ({ params }) => {
     const { artistNo } = params;
 
-    const artist = AdminArtistsMockData.find(
+    const artist = ADMIN_ARTISTS_MOCK_DATA.find(
       (artist) => artist.artistNo === Number(artistNo)
     );
 
@@ -67,7 +40,7 @@ export const adminArtistHandlers = [
         cohort: string;
       };
 
-      const artist = AdminArtistsMockData.find(
+      const artist = ADMIN_ARTISTS_MOCK_DATA.find(
         (artist) => artist.artistNo === Number(artistNo)
       );
 
@@ -80,7 +53,12 @@ export const adminArtistHandlers = [
         );
       }
 
-      return HttpResponse.json({ ...artist, artistName, studentNo, cohort });
+      return HttpResponse.json({
+        ...artist,
+        ...(artistName !== undefined ? { artistName } : {}),
+        ...(studentNo !== undefined ? { studentNo } : {}),
+        ...(cohort !== undefined ? { cohort } : {}),
+      });
     }
   ),
 
@@ -88,7 +66,7 @@ export const adminArtistHandlers = [
   http.delete(
     `${API_URL}/admin/artists/:artistNo`,
     async ({ params: { artistNo } }) => {
-      const artist = AdminArtistsMockData.find(
+      const artist = ADMIN_ARTISTS_MOCK_DATA.find(
         (artist) => artist.artistNo === Number(artistNo)
       );
 
@@ -104,6 +82,33 @@ export const adminArtistHandlers = [
       return HttpResponse.json({
         status: 204,
         artistNo: artist.artistNo,
+      });
+    }
+  ),
+
+  // [POST] 작가 등록
+  http.post(
+    `${API_URL}/admin/artists`,
+    async ({ request }: { request: Request }) => {
+      const { artistName, studentNo, cohort } = await request.json();
+
+      if (studentNo === '000000000') {
+        return HttpResponse.json(
+          {
+            message: '이미 등록된 학번입니다.',
+          },
+          { status: 409 }
+        );
+      }
+
+      return HttpResponse.json({
+        status: 201,
+        message: '등록이 완료되었습니다.',
+        data: {
+          artistName,
+          studentNo,
+          cohort,
+        },
       });
     }
   ),
