@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { ADMIN_ARTISTS_MOCK_DATA } from '@/constants/admin/artists';
+import { PatchArtistRequest } from '@/types/admin/artists';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -34,11 +35,8 @@ export const adminArtistHandlers = [
     `${API_URL}/admin/artists/:artistNo`,
     async ({ params, request }) => {
       const { artistNo } = params;
-      const { artistName, studentNo, cohort } = (await request.json()) as {
-        artistName: string;
-        studentNo: string;
-        cohort: string;
-      };
+      const { artistName, studentNo, cohort } =
+        (await request.json()) as PatchArtistRequest;
 
       const artist = ADMIN_ARTISTS_MOCK_DATA.find(
         (artist) => artist.artistNo === Number(artistNo)

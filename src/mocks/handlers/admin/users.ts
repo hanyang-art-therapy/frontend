@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { ADMIN_USERS_MOCK_DATA } from '@/constants/admin/users';
+import { PatchUserRequest } from '@/types/admin/users';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -26,14 +27,7 @@ export const adminUsersHandlers = [
   http.patch(`${API_URL}/admin/users/:userNo`, async ({ params, request }) => {
     const { userNo } = params;
     const { userId, userName, email, studentNo, role, userStatus } =
-      (await request.json()) as {
-        userId: 0;
-        userName: string;
-        email: string;
-        studentNo: 0;
-        role: string;
-        userStatus: string;
-      };
+      (await request.json()) as PatchUserRequest;
 
     const users = ADMIN_USERS_MOCK_DATA.find(
       (users) => users.userNo === Number(userNo)

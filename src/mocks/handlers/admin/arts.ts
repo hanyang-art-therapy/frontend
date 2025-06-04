@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { ADMIN_ARTS_MOCK_DATA } from '@/constants/admin/arts';
+import { PatchAdminArtRequest } from '@/types/admin/arts';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -35,15 +36,7 @@ export const adminArtsHandlers = [
       caption,
       coDescription,
       artistList,
-    } = (await request.json()) as {
-      artName: string;
-      artType: string;
-      filesNo: 0;
-      galleriesNo: 0;
-      caption: string;
-      coDescription: string;
-      artistList: string;
-    };
+    } = (await request.json()) as PatchAdminArtRequest;
 
     const arts = ADMIN_ARTS_MOCK_DATA.find(
       (arts) => arts.artsNo === Number(artsNo)

@@ -1,5 +1,6 @@
-import { ADMIN_GALLERIES_MOCK_DATA } from '@/constants/admin/gallery';
 import { http, HttpResponse } from 'msw';
+import { ADMIN_GALLERIES_MOCK_DATA } from '@/constants/admin/gallery';
+import { PatchGalleriesRequest } from '@/types/admin/galleries';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -24,14 +25,26 @@ export const adminGalleryHandlers = [
   // [PATCH] 전시회 정보 수정
   http.patch(
     `${API_URL}/admin/galleries/:galleriesNo`,
-    async ({ request }: { request: Request }) => {
-      const { galleriesNo, title, startDate, endDate } = await request.json();
+    async ({ params, request }) => {
+      const { galleriesNo } = params;
+      const { title, startDate, endDate } =
+        (await request.json()) as PatchGalleriesRequest;
+
+      const gallery = ADMIN_GALLERIES_MOCK_DATA.find(
+        (g) => g.galleriesNo === Number(galleriesNo)
+      );
+      if (!gallery) {
+        return HttpResponse.json(
+          { message: '해당 전시회가 존재하지 않습니다.' },
+          { status: 404 }
+        );
+      }
 
       return HttpResponse.json({
-        galleriesNo,
-        title,
-        startDate,
-        endDate,
+        ...gallery,
+        ...(title !== undefined ? { title } : {}),
+        ...(startDate !== undefined ? { startDate } : {}),
+        ...(endDate !== undefined ? { endDate } : {}),
       });
     }
   ),
