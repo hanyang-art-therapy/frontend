@@ -5,13 +5,6 @@ import type {
   AdminArtResponse,
 } from '@/types/admin/arts';
 
-export const postAdminArt = async (
-  data: PostAdminArtRequest
-): Promise<{ message: string }> => {
-  const res = await apiInstance.post('/admin/arts', data);
-  return res.data;
-};
-
 export const getAdminArts = async (): Promise<AdminArtResponse[]> => {
   const res = await apiInstance.get('/admin/arts');
   return res.data;
@@ -36,5 +29,12 @@ export const deleteAdminArt = async (
   artsNo: number
 ): Promise<{ message: string }> => {
   const res = await apiInstance.delete(`/admin/arts/${artsNo}`);
+  return res.data;
+};
+
+export const postAdminArt = async (
+  data: PostAdminArtRequest
+): Promise<{ message: string }> => {
+  const res = await apiInstance.post('/admin/arts', data);
   return res.data;
 };
