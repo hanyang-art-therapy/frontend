@@ -8,7 +8,7 @@ export type User = {
   email: string; // 이메일
   userName: string; // 이름
   studentNo: string; // 학번
-  role: string; // 회원 권한
+  role: 'USER' | 'ARTIST' | 'ADMIN'; // 회원 권한
   userStatus: string; // 회원 상태
 };
 
@@ -94,6 +94,7 @@ export type Notice = {
   viewCount: number; // 조회수
 };
 
+// 교수진
 export type Professor = {
   professorNo: number; // 교수 번호
   professorName: string; // 교수명

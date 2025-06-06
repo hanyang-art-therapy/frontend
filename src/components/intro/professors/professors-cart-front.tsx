@@ -1,4 +1,4 @@
-import type { ProfessorResponse } from '@/types/admin/professor';
+import type { ProfessorResponse } from '@/types/admin/professors';
 import { Mail, Phone } from 'lucide-react';
 
 export default function ProfessorsCartFront({

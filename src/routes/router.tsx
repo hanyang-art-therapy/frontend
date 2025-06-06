@@ -41,11 +41,11 @@ const NoticePage = lazy(() => import('@/pages/notice/page'));
 
 // 관리자
 const AdminPage = lazy(() => import('@/pages/admin/page'));
-const AdminArtPage = lazy(() => import('@/pages/admin/art/page'));
-const AdminArtistPage = lazy(() => import('@/pages/admin/artist/page'));
-const AdminGalleryPage = lazy(() => import('@/pages/admin/gallery/page'));
-const AdminProfessorPage = lazy(() => import('@/pages/admin/professor/page'));
-const AdminUserPage = lazy(() => import('@/pages/admin/user/page'));
+const AdminUsersPage = lazy(() => import('@/pages/admin/users/page'));
+const AdminArtPage = lazy(() => import('@/pages/admin/arts/page'));
+const AdminArtistPage = lazy(() => import('@/pages/admin/artists/page'));
+const AdminGalleryPage = lazy(() => import('@/pages/admin/galleries/page'));
+const AdminProfessorPage = lazy(() => import('@/pages/admin/professors/page'));
 
 const router = createBrowserRouter([
   {
@@ -159,11 +159,11 @@ const router = createBrowserRouter([
         path: '/admin',
         element: lazyElement(AdminPage),
         children: [
-          { path: 'art', element: lazyElement(AdminArtPage) },
-          { path: 'artist', element: lazyElement(AdminArtistPage) },
-          { path: 'gallery', element: lazyElement(AdminGalleryPage) },
-          { path: 'professor', element: lazyElement(AdminProfessorPage) },
-          { path: 'user', element: lazyElement(AdminUserPage) },
+          { path: 'users', element: lazyElement(AdminUsersPage) },
+          { path: 'arts', element: lazyElement(AdminArtPage) },
+          { path: 'artists', element: lazyElement(AdminArtistPage) },
+          { path: 'galleries', element: lazyElement(AdminGalleryPage) },
+          { path: 'professors', element: lazyElement(AdminProfessorPage) },
         ],
       },
     ],

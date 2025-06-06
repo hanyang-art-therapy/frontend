@@ -1,4 +1,4 @@
-import type { ProfessorResponse } from '@/types/admin/professor';
+import type { ProfessorResponse } from '@/types/admin/professors';
 import { cn } from '@/lib/utils';
 import ProfessorsCartFront from './professors-cart-front';
 import ProfessorsCardBack from './professors-card-back';
@@ -46,12 +46,14 @@ export default function ProfessorsCard({ professor }: ProfessorsCardProps) {
       onClick={handleCardClick}
       onMouseEnter={() => handleMouseEnter(professor.professorNo)}
       onMouseLeave={handleMouseLeave}
-      onKeyDown={handleKeyDown}>
+      onKeyDown={handleKeyDown}
+    >
       <div
         className={cn(
           'relative w-full h-full transition-transform duration-700 ease-in-out [transform-style:preserve-3d] box-shadow-style rounded-xl',
           isFlipped && '[transform:rotateY(180deg)]'
-        )}>
+        )}
+      >
         <ProfessorsCartFront {...professor} />
         <ProfessorsCardBack handleCardClick={handleCardClick} />
       </div>
