@@ -23,7 +23,8 @@ export default function ReviewsImage({
           <button
             onClick={() => setPreviewUploadImage(null)}
             className='absolute top-1 right-1 bg-black/80 hover:bg-black rounded-full w-6 h-6 flex items-center justify-center cursor-pointer'
-            aria-label='이미지 삭제'>
+            aria-label='이미지 삭제'
+          >
             <X
               className='w-4 h-4 hover:scale-110 transition-all duration-100'
               color='white'

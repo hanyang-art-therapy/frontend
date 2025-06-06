@@ -19,9 +19,7 @@ export const noticeHandlers = [
 
     const filteredData = NOTICE_MOCK_DATA.content.filter(
       (notice) =>
-        notice.title.includes(keyword) ||
-        notice.content.includes(keyword) ||
-        notice.writer.includes(keyword)
+        notice.title.includes(keyword) || notice.content.includes(keyword)
     );
 
     const paginatedData = filteredData.slice(startIndex, endIndex);

@@ -38,6 +38,8 @@ const ScholarshipPage = lazy(() => import('@/pages/enroll/scholarship/page'));
 
 // 공지사항
 const NoticePage = lazy(() => import('@/pages/notice/page'));
+const NoticeDetailPage = lazy(() => import('@/pages/notice/detail/page'));
+const NoticeWritePage = lazy(() => import('@/pages/notice/write/page'));
 
 // 관리자
 const AdminPage = lazy(() => import('@/pages/admin/page'));
@@ -146,6 +148,14 @@ const router = createBrowserRouter([
       {
         path: '/notice',
         element: lazyElement(NoticePage),
+      },
+      {
+        path: 'notice/:noticeNo',
+        element: lazyElement(NoticeDetailPage),
+      },
+      {
+        path: 'notice/write',
+        element: lazyElement(NoticeWritePage),
       },
       {
         path: '/comming-soon',
