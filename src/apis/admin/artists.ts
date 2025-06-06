@@ -16,9 +16,10 @@ export const getArtist = async (artistNo: number): Promise<ArtistResponse> => {
 };
 
 export const patchArtist = async (
-  data: PatchArtistRequest
+  artistNo: number,
+  data: Omit<PatchArtistRequest, 'artistNo'>
 ): Promise<{ message: string }> => {
-  const res = await apiInstance.patch(`/admin/artists/${data.artistNo}`, data);
+  const res = await apiInstance.patch(`/admin/artists/${artistNo}`, data);
   return res.data;
 };
 
