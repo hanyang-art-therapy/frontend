@@ -13,11 +13,7 @@ export default function FormField({ label, id, children }: FormFieldProps) {
       >
         {label}
       </label>
-      <div
-        className={`min-h-[44px] flex items-center justify-center t-r-14 ${
-          id === 'userId' || id === 'userStatus' ? 'bg-bg-gray-fa' : ''
-        }`}
-      >
+      <div className='min-h-[44px] flex items-center justify-center t-r-14'>
         {children}
       </div>
     </div>
