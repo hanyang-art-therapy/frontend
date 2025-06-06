@@ -1,6 +1,7 @@
 import { NOTICE_MOCK_DATA } from '@/constants/notice/notice';
 import { useNavigate } from 'react-router-dom';
 import { Paperclip } from 'lucide-react';
+import { formatTimeStamp } from '@/lib/utils';
 
 type NoticeTableProps = {
   data: typeof NOTICE_MOCK_DATA.content;
@@ -55,7 +56,7 @@ export default function NoticeTable({ data }: NoticeTableProps) {
                 {item.viewCount}
               </td>
               <td className='p-2 text-center'>
-                {new Date(item.createdAt).toLocaleDateString('ko-KR')}
+                {formatTimeStamp(item.createdAt)}
               </td>
             </tr>
           ))}

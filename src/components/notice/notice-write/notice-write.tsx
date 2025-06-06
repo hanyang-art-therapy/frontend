@@ -7,12 +7,14 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'react-router-dom';
-import NoticeEditor from './notice-editor';
+// import NoticeEditor from './notice-editor';
 import { useState, useEffect } from 'react';
 import { NotepadText } from 'lucide-react';
 import NoticeNav from '../notice-nav.tsx/notice-nav';
+import NoticeEditor from './notice-editor';
+import { CATEGORY_LIST } from '@/constants/notice/notice-category';
 
-const categoryList = ['실습', '모집', '일반', '전시', '학술'];
+const categoryList = CATEGORY_LIST;
 
 export default function NoticeWrite() {
   const [title, setTitle] = useState('');
@@ -43,7 +45,7 @@ export default function NoticeWrite() {
       <div className='w-full  text-center'>
         <div className='flex justify-start  bitems-center  gap-1 w-full pb-[18px]'>
           <div className='p-2 rounded-[5px] text-white bg-secondary'>
-            <NotepadText size={24} strokeWidth={2} />
+            <NotepadText size={32} strokeWidth={2} />
           </div>
           <strong className='p-2 text-[#666] font-medium t-b-24'>
             게시물 작성

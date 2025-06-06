@@ -57,7 +57,7 @@ export default function NoticeNav({ noticeNo }: NoticeNavProps) {
         <span className='t-r-16 group-hover:scale-110'>홈</span>
       </Button>
 
-      {currentNo < 0 && MAX_NOTICE_NO && (
+      {currentNo > 0 && MAX_NOTICE_NO && (
         <Button
           variant='outline'
           className='group transition-colors duration-200 xl:w-[200px] md:w-[120px] w-[96px] h-[32px] md:h-[46px] col-span-1'
