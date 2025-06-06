@@ -1,8 +1,8 @@
 import apiInstance from '@/lib/axios';
 import type {
   GalleriesResponse,
-  PostGalleriesRequest,
-  PatchGalleriesRequest,
+  PatchGalleryRequest,
+  PostGalleryRequest,
 } from '@/types/admin/galleries';
 
 export const getGalleries = async (): Promise<GalleriesResponse[]> => {
@@ -17,17 +17,10 @@ export const getGallery = async (
   return res.data;
 };
 
-export const postGallery = async (
-  data: PostGalleriesRequest
-): Promise<{ message: string }> => {
-  const res = await apiInstance.post('/admin/galleries', data);
-  return res.data;
-};
-
 export const patchGallery = async (
   galleriesNo: number,
-  data: Omit<PatchGalleriesRequest, 'galleriesNo'>
-): Promise<GalleriesResponse> => {
+  data: Omit<PatchGalleryRequest, 'galleriesNo'>
+): Promise<{ message: string }> => {
   const res = await apiInstance.patch(`/admin/galleries/${galleriesNo}`, data);
   return res.data;
 };
@@ -36,5 +29,12 @@ export const deleteGallery = async (
   galleriesNo: number
 ): Promise<{ message: string }> => {
   const res = await apiInstance.delete(`/admin/galleries/${galleriesNo}`);
+  return res.data;
+};
+
+export const postGallery = async (
+  data: PostGalleryRequest
+): Promise<{ message: string }> => {
+  const res = await apiInstance.post('/admin/galleries', data);
   return res.data;
 };

@@ -4,15 +4,13 @@ import { Gallery } from '@/types';
 export type GalleriesResponse = Gallery;
 
 // [PATCH] 수정 요청
-export type PatchGalleriesRequest = Pick<
+export type PatchGalleryRequest = Pick<
   Gallery,
   'galleriesNo' | 'title' | 'startDate' | 'endDate'
 >;
 
 // [DELETE] 삭제 요청
-export type DeleteGalleriesRequest = {
-  galleriesNo: number;
-};
+export type DeleteGalleryRequest = Pick<Gallery, 'galleriesNo'>;
 
 // [POST] 등록 요청
-export type PostGalleriesRequest = Omit<Gallery, 'galleriesNo'>;
+export type PostGalleryRequest = Omit<Gallery, 'galleriesNo'>;

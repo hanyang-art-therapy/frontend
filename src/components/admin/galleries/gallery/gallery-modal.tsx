@@ -1,0 +1,133 @@
+import FormField from '@/components/admin/form-field';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
+  GalleriesResponse,
+  PatchGalleryRequest,
+} from '@/types/admin/galleries';
+import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+import { handleApiError } from '@/components/common/error-handler';
+
+interface Props {
+  gallery: GalleriesResponse;
+  onEdit: (form: PatchGalleryRequest) => Promise<void>;
+  onDelete: (artistNo: number) => Promise<void>;
+  onClose: () => void;
+}
+
+export default function GalleryModal({
+  gallery,
+  onEdit,
+  onDelete,
+  onClose,
+}: Props) {
+  type GalleryFormState = {
+    galleriesNo: string;
+    title: string;
+    startDate: string;
+    endDate: string;
+  };
+  const [form, setForm] = useState<GalleryFormState>({
+    galleriesNo: '',
+    title: '',
+    startDate: '',
+    endDate: '',
+  });
+
+  useEffect(() => {
+    setForm({
+      galleriesNo: String(gallery.galleriesNo),
+      title: gallery.title ?? '',
+      startDate: gallery.startDate ?? '',
+      endDate: gallery.endDate ?? '',
+    });
+  }, [gallery]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // 유효성 검사
+    if (!form.title || !form.startDate || !form.endDate) {
+      toast.error('전시 제목, 전시 기간 모두 입력해주세요.');
+      return;
+    }
+
+    try {
+      const submitForm: PatchGalleryRequest = {
+        galleriesNo: Number(form.galleriesNo),
+        title: form.title,
+        startDate: form.startDate,
+        endDate: form.endDate,
+      };
+      await onEdit(submitForm);
+      toast.success('전시회 수정이 완료되었습니다.');
+      onClose();
+    } catch (error) {
+      toast.error(handleApiError(error));
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await onDelete(Number(form.galleriesNo));
+      toast.success('전시회 삭제가 완료되었습니다.');
+      onClose();
+    } catch (error) {
+      toast.error(handleApiError(error));
+    }
+  };
+
+  const fields = [
+    { id: 'title', label: '제목' },
+    { id: 'startDate', label: '시작 일자' },
+    { id: 'endDate', label: '종료 일자' },
+  ];
+
+  return (
+    <Dialog open onOpenChange={onClose}>
+      <DialogContent className='max-w-[700px]'>
+        <DialogHeader>
+          <DialogTitle className='text-center'>GALLERY INFO</DialogTitle>
+        </DialogHeader>
+
+        <div className='w-full border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
+          {fields.map(({ id, label }) => (
+            <FormField key={id} id={id} label={label}>
+              <input
+                id={id}
+                name={id}
+                type={id === 'startDate' || id === 'endDate' ? 'date' : 'text'}
+                value={(form as any)[id] ?? ''}
+                onChange={handleChange}
+                autoComplete='off'
+                className='w-full px-[15px] outline-none cursor-pointer'
+              />
+            </FormField>
+          ))}
+        </div>
+
+        <DialogFooter className='grid grid-cols-2 mx-auto mt-[10px] gap-[15px]'>
+          <Button onClick={handleSubmit}>수정</Button>
+          <Button variant='destructive' onClick={handleDelete}>
+            삭제
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
