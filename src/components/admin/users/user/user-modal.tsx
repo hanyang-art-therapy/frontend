@@ -15,6 +15,7 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 import { PatchUserRequest, UserResponse } from '@/types/admin/users';
+import { User } from '@/types';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
@@ -26,33 +27,25 @@ interface Props {
 }
 
 export default function UserModal({ user, onEdit, onClose }: Props) {
-  type UserFormState = {
-    userNo: string;
-    userId: string;
-    email: string;
-    userName: string;
-    studentNo: string;
-    role: string;
-    userStatus: string;
-  };
+  type UserFormState = Omit<User, 'password'>;
 
   const [form, setForm] = useState<UserFormState>({
-    userNo: '',
+    userNo: 0,
     userId: '',
     email: '',
     userName: '',
-    studentNo: '',
-    role: '',
+    studentNo: 0,
+    role: 'USER',
     userStatus: '',
   });
 
   useEffect(() => {
     setForm({
-      userNo: String(user.userNo),
+      userNo: user.userNo,
       userId: user.userId,
       email: user.email,
       userName: user.userName,
-      studentNo: String(user.studentNo ?? ''),
+      studentNo: user.studentNo,
       role: user.role as 'USER' | 'ARTIST' | 'ADMIN',
       userStatus: user.userStatus,
     });
@@ -70,24 +63,24 @@ export default function UserModal({ user, onEdit, onClose }: Props) {
     e.preventDefault();
 
     // 유효성 검사
-    if (!form.userName || !form.studentNo) {
-      toast.error('이름, 학번 모두 입력해주세요.');
-      return;
-    }
     if (form.userName.length < 2 || form.userName.length > 50) {
       toast.error('이름은 2자 이상 50자 이하로 입력해주세요.');
       return;
     }
     if (form.role === 'ARTIST') {
-      if (!form.studentNo || isNaN(Number(form.studentNo))) {
+      if (!form.userName || !form.studentNo) {
+        toast.error('이름, 학번 모두 입력해주세요.');
+        return;
+      }
+      if (!form.studentNo || isNaN(form.studentNo)) {
         toast.error('학번은 숫자만 입력이 가능합니다.');
         return;
       }
-      if (form.studentNo.length !== 10) {
+      if (String(form.studentNo).length !== 10) {
         toast.error('학번은 10자리 숫자만 입력이 가능합니다.');
         return;
       }
-      if (/^0+$/.test(form.studentNo)) {
+      if (/^0+$/.test(String(form.studentNo))) {
         toast.error('학번은 0으로만 구성될 수 없습니다.');
         return;
       }
@@ -95,11 +88,11 @@ export default function UserModal({ user, onEdit, onClose }: Props) {
 
     try {
       const submitForm: PatchUserRequest = {
-        userNo: Number(form.userNo),
+        userNo: form.userNo,
         userId: form.userId,
         email: form.email,
         userName: form.userName,
-        studentNo: Number(form.studentNo ?? ''),
+        studentNo: form.studentNo ?? '',
         role: form.role as 'USER' | 'ARTIST' | 'ADMIN',
         userStatus: form.userStatus,
       };
@@ -161,7 +154,7 @@ export default function UserModal({ user, onEdit, onClose }: Props) {
                     id={id}
                     name={id}
                     type={id}
-                    value={(form as any)[id] ?? ''}
+                    value={form[id as keyof UserFormState] ?? ''}
                     onChange={handleChange}
                     autoComplete='off'
                     className={`w-full px-[15px] outline-none cursor-pointer ${

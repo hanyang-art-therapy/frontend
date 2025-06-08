@@ -51,14 +51,14 @@ export default function AdminUserPage() {
           </div>
         </div>
         {/* 회원 목록 */}
-        {users.map((user, i) => (
+        {users.map((user, index) => (
           <div
             key={user.userNo}
             onClick={() => setSelectedUser(user)}
             className='grid grid-cols-[1fr_2fr_2fr_2fr] divide-x divide-btn-gray-d text-center t-r-14 cursor-pointer hover:bg-primary/10'
           >
             <div className='min-h-[44px] flex items-center justify-center'>
-              {i + 1}
+              {index + 1}
             </div>
             <div className='min-h-[44px] flex items-center justify-center'>
               {user.userName}
