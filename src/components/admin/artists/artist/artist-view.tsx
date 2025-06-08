@@ -53,14 +53,14 @@ export default function ArtistView() {
         </div>
 
         {/* 작가 목록 */}
-        {artists.map((artist, i) => (
+        {artists.map((artist, index) => (
           <div
             key={artist.artistNo}
             onClick={() => setSelectedArtist(artist)}
             className='grid grid-cols-[1fr_2fr_2fr_2fr] divide-x divide-btn-gray-d text-center t-r-14 cursor-pointer hover:bg-primary/10'
           >
             <div className='min-h-[44px] flex items-center justify-center'>
-              {i + 1}
+              {index + 1}
             </div>
             <div className='min-h-[44px] flex items-center justify-center'>
               {artist.artistName}

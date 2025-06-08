@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { ArtistResponse, PatchArtistRequest } from '@/types/admin/artists';
+import { Artist } from '@/types';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
@@ -25,26 +26,21 @@ export default function ArtistModal({
   onDelete,
   onClose,
 }: Props) {
-  type ArtistFormState = {
-    artistNo: string;
-    artistName: string;
-    studentNo: string;
-    cohort: string;
-  };
+  type ArtistFormState = Artist;
 
   const [form, setForm] = useState<ArtistFormState>({
-    artistNo: '',
+    artistNo: 0,
     artistName: '',
-    studentNo: '',
-    cohort: '',
+    studentNo: 0,
+    cohort: 0,
   });
 
   useEffect(() => {
     setForm({
-      artistNo: String(artist.artistNo),
-      artistName: artist.artistName ?? '',
-      studentNo: String(artist.studentNo ?? ''),
-      cohort: String(artist.cohort ?? ''),
+      artistNo: artist.artistNo,
+      artistName: artist.artistName,
+      studentNo: artist.studentNo ?? '',
+      cohort: artist.cohort,
     });
   }, [artist]);
 
@@ -68,33 +64,33 @@ export default function ArtistModal({
       toast.error('이름은 2자 이상 50자 이하로 입력해주세요.');
       return;
     }
-    if (isNaN(Number(form.studentNo))) {
+    if (isNaN(form.studentNo)) {
       toast.error('학번은 숫자만 입력이 가능합니다.');
       return;
     }
-    if (form.studentNo.length !== 10) {
+    if (String(form.studentNo).length !== 10) {
       toast.error('학번은 10자리 숫자만 입력이 가능합니다.');
       return;
     }
-    if (/^0+$/.test(form.studentNo)) {
+    if (/^0+$/.test(String(form.studentNo))) {
       toast.error('학번은 0으로만 구성될 수 없습니다.');
       return;
     }
-    if (isNaN(Number(form.cohort))) {
+    if (isNaN(form.cohort)) {
       toast.error('기수는 숫자만 입력이 가능합니다.');
       return;
     }
-    if (/^0+$/.test(form.cohort)) {
+    if (/^0+$/.test(String(form.cohort))) {
       toast.error('기수는 0으로만 구성될 수 없습니다.');
       return;
     }
 
     try {
       const submitForm: PatchArtistRequest = {
-        artistNo: Number(form.artistNo),
+        artistNo: form.artistNo,
         artistName: form.artistName,
-        studentNo: Number(form.studentNo),
-        cohort: Number(form.cohort),
+        studentNo: form.studentNo,
+        cohort: form.cohort,
       };
       await onEdit(submitForm);
       toast.success('작가 수정이 완료되었습니다.');
@@ -106,7 +102,7 @@ export default function ArtistModal({
 
   const handleDelete = async () => {
     try {
-      await onDelete(Number(form.artistNo));
+      await onDelete(form.artistNo);
       toast.success('작가 삭제가 완료되었습니다.');
       onClose();
     } catch (error) {
@@ -132,7 +128,7 @@ export default function ArtistModal({
               <input
                 id={id}
                 name={id}
-                value={(form as any)[id] ?? ''}
+                value={form[id as keyof ArtistFormState] ?? ''}
                 onChange={handleChange}
                 autoComplete='off'
                 className='w-full px-[15px] outline-none cursor-pointer'
