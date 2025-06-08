@@ -3,7 +3,7 @@ import { NOTICE_MOCK_DATA } from '@/constants/notice/notice';
 import { useParams } from 'react-router-dom';
 import { Download } from 'lucide-react';
 import NoticeNav from '../notice-nav.tsx/notice-nav';
-import { NoticeNoResult } from '../notice-noresult/notice-noresult';
+import NoticeNoResult from '../notice-noresult/notice-noresult';
 import { formatTimeStamp } from '@/lib/utils';
 
 type Notice = (typeof NOTICE_MOCK_DATA.content)[number];

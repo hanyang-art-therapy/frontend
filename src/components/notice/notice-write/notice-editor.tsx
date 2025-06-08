@@ -1,4 +1,3 @@
-// src/components/TiptapEditor.tsx
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
@@ -10,7 +9,7 @@ import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import { useState } from 'react';
 
-const NoticeEditor = () => {
+export default function NoticeEditor() {
   const [imageUrl, setImageUrl] = useState('');
 
   const editor = useEditor({
@@ -156,11 +155,9 @@ const NoticeEditor = () => {
       </div>
 
       {/* 에디터 */}
-      <div className='border border-gray-300 p-3 rounded-lg min-h-[200px] leading-relaxed'>
+      <div className='border border-b-bg-gray-d p-3 rounded-lg min-h-[300px] leading-relaxed'>
         <EditorContent editor={editor} />
       </div>
     </div>
   );
-};
-
-export default NoticeEditor;
+}

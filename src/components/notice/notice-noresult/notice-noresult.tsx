@@ -1,27 +1,12 @@
-export const NoticeNoResult = () => {
+export default function NoticeNoResult() {
   return (
-    <div className='min-h-screen flex flex-col items-center justify-start text-start text-black mt-[120px]'>
+    <div className='min-h-screen flex flex-col items-center justify-start text-start mt-[120px]'>
       {/* 제목 */}
       <div className='w-full h-[600px] xl:px-0 border-t-2 border-b-2 py-[10px] border-t-gray-300 border-b-gray-300 bg-white flex justify-center items-center'>
-        <div className='flex gap-4 mt-2 px-[20px] text-gray-2xl'>
+        <div className='flex gap-4 mt-2 px-[20px] text-btn-gray-9'>
           게시물을 찾을 수 없습니다.
         </div>
       </div>
     </div>
   );
-};
-
-// if (!notice)
-//   return (
-//     <div className='min-h-screen flex flex-col items-center justify-start text-start text-black mt-[120px]'>
-//       {/* 제목 */}
-//       <div className='w-full h-[600px] xl:px-0 border-t-2 border-b-2 py-[10px] border-t-gray-300 border-b-gray-300 bg-white flex justify-center items-center'>
-//         <div className='flex gap-4 mt-2 px-[20px] text-gray-2xl'>
-//           게시물을 찾을 수 없습니다.
-//         </div>
-//       </div>
-
-//       {/* 이전글과 다음글 */}
-//       <NoticeNav noticeNo={noticeNo ?? ''} />
-//     </div>
-//   );
+}

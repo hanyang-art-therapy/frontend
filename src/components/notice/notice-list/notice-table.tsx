@@ -13,7 +13,7 @@ export default function NoticeTable({ data }: NoticeTableProps) {
   return (
     <div className='w-full overflow-x-auto'>
       <table className='w-full border-collapse table-fixed'>
-        <thead className='bg-bg-gray-fa text-[12px] md:text-[16px] border-b border-t border-gray-300'>
+        <thead className='bg-bg-gray-fa t-r-16 border-b border-t border-gray-300'>
           <tr>
             <th className='p-2 w-[40px] md:w-[70px] min-w-[40px]'>번호</th>
             <th className='p-2 w-[50px] md:w-[100px] min-w-[50px]'>구분</th>
@@ -32,7 +32,7 @@ export default function NoticeTable({ data }: NoticeTableProps) {
             <tr
               key={item.noticeNo}
               onClick={() => navigate(`/notice/${item.noticeNo}`)}
-              className='hover:bg-[rgba(241,129,0,0.1)] cursor-pointer border-b border-gray-300 text-[14px] md:text-[16px]'
+              className='hover:bg-[rgba(241,129,0,0.1)] cursor-pointer border-b border-gray-300 t-r-16 '
             >
               <td className='p-2 text-center'>{item.noticeNo}</td>
               <td className='p-2 text-center'>{item.category}</td>

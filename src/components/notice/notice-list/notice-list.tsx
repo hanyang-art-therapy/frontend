@@ -24,7 +24,7 @@ export default function NoticeList() {
             공지사항
           </strong>
         </div>
-        <div className='p-4 bg-gray-100 rounded text-sm t-r-16 flex-1 min-w-0'>
+        <div className='p-4 bg-bg-gray-100 rounded text-sm t-r-16 flex-1 min-w-0'>
           본 게시판은 미술치료학과의 학사, 실습, 전시, 행사 등과 관련된 주요
           공지사항을 안내합니다. 일정 확인 및 필수 제출 서류 등은 수시로
           확인해주세요.
@@ -39,7 +39,7 @@ export default function NoticeList() {
           <NoticeTable data={NOTICE_MOCK_DATA.content} />
           <div className='flex w-full h-[50px] items-center pt-[22px] md:pt-[32px]'>
             {/* 페이지네이션 */}
-            <div className='border-1 border-red-600 h-[80px] flex-1 flex justify-center items-center t-b-16'>
+            <div className='border-1 border-destructive h-[80px] flex-1 flex justify-center items-center t-b-16'>
               <Pagination>
                 <PaginationContent />
                 페이지네이션
