@@ -11,6 +11,7 @@ import {
   GalleriesResponse,
   PatchGalleryRequest,
 } from '@/types/admin/galleries';
+import { Gallery } from '@/types';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
@@ -28,14 +29,10 @@ export default function GalleryModal({
   onDelete,
   onClose,
 }: Props) {
-  type GalleryFormState = {
-    galleriesNo: string;
-    title: string;
-    startDate: string;
-    endDate: string;
-  };
+  type GalleryFormState = Gallery;
+
   const [form, setForm] = useState<GalleryFormState>({
-    galleriesNo: '',
+    galleriesNo: 0,
     title: '',
     startDate: '',
     endDate: '',
@@ -43,10 +40,10 @@ export default function GalleryModal({
 
   useEffect(() => {
     setForm({
-      galleriesNo: String(gallery.galleriesNo),
-      title: gallery.title ?? '',
-      startDate: gallery.startDate ?? '',
-      endDate: gallery.endDate ?? '',
+      galleriesNo: gallery.galleriesNo,
+      title: gallery.title,
+      startDate: gallery.startDate,
+      endDate: gallery.endDate,
     });
   }, [gallery]);
 
@@ -69,7 +66,7 @@ export default function GalleryModal({
 
     try {
       const submitForm: PatchGalleryRequest = {
-        galleriesNo: Number(form.galleriesNo),
+        galleriesNo: form.galleriesNo,
         title: form.title,
         startDate: form.startDate,
         endDate: form.endDate,
@@ -84,7 +81,7 @@ export default function GalleryModal({
 
   const handleDelete = async () => {
     try {
-      await onDelete(Number(form.galleriesNo));
+      await onDelete(form.galleriesNo);
       toast.success('전시회 삭제가 완료되었습니다.');
       onClose();
     } catch (error) {
@@ -112,7 +109,7 @@ export default function GalleryModal({
                 id={id}
                 name={id}
                 type={id === 'startDate' || id === 'endDate' ? 'date' : 'text'}
-                value={(form as any)[id] ?? ''}
+                value={form[id as keyof GalleryFormState] ?? ''}
                 onChange={handleChange}
                 autoComplete='off'
                 className='w-full px-[15px] outline-none cursor-pointer'

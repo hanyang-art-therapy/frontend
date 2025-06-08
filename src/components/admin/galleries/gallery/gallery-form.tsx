@@ -2,12 +2,17 @@ import FormField from '@/components/admin/form-field';
 import { Button } from '@/components/ui/button';
 import { postGallery } from '@/apis/admin/galleries';
 import { PostGalleryRequest } from '@/types/admin/galleries';
+import { Gallery } from '@/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
 
-export default function GalleryForm({ onSuccess }: { onSuccess?: () => void }) {
-  const [form, setForm] = useState<PostGalleryRequest>({
+interface Props {
+  onSuccess?: () => void;
+}
+
+export default function GalleryForm({ onSuccess }: Props) {
+  const [form, setForm] = useState<Omit<Gallery, 'galleriesNo'>>({
     title: '',
     startDate: '',
     endDate: '',
@@ -31,12 +36,7 @@ export default function GalleryForm({ onSuccess }: { onSuccess?: () => void }) {
     }
 
     try {
-      const submitForm: PostGalleryRequest = {
-        title: form.title,
-        startDate: form.startDate,
-        endDate: form.endDate,
-      };
-      await postGallery(submitForm);
+      await postGallery(form);
       toast.success('전시회 등록이 완료되었습니다.');
       setForm({ title: '', startDate: '', endDate: '' });
       onSuccess?.();
@@ -46,7 +46,7 @@ export default function GalleryForm({ onSuccess }: { onSuccess?: () => void }) {
   };
 
   const fields = [
-    { id: 'title', label: '제목', placeholder: '올해의 전시회' },
+    { id: 'title', label: '제목' },
     { id: 'startDate', label: '시작 일자' },
     { id: 'endDate', label: '종료 일자' },
   ];
@@ -54,17 +54,16 @@ export default function GalleryForm({ onSuccess }: { onSuccess?: () => void }) {
   return (
     <form className='flex flex-col gap-[30px]' onSubmit={handleSubmit}>
       <div className='border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
-        {fields.map(({ id, label, placeholder }) => (
+        {fields.map(({ id, label }) => (
           <FormField key={id} id={id} label={label}>
             <input
               id={id}
               name={id}
               type={id === 'startDate' || id === 'endDate' ? 'date' : 'text'}
-              value={(form as any)[id] ?? ''}
+              value={form[id as keyof PostGalleryRequest] ?? ''}
               onChange={handleChange}
               autoComplete='off'
-              placeholder={placeholder}
-              className='w-full px-[15px] outline-none cursor-pointer'
+              className='w-full px-[15px] outline-none cursor-pointer text-gray-9'
             />
           </FormField>
         ))}

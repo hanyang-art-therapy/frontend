@@ -51,14 +51,14 @@ export default function GalleryView() {
         </div>
 
         {/* 전시회 목록 */}
-        {galleries.map((gallery, i) => (
+        {galleries.map((gallery, index) => (
           <div
             key={gallery.galleriesNo}
             onClick={() => setSelectedGallery(gallery)}
             className='grid grid-cols-[1fr_3fr_3fr] divide-x divide-btn-gray-d text-center t-r-14 cursor-pointer hover:bg-primary/10'
           >
             <div className='min-h-[44px] flex items-center justify-center'>
-              {i + 1}
+              {index + 1}
             </div>
             <div className='min-h-[44px] flex items-center justify-center'>
               {gallery.title}
