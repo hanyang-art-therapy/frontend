@@ -46,7 +46,7 @@ export default function ArtistSelectModal({
                   }}
                   className='grid grid-cols-[1fr_2fr_2fr_2fr] leading-[44px] divide-x divide-btn-gray-d text-center t-r-14 cursor-pointer hover:bg-primary/10'
                 >
-                  <div>{i + 1}</div>
+                  <div>{index + 1}</div>
                   <div>{artist.artistName}</div>
                   <div>{artist.studentNo}</div>
                   <div>{artist.cohort}</div>

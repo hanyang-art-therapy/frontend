@@ -133,17 +133,26 @@ export default function UserModal({ user, onEdit, onClose }: Props) {
                     }))
                   }
                 >
-                  <SelectTrigger className='w-full border-none bg-white/0 outline-none'>
+                  <SelectTrigger className='w-full border-none bg-white/0 outline-none cursor-pointer'>
                     <SelectValue placeholder='' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value='USER' className='hover:bg-primary/10'>
+                    <SelectItem
+                      value='USER'
+                      className='cursor-pointer hover:bg-primary/10'
+                    >
                       USER
                     </SelectItem>
-                    <SelectItem value='ARTIST' className='hover:bg-primary/10'>
+                    <SelectItem
+                      value='ARTIST'
+                      className='cursor-pointer hover:bg-primary/10'
+                    >
                       ARTIST
                     </SelectItem>
-                    <SelectItem value='ADMIN' className='hover:bg-primary/10'>
+                    <SelectItem
+                      value='ADMIN'
+                      className='cursor-pointer hover:bg-primary/10'
+                    >
                       ADMIN
                     </SelectItem>
                   </SelectContent>

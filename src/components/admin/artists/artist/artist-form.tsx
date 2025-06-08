@@ -12,9 +12,7 @@ interface Props {
 }
 
 export default function ArtistForm({ onSuccess }: Props) {
-  type ArtistFormState = Omit<Artist, 'artistNo'>;
-
-  const [form, setForm] = useState<ArtistFormState>({
+  const [form, setForm] = useState<Omit<Artist, 'artistNo'>>({
     artistName: '',
     studentNo: 0,
     cohort: 0,
@@ -91,10 +89,10 @@ export default function ArtistForm({ onSuccess }: Props) {
               id={id}
               name={id}
               value={
-                typeof form[id as keyof ArtistFormState] === 'number' &&
-                form[id as keyof ArtistFormState] === 0
+                typeof form[id as keyof PostArtistRequest] === 'number' &&
+                form[id as keyof PostArtistRequest] === 0
                   ? ''
-                  : form[id as keyof ArtistFormState] ?? ''
+                  : form[id as keyof PostArtistRequest] ?? ''
               }
               onChange={handleChange}
               autoComplete='off'
