@@ -7,7 +7,7 @@ export type User = {
   password: string; // 비밀번호
   email: string; // 이메일
   userName: string; // 이름
-  studentNo: string; // 학번
+  studentNo: number; // 학번
   role: 'USER' | 'ARTIST' | 'ADMIN'; // 회원 권한
   userStatus: string; // 회원 상태
 };
