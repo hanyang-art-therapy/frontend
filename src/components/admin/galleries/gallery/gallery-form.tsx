@@ -63,7 +63,7 @@ export default function GalleryForm({ onSuccess }: Props) {
               value={form[id as keyof PostGalleryRequest] ?? ''}
               onChange={handleChange}
               autoComplete='off'
-              className='w-full px-[15px] outline-none cursor-pointer text-gray-9'
+              className='w-full px-[15px] outline-none cursor-pointer'
             />
           </FormField>
         ))}

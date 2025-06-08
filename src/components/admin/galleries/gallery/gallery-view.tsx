@@ -20,8 +20,7 @@ export default function GalleryView() {
   }, []);
 
   const handleEdit = async (form: PatchGalleryRequest) => {
-    const { galleriesNo, title, startDate, endDate } = form;
-    await patchGallery(galleriesNo, { title, startDate, endDate });
+    await patchGallery(form.galleriesNo, form);
     await getGalleries().then((galleries) => setGalleries(galleries));
     setSelectedGallery(null);
   };
