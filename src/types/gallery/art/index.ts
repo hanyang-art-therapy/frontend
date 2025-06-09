@@ -15,7 +15,7 @@ export type ArtDetail = Pick<
       Files,
       'filesNo' | 'name' | 'url' | 'filesSize' | 'extension' | 'filesType'
     >;
-    artist: Pick<Artist, 'studentNo' | 'artistName' | 'cohort'>[];
+    artists: Pick<Artist, 'studentNo' | 'artistName' | 'cohort'>[];
   };
 
 export type ArtsRequest = {

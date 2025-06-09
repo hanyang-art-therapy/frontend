@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import apiInstance from '@/lib/axios';
+import axiosInstance from '@/lib/axios';
 import type {
   ArtReview,
   DeleteReviewRequest,
@@ -10,9 +10,9 @@ import axios from 'axios';
 
 // GET /gallery/arts/:artsNo/reviews
 export const getReviews = async (artsNo: number): Promise<ArtReview[]> => {
-  const response = await apiInstance.get(`/galleries/arts/${artsNo}/reviews`);
+  const response = await axiosInstance.get(`/galleries/arts/${artsNo}/reviews`);
 
-  return response.data.reviews;
+  return response.data.content;
 };
 
 export const getReviewsMocking = async (
@@ -51,21 +51,17 @@ export const postReviewMocking = async ({
 };
 
 export const postReview = async ({
-  userNo,
   artsNo,
   reviewText,
   filesNo,
 }: PostReviewRequest & { userNo: number }) => {
-  const response = await supabase.from('reviews').insert({
-    artsNo,
-    reviewText,
-    filesNo: filesNo[0],
-    userNo,
-  });
-
-  if (response.error) {
-    throw new Error('리뷰 작성에 실패했습니다. 잠시 후 다시 시도해주세요');
-  }
+  const response = await axiosInstance.post(
+    `/galleries/arts/${artsNo}/reviews`,
+    {
+      filesNo,
+      reviewText,
+    }
+  );
 
   return response.data;
 };

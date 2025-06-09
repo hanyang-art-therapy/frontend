@@ -8,17 +8,23 @@ import type { UserType } from '@/types/auth/sign-up';
 export const getValidationStates = ({
   watch,
   errors,
+  isUserIdValid,
   isEmailValid,
   isStudentNoValid,
   userType,
 }: {
   watch: UseFormWatch<SignUpFormValues>;
   errors: FieldErrors<SignUpFormValues>;
+  isUserIdValid: boolean;
   isEmailValid: boolean;
   isStudentNoValid: boolean;
   userType: UserType;
 }) => {
+  const userIdValid =
+    !errors.userId && Boolean(watch('userId')) && isUserIdValid;
+
   const emailValid =
+    userIdValid &&
     !errors.emailId &&
     !errors.emailDomain &&
     Boolean(watch('emailId')) &&

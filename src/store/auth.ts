@@ -7,6 +7,9 @@ type AuthState = {
   userNo: string | null;
   setUserNo: (userNo: string | null) => void;
 
+  role: string | null;
+  setRole: (role: string | null) => void;
+
   reset: () => void;
 };
 
@@ -17,5 +20,8 @@ export const useAuthStore = create<AuthState>((set) => ({
   userNo: null,
   setUserNo: (userNo) => set({ userNo }),
 
-  reset: () => set({ accessToken: null, userNo: null }),
+  role: null,
+  setRole: (role) => set({ role }),
+
+  reset: () => set({ accessToken: null, userNo: null, role: null }),
 }));

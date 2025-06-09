@@ -1,7 +1,6 @@
-import AuthLinks from '@/components/header/links/auth-links';
 import DesktopMenu from '@/components/nav/nav-sections/nav-menu-sections/desktop-menu';
 import HamburgerButton from '@/components/nav/nav-sections/nav-menu-sections/hamburger-button';
-import MobileMenu from '@/components/nav/nav-sections/nav-menu-sections/mobile-menu';
+import MobileMenu from '@/components/nav/nav-sections/nav-menu-sections/mobile/mobile-menu';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -23,7 +22,6 @@ export default function NavMenu() {
 
       {/* 모바일 메뉴 버튼 */}
       <div className='flex items-center gap-[15px] xl:hidden'>
-        <AuthLinks />
         {/*<SearchButton />*/}
         <HamburgerButton
           isOpen={isSlideOpen}

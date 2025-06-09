@@ -5,7 +5,7 @@ import type { ArtDetail as ArtDetailType } from '@/types/gallery/art';
 import { useEffect } from 'react';
 
 export default function Art({ artDetail }: { artDetail: ArtDetailType }) {
-  const { file, description, artName, artist, caption } = artDetail;
+  const { file, description, artName, artists, caption } = artDetail;
 
   useEffect(() => {
     window.scrollTo({
@@ -22,7 +22,7 @@ export default function Art({ artDetail }: { artDetail: ArtDetailType }) {
 
         <div className='xl:w-[40%] w-full space-y-[60px] md:space-y-[100px] mx-auto xl:mx-0'>
           {/* 작품 상세 박스 */}
-          <ArtInfo artName={artName} artist={artist} caption={caption} />
+          <ArtInfo artName={artName} artists={artists} caption={caption} />
 
           {/* 작품 설명 */}
           <ArtDescription description={description} />

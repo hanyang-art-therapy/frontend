@@ -1,11 +1,11 @@
 import Arts from '@/components/gallery/arts/arts';
-import GalleryBanner from '@/components/gallery/gallery-banner';
 import GalleryIntro from '@/components/gallery/intro/gallery-intro';
 import Gallerytherapy from '@/components/gallery/therapy/gallery-therapy';
 import Step from '@/components/ui/step';
 import { GALLERY_STEP_ITEMS } from '@/constants/gallery/gallery';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import VideoBanner from '../common/video-banner';
 
 export default function Gallery() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,7 +22,7 @@ export default function Gallery() {
 
   return (
     <div className='w-full h-full flex flex-col justify-center items-center'>
-      <GalleryBanner />
+      <VideoBanner src='/videos/gallery.mp4' title='ART+THERAPY 展' />
 
       <Step
         items={GALLERY_STEP_ITEMS}

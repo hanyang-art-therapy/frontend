@@ -114,7 +114,6 @@ export type PaginationResponse<T> = {
   size: number;
   totalElements: number;
   totalPages: number;
-  isLast: boolean;
 };
 
 export type ArtsPagination<T> = {

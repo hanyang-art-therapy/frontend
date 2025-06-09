@@ -5,5 +5,5 @@ export type SignInRequest = Pick<User, 'userId' | 'password'>;
 export type SignInResponse = {
   accessToken: string;
   userNo: string;
-  role: 'USER' | 'ADMIN';
+  role: 'USER' | 'ADMIN' | 'ARTIST' | 'TESTER';
 };

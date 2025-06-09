@@ -52,7 +52,8 @@ function SelectTrigger({
         'data-[size=default]:h-11 data-[size=sm]:h-8',
         className
       )}
-      {...props}>
+      {...props}
+    >
       {children}
       <SelectPrimitive.Icon asChild>
         <ChevronDownIcon className='size-6 opacity-100' strokeWidth={1} />
@@ -82,14 +83,16 @@ function SelectContent({
           className
         )}
         position={position}
-        {...props}>
+        {...props}
+      >
         <SelectScrollUpButton />
         <SelectPrimitive.Viewport
           className={cn(
             'p-1',
             position === 'popper' &&
               'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1'
-          )}>
+          )}
+        >
           {children}
         </SelectPrimitive.Viewport>
         <SelectScrollDownButton />
@@ -120,10 +123,11 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot='select-item'
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "cursor-pointer hover:bg-bg-gray-fa focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full  items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className
       )}
-      {...props}>
+      {...props}
+    >
       <span className='absolute right-2 flex size-3.5 items-center justify-center'>
         <SelectPrimitive.ItemIndicator>
           <CheckIcon className='size-4' />
@@ -158,7 +162,8 @@ function SelectScrollUpButton({
         'flex cursor-default items-center justify-center py-1',
         className
       )}
-      {...props}>
+      {...props}
+    >
       <ChevronUpIcon className='size-4' />
     </SelectPrimitive.ScrollUpButton>
   );
@@ -175,7 +180,8 @@ function SelectScrollDownButton({
         'flex cursor-default items-center justify-center py-1',
         className
       )}
-      {...props}>
+      {...props}
+    >
       <ChevronDownIcon className='size-4' />
     </SelectPrimitive.ScrollDownButton>
   );

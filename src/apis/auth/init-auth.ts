@@ -1,6 +1,5 @@
 import { useAuthStore } from '@/store/auth';
-
-import apiInstance from '@/lib/axios';
+import { refresh } from '@/apis/auth/refresh';
 let initAuthPromise: Promise<void> | null = null;
 
 export const initializeAuth = (): Promise<void> => {
@@ -9,11 +8,9 @@ export const initializeAuth = (): Promise<void> => {
 
   initAuthPromise = (async () => {
     try {
-      const res = await apiInstance.post('/user/refresh', null, {
-        withCredentials: true,
-      });
+      const res = await refresh();
 
-      const token = res.data.access_token;
+      const token = res.data.accessToken;
       setAccessToken(token);
     } catch {
       reset();

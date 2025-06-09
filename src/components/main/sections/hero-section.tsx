@@ -1,7 +1,6 @@
 export default function HeroSection() {
   return (
     <section className='w-full h-[320px] sm:h-[400px] flex justify-center relative banner-bg'>
-      <div className='w-full h-full inset-0 bg-black/10 absolute'></div>
       <div className='w-full max-w-[1260px] h-full flex flex-col justify-center items-center text-shadow-style relative'>
         <div className='xl:pl-0 pl-[20px] flex flex-col absolute top-[90px] left-0'>
           <p className='flex gap-[5px] items-center'>

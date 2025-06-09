@@ -1,15 +1,21 @@
-export const NAV_MENU = [
+export type NavMenu = {
+  title: string;
+  path: string;
+  submenu: { title: string; path: string }[];
+};
+
+export const NAV_MENU: NavMenu[] = [
   {
     title: '학과소개',
-    path: '#',
+    path: '/intro',
     submenu: [
-      { title: '- 미래상', path: '/coming-soon' },
+      { title: '- 미래상', path: '/intro/vision' },
       { title: '- 교수진', path: '/intro/professors' },
-      { title: '- 교육과정', path: '/coming-soon' },
+      { title: '- 교육과정', path: '/intro/curriculums' },
       { title: '- 자격증', path: '/intro/certificates' },
-      { title: '- 졸업 후 전망', path: '/coming-soon' },
-      { title: '- MOU기관', path: '/coming-soon' },
-      { title: '- 오시는 길', path: '/coming-soon' },
+      { title: '- 졸업 후 전망', path: '/intro/prospect' },
+      { title: '- MOU기관', path: '/intro/mou' },
+      { title: '- 오시는 길', path: '/intro/map' },
     ],
   },
   {
@@ -46,4 +52,4 @@ export const NAV_MENU = [
     path: '/notice',
     submenu: [],
   },
-];
+] as const;
