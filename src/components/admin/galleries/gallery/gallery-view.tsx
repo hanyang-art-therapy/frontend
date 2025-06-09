@@ -3,6 +3,7 @@ import {
   GalleriesResponse,
   PatchGalleryRequest,
 } from '@/types/admin/galleries';
+import { MessageResponse } from '@/types';
 import {
   getGalleries,
   patchGallery,
@@ -19,16 +20,31 @@ export default function GalleryView() {
     getGalleries().then((galleries) => setGalleries(galleries));
   }, []);
 
-  const handleEdit = async (form: PatchGalleryRequest) => {
-    await patchGallery(form.galleriesNo, form);
+  const handleEdit = async (
+    form: PatchGalleryRequest
+  ): Promise<MessageResponse> => {
+    const { galleriesNo, title, startDate, endDate } = form;
+    const res = await patchGallery(galleriesNo, {
+      title,
+      startDate,
+      endDate,
+    });
+
     await getGalleries().then((galleries) => setGalleries(galleries));
     setSelectedGallery(null);
+
+    return res;
   };
 
-  const handleDelete = async (galleriesNo: number) => {
-    await deleteGallery(galleriesNo);
+  const handleDelete = async (
+    galleriesNo: number
+  ): Promise<MessageResponse> => {
+    const res = await deleteGallery(galleriesNo);
+
     await getGalleries().then((galleries) => setGalleries(galleries));
     setSelectedGallery(null);
+
+    return res;
   };
 
   const handleClose = () => setSelectedGallery(null);

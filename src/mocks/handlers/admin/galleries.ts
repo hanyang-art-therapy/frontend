@@ -24,7 +24,7 @@ export const adminGalleryHandlers = [
 
       if (idx === -1) {
         return HttpResponse.json(
-          { message: '해당 회원이 존재하지 않습니다.' },
+          { message: '해당 전시회가 존재하지 않습니다.' },
           { status: 404 }
         );
       }
@@ -34,7 +34,10 @@ export const adminGalleryHandlers = [
         ...patch,
       };
 
-      return HttpResponse.json(galleries[idx]);
+      return HttpResponse.json(
+        { message: '전시회 수정이 완료되었습니다.' },
+        { status: 200 }
+      );
     }
   ),
 
@@ -54,7 +57,10 @@ export const adminGalleryHandlers = [
 
     galleries.splice(idx, 1);
 
-    return HttpResponse.json({ status: 204, galleriesNo: Number(galleriesNo) });
+    return HttpResponse.json({
+      status: 200,
+      message: '전시회 삭제가 완료되었습니다.',
+    });
   }),
 
   // [POST] 전시회 등록
@@ -67,6 +73,7 @@ export const adminGalleryHandlers = [
         galleries.length > 0
           ? Math.max(...galleries.map((a) => a.galleriesNo)) + 1
           : 1;
+
       const newGallery = {
         galleriesNo,
         title,
@@ -77,8 +84,8 @@ export const adminGalleryHandlers = [
       galleries.push(newGallery);
 
       return HttpResponse.json({
-        status: 201,
-        message: '등록이 완료되었습니다.',
+        status: 200,
+        message: '전시회 등록이 완료되었습니다.',
         data: newGallery,
       });
     }

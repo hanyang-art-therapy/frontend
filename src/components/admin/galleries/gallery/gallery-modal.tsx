@@ -12,14 +12,15 @@ import {
   PatchGalleryRequest,
 } from '@/types/admin/galleries';
 import { Gallery } from '@/types';
+import { MessageResponse } from '@/types';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
 
 interface Props {
   gallery: GalleriesResponse;
-  onEdit: (form: PatchGalleryRequest) => Promise<void>;
-  onDelete: (artistNo: number) => Promise<void>;
+  onEdit: (form: PatchGalleryRequest) => Promise<MessageResponse>;
+  onDelete: (artistNo: number) => Promise<MessageResponse>;
   onClose: () => void;
 }
 
@@ -51,7 +52,7 @@ export default function GalleryModal({
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value.trim(),
     }));
   };
 
@@ -71,8 +72,8 @@ export default function GalleryModal({
         startDate: form.startDate,
         endDate: form.endDate,
       };
-      await onEdit(submitForm);
-      toast.success('전시회 수정이 완료되었습니다.');
+      const res = await onEdit(submitForm);
+      toast.success(res.message);
       onClose();
     } catch (error) {
       toast.error(handleApiError(error));
@@ -81,8 +82,8 @@ export default function GalleryModal({
 
   const handleDelete = async () => {
     try {
-      await onDelete(form.galleriesNo);
-      toast.success('전시회 삭제가 완료되었습니다.');
+      const res = await onDelete(form.galleriesNo);
+      toast.success(res.message);
       onClose();
     } catch (error) {
       toast.error(handleApiError(error));
