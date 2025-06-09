@@ -4,7 +4,7 @@ import NoticeTable from './notice-table';
 import { Button } from '@/components/ui/button';
 import { FileText, Volume2 } from 'lucide-react';
 import { NoticeSearch } from '../notice-search/notice-search';
-import { Pagination, PaginationContent } from '@/components/ui/pagination';
+import MyCommentPagination from '@/components/my-page/review/my-review-pagination';
 
 export default function NoticeList() {
   const navigate = useNavigate();
@@ -37,18 +37,12 @@ export default function NoticeList() {
             <FileText size={16} strokeWidth={1.5} />총 10개의 게시물
           </strong>
           <NoticeTable data={NOTICE_MOCK_DATA.content} />
-          <div className='flex w-full h-[50px] items-center pt-[22px] md:pt-[32px]'>
-            {/* 페이지네이션 */}
-            <div className='border-1 border-destructive h-[80px] flex-1 flex justify-center items-center t-b-16'>
-              <Pagination>
-                <PaginationContent />
-                페이지네이션
-              </Pagination>
-            </div>
+          <div className='flex w-full justify-center items-center'>
+            <MyCommentPagination />
             <Button
               type='button'
               onClick={handleWriteClick}
-              className='h-[30px] md:h-[40px] w-[80px] md:w-[120px]'
+              className='h-[30px] md:h-[40px] w-[80px]  md:w-[120px] mt-[30px]'
             >
               글쓰기
             </Button>

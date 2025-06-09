@@ -20,8 +20,10 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
+import Underline from '@tiptap/extension-underline';
 import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
+import Link from '@tiptap/extension-link';
 
 const categoryList = CATEGORY_LIST;
 
@@ -37,10 +39,12 @@ export default function NoticeWrite() {
       StarterKit,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       TextStyle,
+      Underline,
       Color,
       Highlight.configure({
         multicolor: true, // 여러 색상 가능하게
       }),
+      Link.configure({ autolink: true, openOnClick: false }),
     ],
     content: '<p style="text-align:left;">여기에 내용을 입력하세요</p>',
   });
@@ -135,7 +139,7 @@ export default function NoticeWrite() {
         {/* <NoticeEditor /> */}
         <div className='m-1 border-1 rounded-sm border-[#cacad6]'>
           {editor && <Toolbar editor={editor} />}
-          <EditorContent editor={editor} className='p-[12px]' />
+          <EditorContent editor={editor} className='px-[12px]' />
         </div>
         <div className='flex justify-between mt-4'>
           <NoticeNav />

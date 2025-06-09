@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { Editor } from '@tiptap/react';
 import { Paperclip, Image } from 'lucide-react';
-import ToolbarHeading from './toolbar-btns/toolbar-heading';
-import ToolbarFileUpload from './toolbar-btns/toolbar-upload';
 
 type ToolbarProps = {
-  editor: Editor;
+  editor: Editor | null;
 };
 
 const ToolbarButton = ({
@@ -31,34 +29,32 @@ const ToolbarButton = ({
   </button>
 );
 
-export default function Toolbar({ editor }: ToolbarProps) {
-  if (!editor) return null;
-
+export default function ToolbarFileUpload({ editor }: ToolbarProps) {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
+
+  if (!editor) return null;
 
   const triggerFileUpload = () => {
     document.getElementById('fileUpload')?.click();
   };
+
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const fileUrl = URL.createObjectURL(file);
-    editor
-      .chain()
-      .focus()
-      .extendMarkRange('link')
-      .setLink({ href: fileUrl })
-      .run();
+    const url = URL.createObjectURL(file);
+    setUploadedFile(file);
+    setFileUrl(url);
+
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
   };
 
   return (
-    <div className='flex items-center justify-start p-[10px] border-b border-[#cacad6]'>
-      <ToolbarHeading editor={editor} />
-      <ToolbarFileUpload editor={editor} />
-
-      {/* File Upload */}
+    <div className='p-[10px] border-b border-[#cacad6]'>
+      <input type='file' id='fileUpload' hidden onChange={handleFileInput} />
+      <ToolbarButton icon={Paperclip} onClick={triggerFileUpload} />
+      <ToolbarButton icon={Image} onClick={() => {}} />
 
       {uploadedFile && fileUrl && (
         <div className='p-4 border-t border-gray-300 w-full'>
