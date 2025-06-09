@@ -16,7 +16,9 @@
   --color-bg-secondary: #004483;
   --color-bg-gray-d: #ddd;
   --color-bg-gray-fa: #fafafa;
-
+  /* 이부분 추가 */
+  --color-bg-gray-100: #f3f4f6;
+  /* 이부분 추가 */
   --color-btn-dark-3: #333;
   --color-btn-gray-9: #999;
   --color-btn-gray-d: #ddd;

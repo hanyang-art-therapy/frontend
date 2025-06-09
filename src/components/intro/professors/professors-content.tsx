@@ -1,5 +1,5 @@
-import { getProfessors } from '@/apis/admin/professor';
-import type { ProfessorResponse } from '@/types/admin/professor';
+import { getProfessors } from '@/apis/admin/professors';
+import type { ProfessorResponse } from '@/types/admin/professors';
 import { useEffect, useState } from 'react';
 import ProfessorsCard from './professors-card';
 

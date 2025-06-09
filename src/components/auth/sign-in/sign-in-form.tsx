@@ -40,8 +40,9 @@ export default function SignInForm() {
     try {
       const response = await signIn({ userId: userId.trim(), password });
 
+
       if (response.role === 'ADMIN' || response.role === 'TESTER') {
-        navigate('/admin');
+        navigate('/admin/users');
       } else {
         navigate('/');
       }
