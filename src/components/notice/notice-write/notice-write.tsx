@@ -11,8 +11,17 @@ import { useSearchParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { NotepadText } from 'lucide-react';
 import NoticeNav from '../notice-nav.tsx/notice-nav';
-import NoticeEditor from './notice-editor';
+// import NoticeEditor from './notice-editor';
 import { CATEGORY_LIST } from '@/constants/notice/notice-category';
+import Toolbar from './toolbar';
+
+import { useEditor, EditorContent } from '@tiptap/react';
+
+import StarterKit from '@tiptap/starter-kit';
+import TextAlign from '@tiptap/extension-text-align';
+import TextStyle from '@tiptap/extension-text-style';
+import Color from '@tiptap/extension-color';
+import Highlight from '@tiptap/extension-highlight';
 
 const categoryList = CATEGORY_LIST;
 
@@ -23,6 +32,18 @@ export default function NoticeWrite() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      TextStyle,
+      Color,
+      Highlight.configure({
+        multicolor: true, // 여러 색상 가능하게
+      }),
+    ],
+    content: '<p style="text-align:left;">여기에 내용을 입력하세요</p>',
+  });
   const handleCategoryChange = (category: string) => {
     setSearchParams((prevSearchParams) => {
       if (category === 'all') {
@@ -47,7 +68,9 @@ export default function NoticeWrite() {
           <div className='p-2 rounded-[5px] text-white bg-secondary'>
             <NotepadText size={32} strokeWidth={2} />
           </div>
-          <strong className='p-2 ext-gray-6 t-b-24'>게시물 작성</strong>
+          <strong className='p-2 text-gray-600 text-lg font-bold'>
+            게시물 작성
+          </strong>
         </div>
         <div className='flex flex-col md:flex-row gap-4 mb-4 overflow-x-auto'>
           {/* 제목 */}
@@ -108,9 +131,12 @@ export default function NoticeWrite() {
             />
           </div>
         </div>
-
         {/* 에디터 */}
-        <NoticeEditor />
+        {/* <NoticeEditor /> */}
+        <div className='m-1 border-1 rounded-sm border-[#cacad6]'>
+          {editor && <Toolbar editor={editor} />}
+          <EditorContent editor={editor} className='p-[12px]' />
+        </div>
         <div className='flex justify-between mt-4'>
           <NoticeNav />
           <Button
