@@ -37,7 +37,7 @@ export default function ArtistSelectModal({
           {/* 작가 목록 */}
           <div className='max-h-[224px] divide-y divide-btn-gray-d overflow-y-auto'>
             {Array.isArray(artists) &&
-              artists.map((artist, i) => (
+              artists.map((artist, index) => (
                 <div
                   key={artist.artistNo}
                   onClick={() => {

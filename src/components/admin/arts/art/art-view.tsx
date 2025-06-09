@@ -1,52 +1,57 @@
-import AdminArtModal from '@/components/admin/arts/art-modal';
-import { handleApiError } from '@/components/common/error-handler';
-import { AdminArtResponse, PatchAdminArtRequest } from '@/types/admin/arts';
-import { getAdminArts, patchAdminArt, deleteAdminArt } from '@/apis/admin/arts';
 import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { AdminArtResponse, PatchAdminArtRequest } from '@/types/admin/arts';
+import { MessageResponse } from '@/types';
+import { getAdminArts, patchAdminArt, deleteAdminArt } from '@/apis/admin/arts';
+import AdminArtModal from '@/components/admin/arts/art/art-modal';
 
 export default function AdminArtView() {
-  const [artList, setArtList] = useState<AdminArtResponse[]>([]);
+  const [arts, setArts] = useState<AdminArtResponse[]>([]);
   const [selectedArt, setSelectedArt] = useState<AdminArtResponse | null>(null);
 
-  const fetchList = async () => {
-    try {
-      const res = await getAdminArts();
-      setArtList(res);
-    } catch (error) {
-      const errorMessage = handleApiError(error);
-      toast.error(errorMessage);
-    }
-  };
-
-  const handleEdit = async (form: PatchAdminArtRequest) => {
-    try {
-      if (!selectedArt) return;
-      await patchAdminArt(selectedArt.artsNo, form);
-      toast.success('작품 정보 수정이 완료되었습니다.');
-      await fetchList();
-      setSelectedArt(null);
-    } catch (error) {
-      const errorMessage = handleApiError(error);
-      toast.error(errorMessage);
-    }
-  };
-
-  const handleDelete = async (artsNo: number) => {
-    try {
-      await deleteAdminArt(artsNo);
-      toast.success('작품 정보 삭제가 완료되었습니다.');
-      await fetchList();
-      setSelectedArt(null);
-    } catch (error) {
-      const errorMessage = handleApiError(error);
-      toast.error(errorMessage);
-    }
-  };
-
   useEffect(() => {
-    fetchList();
+    getAdminArts().then(setArts);
   }, []);
+
+  const handleEdit = async (
+    form: PatchAdminArtRequest
+  ): Promise<MessageResponse> => {
+    const {
+      artsNo,
+      galleriesNo,
+      artName,
+      caption,
+      artType,
+      coDescription,
+      filesNo,
+      artists,
+    } = form;
+
+    const res = await patchAdminArt(artsNo, {
+      galleriesNo,
+      artName,
+      caption,
+      artType,
+      coDescription,
+      filesNo,
+      artists,
+    });
+
+    await getAdminArts().then((arts) => setArts(arts));
+    setSelectedArt(null);
+
+    return res;
+  };
+
+  const handleDelete = async (artsNo: number): Promise<MessageResponse> => {
+    const res = await deleteAdminArt(artsNo);
+
+    await getAdminArts().then((arts) => setArts(arts));
+    setSelectedArt(null);
+
+    return res;
+  };
+
+  const handleClose = () => setSelectedArt(null);
 
   return (
     <>
@@ -59,13 +64,13 @@ export default function AdminArtView() {
         </div>
 
         {/* 작품 목록 */}
-        {artList.map((art, i) => (
+        {arts.map((art, index) => (
           <div
             key={art.artsNo}
             onClick={() => setSelectedArt(art)}
             className='grid grid-cols-[1fr_3fr_3fr] leading-[44px] divide-x divide-btn-gray-d text-center t-r-14 cursor-pointer hover:bg-primary/10'
           >
-            <div className='px-[15px]'>{i + 1}</div>
+            <div className='px-[15px]'>{index + 1}</div>
             <div className='px-[15px]'>{art.artName || '-'}</div>
             <div className='px-[15px]'>
               {art.artists.length === 0
@@ -86,7 +91,7 @@ export default function AdminArtView() {
           art={selectedArt}
           onEdit={handleEdit}
           onDelete={handleDelete}
-          onClose={() => setSelectedArt(null)}
+          onClose={handleClose}
         />
       )}
     </>

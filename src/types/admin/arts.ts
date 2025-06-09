@@ -25,7 +25,7 @@ export type PostAdminArtRequest = Pick<
 > & {
   caption?: string;
   coDescription?: string | null;
-  artistList: {
+  artists: {
     artistNo: Artist['artistNo'];
     artistName: Artist['artistName'];
     description: ArtArtistRel['description'];
@@ -33,16 +33,16 @@ export type PostAdminArtRequest = Pick<
 };
 
 // [PATCH] 수정 요청
-export type PatchAdminArtRequest = {
-  artsNo: Arts['artsNo'];
-} & Partial<Omit<PostAdminArtRequest, 'artistList'>> & {
-    galleriesNo?: number;
-    artistList?: {
-      artistNo: Artist['artistNo'];
-      artistName: Artist['artistName'];
-      description: ArtArtistRel['description'];
-    }[];
-  };
+export type PatchAdminArtRequest = Pick<
+  Arts,
+  'artsNo' | 'galleriesNo' | 'artName' | 'caption' | 'artType' | 'coDescription'
+> & {
+  filesNo: number;
+  artists:
+    | (Pick<Artist, 'artistNo' | 'artistName'> &
+        Pick<ArtArtistRel, 'description'>)[]
+    | [];
+};
 
 // [DELETE] 삭제 요청
 export type DeleteAdminArtRequest = Pick<Arts, 'artsNo'>;

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import TabButton from '@/components/admin/tab-btn';
-import AdminArtView from '@/components/admin/arts/art-view';
-import AdminArtForm from '@/components/admin/arts/art-form';
+import AdminArtView from '@/components/admin/arts/art/art-view';
+import AdminArtForm from '@/components/admin/arts/art/art-form';
 
 export default function AdminArt() {
   const [selectedTab, setSelectedTab] = useState<'view' | 'form'>('view');
 
   return (
     <>
-      <div className='fixed w-full pt-[100px] bg-white'>
+      <div className='fixed z-5 w-full pt-[100px] bg-white'>
         <h2 className='t-b-24'>작품 관리</h2>
         <div className='flex space-x-[10px] mt-[10px]'>
           <TabButton
