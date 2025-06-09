@@ -16,13 +16,14 @@ import {
 } from '@/components/ui/select';
 import { PatchUserRequest, UserResponse } from '@/types/admin/users';
 import { User } from '@/types';
+import type { MessageResponse } from '@/types';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
 
 interface Props {
   user: UserResponse;
-  onEdit: (form: PatchUserRequest) => void;
+  onEdit: (form: PatchUserRequest) => Promise<MessageResponse>;
   onClose: () => void;
 }
 
@@ -96,8 +97,9 @@ export default function UserModal({ user, onEdit, onClose }: Props) {
         role: form.role as 'USER' | 'ARTIST' | 'ADMIN',
         userStatus: form.userStatus,
       };
-      await onEdit(submitForm);
-      toast.success('회원 수정이 완료되었습니다.');
+      const res = await onEdit(submitForm);
+      toast.success(res.message);
+
       onClose();
     } catch (error) {
       toast.error(handleApiError(error));

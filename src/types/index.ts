@@ -45,12 +45,12 @@ export type Gallery = {
 export type Arts = {
   artsNo: number; // 작품 번호
   galleriesNo: number; // 전시 번호
-  filesNo: number; // 파일 ID
   artName: string; // 작품명
   caption: string; // 캡션
   artType: 'SINGLE' | 'GROUP'; // 작품 타입
   coDescription: string | null; // 공동 작품 설명
   createdAt: string; // 업로드 일자 - TIMESTAMP
+  filesNo: number; // 파일 ID
 };
 
 // 파일

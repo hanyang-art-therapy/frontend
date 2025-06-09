@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { UserResponse, PatchUserRequest } from '@/types/admin/users';
+import { MessageResponse } from '@/types';
 import { getUsers, patchUser } from '@/apis/admin/users';
 import UserModal from '@/components/admin/users/user/user-modal';
 
@@ -11,10 +12,12 @@ export default function AdminUserPage() {
     getUsers().then((users) => setUsers(users));
   }, []);
 
-  const handleEdit = async (form: PatchUserRequest) => {
+  const handleEdit = async (
+    form: PatchUserRequest
+  ): Promise<MessageResponse> => {
     const { userNo, userId, userName, email, studentNo, role, userStatus } =
       form;
-    await patchUser(userNo, {
+    const res = await patchUser(userNo, {
       userId,
       userName,
       email,
@@ -24,6 +27,8 @@ export default function AdminUserPage() {
     });
     await getUsers().then((users) => setUsers(users));
     setSelectedUser(null);
+
+    return res;
   };
 
   const handleClose = () => setSelectedUser(null);
