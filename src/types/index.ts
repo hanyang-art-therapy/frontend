@@ -7,8 +7,8 @@ export type User = {
   password: string; // 비밀번호
   email: string; // 이메일
   userName: string; // 이름
-  studentNo: string; // 학번
-  role: string; // 회원 권한
+  studentNo: number; // 학번
+  role: 'USER' | 'ARTIST' | 'ADMIN'; // 회원 권한
   userStatus: string; // 회원 상태
 };
 
@@ -45,12 +45,12 @@ export type Gallery = {
 export type Arts = {
   artsNo: number; // 작품 번호
   galleriesNo: number; // 전시 번호
-  filesNo: number; // 파일 ID
   artName: string; // 작품명
   caption: string; // 캡션
   artType: 'SINGLE' | 'GROUP'; // 작품 타입
   coDescription: string | null; // 공동 작품 설명
   createdAt: string; // 업로드 일자 - TIMESTAMP
+  filesNo: number; // 파일 ID
 };
 
 // 파일
@@ -94,6 +94,7 @@ export type Notice = {
   viewCount: number; // 조회수
 };
 
+// 교수진
 export type Professor = {
   professorNo: number; // 교수 번호
   professorName: string; // 교수명
