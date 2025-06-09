@@ -4,6 +4,7 @@ import type {
   PostArtistRequest,
   PatchArtistRequest,
 } from '@/types/admin/artists';
+import type { MessageResponse } from '@/types';
 
 export const getArtists = async (): Promise<ArtistResponse[]> => {
   const res = await apiInstance.get('/admin/artists');
@@ -18,21 +19,21 @@ export const getArtist = async (artistNo: number): Promise<ArtistResponse> => {
 export const patchArtist = async (
   artistNo: number,
   data: Omit<PatchArtistRequest, 'artistNo'>
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.patch(`/admin/artists/${artistNo}`, data);
   return res.data;
 };
 
 export const deleteArtist = async (
   artistNo: number
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.delete(`/admin/artists/${artistNo}`);
   return res.data;
 };
 
 export const postArtist = async (
   data: PostArtistRequest
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.post('/admin/artists', data);
   return res.data;
 };

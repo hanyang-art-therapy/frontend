@@ -4,6 +4,7 @@ import type {
   PatchGalleryRequest,
   PostGalleryRequest,
 } from '@/types/admin/galleries';
+import { MessageResponse } from '@/types';
 
 export const getGalleries = async (): Promise<GalleriesResponse[]> => {
   const res = await apiInstance.get('/admin/galleries');
@@ -20,21 +21,21 @@ export const getGallery = async (
 export const patchGallery = async (
   galleriesNo: number,
   data: Omit<PatchGalleryRequest, 'galleriesNo'>
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.patch(`/admin/galleries/${galleriesNo}`, data);
   return res.data;
 };
 
 export const deleteGallery = async (
   galleriesNo: number
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.delete(`/admin/galleries/${galleriesNo}`);
   return res.data;
 };
 
 export const postGallery = async (
   data: PostGalleryRequest
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.post('/admin/galleries', data);
   return res.data;
 };
