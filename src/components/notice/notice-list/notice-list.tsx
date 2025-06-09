@@ -1,21 +1,40 @@
 import { useNavigate } from 'react-router-dom';
-import { NOTICE_MOCK_DATA } from '@/constants/notice/notice';
+
 import NoticeTable from './notice-table';
 import { Button } from '@/components/ui/button';
 import { FileText, Volume2 } from 'lucide-react';
 import { NoticeSearch } from '../notice-search/notice-search';
-import { Pagination, PaginationContent } from '@/components/ui/pagination';
+import { useEffect, useState } from 'react';
+import { getNotices } from '@/apis/notice/notice';
+import { Notice } from '@/types';
+import { GetNoticeResponse, GetNoticesResponse } from '@/types/notice/notice';
+import { number } from 'zod';
 
 export default function NoticeList() {
+  const [fetchedNotices, setFetchedNotices] =
+    useState<GetNoticesResponse | null>(null);
   const navigate = useNavigate();
+  const [pageNumber, setPageNumber] = useState(1);
 
   const handleWriteClick = () => {
     navigate('/notice/write');
   };
 
+  useEffect(() => {
+    const fetchNotices = async () => {
+      const response = await getNotices({
+        page: pageNumber,
+      });
+
+      setFetchedNotices(response);
+    };
+
+    fetchNotices();
+  }, []);
+
   return (
     <div className='min-h-screen-vh mt-[10px] md:mt-[30px] flex flex-col items-center justify-start'>
-      <div className='flex flex-col justify-start items-start w-full px-5 xl:px-0'>
+      <div className='flex flex-col justify-start items-start w-full xl:px-0'>
         <div className='flex justify-start items-center pb-[20px] gap-2 w-full'>
           <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center  items-center text-white bg-secondary'>
             <Volume2 size={30} strokeWidth={2} />
@@ -36,19 +55,12 @@ export default function NoticeList() {
           <strong className='flex justify-start items-center pb-[12px] gap-1 t-b-16'>
             <FileText size={16} strokeWidth={1.5} />총 10개의 게시물
           </strong>
-          <NoticeTable data={NOTICE_MOCK_DATA.content} />
-          <div className='flex w-full h-[50px] items-center pt-[22px] md:pt-[32px]'>
-            {/* 페이지네이션 */}
-            <div className='border-1 border-destructive h-[80px] flex-1 flex justify-center items-center t-b-16'>
-              <Pagination>
-                <PaginationContent />
-                페이지네이션
-              </Pagination>
-            </div>
+          <NoticeTable data={fetchedNotices} />
+          <div className='flex w-full justify-center items-center'>
             <Button
               type='button'
               onClick={handleWriteClick}
-              className='h-[30px] md:h-[40px] w-[80px] md:w-[120px]'
+              className='h-[30px] md:h-[40px] w-[80px]  md:w-[120px] mt-[30px]'
             >
               글쓰기
             </Button>

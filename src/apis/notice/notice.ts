@@ -10,7 +10,6 @@ import type {
 } from '@/types/notice/notice';
 
 // GET 공지사항 전체 조회
-// GET 공지사항 전체 조회
 export const getNotices = async ({
   page,
   keyword,
@@ -23,7 +22,6 @@ export const getNotices = async ({
 };
 
 // GET 공지사항 상세 조회
-// GET 공지사항 상세 조회
 export const getNotice = async ({
   noticeNo,
 }: GetNoticeRequest): Promise<GetNoticeResponse> => {
@@ -33,24 +31,28 @@ export const getNotice = async ({
 };
 
 // POST 공지사항 작성 /notices
-// POST 공지사항 작성 /notices
 export const postNotice = async ({
   title,
   content,
   category,
+  periodStart,
+  periodEnd,
+  isFixed,
   filesNo,
 }: PostNoticeRequest): Promise<GetNoticeResponse> => {
   const response = await apiInstance.post('/notices', {
     title,
     content,
     category,
+    periodStart,
+    periodEnd,
+    isFixed,
     filesNo,
   });
 
   return response.data;
 };
 
-// PATCH 공지사항 수정 /notices/:noticeNo
 // PATCH 공지사항 수정 /notices/:noticeNo
 export const updateNotice = async ({
   noticeNo,
@@ -69,7 +71,6 @@ export const updateNotice = async ({
   return response.data;
 };
 
-// DELETE 공지사항 삭제 /notices/:noticeNo
 // DELETE 공지사항 삭제 /notices/:noticeNo
 export const deleteNotice = async ({
   noticeNo,

@@ -86,12 +86,20 @@ export type ArtArtistRel = {
 export type Notice = {
   noticeNo: number; // 공지사항 번호
   userNo: number; // 회원 번호
-  filesNo: number; // 파일 번호
   title: string; // 제목
   content: string; // 내용
   createdAt: string; // 작성 일자
   category: string; // 카테고리
   viewCount: number; // 조회수
+  periodStart: string; // 시작 일자 - TimeStamp
+  periodEnd: string; // 종료 일자 - TimeStamp
+  isFixed: boolean; // 고정 여부
+};
+
+export type NoticeFiles = {
+  noticeFilesNo: number; // 공지사항 파일 번호
+  noticeNo: number; // 공지사항 번호
+  filesNo: number; // 파일 번호
 };
 
 // 교수진

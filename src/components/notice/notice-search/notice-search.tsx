@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -14,14 +15,53 @@ const categoryList = CATEGORY_LIST;
 export const NoticeSearch = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category') ?? 'all';
+
+  const getEgType = (category: string) => {
+    if (category === '일반') {
+      return 'GENERAL';
+    }
+    if (category === '실습') {
+      return 'PRACTICE';
+    }
+    if (category === '모집') {
+      return 'RECRUIT';
+    }
+    if (category === '전시') {
+      return 'EXHIBITION';
+    }
+
+    return 'ACADEMIC';
+  };
+
   const handleCategoryChange = async (category: string) => {
     setSearchParams((prevSearchParams) => {
+      const enCategory = getEgType(category);
+      console.log(prevSearchParams);
+
       if (category === 'all') prevSearchParams.delete('category');
-      else prevSearchParams.set('category', category);
+      else prevSearchParams.set('category', enCategory);
 
       return prevSearchParams;
     });
   };
+
+  const [searchValue, setSearchValue] = useState('');
+  const handleSearch = () => {
+    console.log('검색:', searchValue);
+    // 여기서 검색 결과 처리 로직 추가 가능
+    if (searchValue) {
+      setSearchParams((prev) => {
+        prev.set('keyword', searchValue);
+        return prev;
+      });
+    } else {
+      setSearchParams((prev) => {
+        prev.delete('keyword');
+        return prev;
+      });
+    }
+  };
+
   return (
     <div className='w-full text-center'>
       {/* 구분 선택 && 검색바 */}
@@ -47,7 +87,9 @@ export const NoticeSearch = () => {
         <div className='flex-1'>
           <Search
             placeholder='검색어를 입력하세요'
-            onSearch={(value) => console.log('검색:', value)}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            onSearch={handleSearch}
           />
         </div>
       </div>
