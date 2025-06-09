@@ -4,6 +4,7 @@ import type {
   PatchAdminArtRequest,
   AdminArtResponse,
 } from '@/types/admin/arts';
+import { MessageResponse } from '@/types';
 
 export const getAdminArts = async (): Promise<AdminArtResponse[]> => {
   const res = await apiInstance.get('/admin/arts');
@@ -19,22 +20,22 @@ export const getAdminArtByNo = async (
 
 export const patchAdminArt = async (
   artsNo: number,
-  data: PatchAdminArtRequest
-): Promise<AdminArtResponse> => {
+  data: Omit<PatchAdminArtRequest, 'artsNo'>
+): Promise<MessageResponse> => {
   const res = await apiInstance.patch(`/admin/arts/${artsNo}`, data);
   return res.data;
 };
 
 export const deleteAdminArt = async (
   artsNo: number
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.delete(`/admin/arts/${artsNo}`);
   return res.data;
 };
 
 export const postAdminArt = async (
   data: PostAdminArtRequest
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.post('/admin/arts', data);
   return res.data;
 };
