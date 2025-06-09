@@ -3,6 +3,7 @@ import {
   ProfessorResponse,
   PatchProfessorRequest,
 } from '@/types/admin/professors';
+import { MessageResponse } from '@/types';
 import {
   getProfessors,
   patchProfessor,
@@ -19,16 +20,42 @@ export default function ProfessorView() {
     getProfessors().then(setProfessors);
   }, []);
 
-  const handleEdit = async (form: PatchProfessorRequest) => {
-    await patchProfessor(form.professorNo, form);
-    await getProfessors().then(setProfessors);
+  const handleEdit = async (
+    form: PatchProfessorRequest
+  ): Promise<MessageResponse> => {
+    const {
+      professorNo,
+      professorName,
+      position,
+      major,
+      email,
+      tel,
+      files: { filesNo },
+    } = form;
+    const res = await patchProfessor(professorNo, {
+      professorName,
+      position,
+      major,
+      email,
+      tel,
+      files: { filesNo },
+    });
+
+    await getProfessors().then((professors) => setProfessors(professors));
     setSelectedProfessors(null);
+
+    return res;
   };
 
-  const handleDelete = async (professorNo: number) => {
-    await deleteProfessor(professorNo);
-    await getProfessors().then(setProfessors);
+  const handleDelete = async (
+    professorNo: number
+  ): Promise<MessageResponse> => {
+    const res = await deleteProfessor(professorNo);
+
+    await getProfessors().then((professors) => setProfessors(professors));
     setSelectedProfessors(null);
+
+    return res;
   };
 
   const handleClose = () => setSelectedProfessors(null);
