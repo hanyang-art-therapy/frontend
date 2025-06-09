@@ -8,8 +8,8 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import {
-  PatchProfessorRequest,
   ProfessorResponse,
+  PatchProfessorRequest,
 } from '@/types/admin/professors';
 import type { MessageResponse } from '@/types';
 import { FileUpload } from '@/apis/admin/files';
@@ -77,6 +77,13 @@ export default function ProfessorModal({
     const selected = e.target.files?.[0];
     if (!selected) return;
 
+    const maxSize = 5 * 1024 * 1024;
+    if (selected.size > maxSize) {
+      toast.error('파일의 용량이 5MB를 초과하였습니다.');
+      e.target.value = '';
+      return;
+    }
+
     setUploading(true);
     try {
       const formData = new FormData();
@@ -108,6 +115,16 @@ export default function ProfessorModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 유효성 검사
+    if (!form.professorName || !form.position) {
+      toast.error('이름, 소속 모두 입력해주세요.');
+      return;
+    }
+    if (form.professorName.length < 2 || form.professorName.length > 50) {
+      toast.error('이름은 2자 이상 50자 이하로 입력해주세요.');
+      return;
+    }
 
     try {
       const submitForm: PatchProfessorRequest = {
@@ -152,6 +169,7 @@ export default function ProfessorModal({
           <DialogTitle className='text-center'>PROFESSOR INFO</DialogTitle>
         </DialogHeader>
         <div className='flex gap-[15px]'>
+          {/* 이미지 업로드 */}
           <div className='flex flex-col items-center gap-[10px]'>
             <div className='w-[130px] aspect-[4/5] rounded border border-btn-gray-d overflow-hidden'>
               <img
@@ -181,6 +199,8 @@ export default function ProfessorModal({
               {uploading ? '업로드 중...' : '이미지 업로드'}
             </Button>
           </div>
+
+          {/* 정보 입력 필드 */}
           <div className='w-full border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
             {fields.map(({ id, label }) => (
               <FormField key={id} id={id} label={label}>

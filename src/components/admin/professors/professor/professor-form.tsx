@@ -70,8 +70,13 @@ export default function ProfessorForm({ onSuccess }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!form.professorName) {
-      toast.error('이름을 입력하세요.');
+    // 유효성 검사
+    if (!form.professorName || !form.position) {
+      toast.error('이름, 소속 모두 입력해주세요.');
+      return;
+    }
+    if (form.professorName.length < 2 || form.professorName.length > 50) {
+      toast.error('이름은 2자 이상 50자 이하로 입력해주세요.');
       return;
     }
 
