@@ -1,4 +1,3 @@
-import { supabase } from '@/lib/supabase';
 import type { SignInRequest, SignInResponse } from '@/types/auth/sign-in';
 import apiInstance from '@/lib/axios';
 
@@ -14,17 +13,4 @@ export const signIn = async ({
   });
 
   return response.data;
-};
-
-export const signInSupabase = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
-    throw new Error('아이디 또는 비밀번호가 일치하지 않습니다.');
-  }
-
-  return data;
 };

@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { EMAIL_DOMAIN_SELECT_OPTIONS } from '@/constants/common/common';
 
 type EmailDomainSelectProps = {
   value: string;
@@ -22,16 +23,22 @@ export default function EmailDomainSelect({
       onValueChange={onValueChange}
       value={value}
       disabled={disabled}
-      name='emailDomain'>
-      <SelectTrigger className='w-[200px] h-[45px] t-r-16'>
+      name='emailDomain'
+    >
+      <SelectTrigger className='w-[200px] h-[45px]'>
         <SelectValue className='h-[45px]' placeholder='선택하세요' />
       </SelectTrigger>
 
       <SelectContent>
-        <SelectItem value='hanyang.ac.kr'>hanyang.ac.kr</SelectItem>
-        <SelectItem value='naver.com'>naver.com</SelectItem>
-        <SelectItem value='gmail.com'>gmail.com</SelectItem>
-        <SelectItem value='custom'>직접 입력</SelectItem>
+        {EMAIL_DOMAIN_SELECT_OPTIONS.map((option) => (
+          <SelectItem key={option} value={option}>
+            {option}
+          </SelectItem>
+        ))}
+
+        <SelectItem key='custom' value='custom'>
+          직접 입력
+        </SelectItem>
       </SelectContent>
     </Select>
   );

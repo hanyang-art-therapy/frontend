@@ -55,7 +55,8 @@ export function AnimatedSection({
           delay,
         },
       }}
-      viewport={{ once: true, amount: 0.1 }}>
+      viewport={{ once: true, amount: 0.1 }}
+    >
       {children}
     </motion.section>
   );
@@ -90,7 +91,8 @@ export function StaggeredList({
       variants={customStaggerContainer}
       initial='hidden'
       whileInView='visible'
-      viewport={{ once: true, amount: 0.1 }}>
+      viewport={{ once: true, amount: 0.1 }}
+    >
       {Children.map(children, (child, index) => (
         <motion.li key={index} variants={staggerItem} className={itemClassName}>
           {child}
@@ -125,7 +127,8 @@ export function AnimatedCard({
           delay,
         },
       }}
-      viewport={{ once: true, amount: 0.2 }}>
+      viewport={{ once: true, amount: 0.2 }}
+    >
       {children}
     </motion.li>
   );

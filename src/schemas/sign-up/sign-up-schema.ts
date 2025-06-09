@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 const baseSchema = z.object({
+  userId: z.string().min(1, { message: '아이디를 입력해주세요' }),
   password: z
     .string()
     .min(10, { message: '비밀번호는 10자 이상이어야 합니다' })

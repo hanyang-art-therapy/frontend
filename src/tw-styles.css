@@ -219,8 +219,14 @@
     font-size: clamp(16px, calc(13.3247px + 0.3896vw), 18px);
     font-weight: 500;
   }
+
   .t-m-16 {
     font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+    font-weight: 500;
+  }
+
+  .t-m-14 {
+    font-size: clamp(12px, calc(10.8831px + 0.2597vw), 14px);
     font-weight: 500;
   }
 
@@ -228,14 +234,17 @@
     font-size: clamp(15px, calc(13.3247px + 0.3896vw), 18px);
     font-weight: 400;
   }
+
   .t-r-16 {
     font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
     font-weight: 400;
   }
+
   .t-r-14 {
     font-size: clamp(12px, calc(10.8831px + 0.2597vw), 14px);
     font-weight: 400;
   }
+
   .t-r-12 {
     font-size: clamp(10px, calc(8.8831px + 0.2597vw), 12px);
     font-weight: 400;
@@ -258,6 +267,27 @@
 
   .min-h-screen-vh {
     @apply min-h-[calc(100vh-450px)];
+  }
+
+  .sm\:t-b-16 {
+    @media (width >= 40rem /* 640px */) {
+      font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+      font-weight: 700;
+    }
+  }
+
+  .sm\:t-m-16 {
+    @media (width >= 40rem /* 640px */) {
+      font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+      font-weight: 500;
+    }
+  }
+
+  .sm\:t-r-16 {
+    @media (width >= 40rem /* 640px */) {
+      font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+      font-weight: 400;
+    }
   }
 }
 
@@ -568,7 +598,7 @@
     }
   }
 
-  .clinical-banner-bg {
+  .video-banner-bg {
     width: 100vw;
     object-fit: cover;
     height: clamp(300px, calc(88.33px + 25.97vw), 400px);
@@ -594,9 +624,14 @@
     font-weight: 500;
   }
 
+  .mobile-menu-btn {
+    @apply hover:opacity-70 cursor-pointer w-full xl:w-auto flex flex-col items-center gap-2;
+  }
+
   .appear-section {
     @apply opacity-0 max-h-0 pointer-events-none transition-all duration-500 ease-in-out;
   }
+
   .appear-section--visible {
     @apply opacity-100 max-h-[500px] pointer-events-auto;
   }

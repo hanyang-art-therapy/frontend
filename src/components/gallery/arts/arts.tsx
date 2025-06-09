@@ -61,7 +61,7 @@ export default function Arts() {
       ) : !arts.length ? (
         <ArtsNoResult />
       ) : (
-        <ul className='grid-cols-1 grid sm:grid-cols-2 lg:grid-cols-3 md:w-full gap-[10vw] sm:gap-[4vw] pt-[68px]'>
+        <ul className='grid-cols-1 grid sm:grid-cols-2 lg:grid-cols-3 md:w-full gap-[10vw] sm:gap-[2.5vw] pt-[68px]'>
           {arts.map((art) => (
             <ArtsList key={art.artsNo} art={art} />
           ))}

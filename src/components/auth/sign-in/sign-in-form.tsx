@@ -3,9 +3,10 @@ import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
+import ShowPassword from '@/components/ui/show-password';
 import ToolTip from '@/components/ui/tooltip';
 import { useAuthStore } from '@/store/auth';
-import { Eye, EyeOff, LoaderCircle } from 'lucide-react';
+import { LoaderCircle } from 'lucide-react';
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -13,7 +14,7 @@ import { toast } from 'sonner';
 export default function SignInForm() {
   const navigate = useNavigate();
 
-  const { setAccessToken } = useAuthStore();
+  const { setAccessToken, setRole } = useAuthStore();
 
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState('');
@@ -39,13 +40,15 @@ export default function SignInForm() {
     try {
       const response = await signIn({ userId: userId.trim(), password });
 
-      if (response.role === 'ADMIN') {
+
+      if (response.role === 'ADMIN' || response.role === 'TESTER') {
         navigate('/admin/users');
       } else {
         navigate('/');
       }
 
       setAccessToken(response.accessToken);
+      setRole(response.role);
 
       if (isUserIdRemember) {
         localStorage.setItem('userId', userId);
@@ -53,7 +56,6 @@ export default function SignInForm() {
         localStorage.removeItem('userId');
       }
     } catch (error) {
-      console.log(error);
       const errorMessage = handleApiError(error);
       toast.error(errorMessage);
     } finally {
@@ -94,16 +96,10 @@ export default function SignInForm() {
           onBlur={() => setIsPwInputFocused(false)}
         />
 
-        <Button
-          type='button'
-          size='icon'
-          variant='ghost'
-          onClick={() => setShowPassword((prev) => !prev)}
-          className='absolute right-2 top-1/2 -translate-y-1/2'
-          tabIndex={-1}
-        >
-          {showPassword ? <EyeOff color='#333' /> : <Eye color='#333' />}
-        </Button>
+        <ShowPassword
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+        />
 
         {isPwInputFocused && password.length > 0 && (
           <ToolTip content='영문 대소문자, 숫자, 특수문자(~!@#$%^&*)를 조합하여 10자 이상' />
@@ -130,12 +126,13 @@ export default function SignInForm() {
             >
               회원가입
             </Link>
-            {/* <span className='t-r-14'>|</span>
+            <span className='t-r-14'>|</span>
             <Link
               to='/find-my'
-              className='t-r-14 pl-[10px] hover:underline cursor-pointer'>
+              className='t-r-14 pl-[10px] hover:underline cursor-pointer'
+            >
               아이디 / 비밀번호 찾기
-            </Link> */}
+            </Link>
           </div>
         </div>
       </div>

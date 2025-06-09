@@ -1,52 +1,30 @@
-import { supabase } from '@/lib/supabase';
+import apiInstance from '@/lib/axios';
+import type { MessageResponse } from '@/types';
 import type {
   CheckEmailRequest,
   CheckStudentNoRequest,
   CheckUserIdRequest,
   SignUpRequest,
 } from '@/types/auth/sign-up';
-import type { MessageResponse } from '@/types';
-import apiInstance from '@/lib/axios';
 
 // POST 회원가입 /user/sign-up
 // POST 회원가입 /user/sign-up
 export const signUp = async ({
+  userId,
   password,
   userName,
   email,
   studentNo,
 }: SignUpRequest): Promise<MessageResponse> => {
   const response = await apiInstance.post('/user/sign-up', {
-    params: { password, userName, email, studentNo },
+    userId,
+    password,
+    userName,
+    email,
+    studentNo,
   });
 
   return response.data;
-};
-
-export const signUpSupabase = async ({
-  password,
-  userName,
-  email,
-  studentNo,
-}: SignUpRequest) => {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-  });
-
-  if (error) {
-    throw new Error('회원가입에 실패했습니다. 다시 시도해주세요');
-  }
-
-  if (data) {
-    await supabase.from('users').insert({
-      userNo: data.user?.id,
-      password,
-      email,
-      userName,
-      studentNo,
-    });
-  }
 };
 
 // GET 아이디 중복검사 /user/check-id

@@ -1,6 +1,7 @@
-import { signUpSupabase } from '@/apis/auth/sign-up';
+import { signUp } from '@/apis/auth/sign-up';
 import {
   EmailSection,
+  UserIdSection,
   PwSection,
   StudentNoSection,
   UserNameSection,
@@ -33,6 +34,7 @@ export default function SignUpForm({
   const [userType, setUserType] = useState<UserType>('member');
   const [isStudentNoValid, setIsStudentNoValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isUserIdValid, setIsUserIdValid] = useState(false);
 
   const {
     register,
@@ -57,7 +59,8 @@ export default function SignUpForm({
     setIsLoading(true);
 
     try {
-      await signUpSupabase({
+      await signUp({
+        userId: data.userId,
         password: data.password,
         userName: data.userName,
         email,
@@ -88,12 +91,14 @@ export default function SignUpForm({
     isLoading ||
     !isValid ||
     (userType === 'member' && !isStudentNoValid) ||
-    !isEmailValid;
+    !isEmailValid ||
+    !isUserIdValid;
 
   const { emailValid, passwordValid, confirmPasswordValid, studentNoValid } =
     getValidationStates({
       watch,
       errors,
+      isUserIdValid,
       isEmailValid,
       isStudentNoValid,
       userType,
@@ -103,17 +108,27 @@ export default function SignUpForm({
     <form onSubmit={handleSubmit(onSubmit)}>
       <UserTypeSection userType={userType} setUserType={setUserType} />
 
-      <EmailSection
-        isEmailValid={isEmailValid}
-        selectedDomain={selectedDomain}
-        errors={errors}
+      <UserIdSection
         register={register}
         watch={watch}
-        setValue={setValue}
+        errors={errors}
         setError={setError}
-        setIsEmailValid={setIsEmailValid}
-        setSelectedDomain={setSelectedDomain}
+        setIsUserIdValid={setIsUserIdValid}
       />
+
+      <AppearContainer show={isUserIdValid}>
+        <EmailSection
+          isEmailValid={isEmailValid}
+          selectedDomain={selectedDomain}
+          errors={errors}
+          register={register}
+          watch={watch}
+          setValue={setValue}
+          setError={setError}
+          setIsEmailValid={setIsEmailValid}
+          setSelectedDomain={setSelectedDomain}
+        />
+      </AppearContainer>
 
       <AppearContainer show={emailValid}>
         <PwSection
@@ -130,7 +145,8 @@ export default function SignUpForm({
           passwordValid &&
           confirmPasswordValid &&
           userType === 'member'
-        }>
+        }
+      >
         <StudentNoSection
           register={register}
           watch={watch}
@@ -149,7 +165,8 @@ export default function SignUpForm({
           type='submit'
           aria-label='가입하기'
           className='w-full md:w-[200px] h-[50px]'
-          disabled={isButtonDisabled}>
+          disabled={isButtonDisabled}
+        >
           가입하기
           {isLoading && <LoaderCircle className='w-6 h-6 ml-2 animate-spin' />}
         </Button>

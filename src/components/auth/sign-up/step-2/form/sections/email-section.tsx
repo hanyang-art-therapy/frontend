@@ -74,7 +74,7 @@ export default function EmailSection({
   };
 
   // 인증 메일 발송 핸들러
-  const handleSendVerifyCodeClick = async (
+  const handleSendVerificationClick = async (
     e: MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
@@ -158,7 +158,8 @@ export default function EmailSection({
         <label
           aria-label='이메일'
           htmlFor='email'
-          className='t-b-16 flex items-center'>
+          className='t-b-16 flex items-center'
+        >
           이메일 <Required />
         </label>
 
@@ -205,8 +206,9 @@ export default function EmailSection({
               size='sm'
               className='h-[45px] mt-auto t-r-14'
               aria-label='이메일 인증하기'
-              onClick={handleSendVerifyCodeClick}
-              disabled={showVerification}>
+              onClick={handleSendVerificationClick}
+              disabled={showVerification}
+            >
               인증 메일 발송
             </Button>
           </div>
@@ -224,7 +226,8 @@ export default function EmailSection({
           <label
             aria-label='인증번호 입력'
             htmlFor='verificationCode'
-            className='t-b-16 flex items-center'>
+            className='t-b-16 flex items-center'
+          >
             인증번호 입력 <Required />
           </label>
 
@@ -245,13 +248,15 @@ export default function EmailSection({
                   className={cn(
                     'absolute w-fit md:left-64  right-3 top-1/2 -translate-y-1/2 ',
                     isEmailValid && 'md:left-66'
-                  )}>
+                  )}
+                >
                   {isEmailValid ? (
                     <Check className='text-success' />
                   ) : (
                     <span
                       className='t-r-14 text-center text-primary'
-                      aria-label='남은 시간'>
+                      aria-label='남은 시간'
+                    >
                       {formatTimeLeft(timer)}
                     </span>
                   )}
@@ -265,7 +270,8 @@ export default function EmailSection({
                   aria-label='인증하기'
                   className='h-[45px] px-4 t-r-14'
                   onClick={handleVerificationButtonClick}
-                  disabled={!isTimerActive}>
+                  disabled={!isTimerActive}
+                >
                   인증
                 </Button>
 
@@ -276,7 +282,8 @@ export default function EmailSection({
                   aria-label='메일 재전송'
                   className='h-[45px] px-4 t-r-14 text-black'
                   onClick={handleResendVerifyCodeClick}
-                  disabled={isResend || isVerificationCodeValid}>
+                  disabled={isResend || isVerificationCodeValid}
+                >
                   재전송
                 </Button>
               </div>

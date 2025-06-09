@@ -1,12 +1,10 @@
+import ScrollToTopButton from '@/components/common/scroll-to-top';
+import Footer from '@/components/footer/footer';
 import Header from '@/components/header/header';
 import Nav from '@/components/nav/nav';
-import Footer from '@/components/footer/footer';
-import ScrollToTopButton from '@/components/common/scroll-to-top';
-import { Outlet, useLoaderData } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 export default function RootLayout() {
-  useLoaderData();
-
   return (
     <div className='relative'>
       <Header />

@@ -7,7 +7,7 @@ export default function Clinical() {
   const navigate = useNavigate();
 
   return (
-    <div className='md:max-w-[1260px] mx-auto mt-[10vw] sm:mt-[4vw]  xl:px-0 px-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[10vw] sm:gap-[4vw]'>
+    <div className='md:max-w-[1260px] mx-auto mt-[10vw] sm:mt-[4vw] xl:px-0 px-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[10vw] sm:gap-[4vw]'>
       {CLINICAL_ACTIVITIES.map((activity) => {
         const IconComponent = activity.icon;
 

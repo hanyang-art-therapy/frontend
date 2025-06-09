@@ -38,3 +38,43 @@ export const formatTimeLeft = (seconds: number) => {
 export const getIsArtTypeSingle = (artType: 'SINGLE' | 'GROUP') => {
   return artType === 'SINGLE';
 };
+
+/**
+ * 페이지 번호 배열 생성
+ * @param currentPage - 현재 페이지
+ * @param totalPages - 총 페이지 수
+ * @param showPages - 현재 페이지 주변에 보여줄 페이지 수
+ * @returns 페이지 번호 배열
+ */
+export const getPageNumbers = (
+  currentPage: number,
+  totalPages: number,
+  showPages: number
+) => {
+  if (totalPages <= 1) return [1];
+
+  // 페이지 번호 배열
+  const pages: (number | 'ellipsis')[] = [];
+  const start = Math.max(1, currentPage - showPages);
+  const end = Math.min(totalPages, currentPage + showPages);
+
+  // 첫 페이지 추가
+  if (start > 1) {
+    pages.push(1);
+    if (start > 2) pages.push('ellipsis');
+  }
+
+  // 현재 페이지 주변 페이지들 추가
+  for (let i = start; i <= end; i += 1) {
+    pages.push(i);
+  }
+
+  // 마지막 페이지 추가
+  if (end < totalPages) {
+    if (end < totalPages - 1) pages.push('ellipsis');
+
+    pages.push(totalPages);
+  }
+
+  return pages;
+};

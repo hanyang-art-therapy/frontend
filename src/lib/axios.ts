@@ -21,6 +21,42 @@ apiInstance.interceptors.response.use(
   (res) => res,
   async (error) => {
     const originalRequest = error.config;
+    const token = useAuthStore.getState().accessToken;
+
+    const isUserEndpoint = originalRequest.url?.includes('/user/');
+
+    if (!token && !isUserEndpoint) {
+      originalRequest._retry = true;
+
+      try {
+        const refreshResponse = await axios.post(
+          '/user/refresh',
+          {},
+          {
+            baseURL: apiInstance.defaults.baseURL,
+            withCredentials: true,
+            timeout: 10000,
+          }
+        );
+
+        const newToken = refreshResponse.data.accessToken;
+
+        useAuthStore.getState().setAccessToken(newToken);
+
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+
+        return apiInstance(originalRequest);
+      } catch (refreshError) {
+        if (
+          axios.isAxiosError(refreshError) &&
+          refreshError.response?.status === 403
+        ) {
+          useAuthStore.getState().reset();
+        }
+
+        return Promise.reject(refreshError);
+      }
+    }
 
     // 401 응답 (액세스 토큰 만료 시)
     if (error.response?.status === 401 && !originalRequest._retry) {
@@ -55,13 +91,9 @@ apiInstance.interceptors.response.use(
         ) {
           // 토큰 제거
           useAuthStore.getState().reset();
-
-          // 로그인 페이지로 리다이렉트
-          window.location.href = '/sign-in';
         }
 
         useAuthStore.getState().reset();
-        window.location.href = '/sign-in';
       }
     }
 

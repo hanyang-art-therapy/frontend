@@ -13,7 +13,8 @@ export const findMyId = async ({
   userName,
 }: FindIdRequest): Promise<MessageResponse> => {
   const response = await apiInstance.post('/user/find-id', {
-    params: { email, userName },
+    email,
+    userName,
   });
 
   return response.data;
@@ -26,7 +27,8 @@ export const findMyPassword = async ({
   email,
 }: FindPasswordRequest): Promise<MessageResponse> => {
   const response = await apiInstance.post('/user/find-password', {
-    params: { userId, email },
+    userId,
+    email,
   });
 
   return response.data;

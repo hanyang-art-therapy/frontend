@@ -1,3 +1,5 @@
+import { postResetPassword } from '@/apis/my-page/profile';
+import { handleApiError } from '@/components/common/error-handler';
 import PwField from '@/components/my-page/reset-pw/pw-field';
 import ResetPwDialog from '@/components/my-page/reset-pw/reset-pw-dialog';
 import { Button } from '@/components/ui/button';
@@ -6,11 +8,19 @@ import {
   type ResetPwFormData,
 } from '@/schemas/my-page/reset-pw';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { LoaderCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export default function ResetPw() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [searchParams] = useSearchParams();
+
+  const userId = searchParams.get('userId');
 
   const {
     register,
@@ -18,19 +28,34 @@ export default function ResetPw() {
     formState: { errors, isValid },
   } = useForm<ResetPwFormData>({
     resolver: zodResolver(resetPwFormSchema),
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
-  const onSubmit = () => {
+  const onSubmit = async (data: ResetPwFormData) => {
     if (isValid) {
-      setIsDialogOpen(true);
+      try {
+        setIsLoading(true);
+
+        await postResetPassword({
+          userId: userId || '',
+          currentPassword: data.currentPassword,
+          newPassword: data.newPassword,
+        });
+
+        setIsDialogOpen(true);
+      } catch (error) {
+        const errorMessage = handleApiError(error);
+        toast.error(errorMessage);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
   return (
-    <div className='min-h-screen-vh mt-[60px] md:px-0 px-5'>
-      <div className='md:max-w-[1080px] mx-auto pt-[60px]'>
-        <span className='block mb-[40px] space-y-2 t-r-14'>
+    <section>
+      <div className='space-y-[30px]'>
+        <span className='block space-y-2 t-r-14 pt-15'>
           <h1 className='t-b-24'>비밀번호 변경</h1>
           <p>
             *10자 이상의 영문 대소문자, 숫자, 특수문자를 조합하여 사용할 수
@@ -40,9 +65,10 @@ export default function ResetPw() {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className='rounded-[5px] overflow-hidden'>
-          <div className='rounded-[5px] overflow-hidden border border-bg-gray-d bg-bg-gray-fa'>
-            <table className='w-full '>
+          className='rounded-[5px] overflow-hidden'
+        >
+          <div className='rounded-[5px] box-shadow-style overflow-hidden border border-bg-gray-d bg-bg-gray-fa'>
+            <table className='w-full'>
               <tbody>
                 <PwField
                   id='current-password'
@@ -75,8 +101,10 @@ export default function ResetPw() {
             <Button
               type='submit'
               className='md:w-[300px] w-full mx-auto'
-              disabled={!isValid}>
+              disabled={!isValid || isLoading}
+            >
               비밀번호 변경
+              {isLoading && <LoaderCircle className='w-4 h-4 animate-spin' />}
             </Button>
           </div>
         </form>
@@ -86,6 +114,6 @@ export default function ResetPw() {
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}
       />
-    </div>
+    </section>
   );
 }

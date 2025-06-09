@@ -1,3 +1,5 @@
+import Scholarship from '@/components/enroll/scholarship';
+
 export default function EnrollScholarshipPage() {
-  return <div>EnrollS</div>;
+  return <Scholarship />;
 }
