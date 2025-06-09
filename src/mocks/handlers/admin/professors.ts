@@ -1,131 +1,58 @@
 import { http, HttpResponse } from 'msw';
-import type {
-  PatchProfessorRequest,
-  ProfessorResponse,
-} from '@/types/admin/professors';
+import { ADMIN_PROFESSORS_MOCK_DATA } from '@/constants/admin/professors';
+import type { PatchProfessorRequest } from '@/types/admin/professors';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-// 기본 더미 3명 포함
-const professors: ProfessorResponse[] = [
-  {
-    professorNo: 0,
-    professorName: '김은진',
-    position: '교수(학과주임)',
-    major: '미술치료전공',
-    email: 'eunjin49@hanyang.ac.kr',
-    tel: '031-400-5107',
-    files: {
-      filesNo: 0,
-      url: '/images/intro/professors/professors-01.webp',
-    },
-  },
-  {
-    professorNo: 1,
-    professorName: '옥금자',
-    position: '자문위원',
-    major: null,
-    email: null,
-    tel: null,
-    files: {
-      filesNo: 1,
-      url: '/images/intro/professors/professors-02.webp',
-    },
-  },
-  {
-    professorNo: 2,
-    professorName: '김현미',
-    position: '교수',
-    major: '미술치료전공',
-    email: 'studio505@hanyang.ac.kr',
-    tel: null,
-    files: {
-      filesNo: 2,
-      url: '/images/intro/professors/professors-03.webp',
-    },
-  },
-];
-
-const uploadedFiles = new Map<number, string>();
-let nextFilesNo = 3;
+let professors = [...ADMIN_PROFESSORS_MOCK_DATA];
 
 export const adminProfessorHandlers = [
-  // [POST] 교수진 등록
-  http.post(`${API_URL}/admin/professors`, async ({ request }) => {
-    const formData = await request.formData();
-    const file = formData.get('file') as File;
-
-    if (!file || typeof file === 'string') {
-      return HttpResponse.json(
-        { message: '파일 업로드 실패' },
-        { status: 400 }
-      );
-    }
-
-    const professorName = formData.get('professorName')?.toString() ?? '';
-    const position = formData.get('position')?.toString() ?? '';
-    const major = formData.get('major')?.toString() ?? '';
-    const email = formData.get('email')?.toString() ?? '';
-    const tel = formData.get('tel')?.toString() ?? '';
-
-    const filesNo = nextFilesNo++;
-    const filename = encodeURIComponent(file.name);
-    const url = `http://localhost:5173/images/example/${filename}`;
-
-    uploadedFiles.set(filesNo, url);
-
-    return HttpResponse.json({
-      filesNo,
-      url,
-      message: '파일 업로드 성공',
-      professorInfo: {
-        professorName,
-        position,
-        major,
-        email,
-        tel,
-      },
-    });
-  }),
-
-  // [GET] 교수 목록 조회
+  // [GET] 교수 전체 조회
   http.get(`${API_URL}/admin/professors`, async () => {
     return HttpResponse.json(professors);
   }),
 
-  // [GET] 교수 상세 조회
-  http.get(`${API_URL}/admin/professors/:professorNo`, async ({ params }) => {
-    const professor = professors.find(
-      (p) => p.professorNo === Number(params.professorNo)
-    );
-    return HttpResponse.json(professor ?? {});
-  }),
-
-  // [PATCH] 교수 수정
+  // [PATCH] 교수 정보 수정
   http.patch(
     `${API_URL}/admin/professors/:professorNo`,
     async ({ request, params }) => {
-      const updated = (await request.json()) as PatchProfessorRequest;
-
-      const index = professors.findIndex(
-        (prof) => prof.professorNo === Number(params.professorNo)
+      const { professorNo } = params;
+      const patch = (await request.json()) as PatchProfessorRequest;
+      const idx = professors.findIndex(
+        (a) => a.professorNo === Number(professorNo)
       );
 
-      if (index !== -1) {
-        const newUrl =
-          uploadedFiles.get(updated.filesNo) ?? professors[index].files.url;
-
-        professors[index] = {
-          ...professors[index],
-          ...updated,
-          files: {
-            filesNo: updated.filesNo,
-            url: newUrl,
-          },
-        };
+      if (idx === -1) {
+        return HttpResponse.json(
+          { message: '해당 교수진이 존재하지 않습니다.' },
+          { status: 404 }
+        );
       }
 
-      return HttpResponse.json(professors[index]);
+      const filesNo = patch.files?.filesNo ?? professors[idx].files.filesNo;
+      let url = professors[idx].files.url;
+      if (typeof filesNo === 'number') {
+        const found = professors.find((p) => p.files.filesNo === filesNo);
+        url = found?.files.url ?? url;
+      }
+
+      professors[idx] = {
+        ...professors[idx],
+        ...patch,
+        position: patch.position ?? professors[idx].position ?? '',
+        major: patch.major ?? professors[idx].major ?? '',
+        email: patch.email ?? professors[idx].email ?? '',
+        tel: patch.tel ?? professors[idx].tel ?? '',
+        files: {
+          filesNo,
+          url,
+        },
+      };
+
+      return HttpResponse.json(
+        { message: '교수진 수정이 완료되었습니다.' },
+        { status: 200 }
+      );
     }
   ),
 
@@ -133,11 +60,64 @@ export const adminProfessorHandlers = [
   http.delete(
     `${API_URL}/admin/professors/:professorNo`,
     async ({ params }) => {
-      const index = professors.findIndex(
-        (p) => p.professorNo === Number(params.professorNo)
+      const { professorNo } = params;
+      const idx = professors.findIndex(
+        (a) => a.professorNo === Number(professorNo)
       );
-      if (index !== -1) professors.splice(index, 1);
-      return HttpResponse.json({ message: '삭제 성공' });
+
+      if (idx === -1) {
+        return HttpResponse.json(
+          { message: '해당 교수진이 존재하지 않습니다.' },
+          { status: 404 }
+        );
+      }
+
+      professors.splice(idx, 1);
+
+      return HttpResponse.json({
+        status: 200,
+        message: '교수진 삭제가 완료되었습니다.',
+      });
+    }
+  ),
+
+  // [POST] 교수 등록
+  http.post(
+    `${API_URL}/admin/professors`,
+    async ({ request }: { request: Request }) => {
+      const { professorName, position, major, email, tel, filesNo } =
+        await request.json();
+
+      const professorNo =
+        professors.length > 0
+          ? Math.max(...professors.map((a) => a.professorNo)) + 1
+          : 1;
+
+      let url = '/images/no-image.jpg';
+      if (typeof filesNo === 'number') {
+        const found = professors.find((p) => p.files.filesNo === filesNo);
+        url = found?.files.url ?? '/images/no-image.jpg';
+      }
+
+      const newProfessor = {
+        professorNo,
+        professorName,
+        position,
+        major,
+        email,
+        tel,
+        files: {
+          filesNo,
+          url,
+        },
+      };
+
+      professors.push(newProfessor);
+
+      return HttpResponse.json({
+        status: 200,
+        message: '교수진 등록이 완료되었습니다.',
+      });
     }
   ),
 ];

@@ -4,6 +4,7 @@ import type {
   PatchProfessorRequest,
   PostProfessorRequest,
 } from '@/types/admin/professors';
+import { MessageResponse } from '@/types';
 
 export const getProfessors = async (): Promise<ProfessorResponse[]> => {
   const res = await apiInstance.get('/admin/professors');
@@ -20,21 +21,21 @@ export const getProfessor = async (
 export const patchProfessor = async (
   professorNo: number,
   data: Omit<PatchProfessorRequest, 'professorNo'>
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.patch(`/admin/professors/${professorNo}`, data);
   return res.data;
 };
 
 export const deleteProfessor = async (
   professorNo: number
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.delete(`/admin/professors/${professorNo}`);
   return res.data;
 };
 
 export const postProfessor = async (
   data: PostProfessorRequest
-): Promise<{ message: string }> => {
+): Promise<MessageResponse> => {
   const res = await apiInstance.post('/admin/professors', data);
   return res.data;
 };

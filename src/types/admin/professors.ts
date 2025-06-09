@@ -6,8 +6,8 @@ export type ProfessorResponse = Pick<
   'professorNo' | 'professorName' | 'position' | 'major' | 'email' | 'tel'
 > & {
   files: {
-    filesNo: number;
-    url: string;
+    filesNo: number | null;
+    url: string | null;
   };
 };
 
@@ -16,18 +16,17 @@ export type PatchProfessorRequest = Pick<
   Professor,
   'professorNo' | 'professorName' | 'position' | 'major' | 'email' | 'tel'
 > & {
-  filesNo: number;
+  files: {
+    filesNo: number | null;
+  };
 };
-
-// [DELETE] 삭제 요청
-export type DeleteProfessorRequest = Pick<Professor, 'professorNo'>;
 
 // [POST] 등록 요청
 export type PostProfessorRequest = Pick<
   Professor,
-  'professorNo' | 'professorName' | 'position' | 'major' | 'email' | 'tel'
+  'professorName' | 'position' | 'major' | 'email' | 'tel'
 > & {
   files: {
-    url: string;
+    filesNo: number | null;
   };
 };

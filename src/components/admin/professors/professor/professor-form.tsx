@@ -1,14 +1,98 @@
-import { useRef, useState } from 'react';
-import { Button } from '@/components/ui/button';
 import FormField from '@/components/admin/form-field';
-import axios from 'axios';
+import { Button } from '@/components/ui/button';
+import { FileUpload } from '@/apis/admin/files';
+import { postProfessor } from '@/apis/admin/professors';
+import { PostProfessorRequest } from '@/types/admin/professors';
+import { useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { handleApiError } from '@/components/common/error-handler';
+import { MessageResponse } from '@/types';
 
-export default function ProfessorForm({
-  onRegister,
-}: {
-  onRegister?: (form: any) => void;
-}) {
+interface Props {
+  onSuccess: (form: PostProfessorRequest) => Promise<MessageResponse>;
+}
+
+export default function ProfessorForm({ onSuccess }: Props) {
+  const [form, setForm] = useState<PostProfessorRequest>({
+    professorName: '',
+    position: '',
+    major: '',
+    email: '',
+    tel: '',
+    files: { filesNo: 0 },
+  });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageUpload = () => {
+    if (fileInputRef.current) fileInputRef.current.value = '';
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const { filesNo } = await FileUpload(formData);
+
+      setForm((prev) => ({
+        ...prev,
+        files: {
+          filesNo,
+        },
+      }));
+      setPreviewUrl(URL.createObjectURL(file));
+      toast.success('이미지 업로드 성공');
+    } catch (e) {
+      toast.error('이미지 업로드 실패');
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value.trim(),
+      files: { filesNo: 0 },
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!form.professorName) {
+      toast.error('이름을 입력하세요.');
+      return;
+    }
+
+    try {
+      const res = await postProfessor(form);
+      toast.success(res.message);
+      setForm({
+        professorName: '',
+        position: '',
+        major: '',
+        email: '',
+        tel: '',
+        files: { filesNo: 0 },
+      });
+      setPreviewUrl('');
+      onSuccess?.(form);
+    } catch (error) {
+      toast.error(handleApiError(error));
+    }
+  };
+
   const fields = [
     { id: 'professorName', label: '이름', placeholder: '홍길동' },
     { id: 'position', label: '소속', placeholder: '교수' },
@@ -17,83 +101,14 @@ export default function ProfessorForm({
     { id: 'tel', label: '연락처', placeholder: '010-0000-0000' },
   ];
 
-  const [form, setForm] = useState({
-    professorName: '',
-    position: '',
-    major: '',
-    email: '',
-    tel: '',
-    filesNo: 0,
-    url: '',
-  });
-
-  const [previewUrl, setPreviewUrl] = useState<string>('');
-  const [file, setFile] = useState<File | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
-  };
-
-  const handlePickFile = () => {
-    inputRef.current?.value && (inputRef.current.value = '');
-    inputRef.current?.click();
-  };
-
-  const handleUploadImage = async () => {
-    if (!file) {
-      toast.error('이미지 파일을 선택해주세요.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/files/upload`,
-        formData
-      );
-      const { filesNo, url } = res.data;
-      setForm((prev) => ({ ...prev, filesNo, url }));
-      setPreviewUrl(url);
-      toast.success('이미지 업로드 성공');
-    } catch (e) {
-      toast.error('이미지 업로드 실패');
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleRegister = () => {
-    if (!form.professorName) {
-      toast.error('이름을 입력하세요.');
-      return;
-    }
-    if (!form.filesNo) {
-      toast.error('이미지를 업로드하세요.');
-      return;
-    }
-
-    onRegister?.(form);
-    toast.success('교수진 등록 완료');
-  };
-
   return (
-    <div className='flex flex-col gap-[30px]'>
+    <form className='flex flex-col gap-[30px]' onSubmit={handleSubmit}>
       <div className='flex gap-[30px] items-start'>
-        {/* 이미지 업로드 */}
+        {/* 이미지 미리보기 (미리보기만, 클릭X, 포인터X, hoverX) */}
         <div className='flex flex-col items-center gap-[15px]'>
-          <label
-            htmlFor='file-upload'
-            className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded cursor-pointer hover:opacity-70 flex items-center justify-center overflow-hidden'
-            onClick={handlePickFile}
+          <div
+            className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'
+            style={{ cursor: 'default' }}
           >
             {previewUrl ? (
               <img
@@ -105,28 +120,26 @@ export default function ProfessorForm({
             ) : (
               <span className='t-r-14 text-gray-6'>NO IMAGE</span>
             )}
-          </label>
+          </div>
           <input
             id='file-upload'
             type='file'
             accept='image/*'
-            ref={inputRef}
+            ref={fileInputRef}
             className='hidden'
             onChange={handleFileChange}
           />
-
           <Button
             type='button'
             variant='secondary'
             size='sm'
             className='w-full'
-            onClick={handleUploadImage}
+            onClick={handleImageUpload}
+            disabled={uploading}
           >
-            이미지 업로드
+            {uploading ? '업로드 중...' : '이미지 업로드'}
           </Button>
         </div>
-
-        {/* 교수진 정보 입력 필드 */}
         <div className='w-full border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
           {fields.map(({ id, label, placeholder }) => (
             <FormField key={id} id={id} label={label}>
@@ -134,7 +147,9 @@ export default function ProfessorForm({
                 id={id}
                 name={id}
                 placeholder={placeholder}
-                value={(form as any)[id]}
+                value={
+                  form[id as keyof Omit<PostProfessorRequest, 'files'>] ?? ''
+                }
                 onChange={handleChange}
                 className='w-full px-[15px] outline-none'
                 autoComplete='off'
@@ -143,10 +158,9 @@ export default function ProfessorForm({
           ))}
         </div>
       </div>
-
-      <Button type='button' className='mx-auto' onClick={handleRegister}>
+      <Button type='submit' className='mx-auto'>
         교수진 등록
       </Button>
-    </div>
+    </form>
   );
 }

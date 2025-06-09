@@ -1,6 +1,3 @@
-import { useRef, useState } from 'react';
-import { toast } from 'sonner';
-import axios from 'axios';
 import FormField from '@/components/admin/form-field';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,12 +11,16 @@ import {
   PatchProfessorRequest,
   ProfessorResponse,
 } from '@/types/admin/professors';
+import type { MessageResponse } from '@/types';
+import { FileUpload } from '@/apis/admin/files';
+import { useRef, useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
 
 interface Props {
   professor: ProfessorResponse;
-  onEdit: (form: PatchProfessorRequest) => void;
-  onDelete: (professorNo: number) => void;
+  onEdit: (form: PatchProfessorRequest) => Promise<MessageResponse>;
+  onDelete: (professorNo: number) => Promise<MessageResponse>;
   onClose: () => void;
 }
 
@@ -29,86 +30,119 @@ export default function ProfessorModal({
   onDelete,
   onClose,
 }: Props) {
-  const initialUrl = professor.files?.url ?? '';
-  const initialFilesNo = professor.files?.filesNo ?? 0;
-
-  const [form, setForm] = useState({
-    ...professor,
-    filesNo: initialFilesNo,
-    url: initialUrl,
+  const [form, setForm] = useState<PatchProfessorRequest>({
+    professorNo: 0,
+    professorName: '',
+    position: '',
+    major: '',
+    email: '',
+    tel: '',
+    files: {
+      filesNo: 0,
+    },
   });
 
-  const [previewUrl, setPreviewUrl] = useState<string>(initialUrl);
-  const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState('/images/no-image.jpg');
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    setForm({
+      professorNo: professor.professorNo,
+      professorName: professor.professorName,
+      position: professor.position,
+      major: professor.major,
+      email: professor.email,
+      tel: professor.tel,
+      files: { filesNo: professor.files.filesNo },
+    });
+    setPreviewUrl(professor.files?.url || '/images/no-image.jpg');
+  }, [professor]);
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm((prev) => ({
+      ...prev,
+      [name]: value.trim(),
+      files: { ...prev.files },
+    }));
   };
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
+  const handleImageUpload = () => {
+    fileInputRef.current?.click();
   };
 
-  const handlePickFile = () => {
-    inputRef.current?.click();
-  };
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
+    if (!selected) return;
 
-  const handleUploadImage = async () => {
-    if (!file) {
-      toast.error('이미지를 선택해주세요.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', file);
-
+    setUploading(true);
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/files/upload`,
-        formData
-      );
-      const { filesNo, url } = res.data;
-      setForm((prev) => ({ ...prev, filesNo, url }));
-      setPreviewUrl(url);
+      const formData = new FormData();
+      formData.append('file', selected);
+
+      const { filesNo } = await FileUpload(formData);
+
+      setForm((prev) => ({
+        ...prev,
+        files: {
+          ...prev.files,
+          filesNo,
+        },
+      }));
+
+      setPreviewUrl(URL.createObjectURL(selected));
       toast.success('이미지 업로드가 완료되었습니다.');
     } catch (error) {
-      const errorMessage = handleApiError(error);
-      toast.error(errorMessage);
+      toast.error(handleApiError(error));
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
-  const handleSubmit = () => {
-    const { professorNo, professorName, position, major, email, tel, filesNo } =
-      form;
-    onEdit({
-      professorNo,
-      professorName,
-      position,
-      major,
-      email,
-      tel,
-      filesNo,
-    });
-    onClose();
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = '/images/no-image.jpg';
   };
 
-  const handleDeleteClick = () => {
-    onDelete(form.professorNo);
-    onClose();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const submitForm: PatchProfessorRequest = {
+        professorNo: form.professorNo,
+        professorName: form.professorName,
+        position: form.position,
+        major: form.major,
+        email: form.email,
+        tel: form.tel,
+        files: { filesNo: form.files.filesNo },
+      };
+      const res = await onEdit(submitForm);
+      toast.success(res.message);
+      onClose();
+    } catch (error) {
+      toast.error(handleApiError(error));
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await onDelete(form.professorNo);
+      toast.success(res.message);
+      onClose();
+    } catch (error) {
+      toast.error(handleApiError(error));
+    }
   };
 
   const fields = [
-    { name: 'professorName', label: '이름' },
-    { name: 'position', label: '소속' },
-    { name: 'major', label: '전공' },
-    { name: 'email', label: '이메일' },
-    { name: 'tel', label: '연락처' },
+    { id: 'professorName', label: '이름' },
+    { id: 'position', label: '소속' },
+    { id: 'major', label: '전공' },
+    { id: 'email', label: '이메일' },
+    { id: 'tel', label: '연락처' },
   ];
 
   return (
@@ -118,46 +152,44 @@ export default function ProfessorModal({
           <DialogTitle className='text-center'>PROFESSOR INFO</DialogTitle>
         </DialogHeader>
         <div className='flex gap-[15px]'>
-          {/* 이미지 업로드 */}
           <div className='flex flex-col items-center gap-[10px]'>
-            <label
-              htmlFor='image-upload'
-              className='w-[130px] aspect-[4/5] rounded border border-btn-gray-d cursor-pointer overflow-hidden hover:opacity-70'
-              onClick={handlePickFile}
-            >
+            <div className='w-[130px] aspect-[4/5] rounded border border-btn-gray-d overflow-hidden'>
               <img
-                src={previewUrl || '/images/no-image.jpg'}
+                src={previewUrl}
                 alt='preview'
                 className='w-full h-full object-cover'
-                onError={(e) => (e.currentTarget.src = '/images/no-image.jpg')}
+                onError={handleImageError}
+                style={{ cursor: 'default' }}
               />
-            </label>
+            </div>
             <input
               id='image-upload'
               type='file'
-              ref={inputRef}
+              ref={fileInputRef}
               accept='image/*'
-              onChange={handleFileInputChange}
+              onChange={handleFileChange}
               className='hidden'
             />
             <Button
               type='button'
-              onClick={handleUploadImage}
+              onClick={handleImageUpload}
               size='sm'
               variant='secondary'
               className='w-full'
+              disabled={uploading}
             >
-              이미지 업로드
+              {uploading ? '업로드 중...' : '이미지 업로드'}
             </Button>
           </div>
-          {/* 입력 필드 */}
           <div className='w-full border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
-            {fields.map(({ name, label }) => (
-              <FormField key={name} id={name} label={label}>
+            {fields.map(({ id, label }) => (
+              <FormField key={id} id={id} label={label}>
                 <input
-                  id={name}
-                  name={name}
-                  value={(form as any)[name] ?? ''}
+                  id={id}
+                  name={id}
+                  value={
+                    form[id as keyof Omit<PatchProfessorRequest, 'files'>] ?? ''
+                  }
                   onChange={handleChange}
                   autoComplete='off'
                   className='w-full px-[15px] outline-none'
@@ -168,7 +200,7 @@ export default function ProfessorModal({
         </div>
         <DialogFooter className='grid grid-cols-2 mx-auto mt-[10px]'>
           <Button onClick={handleSubmit}>수정</Button>
-          <Button variant='destructive' onClick={handleDeleteClick}>
+          <Button variant='destructive' onClick={handleDelete}>
             삭제
           </Button>
         </DialogFooter>
