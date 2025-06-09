@@ -33,9 +33,7 @@ export default function ClinicalNav({ category }: { category: string }) {
         <div className='group-hover:-translate-x-1 transition-transform duration-500'>
           {prevActivity ? <ArrowLeft size={20} /> : <Home size={20} />}
         </div>
-        <span className='t-r-16 group-hover:-translate-x-1 transition-transform duration-500'>
-          {prevActivity?.title ?? '홈'}
-        </span>
+        <span className='t-r-16'>{prevActivity?.title ?? '홈'}</span>
       </Button>
 
       <Button
@@ -43,9 +41,7 @@ export default function ClinicalNav({ category }: { category: string }) {
         className='group transition-colors duration-200 group xl:w-[200px] md:w-[120px] w-[96px]'
         onClick={handleNextClick}
       >
-        <span className='t-r-16 group-hover:translate-x-1 transition-transform duration-500'>
-          {nextActivity?.title ?? '홈'}
-        </span>
+        <span className='t-r-16'>{nextActivity?.title ?? '홈'}</span>
 
         <div className='group-hover:translate-x-1 transition-transform duration-500'>
           {nextActivity ? <ArrowRight size={20} /> : <Home size={20} />}
