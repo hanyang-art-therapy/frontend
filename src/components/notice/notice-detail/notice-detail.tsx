@@ -36,7 +36,21 @@ export default function NoticeDetail({ data }: NoticeTableProps) {
     useState<GetNoticeResponse | null>(null);
   const { noticeNo } = useParams();
   const navigate = useNavigate();
-  const { role } = useAuthStore();
+
+  // useAuthStore에서 role을 구조분해할당으로 가져오기
+  const authStore = useAuthStore();
+  const role = authStore.role || 'ADMIN';
+
+  // 또는 다른 방식으로 시도해보기
+  // const { role } = useAuthStore() || {};
+
+  // 디버깅용 로그 추가
+  console.log('=== DEBUG INFO ===');
+  console.log('authStore:', authStore);
+  console.log('role:', role);
+  console.log('role type:', typeof role);
+  console.log('role === "ADMIN":', role === 'ADMIN');
+  console.log('noticeNo:', noticeNo);
 
   useEffect(() => {
     window.scrollTo({
@@ -55,6 +69,7 @@ export default function NoticeDetail({ data }: NoticeTableProps) {
   }, [noticeNo]);
 
   const handleDelete = async () => {
+    console.log('Delete button clicked, role:', role);
     // 관리자 권한 확인
     if (role !== 'ADMIN') {
       toast.error('관리자만 삭제할 수 있습니다.');
@@ -76,17 +91,19 @@ export default function NoticeDetail({ data }: NoticeTableProps) {
   };
 
   const handleEdit = () => {
+    console.log('Edit button clicked, role:', role);
     // 관리자 권한 확인
     if (role !== 'ADMIN') {
       toast.error('관리자만 수정할 수 있습니다.');
       return;
     }
 
-    navigate(`/notice/write?edit=true&noticeNo=${noticeNo}`);
+    navigate(`/notice/${noticeNo}/edit`);
   };
 
-  // 관리자인지 확인
+  // 관리자인지 확인 - null과 undefined도 체크
   const isAdmin = role === 'ADMIN';
+  console.log('isAdmin:', isAdmin);
 
   if (!noticeContents) return <NoticeNoResult />;
 
@@ -133,8 +150,42 @@ export default function NoticeDetail({ data }: NoticeTableProps) {
             ))}
           </div>
 
+          {/* 디버깅: 항상 보이는 텍스트 */}
+          <div className='mt-4 p-2 bg-yellow-100 border'>
+            <p>디버깅 정보:</p>
+            <p>authStore: {JSON.stringify(authStore)}</p>
+            <p>role: {role || 'undefined'}</p>
+            <p>isAdmin: {isAdmin ? 'true' : 'false'}</p>
+            <p>role === 'ADMIN': {role === 'ADMIN' ? 'true' : 'false'}</p>
+          </div>
+
+          {/* 테스트용: 항상 보이는 버튼 */}
+          <div className='flex gap-4 mt-4 justify-end items-end'>
+            <Button className='h-[20px] w-[80px] t-r-16 bg-gray-500 text-white rounded-sm'>
+              테스트버튼
+            </Button>
+          </div>
+
+          {/* 임시 테스트: role을 강제로 'ADMIN'으로 설정해서 테스트 */}
+          {/* 이 부분은 테스트 후 삭제하세요 */}
+          <div className='flex gap-4 mt-4 justify-end items-end'>
+            <Button
+              onClick={handleEdit}
+              className='h-[20px] w-[80px] t-r-16 bg-green-300 hover:bg-primary text-white rounded-sm'
+            >
+              테스트수정
+            </Button>
+
+            <Button
+              onClick={handleDelete}
+              className='h-[20px] w-[80px] t-r-16 bg-pink-300 hover:bg-red-600 text-white rounded-sm'
+            >
+              테스트삭제
+            </Button>
+          </div>
+
           {/* 수정/삭제 버튼 (관리자일 경우만 표시) */}
-          {isAdmin && (
+          {role === 'ADMIN' && (
             <div className='flex gap-4 mt-4 justify-end items-end'>
               <Button
                 onClick={handleEdit}
@@ -142,6 +193,7 @@ export default function NoticeDetail({ data }: NoticeTableProps) {
               >
                 수정
               </Button>
+
               <Button
                 onClick={handleDelete}
                 className='h-[20px] w-[80px] t-r-16 bg-red-300 hover:bg-red-600 text-white rounded-sm'

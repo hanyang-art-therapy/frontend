@@ -23,7 +23,10 @@ export type GetNoticesRequest = {
 export type GetNoticeRequest = Pick<Notice, 'noticeNo'>;
 export type UpdateNoticeRequest = Pick<Notice, 'noticeNo'> &
   Partial<
-    Pick<Notice, 'title' | 'content' | 'category'> & {
+    Pick<
+      Notice,
+      'title' | 'content' | 'category' | 'periodStart' | 'periodEnd' | 'isFixed'
+    > & {
       filesNo: number[] | null;
     }
   >;

@@ -54,6 +54,7 @@ const ScholarshipPage = lazy(() => import('@/pages/enroll/scholarship/page'));
 // 공지사항
 const NoticePage = lazy(() => import('@/pages/notice/page'));
 const NoticeDetailPage = lazy(() => import('@/pages/notice/detail/page'));
+const NoticeEditPage = lazy(() => import('@/pages/notice/edit/page'));
 const NoticeWritePage = lazy(() => import('@/pages/notice/write/page'));
 
 // 관리자
@@ -141,6 +142,10 @@ const router = createBrowserRouter([
       {
         path: 'notice/:noticeNo',
         element: lazyElement(NoticeDetailPage),
+      },
+      {
+        path: 'notice/:noticeNo/edit', // 수정 페이지 라우트 추가
+        element: lazyElement(NoticeEditPage), // 수정 페이지 컴포넌트
       },
       {
         path: 'notice/write',

@@ -57,15 +57,22 @@ export const postNotice = async ({
 export const updateNotice = async ({
   noticeNo,
   title,
-  content,
   category,
+  periodStart,
+  periodEnd,
+  content,
   filesNo,
+  isFixed,
 }: UpdateNoticeRequest): Promise<GetNoticeResponse> => {
   const response = await apiInstance.patch(`/notices/${noticeNo}`, {
+    noticeNo,
     title,
-    content,
     category,
+    periodStart,
+    periodEnd,
+    content,
     filesNo,
+    isFixed,
   });
 
   return response.data;
