@@ -15,7 +15,7 @@ export type PostReviewRequest = Pick<Review, 'artsNo' | 'reviewText'> & {
 export type UploadFileResponse = Pick<
   Files,
   'filesNo' | 'name' | 'url' | 'filesSize' | 'extension' | 'filesType'
->;
+>[];
 
 export type PatchReviewRequest = Pick<
   Review,

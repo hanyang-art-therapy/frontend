@@ -132,3 +132,16 @@ export type Content = {
     points?: string[];
   }[];
 };
+
+export type InfiniteScrollResponse<T> = {
+  content: T[];
+  lastId: number;
+  hasNext: boolean;
+};
+
+export type InfiniteKeywordSearchRequest = {
+  filter?: string;
+  keyword?: string;
+  lastId?: number;
+  size?: number;
+};
