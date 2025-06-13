@@ -40,7 +40,6 @@ export default function SignInForm() {
     try {
       const response = await signIn({ userId: userId.trim(), password });
 
-
       if (response.role === 'ADMIN' || response.role === 'TESTER') {
         navigate('/admin/users');
       } else {
@@ -48,6 +47,7 @@ export default function SignInForm() {
       }
 
       setAccessToken(response.accessToken);
+      localStorage.setItem('accessToken', response.accessToken);
       setRole(response.role);
 
       if (isUserIdRemember) {

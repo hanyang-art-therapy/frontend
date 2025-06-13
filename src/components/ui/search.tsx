@@ -49,7 +49,7 @@ export default function Search({
   };
 
   return (
-    <div className='relative'>
+    <div className='relative w-full'>
       <Input
         ref={inputRef}
         value={searchValue}
