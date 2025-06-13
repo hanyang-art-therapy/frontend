@@ -3,15 +3,16 @@ import { refresh } from '@/apis/auth/refresh';
 let initAuthPromise: Promise<void> | null = null;
 
 export const initializeAuth = (): Promise<void> => {
-  const { setAccessToken, reset } = useAuthStore.getState();
+  const { setAccessToken, setUserNo, setRole, reset } = useAuthStore.getState();
   if (initAuthPromise) return initAuthPromise;
 
   initAuthPromise = (async () => {
     try {
-      const res = await refresh();
+      const { data } = await refresh();
 
-      const token = res.data.accessToken;
-      setAccessToken(token);
+      setAccessToken(data.accessToken);
+      setUserNo(data.userNo);
+      setRole(data.role);
     } catch {
       reset();
     }

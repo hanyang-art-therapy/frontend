@@ -8,6 +8,7 @@ import { MessageResponse } from '@/types';
 
 export const getGalleries = async (): Promise<GalleriesResponse[]> => {
   const res = await apiInstance.get('/admin/galleries');
+
   return res.data;
 };
 
