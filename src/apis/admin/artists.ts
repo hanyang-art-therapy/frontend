@@ -4,10 +4,41 @@ import type {
   PostArtistRequest,
   PatchArtistRequest,
 } from '@/types/admin/artists';
-import type { MessageResponse } from '@/types';
+import type {
+  MessageResponse,
+  InfiniteScrollResponse,
+  InfiniteKeywordSearchRequest,
+} from '@/types';
 
-export const getArtists = async (): Promise<ArtistResponse[]> => {
-  const res = await apiInstance.get('/admin/artists');
+export const getArtists = async ({
+  filter,
+  keyword,
+  lastId,
+}: InfiniteKeywordSearchRequest): Promise<
+  InfiniteScrollResponse<ArtistResponse>
+> => {
+  if (lastId && filter && keyword) {
+    const res = await apiInstance.get(
+      `/admin/artists?lastId=${lastId}&filter=${filter}&keyword=${keyword}`
+    );
+
+    return res.data;
+  }
+
+  if (filter && keyword) {
+    const res = await apiInstance.get(
+      `/admin/artists?filter=${filter}&keyword=${keyword}`
+    );
+    return res.data;
+  }
+
+  if (lastId) {
+    const res = await apiInstance.get(`/admin/artists?lastId=${lastId}`);
+    return res.data;
+  }
+
+  const res = await apiInstance.get(`/admin/artists`);
+
   return res.data;
 };
 
