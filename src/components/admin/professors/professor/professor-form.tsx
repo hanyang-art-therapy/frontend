@@ -40,14 +40,11 @@ export default function ProfessorForm() {
     setUploading(true);
     try {
       const uploadedFiles = await postFile([selected]);
-      console.log(uploadedFiles);
 
       setForm((prev) => ({
         ...prev,
         filesNo: uploadedFiles[0].filesNo,
       }));
-
-      console.log(uploadedFiles);
 
       setPreviewUrl(URL.createObjectURL(selected));
       toast.success('이미지 업로드가 완료되었습니다.');
