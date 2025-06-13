@@ -6,6 +6,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import {
   GalleriesResponse,
@@ -17,14 +18,16 @@ import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
 
-interface Props {
+type Props = {
+  postedYears: string[];
   gallery: GalleriesResponse;
   onEdit: (form: PatchGalleryRequest) => Promise<MessageResponse>;
   onDelete: (artistNo: number) => Promise<MessageResponse>;
   onClose: () => void;
-}
+};
 
 export default function GalleryModal({
+  postedYears,
   gallery,
   onEdit,
   onDelete,
@@ -52,16 +55,38 @@ export default function GalleryModal({
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      [name]: value.trim(),
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const startYear = form.startDate.split('-')[0];
+    const endYear = form.endDate.split('-')[0];
+    const filteredYears = postedYears.filter((postedYear) => {
+      return postedYear !== endYear || postedYear !== startYear;
+    });
+
     // 유효성 검사
     if (!form.title || !form.startDate || !form.endDate) {
       toast.error('전시 제목, 전시 기간 모두 입력해주세요.');
+      return;
+    }
+    if (filteredYears.includes(startYear)) {
+      toast.error('해당년도에 이미 전시회가 등록되어 있습니다.');
+      return;
+    }
+    if (filteredYears.includes(endYear)) {
+      toast.error('해당년도에 이미 전시회가 등록되어 있습니다.');
+      return;
+    }
+    if (startYear !== endYear) {
+      toast.error('시작년도와 종료년도는 같아야 합니다.');
+      return;
+    }
+    if (form.startDate > form.endDate) {
+      toast.error('종료일자가 시작일자보다 빠를 수 없습니다.');
       return;
     }
 
@@ -101,6 +126,9 @@ export default function GalleryModal({
       <DialogContent className='max-w-[700px]'>
         <DialogHeader>
           <DialogTitle className='text-center'>GALLERY INFO</DialogTitle>
+          <DialogDescription className='text-center'>
+            전시회 상세 정보
+          </DialogDescription>
         </DialogHeader>
 
         <div className='w-full border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
@@ -119,9 +147,15 @@ export default function GalleryModal({
           ))}
         </div>
 
-        <DialogFooter className='grid grid-cols-2 mx-auto mt-[10px] gap-[15px]'>
-          <Button onClick={handleSubmit}>수정</Button>
-          <Button variant='destructive' onClick={handleDelete}>
+        <DialogFooter className='grid grid-cols-2 gap-[10px] mx-auto mt-[10px] w-[100%] md:w-auto'>
+          <Button onClick={handleSubmit} className='w-full md:w-[200px]'>
+            수정
+          </Button>
+          <Button
+            variant='destructive'
+            onClick={handleDelete}
+            className='w-full md:w-[200px]'
+          >
             삭제
           </Button>
         </DialogFooter>
