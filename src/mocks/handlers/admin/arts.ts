@@ -1,9 +1,8 @@
-import { http, HttpResponse } from 'msw';
 import type {
-  PostAdminArtRequest,
   PatchAdminArtRequest,
-  AdminArtResponse,
+  PostAdminArtRequest,
 } from '@/types/admin/arts';
+import { http, HttpResponse } from 'msw';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,7 +10,7 @@ let nextArtsNo = 3;
 let nextFilesNo = 3;
 const uploadedFiles = new Map<number, string>();
 
-let arts: AdminArtResponse[] = [
+const arts = [
   {
     artsNo: 1,
     artName: '빛의 기억',
@@ -99,7 +98,7 @@ export const adminArtsHandlers = [
   // [POST] 작품 등록
   http.post(`${API_URL}/admin/arts`, async ({ request }) => {
     const data = (await request.json()) as PostAdminArtRequest;
-    const newArt: AdminArtResponse = {
+    const newArt = {
       artsNo: nextArtsNo++,
       artName: data.artName,
       caption: data.caption ?? '',
@@ -110,11 +109,12 @@ export const adminArtsHandlers = [
       coDescription: data.coDescription ?? '',
       artists: data.artistList.map((artist) => ({
         artistNo: artist.artistNo,
-        artistName: artist.artistName,
         description: artist.description,
+        artistName: '이름',
       })),
       galleriesNo: 0,
     };
+
     arts.push(newArt);
     return HttpResponse.json({ message: '작품 등록 성공' });
   }),
@@ -133,9 +133,9 @@ export const adminArtsHandlers = [
       filesNo,
       fileUrl: uploadedFiles.get(filesNo) ?? old.fileUrl,
       coDescription: update.coDescription ?? old.coDescription,
-      artists: (update.artistList ?? []).map((a) => ({
+      artists: (update.artists ?? []).map((a) => ({
         artistNo: a.artistNo,
-        artistName: a.artistName,
+        artistName: '이름',
         description: a.description,
       })),
     };

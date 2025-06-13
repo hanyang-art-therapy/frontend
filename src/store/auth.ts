@@ -20,7 +20,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   userNo: null,
   setUserNo: (userNo) => set({ userNo }),
 
-  role: null,
+  role: 'ADMIN',
   setRole: (role) => set({ role }),
 
   reset: () => set({ accessToken: null, userNo: null, role: null }),
