@@ -1,10 +1,10 @@
 export type TabType = 'view' | 'form';
 
-interface TabButtonProps {
+type TabButtonProps = {
   isSelected: boolean;
   onSelect: () => void;
   children: React.ReactNode;
-}
+};
 
 export default function TabButton({
   isSelected,

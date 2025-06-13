@@ -12,6 +12,8 @@ import {
   myReviewsLoader,
 } from '@/routes/loaders/my-page-loader';
 import { rootLoader } from '@/routes/loaders/root-loader';
+import { adminUserLoader } from './loaders/admin/users';
+import { adminArtistLoader } from './loaders/admin/artists';
 // import { artLoader } from '@/routes/loaders/art-loader';
 
 // LAZY LOADING
@@ -158,9 +160,17 @@ const router = createBrowserRouter([
         path: '/admin',
         element: lazyElement(AdminPage),
         children: [
-          { path: 'users', element: lazyElement(AdminUsersPage) },
+          {
+            path: 'users',
+            element: lazyElement(AdminUsersPage),
+            loader: adminUserLoader,
+          },
           { path: 'arts', element: lazyElement(AdminArtPage) },
-          { path: 'artists', element: lazyElement(AdminArtistPage) },
+          {
+            path: 'artists',
+            element: lazyElement(AdminArtistPage),
+            loader: adminArtistLoader,
+          },
           { path: 'galleries', element: lazyElement(AdminGalleryPage) },
           { path: 'professors', element: lazyElement(AdminProfessorPage) },
         ],

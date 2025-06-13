@@ -1,14 +1,14 @@
-interface ApiErrorResponse {
+type ApiErrorResponse = {
   message: string;
   statusCode?: number;
-}
+};
 
-interface ApiError {
+type ApiError = {
   response?: {
     data?: ApiErrorResponse;
     status?: number;
   };
-}
+};
 
 export const handleApiError = (error: unknown): string => {
   const apiError = error as ApiError;

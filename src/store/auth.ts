@@ -4,8 +4,8 @@ type AuthState = {
   accessToken: string | null | undefined;
   setAccessToken: (token: string | null | undefined) => void;
 
-  userNo: string | null;
-  setUserNo: (userNo: string | null) => void;
+  userNo: number | null;
+  setUserNo: (userNo: number | null) => void;
 
   role: string | null;
   setRole: (role: string | null) => void;

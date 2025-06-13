@@ -3,22 +3,23 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
 import { ArtistResponse, PatchArtistRequest } from '@/types/admin/artists';
-import { Artist } from '@/types';
+import { Artist, MessageResponse } from '@/types';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
 
-interface Props {
+type Props = {
   artist: ArtistResponse;
-  onEdit: (form: PatchArtistRequest) => Promise<void>;
-  onDelete: (artistNo: number) => Promise<void>;
+  onEdit: (form: PatchArtistRequest) => Promise<MessageResponse>;
+  onDelete: (artistNo: number) => Promise<MessageResponse>;
   onClose: () => void;
-}
+};
 
 export default function ArtistModal({
   artist,
@@ -39,7 +40,7 @@ export default function ArtistModal({
     setForm({
       artistNo: artist.artistNo,
       artistName: artist.artistName,
-      studentNo: artist.studentNo ?? '',
+      studentNo: artist.studentNo,
       cohort: artist.cohort,
     });
   }, [artist]);
@@ -92,8 +93,9 @@ export default function ArtistModal({
         studentNo: form.studentNo,
         cohort: form.cohort,
       };
-      await onEdit(submitForm);
-      toast.success('작가 수정이 완료되었습니다.');
+      const res = await onEdit(submitForm);
+      toast.success(res.message);
+
       onClose();
     } catch (error) {
       toast.error(handleApiError(error));
@@ -102,8 +104,8 @@ export default function ArtistModal({
 
   const handleDelete = async () => {
     try {
-      await onDelete(form.artistNo);
-      toast.success('작가 삭제가 완료되었습니다.');
+      const res = await onDelete(form.artistNo);
+      toast.success(res.message);
       onClose();
     } catch (error) {
       toast.error(handleApiError(error));
@@ -121,6 +123,9 @@ export default function ArtistModal({
       <DialogContent className='max-w-[700px]'>
         <DialogHeader>
           <DialogTitle className='text-center'>ARTIST INFO</DialogTitle>
+          <DialogDescription className='text-center'>
+            작가 상세 정보
+          </DialogDescription>
         </DialogHeader>
         <div className='w-full border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
           {fields.map(({ id, label }) => (
@@ -136,9 +141,15 @@ export default function ArtistModal({
             </FormField>
           ))}
         </div>
-        <DialogFooter className='grid grid-cols-2 mx-auto mt-[10px] gap-[15px]'>
-          <Button onClick={handleSubmit}>수정</Button>
-          <Button variant='destructive' onClick={handleDelete}>
+        <DialogFooter className='grid grid-cols-2 gap-[10px] mx-auto mt-[10px] w-[100%] md:w-auto'>
+          <Button onClick={handleSubmit} className='w-full md:w-[200px]'>
+            수정
+          </Button>
+          <Button
+            variant='destructive'
+            onClick={handleDelete}
+            className='w-full md:w-[200px]'
+          >
             삭제
           </Button>
         </DialogFooter>

@@ -6,11 +6,11 @@ import {
 } from '@/components/ui/dialog';
 import { ArtistResponse } from '@/types/admin/artists';
 
-interface Props {
+type Props = {
   artists: ArtistResponse[];
   onSelect: (artist: ArtistResponse) => void;
   onClose: () => void;
-}
+};
 
 export default function ArtistSelectModal({
   artists,

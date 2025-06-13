@@ -7,3 +7,7 @@ export type SignInResponse = {
   userNo: string;
   role: 'USER' | 'ADMIN' | 'ARTIST' | 'TESTER';
 };
+
+export type RefreshResponse = Pick<User, 'userNo' | 'role'> & {
+  accessToken: string;
+};

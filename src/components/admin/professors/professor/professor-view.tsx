@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  ProfessorsResponse,
   ProfessorResponse,
   PatchProfessorRequest,
 } from '@/types/admin/professors';
@@ -10,35 +11,34 @@ import {
   deleteProfessor,
 } from '@/apis/admin/professors';
 import ProfessorModal from '@/components/admin/professors/professor/professor-modal';
+import { handleApiError } from '@/components/common/error-handler';
+import { toast } from 'sonner';
 
 export default function ProfessorView() {
-  const [professors, setProfessors] = useState<ProfessorResponse[]>([]);
+  const [professors, setProfessors] = useState<ProfessorsResponse[]>([]);
   const [selectedProfessors, setSelectedProfessors] =
-    useState<ProfessorResponse | null>(null);
+    useState<ProfessorsResponse | null>(null);
 
   useEffect(() => {
-    getProfessors().then(setProfessors);
+    getProfessors()
+      .then(setProfessors)
+      .catch((error) => {
+        toast.error(handleApiError(error));
+      });
   }, []);
 
   const handleEdit = async (
     form: PatchProfessorRequest
   ): Promise<MessageResponse> => {
-    const {
-      professorNo,
-      professorName,
-      position,
-      major,
-      email,
-      tel,
-      files: { filesNo },
-    } = form;
+    const { professorNo, professorName, position, major, email, tel, filesNo } =
+      form;
     const res = await patchProfessor(professorNo, {
       professorName,
       position,
       major,
       email,
       tel,
-      files: { filesNo },
+      filesNo,
     });
 
     await getProfessors().then((professors) => setProfessors(professors));
@@ -62,7 +62,7 @@ export default function ProfessorView() {
 
   return (
     <>
-      <div className='max-h-[400px] overflow-y-scroll border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
+      <div className='max-h-[100vw] md:max-h-[400px] overflow-y-scroll border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
         <div className='sticky top-0 z-1 grid grid-cols-[1fr_2fr_2fr_2fr] divide-x divide-btn-gray-d text-center t-b-14 text-nowrap bg-bg-gray-fa'>
           {/* 교수진 타이틀 */}
           <div className='min-h-[44px] flex items-center justify-center'>
@@ -88,17 +88,24 @@ export default function ProfessorView() {
             <div className='min-h-[44px] flex items-center justify-center'>
               {index + 1}
             </div>
-            <div className='min-h-[44px] flex items-center justify-center'>
-              {prof.professorName || '-'}
+            <div className='min-h-[44px] flex items-center justify-center px-2 min-w-0'>
+              <span className='truncate overflow-hidden whitespace-nowrap w-full text-center'>
+                {prof.professorName || '-'}
+              </span>
             </div>
-            <div className='min-h-[44px] flex items-center justify-center'>
-              {prof.position || '-'}
+            <div className='min-h-[44px] flex items-center justify-center px-2 min-w-0'>
+              <span className='truncate overflow-hidden whitespace-nowrap w-full text-center'>
+                {prof.position || '-'}
+              </span>
             </div>
-            <div className='min-h-[44px] flex items-center justify-center'>
-              {prof.major || '-'}
+            <div className='min-h-[44px] flex items-center justify-center px-2 min-w-0'>
+              <span className='truncate overflow-hidden whitespace-nowrap w-full text-center'>
+                {prof.major || '-'}
+              </span>
             </div>
           </div>
         ))}
+        <div className='w-full h-1 bg-bg-gray-fa' />
       </div>
 
       {/* 교수진 상세 모달 */}
