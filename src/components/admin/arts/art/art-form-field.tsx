@@ -10,7 +10,7 @@ import { Search, X } from 'lucide-react';
 import { Gallery } from '@/types';
 import { useCallback } from 'react';
 
-interface Props {
+type Props = {
   form: any;
   galleries: Gallery[];
   onChange: (
@@ -21,7 +21,7 @@ interface Props {
   onClickArtistModal: () => void;
   onRemoveArtist: (artistNo: number) => void;
   onChangeArtistDescription: (artistNo: number, value: string) => void;
-}
+};
 
 export default function ArtworkFormFields({
   form,

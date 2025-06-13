@@ -26,12 +26,12 @@ import { useEffect, useState, useRef } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
 
-interface Props {
+type Props = {
   art: AdminArtResponse;
   onEdit: (form: PatchAdminArtRequest) => Promise<MessageResponse>;
   onDelete: (artsNo: number) => Promise<MessageResponse>;
   onClose: () => void;
-}
+};
 
 export default function AdminArtModal({
   art,
