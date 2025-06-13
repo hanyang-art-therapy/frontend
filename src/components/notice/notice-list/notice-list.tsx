@@ -4,7 +4,6 @@ import NoticeTable from './notice-table';
 import { Button } from '@/components/ui/button';
 import { FileText, Volume2 } from 'lucide-react';
 import { NoticeSearch } from '../notice-search/notice-search';
-import { Pagination, PaginationContent } from '@/components/ui/pagination';
 
 export default function NoticeList() {
   const navigate = useNavigate();
@@ -40,10 +39,11 @@ export default function NoticeList() {
           <div className='flex w-full h-[50px] items-center pt-[22px] md:pt-[32px]'>
             {/* 페이지네이션 */}
             <div className='border-1 border-destructive h-[80px] flex-1 flex justify-center items-center t-b-16'>
-              <Pagination>
-                <PaginationContent />
-                페이지네이션
-              </Pagination>
+              {/* <Pagination
+                currentPage={searchedReviews?.page || 1}
+                totalPages={searchedReviews?.totalPages || 1}
+                onPageChange={handlePageChange}
+              /> */}
             </div>
             <Button
               type='button'

@@ -1,8 +1,6 @@
-import { ArtDetail } from '@/types/gallery/art';
-
 export const COWORK_2025_ART_NO = 24;
 
-export const ART_DETAILS: ArtDetail[] = [
+export const ART_DETAILS = [
   {
     artsNo: 1,
     artName: '나를 향해 가는길',

@@ -8,7 +8,7 @@ export type User = {
   email: string; // 이메일
   userName: string; // 이름
   studentNo: number; // 학번
-  role: 'USER' | 'ARTIST' | 'ADMIN'; // 회원 권한
+  role: 'USER' | 'ARTIST' | 'ADMIN' | 'TESTER'; // 회원 권한
   userStatus: string; // 회원 상태
 };
 
@@ -86,12 +86,21 @@ export type ArtArtistRel = {
 export type Notice = {
   noticeNo: number; // 공지사항 번호
   userNo: number; // 회원 번호
-  filesNo: number; // 파일 번호
   title: string; // 제목
   content: string; // 내용
   createdAt: string; // 작성 일자
   category: string; // 카테고리
   viewCount: number; // 조회수
+  periodStart: string; // 시작 일자 - TIMESTAMP
+  periodEnd: string; // 종료 일자 - TIMESTAMP
+  isFixed: boolean; // 고정 여부
+};
+
+// 공지사항 파일
+export type NoticeFiles = {
+  noticeFilesNo: number; // 공지사항 파일 번호
+  noticeNo: number; // 공지사항 번호
+  filesNo: number; // 파일 번호
 };
 
 // 교수진
@@ -105,11 +114,18 @@ export type Professor = {
   filesNo: number | null; // 파일 번호
 };
 
+export type RefreshTokens = {
+  refreshNo: number;
+  userNo: number;
+  refreshToken: string;
+  expiredAt: string;
+};
+
 export type MessageResponse = {
   message: string;
 };
 
-export type PaginationResponse<T> = {
+export type MyReviewPagination<T> = {
   content: T[];
   page: number;
   size: number;
@@ -120,17 +136,13 @@ export type PaginationResponse<T> = {
 export type ArtsPagination<T> = {
   content: T[];
   lastId: number;
-  totalElements: number;
   hasNext: boolean;
 };
 
-export type Content = {
-  title: string;
-  sections: {
-    title: string;
-    content?: string[];
-    points?: string[];
-  }[];
+export type ArtReviewsPagination<T> = {
+  content: T[];
+  page: number;
+  isLast: boolean;
 };
 
 export type InfiniteScrollResponse<T> = {
@@ -144,4 +156,13 @@ export type InfiniteKeywordSearchRequest = {
   keyword?: string;
   lastId?: number;
   size?: number;
+};
+
+export type Content = {
+  title: string;
+  sections: {
+    title: string;
+    content?: string[];
+    points?: string[];
+  }[];
 };

@@ -66,7 +66,7 @@ export default function SignUpForm({
         email,
         studentNo:
           userType === 'member'
-            ? (data as MemberSignUpFormValues).studentNo
+            ? Number((data as MemberSignUpFormValues).studentNo)
             : undefined,
       });
     } catch (error) {

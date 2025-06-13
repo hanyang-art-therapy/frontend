@@ -49,13 +49,16 @@ export default function Search({
   };
 
   return (
-    <div className='relative w-full'>
+    <div className='relative w-full h-fit'>
       <Input
         ref={inputRef}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         placeholder={placeholder}
-        className={cn('h-[45px] px-[16px] py-[12px] t-r-16 w-full', className)}
+        className={cn(
+          'h-[45px] px-[16px] py-[12px] t-r-16 w-full border-btn-gray-d !bg-white rounded',
+          className
+        )}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
       />

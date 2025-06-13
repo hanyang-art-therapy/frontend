@@ -6,15 +6,17 @@ import MainSkeleton from '@/components/main/main-skeleton';
 import { AuthLayout, IntroLayout, MyPageLayout, RootLayout } from '@/layouts';
 import CommingSoon from '@/pages/comming-soon/page';
 import NotFoundPage from '@/pages/not-found/page';
-import {
-  myPostsLoader,
-  myProfileLoader,
-  myReviewsLoader,
-} from '@/routes/loaders/my-page-loader';
 import { rootLoader } from '@/routes/loaders/root-loader';
-import { adminUserLoader } from './loaders/admin/users';
 import { adminArtistLoader } from './loaders/admin/artists';
-// import { artLoader } from '@/routes/loaders/art-loader';
+import { adminArtsLoader } from './loaders/admin/arts-loader';
+import { adminUserLoader } from './loaders/admin/users';
+import { artLoader } from '@/routes/loaders/art/art-loader';
+import { galleryLoader } from '@/routes/loaders/gallery/gallery-loader';
+import {
+  myProfileLoader,
+  myPostsLoader,
+  myReviewsLoader,
+} from '@/routes/loaders/my-page';
 
 // LAZY LOADING
 const HomePage = lazy(() => import('@/pages/page'));
@@ -82,12 +84,12 @@ const router = createBrowserRouter([
       {
         path: '/gallery',
         element: lazyElement(GalleryPage),
-        // loader: galleryLoader,
+        loader: galleryLoader,
       },
       {
         path: '/gallery/:artsNo',
         element: lazyElement(ArtsDetailPage),
-        // loader: artLoader,
+        loader: artLoader,
       },
 
       {
@@ -165,7 +167,11 @@ const router = createBrowserRouter([
             element: lazyElement(AdminUsersPage),
             loader: adminUserLoader,
           },
-          { path: 'arts', element: lazyElement(AdminArtPage) },
+          {
+            path: 'arts',
+            element: lazyElement(AdminArtPage),
+            loader: adminArtsLoader,
+          },
           {
             path: 'artists',
             element: lazyElement(AdminArtistPage),
@@ -206,6 +212,11 @@ const router = createBrowserRouter([
             loader: myReviewsLoader,
           },
           {
+            path: 'posts',
+            element: lazyElement(MyPagePosts),
+            loader: myPostsLoader,
+          },
+          {
             path: 'profile',
             children: [
               {
@@ -218,11 +229,6 @@ const router = createBrowserRouter([
                 element: lazyElement(ResetPwPage),
               },
             ],
-          },
-          {
-            path: 'posts',
-            element: lazyElement(MyPagePosts),
-            loader: myPostsLoader,
           },
         ],
       },

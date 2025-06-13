@@ -1,10 +1,10 @@
 import { formatTimeStamp } from '@/lib/utils';
-import type { PaginationResponse } from '@/types';
+import type { MyReviewPagination } from '@/types';
 import type { MyPostData } from '@/types/my-page';
 import { Link } from 'react-router-dom';
 
 type MyPostListProps = {
-  myPosts: PaginationResponse<MyPostData>;
+  myPosts: MyReviewPagination<MyPostData>;
 };
 
 export default function MyPostList({ myPosts }: MyPostListProps) {

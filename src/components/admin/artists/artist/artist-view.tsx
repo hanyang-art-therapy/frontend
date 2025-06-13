@@ -108,7 +108,7 @@ export default function ArtistView({ artistsList, setArtistsList }: Props) {
         toast.error(handleApiError(error));
       }
     },
-    [artistsList.lastId, filter, searchValue]
+    [artistsList.lastId, filter, searchValue, setArtistsList]
   );
 
   useEffect(() => {
@@ -121,7 +121,7 @@ export default function ArtistView({ artistsList, setArtistsList }: Props) {
         (entries) => {
           const [entry] = entries;
           if (entry.isIntersecting && artistsList.hasNext) {
-            loadArtists(false);
+            loadArtists();
           }
         },
         {
@@ -141,7 +141,13 @@ export default function ArtistView({ artistsList, setArtistsList }: Props) {
   }, [artistsList.hasNext, loadArtists]);
 
   const handleSearchChange = async () => {
-    await loadArtists(true);
+    try {
+      const response = await getArtists({ keyword: searchValue, filter });
+
+      setArtistsList(response);
+    } catch (error) {
+      toast.error(handleApiError(error));
+    }
   };
 
   return (
@@ -157,6 +163,7 @@ export default function ArtistView({ artistsList, setArtistsList }: Props) {
           <SelectTrigger className='w-[100px]'>
             <SelectValue placeholder='필터' />
           </SelectTrigger>
+
           <SelectContent>
             <SelectItem value='artistName'>작가명</SelectItem>
             <SelectItem value='studentNo'>학번</SelectItem>
@@ -167,7 +174,6 @@ export default function ArtistView({ artistsList, setArtistsList }: Props) {
           searchValue={searchValue}
           setSearchValue={setSearchValue}
           onSearch={handleSearchChange}
-          className='border-btn-gray-d !bg-white rounded'
         />
       </div>
 

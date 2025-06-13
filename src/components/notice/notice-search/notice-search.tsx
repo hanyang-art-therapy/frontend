@@ -47,7 +47,9 @@ export const NoticeSearch = () => {
         <div className='flex-1'>
           <Search
             placeholder='검색어를 입력하세요'
-            onSearch={(value) => console.log('검색:', value)}
+            onSearch={() => {}}
+            searchValue=''
+            setSearchValue={() => {}}
           />
         </div>
       </div>

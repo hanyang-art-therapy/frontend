@@ -5,15 +5,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import type { GalleryLoaderData } from '@/routes/loaders/gallery/gallery-loader';
 import type { Dispatch, SetStateAction } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLoaderData, useSearchParams } from 'react-router-dom';
 
 type ArtsSearchProps = {
-  cohorts: number[];
   setLastId: Dispatch<SetStateAction<number>>;
 };
 
-export default function ArtsSearch({ cohorts, setLastId }: ArtsSearchProps) {
+export default function ArtsSearch({ setLastId }: ArtsSearchProps) {
+  const { yearsResponse, cohortsResponse } = useLoaderData<GalleryLoaderData>();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentYear = new Date().getFullYear().toString();
@@ -32,8 +34,7 @@ export default function ArtsSearch({ cohorts, setLastId }: ArtsSearchProps) {
 
   const handleYearChange = async (year: string) => {
     setSearchParams((prevSearchParams) => {
-      if (year === 'all') prevSearchParams.delete('year');
-      else prevSearchParams.set('year', year);
+      prevSearchParams.set('year', year);
 
       return prevSearchParams;
     });
@@ -43,14 +44,15 @@ export default function ArtsSearch({ cohorts, setLastId }: ArtsSearchProps) {
     <div className='flex gap-4 mr-auto'>
       <Select
         value={selectedCohort}
-        onValueChange={(value) => handleCohortChange(value)}>
+        onValueChange={(value) => handleCohortChange(value)}
+      >
         <SelectTrigger className='px-4 py-2 border rounded mr-auto mt-[30px]'>
           <SelectValue placeholder='전체 기수' />
         </SelectTrigger>
 
         <SelectContent>
           <SelectItem value='all'>전체 기수</SelectItem>
-          {cohorts.map((cohort) => (
+          {cohortsResponse.cohorts.map((cohort: number) => (
             <SelectItem key={cohort} value={cohort.toString()}>
               {cohort}기
             </SelectItem>
@@ -60,15 +62,18 @@ export default function ArtsSearch({ cohorts, setLastId }: ArtsSearchProps) {
 
       <Select
         value={selectedYear}
-        onValueChange={(value) => handleYearChange(value)}>
+        onValueChange={(value) => handleYearChange(value)}
+      >
         <SelectTrigger className='px-4 py-2 border rounded mr-auto mt-[30px]'>
-          <SelectValue defaultValue='2025' />
+          <SelectValue placeholder='전체 연도' />
         </SelectTrigger>
 
         <SelectContent>
-          <SelectItem value='2025'>2025</SelectItem>
-          <SelectItem value='2024'>2024</SelectItem>
-          <SelectItem value='2023'>2023</SelectItem>
+          {yearsResponse.years.map((year: number) => (
+            <SelectItem key={year} value={year.toString()}>
+              {year}년
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>

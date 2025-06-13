@@ -1,6 +1,12 @@
-import type { ArtsPagination } from '@/types';
-import type { Art, ArtDetail, ArtsRequest } from '@/types/gallery/art';
 import apiInstance from '@/lib/axios';
+import type { ArtsPagination } from '@/types';
+import type {
+  Art,
+  ArtDetail,
+  ArtsRequest,
+  GetCohortsResponse,
+  GetYearsResponse,
+} from '@/types/gallery/art';
 
 // GET 작품 전체 조회 /gallery/arts
 export const getArts = async ({
@@ -18,6 +24,18 @@ export const getArts = async ({
 // GET /gallery/arts/:artsNo
 export const getArtDetail = async (artsNo: number): Promise<ArtDetail> => {
   const response = await apiInstance.get(`/galleries/arts/${artsNo}`);
+
+  return response.data;
+};
+
+export const getYears = async (): Promise<GetYearsResponse> => {
+  const response = await apiInstance.get('/galleries/years');
+
+  return response.data;
+};
+
+export const getCohorts = async (): Promise<GetCohortsResponse> => {
+  const response = await apiInstance.get('/galleries/cohorts');
 
   return response.data;
 };

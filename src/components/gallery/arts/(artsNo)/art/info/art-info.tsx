@@ -10,9 +10,9 @@ type ArtInfoProps = {
 export default function ArtInfo({ artName, artists, caption }: ArtInfoProps) {
   return (
     <div>
-      <h2 className='t-b-24 text-left t-b-24 mb-[30px]'>작품 정보</h2>
-      <div className='flex flex-col bg-bg-gray-fa rounded-[5px] justify-start items-start md:leading-[2] p-[30px]'>
-        <div className='flex flex-col gap-[10px]'>
+      <h2 className='t-b-24 text-left t-b-24 mb-4'>작품 정보</h2>
+      <div className='flex flex-col bg-bg-gray-fa rounded-[5px] justify-start items-start md:leading-[2] xl:p-6 p-4'>
+        <div className='flex flex-col gap-4'>
           <ArtInfoItem label='작품명'>{artName}</ArtInfoItem>
 
           <ArtInfoItem label='작가명'>

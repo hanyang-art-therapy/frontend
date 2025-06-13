@@ -1,4 +1,4 @@
-import { Files, Notice, PaginationResponse } from '@/types';
+import { Files, Notice, MyReviewPagination } from '@/types';
 
 export type NoticeCategory = 'NOTICE' | 'PINNED';
 
@@ -20,7 +20,7 @@ export type UpdateNoticeRequest = Pick<Notice, 'noticeNo'> &
     }
   >;
 
-export type GetNoticesResponse = PaginationResponse<Notice>;
+export type GetNoticesResponse = MyReviewPagination<Notice>;
 export type GetNoticeResponse = Omit<Notice, 'userNo' | 'filesNo'> & {
   file: Pick<Files, 'filesNo' | 'name' | 'url'>;
 };

@@ -1,15 +1,15 @@
-import type { ProfessorResponse } from '@/types/admin/professors';
+import type { ProfessorsResponse } from '@/types/admin/professors';
 import { cn } from '@/lib/utils';
-import ProfessorsCartFront from './professors-cart-front';
+// import ProfessorsCartFront from './professors-cart-front';
 import ProfessorsCardBack from './professors-card-back';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-type ProfessorsCardProps = {
-  professor: ProfessorResponse;
+type ProfessorCardProps = {
+  professor: ProfessorsResponse;
 };
 
-export default function ProfessorsCard({ professor }: ProfessorsCardProps) {
+export default function ProfessorsCard({ professor }: ProfessorCardProps) {
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
 
   const isFlipped = flippedCard === professor.professorNo;
@@ -54,7 +54,7 @@ export default function ProfessorsCard({ professor }: ProfessorsCardProps) {
           isFlipped && '[transform:rotateY(180deg)]'
         )}
       >
-        <ProfessorsCartFront {...professor} />
+        {/* <ProfessorsCartFront {...professor} /> */}
         <ProfessorsCardBack handleCardClick={handleCardClick} />
       </div>
     </li>

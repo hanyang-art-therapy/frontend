@@ -1,14 +1,14 @@
 import apiInstance from '@/lib/axios';
 import type {
-  ArtistResponse,
-  PostArtistRequest,
-  PatchArtistRequest,
-} from '@/types/admin/artists';
-import type {
-  MessageResponse,
-  InfiniteScrollResponse,
   InfiniteKeywordSearchRequest,
+  InfiniteScrollResponse,
+  MessageResponse,
 } from '@/types';
+import type {
+  ArtistResponse,
+  PatchArtistRequest,
+  PostArtistRequest,
+} from '@/types/admin/artists';
 
 export const getArtists = async ({
   filter,

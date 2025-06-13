@@ -1,13 +1,44 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
-import { PostAdminArtRequest } from '@/types/admin/arts';
-import { getGalleries } from '@/apis/admin/galleries';
 import { postAdminArt } from '@/apis/admin/arts';
-import { FileUpload } from '@/apis/admin/files';
+import { postFile } from '@/apis/common/file';
+import SelectArtistDialog from '@/components/admin/arts/art/select-artist-dialog';
 import FormField from '@/components/admin/form-field';
+import { handleApiError } from '@/components/common/error-handler';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import type { InfiniteScrollResponse } from '@/types';
+import type { ArtistResponse } from '@/types/admin/artists';
+import type { PostAdminArtRequest } from '@/types/admin/arts';
+import type { GalleriesResponse } from '@/types/admin/galleries';
+import {
+  type ChangeEvent,
+  type Dispatch,
+  type SetStateAction,
+  useState,
+} from 'react';
+import { useLoaderData } from 'react-router-dom';
+import { toast } from 'sonner';
 
-export default function AdminArtForm() {
+type AdminArtFormProps = {
+  setSelectedTab: Dispatch<SetStateAction<'view' | 'form'>>;
+};
+
+export default function AdminArtForm({ setSelectedTab }: AdminArtFormProps) {
+  const { galleriesResponse } = useLoaderData() as {
+    galleriesResponse: GalleriesResponse[];
+  };
+
+  const { artistsResponse } = useLoaderData() as {
+    artistsResponse: InfiniteScrollResponse<ArtistResponse>;
+  };
+
+  const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
   const [form, setForm] = useState<PostAdminArtRequest>({
     artName: '',
     caption: '',
@@ -18,26 +49,20 @@ export default function AdminArtForm() {
     artistList: [],
   });
 
-  const [file, setFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('');
-  const [galleries, setGalleries] = useState<
-    { galleriesNo: number; title: string }[]
-  >([]);
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const uploadedImage = e.target.files?.[0];
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
+    if (!uploadedImage) {
+      toast.error('이미지를 선택해주세요.');
+      return;
+    }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const uploaded = e.target.files?.[0];
-    if (uploaded) {
-      setFile(uploaded);
-      setPreviewUrl(URL.createObjectURL(uploaded));
+    try {
+      setPreviewUrl(URL.createObjectURL(uploadedImage));
+      setFile(uploadedImage);
+    } catch (error) {
+      toast.error(handleApiError(error));
+      e.target.value = '';
     }
   };
 
@@ -48,46 +73,48 @@ export default function AdminArtForm() {
     }
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
+      const response = await postFile([file]);
 
-      const res = await FileUpload(formData); // 서버에 업로드
-      setForm((prev) => ({ ...prev, filesNo: res.filesNo })); // ✅ filesNo 반영
-      toast.success('이미지 업로드 성공');
+      setForm((prev) => ({ ...prev, filesNo: response[0].filesNo }));
+
+      toast.success('작품 이미지가 등록되었습니다. 작품 등록을 진행해주세요.');
     } catch (error) {
-      toast.error('이미지 업로드 실패');
+      toast.error(handleApiError(error));
+      setForm((prev) => ({ ...prev, filesNo: 0 }));
     }
   };
 
   const handleSubmit = async () => {
+    if (!form.artistList.length) {
+      toast.error('작가를 선택해주세요.');
+      return;
+    }
+
     try {
-      await postAdminArt({ ...form, galleriesNo: Number(form.galleriesNo) });
-      toast.success('작품 등록 성공');
-    } catch {
-      toast.error('작품 등록 실패');
+      await postAdminArt({
+        ...form,
+        galleriesNo: Number(form.galleriesNo),
+        artType: form.artistList.length > 1 ? 'GROUP' : 'SINGLE',
+      });
+      toast.success('작품 등록이 완료되었습니다.');
+      setSelectedTab('view');
+    } catch (error) {
+      toast.error(handleApiError(error));
     }
   };
 
-  useEffect(() => {
-    const fetchGalleries = async () => {
-      try {
-        const res = await getGalleries();
-        setGalleries(res);
-      } catch {
-        toast.error('전시 목록 조회 실패');
-      }
+  const handleInputChange =
+    (id: string) => (e: ChangeEvent<HTMLInputElement>) => {
+      setForm((prev) => ({ ...prev, [id]: e.target.value }));
     };
-    fetchGalleries();
-  }, []);
+
+  const handleGallerySelectChange = (value: string) => {
+    setForm((prev) => ({ ...prev, galleriesNo: Number(value) }));
+  };
 
   const fields = [
-    { id: 'artType', label: '유형', placeholder: '유형' },
     { id: 'artName', label: '작품명', placeholder: '작품명' },
     { id: 'caption', label: '캡션', placeholder: '캡션' },
-    { id: 'galleriesTitle', label: '전시회', placeholder: '전시회' },
-    { id: 'galleriesTitle', label: '작가', placeholder: '작가' },
-    { id: 'coDescription', label: '공동작품설명', placeholder: '공동작품설명' },
-    { id: 'coDescription', label: '개인작품설명', placeholder: '개인작품설명' },
   ];
 
   return (
@@ -135,10 +162,50 @@ export default function AdminArtForm() {
                 id={id}
                 name={id}
                 placeholder={placeholder}
+                onChange={handleInputChange(id)}
                 className='w-full px-[15px] outline-none'
               />
             </FormField>
           ))}
+
+          <FormField id='galleriesTitle' label='전시회'>
+            <Select onValueChange={handleGallerySelectChange}>
+              <SelectTrigger className='w-full border-none'>
+                <SelectValue placeholder='전시회를 선택해주세요.' />
+              </SelectTrigger>
+
+              <SelectContent className='w-full'>
+                {galleriesResponse.map((gallery) => (
+                  <SelectItem
+                    key={gallery.galleriesNo}
+                    value={gallery.galleriesNo.toString()}
+                  >
+                    {gallery.title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FormField>
+
+          <FormField id='artistList' label='작가'>
+            <SelectArtistDialog
+              initialArtists={artistsResponse}
+              form={form}
+              setForm={setForm}
+            />
+          </FormField>
+
+          {form.artistList.length > 1 && (
+            <FormField id='coDescription' label='공동작품설명'>
+              <textarea
+                id='coDescription'
+                name='coDescription'
+                placeholder='공동작품설명'
+                className='w-full p-[15px] outline-none'
+                rows={10}
+              />
+            </FormField>
+          )}
         </div>
       </div>
 
