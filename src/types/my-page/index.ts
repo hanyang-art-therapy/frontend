@@ -1,7 +1,10 @@
 import { ArtArtistRel, Arts, Review, User } from '@/types';
 
-// TODO: userId 추가
-export type MyProfileData = Pick<User, 'userName' | 'email' | 'studentNo'>;
+export type MyProfileData = Pick<
+  User,
+  'userId' | 'userName' | 'email' | 'role' | 'studentNo'
+>;
+
 export type MyReviewData = Pick<
   Review,
   'reviewsNo' | 'artsNo' | 'reviewText' | 'createdAt'
@@ -16,3 +19,25 @@ export type ResetPwFieldKey =
   | 'currentPassword'
   | 'newPassword'
   | 'confirmPassword';
+
+export type getMyReviewsRequest = {
+  page?: number;
+  keyword?: string;
+};
+
+export type getMyPostsRequest = {
+  page?: number;
+};
+
+export type PatchMyProfileRequest = Partial<
+  Pick<User, 'userName' | 'email' | 'studentNo'> & {
+    verificationCode: string;
+  }
+>;
+
+export type PostEmailVerificationRequest = Pick<User, 'email'>;
+
+export type PostResetPasswordRequest = Pick<User, 'userId'> & {
+  currentPassword: string;
+  newPassword: string;
+};

@@ -79,7 +79,7 @@ export default function FindMy() {
 
   return (
     <>
-      <Step items={FIND_MY_STEP_ITEMS} step={step} setStep={setStep} />
+      <Step items={FIND_MY_STEP_ITEMS} step={step} onChange={setStep} />
 
       <div className='md:max-w-[1260px] xl:px-0 px-[20px] mx-auto pt-[60px] space-y-[30px] md:min-h-[calc(100vh-394px)]'>
         <h1 className='t-b-24'>{isFindId ? findId.label : findPw.label}</h1>

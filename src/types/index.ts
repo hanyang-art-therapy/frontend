@@ -7,8 +7,8 @@ export type User = {
   password: string; // 비밀번호
   email: string; // 이메일
   userName: string; // 이름
-  studentNo: string; // 학번
-  role: string; // 회원 권한
+  studentNo: number; // 학번
+  role: 'USER' | 'ARTIST' | 'ADMIN' | 'TESTER'; // 회원 권한
   userStatus: string; // 회원 상태
 };
 
@@ -45,11 +45,12 @@ export type Gallery = {
 export type Arts = {
   artsNo: number; // 작품 번호
   galleriesNo: number; // 전시 번호
-  filesNo: number; // 파일 ID
   artName: string; // 작품명
   caption: string; // 캡션
   artType: 'SINGLE' | 'GROUP'; // 작품 타입
+  coDescription: string | null; // 공동 작품 설명
   createdAt: string; // 업로드 일자 - TIMESTAMP
+  filesNo: number; // 파일 ID
 };
 
 // 파일
@@ -81,13 +82,87 @@ export type ArtArtistRel = {
   description: string; // 작품 설명
 };
 
+// 공지사항
+export type Notice = {
+  noticeNo: number; // 공지사항 번호
+  userNo: number; // 회원 번호
+  title: string; // 제목
+  content: string; // 내용
+  createdAt: string; // 작성 일자
+  category: string; // 카테고리
+  viewCount: number; // 조회수
+  periodStart: string; // 시작 일자 - TIMESTAMP
+  periodEnd: string; // 종료 일자 - TIMESTAMP
+  isFixed: boolean; // 고정 여부
+};
+
+// 공지사항 파일
+export type NoticeFiles = {
+  noticeFilesNo: number; // 공지사항 파일 번호
+  noticeNo: number; // 공지사항 번호
+  filesNo: number; // 파일 번호
+};
+
+// 교수진
+export type Professor = {
+  professorNo: number; // 교수 번호
+  professorName: string; // 교수명
+  position: string | null; // 교수 직위
+  major: string | null; // 교수 전공
+  email: string | null; // 교수 이메일
+  tel: string | null; // 교수 전화번호
+  filesNo: number | null; // 파일 번호
+};
+
+export type RefreshTokens = {
+  refreshNo: number;
+  userNo: number;
+  refreshToken: string;
+  expiredAt: string;
+};
+
 export type MessageResponse = {
   message: string;
+};
+
+export type MyReviewPagination<T> = {
+  content: T[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
 };
 
 export type ArtsPagination<T> = {
   content: T[];
   lastId: number;
-  totalElements: number;
   hasNext: boolean;
+};
+
+export type ArtReviewsPagination<T> = {
+  content: T[];
+  page: number;
+  isLast: boolean;
+};
+
+export type InfiniteScrollResponse<T> = {
+  content: T[];
+  lastId: number;
+  hasNext: boolean;
+};
+
+export type InfiniteKeywordSearchRequest = {
+  filter?: string;
+  keyword?: string;
+  lastId?: number;
+  size?: number;
+};
+
+export type Content = {
+  title: string;
+  sections: {
+    title: string;
+    content?: string[];
+    points?: string[];
+  }[];
 };

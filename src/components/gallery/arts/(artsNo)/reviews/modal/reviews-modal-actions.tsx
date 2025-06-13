@@ -1,10 +1,13 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
-import { DialogClose } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/store/auth';
+import { Check, Edit, RotateCcw, Trash } from 'lucide-react';
 
 type ReviewsModalActionsProps = {
   isEditing: boolean;
+  handleCancelClick: () => void;
   handleConfirmClick: () => void;
   handleEditClick: () => void;
   handleDeleteClick: () => void;
@@ -12,6 +15,7 @@ type ReviewsModalActionsProps = {
 
 export default function ReviewsModalActions({
   isEditing,
+  handleCancelClick,
   handleConfirmClick,
   handleEditClick,
   handleDeleteClick,
@@ -19,34 +23,48 @@ export default function ReviewsModalActions({
   const { userNo } = useAuthStore();
 
   return (
-    <div className='flex gap-2 items-end sm:justify-end justify-center'>
-      <DialogClose asChild>
-        <Button
-          variant='outline'
-          size='default'
-          className='w-[80px] h-[36px] py-[14px] px-3 t-r-18 md:h-[40px] md:w-[80px] md:py-[14px] rounded-full'>
-          닫기
-        </Button>
-      </DialogClose>
-
+    <div className='flex gap-4 items-center justify-end'>
       {isEditing ? (
-        <Button
-          onClick={handleConfirmClick}
-          variant='secondary'
-          className={cn(
-            'w-[80px] h-[36px] py-[14px] px-3 t-r-18 md:h-[40px] md:w-[80px] md:py-[14px] rounded-full',
-            !userNo && 'hidden'
-          )}>
-          확인
-        </Button>
+        <>
+          <Button
+            onClick={handleCancelClick}
+            variant='outline'
+            size='sm'
+            autoFocus={false}
+            className={cn(
+              'transition-all duration-200 hover:scale-105 group text-black',
+              userNo && 'hidden'
+            )}
+          >
+            <RotateCcw />
+            취소
+          </Button>
+          <Button
+            onClick={handleConfirmClick}
+            variant='secondary'
+            size='sm'
+            autoFocus={false}
+            className={cn(
+              'bg-primary hover:bg-primary/80 border-0 transition-all duration-200 hover:scale-105 group',
+              userNo && 'hidden'
+            )}
+          >
+            <Check className='w-4 h-4 group-hover:scale-110 transition-transform duration-200' />
+            확인
+          </Button>
+        </>
       ) : (
         <Button
           onClick={handleEditClick}
-          variant='secondary'
+          variant='default'
+          size='sm'
+          autoFocus={false}
           className={cn(
-            'w-[80px] h-[36px] py-[14px] px-3 t-r-18 md:h-[40px] md:w-[80px] md:py-[14px] rounded-full',
-            !userNo && 'hidden'
-          )}>
+            'flex items-center gap-2 transition-all duration-200 hover:scale-105 group',
+            userNo && 'hidden'
+          )}
+        >
+          <Edit className='w-4 h-4 group-hover:rotate-12 transition-transform duration-200' />
           수정
         </Button>
       )}
@@ -55,10 +73,14 @@ export default function ReviewsModalActions({
         <Button
           onClick={handleDeleteClick}
           variant='destructive'
+          size='sm'
+          autoFocus={false}
           className={cn(
-            'w-[80px] h-[36px] py-[14px] px-3 t-r-18 text-white md:h-[40px] md:w-[80px] md:py-[14px] rounded-full',
-            !userNo && 'hidden'
-          )}>
+            'flex items-center gap-2 bg-destructive hover:bg-destructive/80 transition-all duration-200 hover:scale-105 group',
+            userNo && 'hidden'
+          )}
+        >
+          <Trash className='w-4 h-4 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-200' />
           삭제
         </Button>
       )}

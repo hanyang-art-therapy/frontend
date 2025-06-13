@@ -1,8 +1,12 @@
 import type { User } from '@/types';
 
-export type SignUpRequest = Pick<User, 'password' | 'userName' | 'email'> & {
-  studentNo?: string;
-};
+export type SignUpRequest = Pick<
+  User,
+  'userId' | 'password' | 'userName' | 'email'
+> &
+  Partial<Pick<User, 'studentNo'>>;
+
+export type CheckUserIdRequest = Pick<User, 'userId'>;
 
 export type CheckStudentNoRequest = Pick<User, 'studentNo'>;
 

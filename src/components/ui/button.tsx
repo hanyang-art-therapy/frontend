@@ -12,18 +12,16 @@ const buttonVariants = cva(
         default: 'bg-bg-primary text-white shadow-xs hover:bg-bg-primary/80',
         destructive:
           'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 ',
-        outline:
-          'border border-gray-3 bg-bg-gray-fa shadow-xs hover:bg-bg-gray-fa/80',
+        outline: 'border border-gray-3  shadow-xs hover:bg-bg-gray-fa/80',
         gray: 'border border-gray-300 bg-gray-3 text-gray-800 shadow-xs hover:bg-gray-600 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-600',
         secondary:
           'bg-bg-secondary/80 text-white shadow-xs hover:bg-secondary/60',
-        ghost:
-          'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-[45px] w-[200px] py-[14px] t-b-18',
-        sm: 'h-[36px] py-[14px] px-3 has-[>svg]:px-2.5 text-r-14 text-white',
+        sm: 'h-[36px] py-[14px] px-3 has-[>svg]:px-4 text-r-14 text-white',
         lg: 'h-10 px-6 has-[>svg]:px-4 t-m-18',
         icon: 'size-9 px-auto',
       },

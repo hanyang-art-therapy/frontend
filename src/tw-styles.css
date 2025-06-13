@@ -4,6 +4,10 @@
 @theme inline {
   --color-primary: #f18100;
   --color-secondary: #004483;
+  --color-black: #333;
+  --color-white: #fff;
+  --color-success: #1a83e4;
+
   --color-gray-6: #666;
   --color-gray-9: #999;
   --color-gray-3: #333;
@@ -12,14 +16,13 @@
   --color-bg-secondary: #004483;
   --color-bg-gray-d: #ddd;
   --color-bg-gray-fa: #fafafa;
-
+  /* 이부분 추가 */
+  --color-bg-gray-100: #f3f4f6;
+  /* 이부분 추가 */
   --color-btn-dark-3: #333;
   --color-btn-gray-9: #999;
   --color-btn-gray-d: #ddd;
   --color-btn-gray-fa: #fafafa;
-
-  --color-black: #333;
-  --color-white: #fff;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -171,26 +174,32 @@
     font-size: clamp(38px, calc(14.545px + 5.455vw), 80px);
     font-weight: 700;
   }
+
   .t-b-52 {
     font-size: clamp(34px, calc(27.0649px + 2.0779vw), 52px);
     font-weight: 700;
   }
+
   .t-b-32 {
     font-size: clamp(24px, calc(19.5325px + 1.039vw), 32px);
     font-weight: 700;
   }
+
   .t-b-24 {
     font-size: clamp(20px, calc(17.7662px + 0.5195vw), 24px);
     font-weight: 700;
   }
+
   .t-b-18 {
     font-size: clamp(16px, calc(13.3247px + 0.3896vw), 18px);
     font-weight: 700;
   }
+
   .t-b-16 {
     font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
     font-weight: 700;
   }
+
   .t-b-14 {
     font-size: clamp(12px, calc(10.8831px + 0.2597vw), 14px);
     font-weight: 700;
@@ -210,8 +219,14 @@
     font-size: clamp(16px, calc(13.3247px + 0.3896vw), 18px);
     font-weight: 500;
   }
+
   .t-m-16 {
     font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+    font-weight: 500;
+  }
+
+  .t-m-14 {
+    font-size: clamp(12px, calc(10.8831px + 0.2597vw), 14px);
     font-weight: 500;
   }
 
@@ -219,14 +234,17 @@
     font-size: clamp(15px, calc(13.3247px + 0.3896vw), 18px);
     font-weight: 400;
   }
+
   .t-r-16 {
     font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
     font-weight: 400;
   }
+
   .t-r-14 {
     font-size: clamp(12px, calc(10.8831px + 0.2597vw), 14px);
     font-weight: 400;
   }
+
   .t-r-12 {
     font-size: clamp(10px, calc(8.8831px + 0.2597vw), 12px);
     font-weight: 400;
@@ -248,7 +266,28 @@
   }
 
   .min-h-screen-vh {
-    @apply min-h-[calc(100vh-400px)];
+    @apply min-h-[calc(100vh-450px)];
+  }
+
+  .sm\:t-b-16 {
+    @media (width >= 40rem /* 640px */) {
+      font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+      font-weight: 700;
+    }
+  }
+
+  .sm\:t-m-16 {
+    @media (width >= 40rem /* 640px */) {
+      font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+      font-weight: 500;
+    }
+  }
+
+  .sm\:t-r-16 {
+    @media (width >= 40rem /* 640px */) {
+      font-size: clamp(14px, calc(12.8831px + 0.2597vw), 16px);
+      font-weight: 400;
+    }
   }
 }
 
@@ -559,6 +598,22 @@
     }
   }
 
+  .video-banner-bg {
+    width: 100vw;
+    object-fit: cover;
+    height: clamp(300px, calc(88.33px + 25.97vw), 400px);
+
+    > span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--white);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+    }
+  }
+
   .sign-in-banner-bg {
     background: url(/images/banners/sign-in-banner.webp) no-repeat 0 0;
     background-size: cover;
@@ -567,5 +622,17 @@
   .t-m-review-title {
     font-size: clamp(16px, calc(17.7662px + 0.5195vw), 24px);
     font-weight: 500;
+  }
+
+  .mobile-menu-btn {
+    @apply hover:opacity-70 cursor-pointer w-full xl:w-auto flex flex-col items-center gap-2;
+  }
+
+  .appear-section {
+    @apply opacity-0 max-h-0 pointer-events-none transition-all duration-500 ease-in-out;
+  }
+
+  .appear-section--visible {
+    @apply opacity-100 max-h-[500px] pointer-events-auto;
   }
 }

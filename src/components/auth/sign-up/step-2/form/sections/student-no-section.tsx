@@ -39,11 +39,9 @@ export default function StudentNoSection({
     onBlur(event);
 
     try {
-      const response = await checkStudentNo({
-        studentNo: watchStudentNo,
+      await checkStudentNo({
+        studentNo: Number(watchStudentNo),
       });
-
-      console.log(response);
 
       setIsStudentNoValid(true);
     } catch (error) {
@@ -59,16 +57,22 @@ export default function StudentNoSection({
   };
 
   return (
-    <div className='py-[20px] space-y-2.5 border-b border-bg-gray-d'>
-      <label className='t-b-16 flex items-center'>
+    <div className='py-[20px] space-y-2.5 border-b border-bg-gray-d w-full'>
+      <label
+        aria-label='학번'
+        htmlFor='studentNo'
+        className='t-b-16 flex items-center'
+      >
         학번 <Required nbsp />
       </label>
       <div className='flex gap-[30px] h-[45px]'>
         <Input
+          id='studentNo'
           type='number'
+          aria-label='학번'
           onBlur={handleBlur}
           pattern='[0-9]*'
-          className='w-[200px] h-[45px]'
+          className='w-[200px] h-[45px] t-r-16'
           placeholder='학번을 입력해주세요.'
           {...rest}
         />

@@ -15,7 +15,7 @@ export default function GalleryIntroContentTitle({
   subTitle,
 }: GalleryIntroTitleProps) {
   return (
-    <h3 className='min-w-[280px] t-b-32 flex flex-col gap-[5px]'>
+    <h3 className='min-w-[280px] t-b-32 flex flex-col gap-[5px] mb-[30px]'>
       <div className='flex items-center gap-3'>
         <Icon className='h-6 w-6 text-primary' />
         <p>{title}</p>

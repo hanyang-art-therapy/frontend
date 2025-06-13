@@ -1,5 +1,7 @@
 import { Input } from '@/components/ui/input';
+import ShowPassword from '@/components/ui/show-password';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 
 type RestPwFieldRegister = {
@@ -24,24 +26,38 @@ export default function PwField({
   register,
   error,
 }: PwFieldProps) {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <tr className='border-b-[1px] relative border-bg-gray-d last:border-b-0 md:h-[45px] h-[35px]'>
-      <td className='t-b-16 text-center md:w-[250px] w-[100px] border-r-[1px] border-bg-gray-d bg-bg-muted'>
+    <tr className='border-b-[1px] relative border-bg-gray-d last:border-b-0'>
+      <td className='t-b-14 text-center md:w-[250px] w-24 border-r-[1px] border-bg-gray-d bg-bg-muted'>
         {label}
       </td>
 
-      <td className='text-gray t-r-14 md:text-r-16 px-4 rounded-[5px] bg-white'>
-        <div className='flex flex-col md:flex-row gap-2 md:gap-4 items-center justify-between py-2 relative'>
-          <Input
-            id={id}
-            type='password'
-            {...register(fieldKey)}
-            className={cn('max-w-[400px]', error && 'border-destructive')}
-            autoComplete={label}
-            required
-          />
+      <td className='t-r-16 px-2 sm:px-4 rounded-[5px] bg-white'>
+        <div className='flex flex-col gap-1 justify-between py-2'>
+          <div className='relative w-fit'>
+            <Input
+              id={id}
+              type={showPassword ? 'text' : 'password'}
+              {...register(fieldKey)}
+              className={cn('sm:w-[30vw] w-fit', error && 'border-destructive')}
+              autoComplete={label}
+              required
+            />
 
-          <span className='text-[12px] md:t-r-14 text-destructive'>
+            <ShowPassword
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+            />
+          </div>
+
+          <span
+            className={cn(
+              't-r-12 text-destructive hidden',
+              error && 'block mr-auto'
+            )}
+          >
             {error}
           </span>
         </div>

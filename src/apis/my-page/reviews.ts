@@ -1,24 +1,19 @@
-import { supabase } from '@/lib/supabase';
-import axios from 'axios';
+import apiInstance from '@/lib/axios';
+import type { MyReviewPagination } from '@/types';
+import type { getMyReviewsRequest, MyReviewData } from '@/types/my-page';
 
-// GET /my-page/myreviews
-// export const getMyReviews = async () => {
-//   const response = await apiInstance.get('/my-page/my-reviews');
-//   return response.data;
-// };
-
-export const getMyReviewsMocking = async () => {
-  const response = await axios.get('/my-page/my-reviews');
-
-  return response.data;
-};
-
-export const getMyReviews = async (userNo: string) => {
-  const response = await supabase.rpc('get_my_reviews', {
-    user_no: userNo,
+// GET 내가 작성한 댓글 목록조회 /my-page/my-reviews
+// GET 내가 작성한 댓글 목록조회 /my-page/my-reviews
+export const getMyReviews = async ({
+  page,
+  keyword,
+}: getMyReviewsRequest): Promise<MyReviewPagination<MyReviewData>> => {
+  const response = await apiInstance.get('/my-page/my-reviews', {
+    params: {
+      page,
+      keyword,
+    },
   });
-
-  console.log(response);
 
   return response.data;
 };

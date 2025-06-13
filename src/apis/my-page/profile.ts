@@ -1,29 +1,70 @@
-// import apiInstance from '@/lib/axios';
-import { supabase } from '@/lib/supabase';
-import type { MyProfileData } from '@/types/my-page';
-import axios from 'axios';
+import apiInstance from '@/lib/axios';
+import type { MessageResponse } from '@/types';
+import type {
+  MyProfileData,
+  PatchMyProfileRequest,
+  PostEmailVerificationRequest,
+  PostResetPasswordRequest,
+} from '@/types/my-page';
 
-// GET /my-page/profile
-// export const getMyProfile = async () => {
-//   const response = await apiInstance.get('/my-page/profile');
-
-//   return response.data;
-// };
-
-export const getMyProfileMocking = async () => {
-  const response = await axios.get('/my-page/profile');
+// GET 내 정보 조회 /my-page/profile
+// GET 내 정보 조회 /my-page/profile
+export const getMyProfile = async (): Promise<MyProfileData> => {
+  const response = await apiInstance.get('/my-page/profile');
 
   return response.data;
 };
 
-export const getMyProfile = async (userNo: string): Promise<MyProfileData> => {
-  const { data, error } = await supabase.rpc('get_my_profile', {
-    user_no: userNo,
+// PATCH 내 정보 수정 /my-page/profile
+// PATCH 내 정보 수정 /my-page/profile
+export const patchMyProfile = async ({
+  userName,
+  email,
+  studentNo,
+  verificationCode,
+}: PatchMyProfileRequest): Promise<MyProfileData> => {
+  const response = await apiInstance.patch('/my-page/profile', {
+    userName,
+    email,
+    studentNo,
+    verificationCode,
   });
 
-  if (error) {
-    throw new Error('유저 정보가 존재하지 않습니다.');
-  }
+  return response.data;
+};
 
-  return data ?? {};
+// PATCH 회원 탈퇴 /my-page/withdraw
+// PATCH 회원 탈퇴 /my-page/withdraw
+export const withdraw = async (): Promise<MessageResponse> => {
+  const response = await apiInstance.patch('/my-page/withdraw');
+
+  return response.data;
+};
+
+// POST 이메일 인증 /my-page/email-verification
+// POST 이메일 인증 /my-page/email-verification
+export const postEmailVerification = async ({
+  email,
+}: PostEmailVerificationRequest): Promise<MessageResponse> => {
+  const response = await apiInstance.post('/my-page/email-verification', {
+    email,
+  });
+
+  return response.data;
+};
+
+// POST 비밀번호 변경 /user/reset-password
+// POST 비밀번호 변경 /user/reset-password
+export const postResetPassword = async ({
+  userId,
+  currentPassword,
+  newPassword,
+}: PostResetPasswordRequest): Promise<MessageResponse> => {
+  const response = await apiInstance.post('/user/reset-password', {
+    userId,
+    currentPassword,
+    newPassword,
+  });
+
+  return response.data;
 };

@@ -7,29 +7,34 @@ import type {
 } from '@/types/find-my';
 
 // POST 아이디 찾기 /user/find-id
+// POST 아이디 찾기 /user/find-id
 export const findMyId = async ({
   email,
   userName,
 }: FindIdRequest): Promise<MessageResponse> => {
   const response = await apiInstance.post('/user/find-id', {
-    params: { email, userName },
+    email,
+    userName,
   });
 
   return response.data;
 };
 
 // POST 비밀번호 찾기 /user/find-password
+// POST 비밀번호 찾기 /user/find-password
 export const findMyPassword = async ({
   userId,
   email,
 }: FindPasswordRequest): Promise<MessageResponse> => {
   const response = await apiInstance.post('/user/find-password', {
-    params: { userId, email },
+    userId,
+    email,
   });
 
   return response.data;
 };
 
+// POST 비밀번호 초기화 /user/reset-password
 // POST 비밀번호 초기화 /user/reset-password
 export const resetPassword = async ({
   userId,

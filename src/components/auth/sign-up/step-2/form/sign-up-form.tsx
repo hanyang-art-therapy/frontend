@@ -1,18 +1,21 @@
 import { signUp } from '@/apis/auth/sign-up';
 import {
   EmailSection,
+  UserIdSection,
   PwSection,
   StudentNoSection,
   UserNameSection,
   UserTypeSection,
 } from '@/components/auth/sign-up/step-2/form/sections';
+import AppearContainer from '@/components/auth/sign-up/step-2/form/ui/appear-container';
 import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
+import { getValidationStates } from '@/lib/helper/sign-up';
 import {
-  signUpSchema,
   generalSignUpSchema,
-  type SignUpFormValues,
+  signUpSchema,
   type MemberSignUpFormValues,
+  type SignUpFormValues,
 } from '@/schemas/sign-up/sign-up-schema';
 import type { UserType } from '@/types/auth/sign-up';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,7 +33,8 @@ export default function SignUpForm({
   const [isLoading, setIsLoading] = useState(false);
   const [userType, setUserType] = useState<UserType>('member');
   const [isStudentNoValid, setIsStudentNoValid] = useState(true);
-  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isUserIdValid, setIsUserIdValid] = useState(false);
 
   const {
     register,
@@ -56,12 +60,13 @@ export default function SignUpForm({
 
     try {
       await signUp({
+        userId: data.userId,
         password: data.password,
         userName: data.userName,
         email,
         studentNo:
           userType === 'member'
-            ? (data as MemberSignUpFormValues).studentNo
+            ? Number((data as MemberSignUpFormValues).studentNo)
             : undefined,
       });
     } catch (error) {
@@ -78,38 +83,70 @@ export default function SignUpForm({
     if (userType === 'general') {
       clearErrors('studentNo');
       setIsStudentNoValid(true);
-      reset(
-        { ...watch(), studentNo: undefined },
-        { keepErrors: false, keepDirty: true, keepTouched: true }
-      );
-      trigger();
+      reset({ ...watch(), studentNo: undefined });
     }
-  }, [userType, clearErrors, setIsStudentNoValid, reset, watch, trigger]);
+  }, [userType, clearErrors, setIsStudentNoValid, reset, watch]);
 
   const isButtonDisabled =
     isLoading ||
     !isValid ||
     (userType === 'member' && !isStudentNoValid) ||
-    !isEmailValid;
+    !isEmailValid ||
+    !isUserIdValid;
+
+  const { emailValid, passwordValid, confirmPasswordValid, studentNoValid } =
+    getValidationStates({
+      watch,
+      errors,
+      isUserIdValid,
+      isEmailValid,
+      isStudentNoValid,
+      userType,
+    });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <UserTypeSection userType={userType} setUserType={setUserType} />
 
-      <EmailSection
+      <UserIdSection
         register={register}
-        setValue={setValue}
         watch={watch}
-        setError={setError}
-        selectedDomain={selectedDomain}
-        setSelectedDomain={setSelectedDomain}
         errors={errors}
-        setIsEmailValid={setIsEmailValid}
+        setError={setError}
+        setIsUserIdValid={setIsUserIdValid}
       />
 
-      <PwSection register={register} errors={errors} />
+      <AppearContainer show={isUserIdValid}>
+        <EmailSection
+          isEmailValid={isEmailValid}
+          selectedDomain={selectedDomain}
+          errors={errors}
+          register={register}
+          watch={watch}
+          setValue={setValue}
+          setError={setError}
+          setIsEmailValid={setIsEmailValid}
+          setSelectedDomain={setSelectedDomain}
+        />
+      </AppearContainer>
 
-      {userType === 'member' && (
+      <AppearContainer show={emailValid}>
+        <PwSection
+          register={register}
+          errors={errors}
+          watch={watch}
+          trigger={trigger}
+        />
+      </AppearContainer>
+
+      <AppearContainer
+        show={
+          emailValid &&
+          passwordValid &&
+          confirmPasswordValid &&
+          userType === 'member'
+        }
+      >
         <StudentNoSection
           register={register}
           watch={watch}
@@ -117,15 +154,19 @@ export default function SignUpForm({
           setError={setError}
           setIsStudentNoValid={setIsStudentNoValid}
         />
-      )}
+      </AppearContainer>
 
-      <UserNameSection register={register} errors={errors} />
+      <AppearContainer show={studentNoValid}>
+        <UserNameSection register={register} errors={errors} />
+      </AppearContainer>
 
       <div className='flex justify-center mt-[60px]'>
         <Button
           type='submit'
+          aria-label='가입하기'
           className='w-full md:w-[200px] h-[50px]'
-          disabled={isButtonDisabled}>
+          disabled={isButtonDisabled}
+        >
           가입하기
           {isLoading && <LoaderCircle className='w-6 h-6 ml-2 animate-spin' />}
         </Button>

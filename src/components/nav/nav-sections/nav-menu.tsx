@@ -1,9 +1,8 @@
+import DesktopMenu from '@/components/nav/nav-sections/nav-menu-sections/desktop-menu';
+import HamburgerButton from '@/components/nav/nav-sections/nav-menu-sections/hamburger-button';
+import MobileMenu from '@/components/nav/nav-sections/nav-menu-sections/mobile/mobile-menu';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import DesktopMenu from '@/components/nav/nav-sections/nav-menu-sections/desktop-menu';
-import MobileMenu from '@/components/nav/nav-sections/nav-menu-sections/mobile-menu';
-import HamburgerButton from '@/components/nav/nav-sections/nav-menu-sections/hamburger-button';
-// import SearchButton from '@/components/nav/nav-sections/nav-menu-sections/search-button'; 검색 기능 제외
 
 export default function NavMenu() {
   const [isSlideOpen, setIsSlideOpen] = useState(false);

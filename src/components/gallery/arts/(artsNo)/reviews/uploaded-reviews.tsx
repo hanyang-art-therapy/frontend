@@ -18,7 +18,7 @@ export default function UploadedReviews({
   setIsDialogOpen,
   setSelectedReview,
 }: UploadedReviewsProps) {
-  if (!reviews.length) return null;
+  if (!reviews?.length) return null;
   if (isLoading) return <ReviewsSkeleton />;
 
   const handleButtonClick = (review: ArtReview) => {
@@ -32,7 +32,8 @@ export default function UploadedReviews({
         <div
           key={index}
           className='flex flex-col sm:flex-col rounded-[5px] shadow-lg p-3 sm:p-4 w-full cursor-pointer'
-          onClick={() => handleButtonClick(review)}>
+          onClick={() => handleButtonClick(review)}
+        >
           <div className='flex flex-row sm:flex-col gap-3 sm:gap-0'>
             <div className='w-[120px] sm:w-full aspect-square sm:mb-4 rounded flex justify-center items-center flex-shrink-0'>
               <ReviewImageHeicSupport
