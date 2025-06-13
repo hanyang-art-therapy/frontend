@@ -6,23 +6,25 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import {
-  ProfessorResponse,
+  ProfessorsResponse,
   PatchProfessorRequest,
 } from '@/types/admin/professors';
 import type { MessageResponse } from '@/types';
-import { FileUpload } from '@/apis/admin/files';
+import { postFile } from '@/apis/common/file';
 import { useRef, useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
+import { getProfessor } from '@/apis/admin/professors';
 
-interface Props {
-  professor: ProfessorResponse;
+type Props = {
+  professor: ProfessorsResponse;
   onEdit: (form: PatchProfessorRequest) => Promise<MessageResponse>;
   onDelete: (professorNo: number) => Promise<MessageResponse>;
   onClose: () => void;
-}
+};
 
 export default function ProfessorModal({
   professor,
@@ -37,24 +39,31 @@ export default function ProfessorModal({
     major: '',
     email: '',
     tel: '',
-    files: {
-      filesNo: 0,
-    },
+    filesNo: null,
   });
 
   const [previewUrl, setPreviewUrl] = useState('/images/no-image.jpg');
 
   useEffect(() => {
-    setForm({
-      professorNo: professor.professorNo,
-      professorName: professor.professorName,
-      position: professor.position,
-      major: professor.major,
-      email: professor.email,
-      tel: professor.tel,
-      files: { filesNo: professor.files.filesNo },
-    });
-    setPreviewUrl(professor.files?.url || '/images/no-image.jpg');
+    try {
+      const fetchProfessor = async () => {
+        const response = await getProfessor(professor.professorNo);
+        setForm({
+          professorNo: professor.professorNo,
+          professorName: professor.professorName,
+          position: professor.position,
+          major: professor.major,
+          email: response?.email ?? '',
+          tel: response?.tel ?? '',
+          filesNo: null,
+        });
+        setPreviewUrl(response?.files?.url || '/images/no-image.jpg');
+      };
+
+      fetchProfessor();
+    } catch (error) {
+      toast.error(handleApiError(error));
+    }
   }, [professor]);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -65,7 +74,7 @@ export default function ProfessorModal({
     setForm((prev) => ({
       ...prev,
       [name]: value.trim(),
-      files: { ...prev.files },
+      filesNo: null,
     }));
   };
 
@@ -86,17 +95,11 @@ export default function ProfessorModal({
 
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('file', selected);
-
-      const { filesNo } = await FileUpload(formData);
+      const uploadedFile = await postFile([selected]);
 
       setForm((prev) => ({
         ...prev,
-        files: {
-          ...prev.files,
-          filesNo,
-        },
+        filesNo: uploadedFile[0].filesNo,
       }));
 
       setPreviewUrl(URL.createObjectURL(selected));
@@ -109,9 +112,7 @@ export default function ProfessorModal({
     }
   };
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = '/images/no-image.jpg';
-  };
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {};
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,7 +135,7 @@ export default function ProfessorModal({
         major: form.major,
         email: form.email,
         tel: form.tel,
-        files: { filesNo: form.files.filesNo },
+        filesNo: form.filesNo,
       };
       const res = await onEdit(submitForm);
       toast.success(res.message);
@@ -167,18 +168,27 @@ export default function ProfessorModal({
       <DialogContent className='max-w-[700px]'>
         <DialogHeader>
           <DialogTitle className='text-center'>PROFESSOR INFO</DialogTitle>
+          <DialogDescription className='text-center'>
+            교수 상세 정보
+          </DialogDescription>
         </DialogHeader>
         <div className='flex gap-[15px]'>
           {/* 이미지 업로드 */}
-          <div className='flex flex-col items-center gap-[10px]'>
-            <div className='w-[130px] aspect-[4/5] rounded border border-btn-gray-d overflow-hidden'>
-              <img
-                src={previewUrl}
-                alt='preview'
-                className='w-full h-full object-cover'
-                onError={handleImageError}
-                style={{ cursor: 'default' }}
-              />
+          <div className='flex flex-col items-center gap-[15px]'>
+            <div className='w-[100px] md:w-[130px] aspect-[4/5] rounded border border-btn-gray-d overflow-hidden'>
+              {previewUrl ? (
+                <img
+                  src={previewUrl}
+                  alt='preview'
+                  className='w-full h-full object-cover'
+                  onError={(e) =>
+                    (e.currentTarget.src = '/images/no-image.jpg')
+                  }
+                  style={{ cursor: 'default' }}
+                />
+              ) : (
+                <span className='t-r-14 text-gray-6'>NO IMAGE</span>
+              )}
             </div>
             <input
               id='image-upload'
@@ -218,9 +228,15 @@ export default function ProfessorModal({
             ))}
           </div>
         </div>
-        <DialogFooter className='grid grid-cols-2 mx-auto mt-[10px]'>
-          <Button onClick={handleSubmit}>수정</Button>
-          <Button variant='destructive' onClick={handleDelete}>
+        <DialogFooter className='grid grid-cols-2 gap-[10px] mx-auto mt-[10px] w-[100%] md:w-auto'>
+          <Button onClick={handleSubmit} className='w-full md:w-[200px]'>
+            수정
+          </Button>
+          <Button
+            variant='destructive'
+            onClick={handleDelete}
+            className='w-full md:w-[200px]'
+          >
             삭제
           </Button>
         </DialogFooter>

@@ -30,7 +30,7 @@ export default function AdminProfessor() {
         </div>
       </div>
 
-      <div className='pt-[215px] min-h-[100vh]'>{content}</div>
+      <div className='pt-[215px]'>{content}</div>
     </>
   );
 }

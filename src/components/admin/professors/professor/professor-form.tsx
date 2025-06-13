@@ -1,25 +1,20 @@
 import FormField from '@/components/admin/form-field';
 import { Button } from '@/components/ui/button';
-import { FileUpload } from '@/apis/admin/files';
+import { postFile } from '@/apis/common/file';
 import { postProfessor } from '@/apis/admin/professors';
 import { PostProfessorRequest } from '@/types/admin/professors';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
-import { MessageResponse } from '@/types';
 
-interface Props {
-  onSuccess: (form: PostProfessorRequest) => Promise<MessageResponse>;
-}
-
-export default function ProfessorForm({ onSuccess }: Props) {
+export default function ProfessorForm() {
   const [form, setForm] = useState<PostProfessorRequest>({
     professorName: '',
     position: '',
     major: '',
     email: '',
     tel: '',
-    files: { filesNo: 0 },
+    filesNo: null,
   });
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -32,26 +27,32 @@ export default function ProfessorForm({ onSuccess }: Props) {
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const selected = e.target.files?.[0];
+    if (!selected) return;
+
+    const maxSize = 5 * 1024 * 1024;
+    if (selected.size > maxSize) {
+      toast.error('파일의 용량이 5MB를 초과하였습니다.');
+      e.target.value = '';
+      return;
+    }
 
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const { filesNo } = await FileUpload(formData);
+      const uploadedFiles = await postFile([selected]);
+      console.log(uploadedFiles);
 
       setForm((prev) => ({
         ...prev,
-        files: {
-          filesNo,
-        },
+        filesNo: uploadedFiles[0].filesNo,
       }));
-      setPreviewUrl(URL.createObjectURL(file));
-      toast.success('이미지 업로드 성공');
-    } catch (e) {
-      toast.error('이미지 업로드 실패');
+
+      console.log(uploadedFiles);
+
+      setPreviewUrl(URL.createObjectURL(selected));
+      toast.success('이미지 업로드가 완료되었습니다.');
+    } catch (error) {
+      toast.error(handleApiError(error));
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -63,7 +64,7 @@ export default function ProfessorForm({ onSuccess }: Props) {
     setForm((prev) => ({
       ...prev,
       [name]: value.trim(),
-      files: { filesNo: 0 },
+      filesNo: prev.filesNo,
     }));
   };
 
@@ -89,10 +90,9 @@ export default function ProfessorForm({ onSuccess }: Props) {
         major: '',
         email: '',
         tel: '',
-        files: { filesNo: 0 },
+        filesNo: null,
       });
       setPreviewUrl('');
-      onSuccess?.(form);
     } catch (error) {
       toast.error(handleApiError(error));
     }
@@ -109,7 +109,7 @@ export default function ProfessorForm({ onSuccess }: Props) {
   return (
     <form className='flex flex-col gap-[30px]' onSubmit={handleSubmit}>
       <div className='flex gap-[30px] items-start'>
-        {/* 이미지 미리보기 (미리보기만, 클릭X, 포인터X, hoverX) */}
+        {/* 이미지 미리보기 */}
         <div className='flex flex-col items-center gap-[15px]'>
           <div
             className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'
