@@ -107,12 +107,12 @@ export default function ProfessorForm() {
   ];
 
   return (
-    <form className='flex flex-col gap-[30px]' onSubmit={handleSubmit}>
-      <div className='flex gap-[30px] items-start'>
-        {/* 이미지 미리보기 */}
+    <form className='flex flex-col gap-[15px]' onSubmit={handleSubmit}>
+      <div className='flex gap-[15px]'>
+        {/* 이미지 업로드 */}
         <div className='flex flex-col items-center gap-[15px]'>
           <div
-            className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'
+            className='w-[100px] md:w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'
             style={{ cursor: 'default' }}
           >
             {previewUrl ? (

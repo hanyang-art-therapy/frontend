@@ -112,8 +112,6 @@ export default function ProfessorModal({
     }
   };
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {};
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
