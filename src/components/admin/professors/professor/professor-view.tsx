@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import {
+import type {
   ProfessorsResponse,
-  ProfessorResponse,
   PatchProfessorRequest,
 } from '@/types/admin/professors';
 import { MessageResponse } from '@/types';
@@ -20,6 +19,11 @@ export default function ProfessorView() {
     useState<ProfessorsResponse | null>(null);
 
   useEffect(() => {
+    getProfessors()
+      .then(setProfessors)
+      .catch((error) => {
+        toast.error(handleApiError(error));
+      });
     getProfessors()
       .then(setProfessors)
       .catch((error) => {

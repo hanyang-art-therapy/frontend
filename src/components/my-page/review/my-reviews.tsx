@@ -2,20 +2,20 @@ import { getMyReviews } from '@/apis/my-page/reviews';
 import MyReviewList from '@/components/my-page/review/my-review-list';
 import MyPageHeader from '@/components/my-page/ui/my-page-header';
 import Search from '@/components/ui/search';
-import type { PaginationResponse } from '@/types';
+import type { MyReviewPagination } from '@/types';
 import type { MyReviewData } from '@/types/my-page';
 import { useState, useEffect } from 'react';
 import Pagination from '@/components/ui/pagination';
 import MyReviewNoResult from './my-review-no-result';
 
 type MyReviewsProps = {
-  myReviews: PaginationResponse<MyReviewData> | null;
+  myReviews: MyReviewPagination<MyReviewData> | null;
 };
 
 export default function MyReveiws({ myReviews }: MyReviewsProps) {
   const [searchValue, setSearchValue] = useState('');
   const [searchedReviews, setSearchedReviews] =
-    useState<PaginationResponse<MyReviewData> | null>(null);
+    useState<MyReviewPagination<MyReviewData> | null>(null);
 
   useEffect(() => {
     if (myReviews?.content) {

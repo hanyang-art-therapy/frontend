@@ -1,4 +1,4 @@
-import { postFile } from '@/apis/gallery/file';
+import { postFile } from '@/apis/common/file';
 import { getReviews, postReview } from '@/apis/gallery/review';
 import { handleApiError } from '@/components/common/error-handler';
 import ReviewsModal from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal';
@@ -8,99 +8,138 @@ import ReviewsTextarea from '@/components/gallery/arts/(artsNo)/reviews/textarea
 import ReviewsTextareaActions from '@/components/gallery/arts/(artsNo)/reviews/textarea/reviews-textarea-actions';
 import UploadedReviews from '@/components/gallery/arts/(artsNo)/reviews/uploaded-reviews';
 import { useAuthStore } from '@/store/auth';
+import { ArtReviewsPagination } from '@/types';
 import type { ArtReview } from '@/types/gallery/review';
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 type ReviewsProps = {
   artName: string;
   artsNo: string;
+  initialReviews: ArtReviewsPagination<ArtReview> | null;
 };
 
-export default function Reviews({ artName, artsNo }: ReviewsProps) {
+type PreviewImage = {
+  url: string;
+  fileNo: number;
+};
+
+export default function Reviews({
+  artName,
+  artsNo,
+  initialReviews,
+}: ReviewsProps) {
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const { userNo } = useAuthStore();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [comment, setComment] = useState('');
-  const [reviews, setReviews] = useState<ArtReview[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [uploadedFileNo, setUploadedFileNo] = useState<number[]>([]);
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+  const [isImageUploadLoading, setIsImageUploadLoading] = useState(false);
+  const [previewImages, setPreviewImages] = useState<PreviewImage[]>([]);
+  const [reviews, setReviews] = useState<ArtReviewsPagination<ArtReview>>(
+    initialReviews ?? {
+      content: [],
+      page: 0,
+      isLast: false,
+    }
+  );
   const [selectedReview, setSelectedReview] = useState<ArtReview>(
     {} as ArtReview
   );
-  const [previewUploadImage, setPreviewUploadImage] = useState<string | null>(
-    null
-  );
 
-  // 리뷰 전체 조회
   const fetchReviews = useCallback(async () => {
     try {
       const reviews = await getReviews(Number(artsNo));
+
       setReviews(reviews);
     } catch (error) {
       const errorMessage = handleApiError(error);
+
       toast.error(errorMessage);
     }
   }, [artsNo]);
 
-  useEffect(() => {
-    fetchReviews();
-  }, [isDialogOpen]);
-
-  // 댓글 업로드
   const handlePostReview = async () => {
-    // 댓글 입력 없을 때 오류 반환
     if (!comment.trim()) return toast.error('댓글을 입력해주세요.');
 
     try {
-      setIsLoading(true);
+      setIsSubmitLoading(true);
       setComment('');
-      setPreviewUploadImage(null);
+      setPreviewImages([]);
 
-      await postReview({
+      const response = await postReview({
         userNo: Number(userNo),
         artsNo: Number(artsNo),
         reviewText: comment,
-        filesNo: uploadedFileNo,
+        filesNo: previewImages.map((previewImage) => previewImage.fileNo),
       });
 
-      await fetchReviews();
+      setReviews((prev) => {
+        const newReviews = [...prev.content, response.data];
+
+        return {
+          ...prev,
+          content: newReviews,
+        };
+      });
 
       toast.success('댓글이 업로드되었습니다.');
     } catch (error) {
       toast.error(handleApiError(error));
     } finally {
-      setIsLoading(false);
+      setIsSubmitLoading(false);
     }
   };
 
-  // 첨부파일 업로드
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const files = e.target.files;
 
-    if (file) {
-      const response = await postFile(file);
-      setPreviewUploadImage(response[0].url);
-      setUploadedFileNo([response[0].filesNo]);
+    if (files && files.length > 0) {
+      if (previewImages.length + files.length > 5) {
+        toast.error('이미지는 최대 5장까지 첨부 가능합니다.');
+        return;
+      }
+
+      try {
+        setIsImageUploadLoading(true);
+        const fileArray = Array.from(files);
+        const response = await postFile(fileArray);
+
+        const newImages = response.map((file) => ({
+          url: file.url,
+          fileNo: file.filesNo,
+        }));
+
+        setPreviewImages((prev) => [...prev, ...newImages]);
+      } catch (error) {
+        toast.error(handleApiError(error));
+      } finally {
+        setIsImageUploadLoading(false);
+        if (imageInputRef.current) {
+          imageInputRef.current.value = '';
+        }
+      }
     }
+  };
+
+  const handleRemoveImage = (imageIndex: number) => {
+    setPreviewImages((prev) =>
+      prev.filter((_, previewImageIndex) => previewImageIndex !== imageIndex)
+    );
+
+    if (imageInputRef.current) imageInputRef.current.value = '';
   };
 
   return (
     <div className='flex w-full flex-col items-start gap-[10px]'>
       {/* 미술관 미술치료 + 리뷰 개수 */}
-      <ReviewsTitle commentsLength={reviews?.length || 0} />
+      <ReviewsTitle commentsLength={reviews?.content.length || 0} />
 
       {/* 리뷰 작성 */}
       <div className='flex flex-col w-full border border-bg-gray-d p-[10px] gap-[20px] md:pb-[22px] rounded-sm'>
         <div className='flex gap-[10px]'>
-          {/* 리뷰 이미지 */}
-          <ReviewsImage
-            previewImage={previewUploadImage}
-            setPreviewUploadImage={setPreviewUploadImage}
-          />
-
           {/* 리뷰 텍스트 편집기 */}
           <ReviewsTextarea
             comment={comment}
@@ -111,18 +150,26 @@ export default function Reviews({ artName, artsNo }: ReviewsProps) {
           />
         </div>
 
+        {/* 리뷰 이미지 */}
+        <ReviewsImage
+          previewImages={previewImages}
+          handleRemoveImage={handleRemoveImage}
+          handleAddImage={() => imageInputRef.current?.click()}
+          isLoading={isImageUploadLoading}
+        />
+
         {/* 리뷰 텍스트 하단 버튼 (수정, 삭제, 닫기) */}
         <ReviewsTextareaActions
-          isLoading={isLoading}
-          imageInputRef={imageInputRef}
+          isLoading={isSubmitLoading}
           handlePostReview={handlePostReview}
+          comment={comment}
         />
       </div>
 
       {/* 업로드된 리뷰 */}
       <UploadedReviews
-        isLoading={isLoading}
-        reviews={reviews}
+        isLoading={isSubmitLoading}
+        reviews={reviews.content}
         setIsDialogOpen={setIsDialogOpen}
         setSelectedReview={setSelectedReview}
       />

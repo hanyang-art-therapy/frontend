@@ -36,6 +36,7 @@ export default function ReviewsTextarea({
         id='imageInput'
         type='file'
         hidden
+        multiple
         accept='image/*'
         onChange={handleImageChange}
       />

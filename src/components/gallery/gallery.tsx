@@ -1,3 +1,4 @@
+import VideoBanner from '@/components/common/video-banner';
 import Arts from '@/components/gallery/arts/arts';
 import GalleryIntro from '@/components/gallery/intro/gallery-intro';
 import Gallerytherapy from '@/components/gallery/therapy/gallery-therapy';
@@ -5,7 +6,6 @@ import Step from '@/components/ui/step';
 import { GALLERY_STEP_ITEMS } from '@/constants/gallery/gallery';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import VideoBanner from '../common/video-banner';
 
 export default function Gallery() {
   const [searchParams, setSearchParams] = useSearchParams();

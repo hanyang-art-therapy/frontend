@@ -40,7 +40,7 @@ export default function StudentNoSection({
 
     try {
       await checkStudentNo({
-        studentNo: watchStudentNo,
+        studentNo: Number(watchStudentNo),
       });
 
       setIsStudentNoValid(true);
@@ -61,7 +61,8 @@ export default function StudentNoSection({
       <label
         aria-label='학번'
         htmlFor='studentNo'
-        className='t-b-16 flex items-center'>
+        className='t-b-16 flex items-center'
+      >
         학번 <Required nbsp />
       </label>
       <div className='flex gap-[30px] h-[45px]'>
