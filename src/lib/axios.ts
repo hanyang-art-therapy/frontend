@@ -12,8 +12,7 @@ const apiInstance = axios.create({
 
 // Request 인터셉터
 apiInstance.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem('accessToken');
-  // const token = useAuthStore.getState().accessToken;
+  const { accessToken } = useAuthStore.getState();
   if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
 
   return config;
@@ -24,50 +23,50 @@ apiInstance.interceptors.response.use(
   (res) => res,
   async (error) => {
     const originalRequest = error.config;
-    const { setAccessToken, setUserNo, setRole } = useAuthStore.getState();
+    const { accessToken, setAccessToken, setUserNo, setRole } =
+      useAuthStore.getState();
 
-    // const isUserEndpoint = originalRequest.url?.includes('/user/');
+    const isUserEndpoint = originalRequest.url?.includes('/user/');
 
-    // 토큰이 없고 유저 관련 엔드포인트가 아닌 경우
-    // if (!accessToken && !isUserEndpoint) {
-    //   originalRequest._retry = true;
+    if (!accessToken && !isUserEndpoint) {
+      originalRequest._retry = true;
 
-    //   try {
-    //     const refreshResponse: AxiosResponse<RefreshResponse> =
-    //       await axios.post(
-    //         '/user/refresh',
-    //         {},
-    //         {
-    //           baseURL: apiInstance.defaults.baseURL,
-    //           withCredentials: true,
-    //           timeout: 10000,
-    //         }
-    //       );
+      try {
+        const refreshResponse: AxiosResponse<RefreshResponse> =
+          await axios.post(
+            '/user/refresh',
+            {},
+            {
+              baseURL: apiInstance.defaults.baseURL,
+              withCredentials: true,
+              timeout: 10000,
+            }
+          );
 
-    //     const {
-    //       accessToken: newAccessToken,
-    //       userNo,
-    //       role,
-    //     } = refreshResponse.data;
+        const {
+          accessToken: newAccessToken,
+          userNo,
+          role,
+        } = refreshResponse.data;
 
-    //     setAccessToken(newAccessToken);
-    //     setUserNo(userNo);
-    //     setRole(role);
+        setAccessToken(newAccessToken);
+        setUserNo(userNo);
+        setRole(role);
 
-    //     originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-    //     return apiInstance(originalRequest);
-    //   } catch (refreshError) {
-    //     if (
-    //       axios.isAxiosError(refreshError) &&
-    //       refreshError.response?.status === 403
-    //     ) {
-    //       useAuthStore.getState().reset();
-    //     }
+        return apiInstance(originalRequest);
+      } catch (refreshError) {
+        if (
+          axios.isAxiosError(refreshError) &&
+          refreshError.response?.status === 403
+        ) {
+          useAuthStore.getState().reset();
+        }
 
-    //     return Promise.reject(refreshError);
-    //   }
-    // }
+        return Promise.reject(refreshError);
+      }
+    }
 
     // 401 응답 (액세스 토큰 만료 시)
     if (error.response?.status === 401 && !originalRequest._retry) {

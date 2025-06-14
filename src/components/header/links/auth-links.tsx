@@ -1,18 +1,18 @@
 import { signOut } from '@/apis/auth/sign-out';
 import { handleApiError } from '@/components/common/error-handler';
-// import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/auth';
 import { LogIn, LogOut, UserPlus, UserRound } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export default function AuthLinks() {
-  // const { accessToken, reset } = useAuthStore();
-  const isSignedIn = !!localStorage.getItem('accessToken');
+  const { accessToken, reset } = useAuthStore();
+  const isSignedIn = !!accessToken;
 
   const handleLogout = async () => {
     try {
       await signOut();
-      // reset();
+      reset();
     } catch (error) {
       toast.error(handleApiError(error));
     }

@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 export default function SignInForm() {
   const navigate = useNavigate();
 
-  const { setAccessToken, setRole } = useAuthStore();
+  const { setAccessToken, setRole, setUserNo } = useAuthStore();
 
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState('');
@@ -47,8 +47,8 @@ export default function SignInForm() {
       }
 
       setAccessToken(response.accessToken);
-      localStorage.setItem('accessToken', response.accessToken);
       setRole(response.role);
+      setUserNo(response.userNo);
 
       if (isUserIdRemember) {
         localStorage.setItem('userId', userId);

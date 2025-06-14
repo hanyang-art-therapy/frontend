@@ -19,7 +19,7 @@ import type {
   KeyboardEvent,
   SetStateAction,
 } from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 
 type ReviewsModalProps = {
@@ -42,14 +42,10 @@ export default function ReviewsModal({
   fetchReviews,
 }: ReviewsModalProps) {
   const imageUrl = selectedReview.files?.[0]?.url;
-  const { role, userNo, setRole } = useAuthStore();
+  const { role, userNo } = useAuthStore();
 
   const [editedText, setEditedText] = useState(selectedReview.reviewText);
   const [isEditing, setIsEditing] = useState(false);
-
-  useEffect(() => {
-    setRole('ADMIN');
-  }, [role, userNo, selectedReview.userNo]);
 
   const handleEditClick = () => {
     setIsEditing(true);
