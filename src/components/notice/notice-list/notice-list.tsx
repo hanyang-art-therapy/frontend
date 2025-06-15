@@ -6,7 +6,6 @@ import { FileText, Volume2 } from 'lucide-react';
 import { NoticeSearch } from '../notice-search/notice-search';
 import { useEffect, useState } from 'react';
 import { getNotices } from '@/apis/notice/notice';
-// import { Notice } from '@/types';
 import { GetNoticesResponse } from '@/types/notice/notice';
 
 export default function NoticeList() {
