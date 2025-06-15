@@ -26,7 +26,9 @@ apiInstance.interceptors.response.use(
     const { accessToken, setAccessToken, setUserNo, setRole } =
       useAuthStore.getState();
 
-    const isUserEndpoint = originalRequest.url?.includes('/user/');
+    const isUserEndpoint =
+      originalRequest.url?.includes('/user/') &&
+      !originalRequest.url?.includes('/auth/refresh');
 
     if (!accessToken && !isUserEndpoint) {
       originalRequest._retry = true;
@@ -34,7 +36,7 @@ apiInstance.interceptors.response.use(
       try {
         const refreshResponse: AxiosResponse<RefreshResponse> =
           await axios.post(
-            '/user/refresh',
+            '/auth/refresh',
             {},
             {
               baseURL: apiInstance.defaults.baseURL,
@@ -75,7 +77,7 @@ apiInstance.interceptors.response.use(
       try {
         const refreshResponse: AxiosResponse<RefreshResponse> =
           await axios.post(
-            '/user/refresh',
+            '/auth/refresh',
             {},
             {
               baseURL: apiInstance.defaults.baseURL,
