@@ -115,7 +115,7 @@ export default function SignInForm() {
               onCheckedChange={() => setIsUserIdRemember(!isUserIdRemember)}
             />
             <label htmlFor='remember' className='t-r-14'>
-              이메일 저장
+              아이디 저장
             </label>
           </div>
 
