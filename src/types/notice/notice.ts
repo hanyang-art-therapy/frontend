@@ -1,4 +1,4 @@
-import { Files, Notice, PaginationResponse } from '@/types';
+import { Files, Notice, MyReviewPagination } from '@/types';
 
 export type NoticeCategory =
   | 'GENERAL'
@@ -30,6 +30,7 @@ export type UpdateNoticeRequest = Pick<Notice, 'noticeNo'> &
       filesNo: number[] | null;
     }
   >;
+
 
 export type GetNoticesResponse = PaginationResponse<
   Pick<

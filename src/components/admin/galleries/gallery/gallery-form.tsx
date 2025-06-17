@@ -7,11 +7,11 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
 
-interface Props {
-  onSuccess?: () => void;
-}
+type Props = {
+  postedYears: string[];
+};
 
-export default function GalleryForm({ onSuccess }: Props) {
+export default function GalleryForm({ postedYears }: Props) {
   const [form, setForm] = useState<Omit<Gallery, 'galleriesNo'>>({
     title: '',
     startDate: '',
@@ -29,17 +29,43 @@ export default function GalleryForm({ onSuccess }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const startYear = form.startDate.split('-')[0];
+    const endYear = form.endDate.split('-')[0];
+    const filteredYears = postedYears.filter((postedYear) => {
+      return postedYear !== endYear || postedYear !== startYear;
+    });
+
     // 유효성 검사
     if (!form.title || !form.startDate || !form.endDate) {
       toast.error('전시 제목, 전시 기간 모두 입력해주세요.');
       return;
     }
+    if (filteredYears.includes(startYear)) {
+      toast.error('해당년도에 이미 전시회가 등록되어 있습니다.');
+      return;
+    }
+    if (filteredYears.includes(endYear)) {
+      toast.error('해당년도에 이미 전시회가 등록되어 있습니다.');
+      return;
+    }
+    if (startYear !== endYear) {
+      toast.error('시작년도와 종료년도는 같아야 합니다.');
+      return;
+    }
+    if (form.startDate > form.endDate) {
+      toast.error('종료일자가 시작일자보다 빠를 수 없습니다.');
+      return;
+    }
 
     try {
-      await postGallery(form);
-      toast.success('전시회 등록이 완료되었습니다.');
+      const submitForm: PostGalleryRequest = {
+        title: form.title,
+        startDate: form.startDate,
+        endDate: form.endDate,
+      };
+      const res = await postGallery(submitForm);
+      toast.success(res.message);
       setForm({ title: '', startDate: '', endDate: '' });
-      onSuccess?.();
     } catch (error) {
       toast.error(handleApiError(error));
     }

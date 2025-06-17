@@ -5,8 +5,7 @@ export default function ProfessorsCartFront({
   ...professor
 }: ProfessorResponse) {
   const { professorName, position, major, email, tel, files } = professor;
-  const profileImage =
-    files?.[0]?.url || '/placeholder.svg?height=200&width=200';
+  const profileImage = files.url || '/placeholder.svg?height=200&width=200';
 
   return (
     <div className='absolute inset-0 [backface-visibility:hidden] rounded-xl overflow-hidden'>

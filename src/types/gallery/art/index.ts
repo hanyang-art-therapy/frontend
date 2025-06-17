@@ -8,18 +8,26 @@ export type Art = Pick<Arts, 'artsNo' | 'artName' | 'coDescription'> & {
 
 export type ArtDetail = Pick<
   Arts,
-  'artsNo' | 'artName' | 'caption' | 'createdAt'
-> &
-  Pick<ArtArtistRel, 'description'> & {
-    file: Pick<
-      Files,
-      'filesNo' | 'name' | 'url' | 'filesSize' | 'extension' | 'filesType'
-    >;
-    artists: Pick<Artist, 'studentNo' | 'artistName' | 'cohort'>[];
-  };
+  'artsNo' | 'artName' | 'caption' | 'createdAt' | 'coDescription'
+> & {
+  file: Pick<
+    Files,
+    'filesNo' | 'name' | 'url' | 'filesSize' | 'extension' | 'filesType'
+  >;
+  artists: (Pick<Artist, 'studentNo' | 'artistName' | 'cohort'> &
+    Pick<ArtArtistRel, 'description'>)[];
+};
 
 export type ArtsRequest = {
   lastId?: number;
   year?: number;
   cohort?: number;
+};
+
+export type GetCohortsResponse = {
+  cohorts: number[];
+};
+
+export type GetYearsResponse = {
+  years: number[];
 };

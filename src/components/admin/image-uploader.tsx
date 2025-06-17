@@ -2,11 +2,11 @@ import { useId } from 'react';
 import { Button } from '@/components/ui/button';
 import { useRef } from 'react';
 
-interface ImageUploaderProps {
+type ImageUploaderProps = {
   previewUrl: string;
   onFileChange: (file: File) => void;
   onUpload: () => void;
-}
+};
 
 export default function ImageUploader({
   previewUrl,

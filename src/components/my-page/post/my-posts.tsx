@@ -3,17 +3,17 @@ import MyPostList from '@/components/my-page/post/my-post-list';
 import MyPostNoResult from '@/components/my-page/post/my-post-no-result';
 import MyPageHeader from '@/components/my-page/ui/my-page-header';
 import Pagination from '@/components/ui/pagination';
-import type { PaginationResponse } from '@/types';
+import type { MyReviewPagination } from '@/types';
 import type { MyPostData } from '@/types/my-page';
 import { useEffect, useState } from 'react';
 
 export default function MyPosts({
   myPosts,
 }: {
-  myPosts: PaginationResponse<MyPostData> | null;
+  myPosts: MyReviewPagination<MyPostData> | null;
 }) {
   const [searchedPosts, setSearchedPosts] =
-    useState<PaginationResponse<MyPostData> | null>(null);
+    useState<MyReviewPagination<MyPostData> | null>(null);
 
   useEffect(() => {
     if (myPosts?.content) {

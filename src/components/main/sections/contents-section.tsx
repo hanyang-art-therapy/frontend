@@ -1,6 +1,5 @@
 import { Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
-// import { EXHIBITION_OVERVIEW } from '@/constants/main/exhibition';
 import { COMMUNITY_POSTS } from '@/constants/main/community';
 
 export default function ContentsSection() {
@@ -14,7 +13,8 @@ export default function ContentsSection() {
             <Link
               to='/notice'
               aria-label='더보기'
-              className='p-2 rounded-full hover:bg-btn-gray-fa transition'>
+              className='p-2 rounded-full hover:bg-btn-gray-fa transition'
+            >
               <Plus className='w-6 h-6 text-btn-dark' />
             </Link>
           </div>
@@ -24,13 +24,15 @@ export default function ContentsSection() {
             {COMMUNITY_POSTS.map((COMMUNITY_POSTS) => (
               <li
                 key={COMMUNITY_POSTS.id}
-                className='grid grid-cols-[auto_1fr_auto] gap-[20px] items-center leading-[49px]  px-5 t-r-16'>
+                className='grid grid-cols-[auto_1fr_auto] gap-[20px] items-center leading-[49px]  px-5 t-r-16'
+              >
                 {/* 번호 */}
                 <span className='t-b-14'>{COMMUNITY_POSTS.id}</span>
                 {/* 제목 (클릭 시 상세 페이지로 이동 가능) */}
                 <Link
                   to={`/notice/${COMMUNITY_POSTS.id}`}
-                  className='t-r-18 hover:opacity-70 transition truncate'>
+                  className='t-r-18 hover:opacity-70 transition truncate'
+                >
                   {COMMUNITY_POSTS.title}
                 </Link>
                 {/* 날짜 */}

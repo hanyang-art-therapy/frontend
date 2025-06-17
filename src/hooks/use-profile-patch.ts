@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 type PatchProfileParams = {
   userName?: string;
   email?: string;
-  studentNo?: string;
+  studentNo?: number;
   verificationCode?: string;
 };
 
@@ -24,8 +24,8 @@ export const useProfilePatch = () => {
     return null;
   };
 
-  const validateStudentNo = (studentNo: string): string | null => {
-    if (studentNo.length !== 10) {
+  const validateStudentNo = (studentNo: number): string | null => {
+    if (studentNo.toString().length !== 10) {
       return '학번은 10자로 입력해주세요.';
     }
     return null;

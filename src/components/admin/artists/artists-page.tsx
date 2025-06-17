@@ -1,14 +1,25 @@
-import { useState } from 'react';
 import TabButton from '@/components/admin/tab-btn';
 import ArtistView from '@/components/admin/artists/artist/artist-view';
 import ArtistForm from '@/components/admin/artists/artist/artist-form';
-
 import type { TabType } from '@/components/admin/tab-btn';
+import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
+import { ArtistsResponse } from '@/types/admin/artists';
+import { InfiniteScrollResponse } from '@/types';
 
 export default function AdminArtist() {
+  const loaderData = useLoaderData();
+  const [artistsList, setArtistsList] =
+    useState<InfiniteScrollResponse<ArtistsResponse>>(loaderData);
+
   const [selectedTab, setSelectedTab] = useState<TabType>('view');
 
-  const content = selectedTab === 'view' ? <ArtistView /> : <ArtistForm />;
+  const content =
+    selectedTab === 'view' ? (
+      <ArtistView artistsList={artistsList} setArtistsList={setArtistsList} />
+    ) : (
+      <ArtistForm setArtistsList={setArtistsList} />
+    );
 
   return (
     <>
@@ -30,7 +41,7 @@ export default function AdminArtist() {
         </div>
       </div>
 
-      <div className='pt-[215px] min-h-[100vh]'>{content}</div>
+      <div className='pt-[215px]'>{content}</div>
     </>
   );
 }

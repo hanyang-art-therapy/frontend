@@ -1,10 +1,10 @@
 import { getProfessors } from '@/apis/admin/professors';
-import type { ProfessorResponse } from '@/types/admin/professors';
+import type { ProfessorsResponse } from '@/types/admin/professors';
 import { useEffect, useState } from 'react';
 import ProfessorsCard from './professors-card';
 
 export default function ProfessorsContent() {
-  const [professors, setProfessors] = useState<ProfessorResponse[]>([]);
+  const [professors, setProfessors] = useState<ProfessorsResponse[]>([]);
 
   useEffect(() => {
     const fetchProfessors = async () => {

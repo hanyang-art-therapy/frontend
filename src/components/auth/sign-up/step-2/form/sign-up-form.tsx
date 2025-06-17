@@ -66,15 +66,16 @@ export default function SignUpForm({
         email,
         studentNo:
           userType === 'member'
-            ? (data as MemberSignUpFormValues).studentNo
+            ? Number((data as MemberSignUpFormValues).studentNo)
             : undefined,
       });
+
+      setProgress(3);
     } catch (error) {
       const errorMessage = handleApiError(error);
       toast(errorMessage);
     }
 
-    setProgress(3);
     reset();
     setIsLoading(false);
   };

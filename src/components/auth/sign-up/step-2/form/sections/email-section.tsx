@@ -47,6 +47,7 @@ export default function EmailSection({
   const [isResend, setIsResend] = useState(false);
   const [timer, setTimer] = useState(180);
   const [isTimerActive, setIsTimerActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isCustomDomain = selectedDomain === 'custom';
   const watchEmailDomain = watch('emailDomain');
@@ -78,6 +79,7 @@ export default function EmailSection({
     e: MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const emailId = watch('emailId');
     const emailDomain = watch('emailDomain');
@@ -99,6 +101,8 @@ export default function EmailSection({
           type: 'manual',
           message: errorMessage,
         });
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -207,7 +211,7 @@ export default function EmailSection({
               className='h-[45px] mt-auto t-r-14'
               aria-label='이메일 인증하기'
               onClick={handleSendVerificationClick}
-              disabled={showVerification}
+              disabled={showVerification || isLoading}
             >
               인증 메일 발송
             </Button>

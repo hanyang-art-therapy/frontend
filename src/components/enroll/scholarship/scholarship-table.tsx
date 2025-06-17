@@ -1,9 +1,9 @@
 import SectionHeader from '@/components/enroll/common/section-header';
 
-interface ScholarshipData {
+type ScholarshipData = {
   readonly discountRate: string;
   readonly condition: string;
-}
+};
 
 type ScholarshipTableProps = {
   title: string;

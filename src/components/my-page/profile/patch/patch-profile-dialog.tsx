@@ -19,7 +19,7 @@ type PatchProfileDialogProps = {
   selectedProperty: string;
   userName: string;
   email: string;
-  studentNo: string;
+  studentNo: number;
   setMyProfileData: Dispatch<SetStateAction<MyProfileData>>;
   isDialogOpen: boolean;
   setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
@@ -69,10 +69,7 @@ export default function PatchProfileDialog({
 
   // [삭제 - 학번] 버튼 클릭 핸들러
   const handleDeleteStudentNoClick = async () => {
-    const response = await patchProfile(
-      { studentNo: '' },
-      '학번이 삭제되었습니다.'
-    );
+    const response = await patchProfile({}, '학번이 삭제되었습니다.');
 
     if (response) {
       setMyProfileData((prev) => ({ ...prev, ...response }));

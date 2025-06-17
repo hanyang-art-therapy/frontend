@@ -13,7 +13,7 @@ export default function AdminPage() {
   return (
     <div className='w-full max-w-[1260px] mx-auto px-[20px] xl:p-0'>
       <AdminMenu />
-      <div className='w-full max-w-[1260px] pl-[200px]'>
+      <div className='w-full max-w-[1260px] min-h-[90vh] pt-[60px] md:min-h-[75vh] xl:min-h-[55vw] xl:pl-[200px] xl:pt-0 '>
         <Outlet />
       </div>
     </div>

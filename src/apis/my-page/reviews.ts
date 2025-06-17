@@ -1,5 +1,5 @@
 import apiInstance from '@/lib/axios';
-import { PaginationResponse } from '@/types';
+import type { MyReviewPagination } from '@/types';
 import type { getMyReviewsRequest, MyReviewData } from '@/types/my-page';
 
 // GET 내가 작성한 댓글 목록조회 /my-page/my-reviews
@@ -7,7 +7,7 @@ import type { getMyReviewsRequest, MyReviewData } from '@/types/my-page';
 export const getMyReviews = async ({
   page,
   keyword,
-}: getMyReviewsRequest): Promise<PaginationResponse<MyReviewData>> => {
+}: getMyReviewsRequest): Promise<MyReviewPagination<MyReviewData>> => {
   const response = await apiInstance.get('/my-page/my-reviews', {
     params: {
       page,

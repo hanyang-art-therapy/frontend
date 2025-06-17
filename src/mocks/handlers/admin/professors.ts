@@ -4,7 +4,7 @@ import type { PatchProfessorRequest } from '@/types/admin/professors';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-let professors = [...ADMIN_PROFESSORS_MOCK_DATA];
+const professors = [...ADMIN_PROFESSORS_MOCK_DATA];
 
 export const adminProfessorHandlers = [
   // [GET] 교수 전체 조회
@@ -29,7 +29,7 @@ export const adminProfessorHandlers = [
         );
       }
 
-      const filesNo = patch.files?.filesNo ?? professors[idx].files.filesNo;
+      const filesNo = patch.filesNo ?? professors[idx].files.filesNo;
       let url = professors[idx].files.url;
       if (typeof filesNo === 'number') {
         const found = professors.find((p) => p.files.filesNo === filesNo);

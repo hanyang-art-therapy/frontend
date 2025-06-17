@@ -1,12 +1,13 @@
 import apiInstance from '@/lib/axios';
 import type {
+  ProfessorsResponse,
   ProfessorResponse,
   PatchProfessorRequest,
   PostProfessorRequest,
 } from '@/types/admin/professors';
 import { MessageResponse } from '@/types';
 
-export const getProfessors = async (): Promise<ProfessorResponse[]> => {
+export const getProfessors = async (): Promise<ProfessorsResponse[]> => {
   const res = await apiInstance.get('/admin/professors');
   return res.data;
 };

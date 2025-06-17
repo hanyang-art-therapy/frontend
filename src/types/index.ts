@@ -8,7 +8,7 @@ export type User = {
   email: string; // 이메일
   userName: string; // 이름
   studentNo: number; // 학번
-  role: 'USER' | 'ARTIST' | 'ADMIN'; // 회원 권한
+  role: 'USER' | 'ARTIST' | 'ADMIN' | 'TESTER'; // 회원 권한
   userStatus: string; // 회원 상태
 };
 
@@ -113,11 +113,18 @@ export type Professor = {
   filesNo: number | null; // 파일 번호
 };
 
+export type RefreshTokens = {
+  refreshNo: number;
+  userNo: number;
+  refreshToken: string;
+  expiredAt: string;
+};
+
 export type MessageResponse = {
   message: string;
 };
 
-export type PaginationResponse<T> = {
+export type MyReviewPagination<T> = {
   content: T[];
   page: number;
   size: number;
@@ -128,8 +135,26 @@ export type PaginationResponse<T> = {
 export type ArtsPagination<T> = {
   content: T[];
   lastId: number;
-  totalElements: number;
   hasNext: boolean;
+};
+
+export type ArtReviewsPagination<T> = {
+  content: T[];
+  page: number;
+  isLast: boolean;
+};
+
+export type InfiniteScrollResponse<T> = {
+  content: T[];
+  lastId: number;
+  hasNext: boolean;
+};
+
+export type InfiniteKeywordSearchRequest = {
+  filter?: string;
+  keyword?: string;
+  lastId?: number;
+  size?: number;
 };
 
 export type Content = {

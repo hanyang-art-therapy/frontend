@@ -1,16 +1,19 @@
 import { deleteReview, patchReview } from '@/apis/gallery/review';
 import { handleApiError } from '@/components/common/error-handler';
-import ReviewsModalActions from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal-actions';
-import ReviewsModalImage from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal-image';
-import ReviewsModalTextArea from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal-textarea';
+import DeleteReviewModal from '@/components/gallery/arts/(artsNo)/reviews/modal/actions/delete-review-modal';
+import ReviewsModalActions from '@/components/gallery/arts/(artsNo)/reviews/modal/actions/reviews-modal-actions';
+import ReviewsModalActionsButton from '@/components/gallery/arts/(artsNo)/reviews/modal/actions/reviews-modal-actions-button';
+import ReviewsModalImage from '@/components/gallery/arts/(artsNo)/reviews/modal/image/reviews-modal-image';
+import ReviewsModalTextArea from '@/components/gallery/arts/(artsNo)/reviews/modal/textarea/reviews-modal-textarea';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useAuthStore } from '@/store/auth';
 import type { ArtReview } from '@/types/gallery/review';
+import { X } from 'lucide-react';
 import type {
   ChangeEvent,
   Dispatch,
@@ -40,10 +43,11 @@ export default function ReviewsModal({
   fetchReviews,
 }: ReviewsModalProps) {
   const imageUrl = selectedReview.files?.[0]?.url;
+  const { role, userNo } = useAuthStore();
 
   const [editedText, setEditedText] = useState(selectedReview.reviewText);
   const [isEditing, setIsEditing] = useState(false);
-  const [isButtonVisible, setIsButtonVisible] = useState(true);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -51,7 +55,6 @@ export default function ReviewsModal({
 
   const handleConfirmClick = async () => {
     setIsEditing(false);
-    setIsButtonVisible(true);
 
     try {
       await patchReview({
@@ -69,11 +72,12 @@ export default function ReviewsModal({
   };
 
   const handleDeleteClick = async () => {
-    const isConfirmed = window.confirm('정말 해당 리뷰를 삭제하시겠습니까?');
+    setIsDeleteDialogOpen(true);
+  };
 
-    if (!isConfirmed) return;
-
+  const handleDeleteConfirm = async () => {
     setIsDialogOpen(false);
+    setIsDeleteDialogOpen(false);
 
     try {
       await deleteReview({
@@ -89,6 +93,11 @@ export default function ReviewsModal({
     }
   };
 
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setEditedText(selectedReview.reviewText);
+  };
+
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setEditedText(e.target.value);
   };
@@ -101,43 +110,75 @@ export default function ReviewsModal({
   };
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogContent className='w-full max-w-[90vw] xl:max-w-[80vw] max-h-[80vh] h-auto p-5 md:p-10 gap-10 md:gap-15 overflow-y-auto border-none'>
-        <DialogHeader className='flex flex-row items-center'>
-          <DialogTitle className='space-x-2 t-b-24'>
-            <span>{selectedReview.userName ?? '익명'}의</span>
-            <b className='t-b-32 hidden sm:inline'>{artName}</b>
-            <span>작품 리뷰</span>
-            {isEditing && <span>수정</span>}
-          </DialogTitle>
-          <DialogDescription />
-        </DialogHeader>
+    <>
+      <Dialog
+        open={isDialogOpen && !isDeleteDialogOpen}
+        onOpenChange={setIsDialogOpen}
+      >
+        <DialogContent
+          className='w-full max-w-[95vw] sm:max-w-[90vw] xl:max-w-[85vw] max-h-[95vh] h-auto overflow-visible'
+          hasCloseButton={false}
+        >
+          <div className='flex flex-col h-full max-h-[95vh]'>
+            <DialogHeader className='relative flex flex-row items-center justify-between pb-4 sm:pb-6 px-4 sm:px-8 pt-4 sm:pt-8'>
+              <DialogTitle className='flex flex-wrap items-center gap-2 sm:gap-3 t-b-18 sm:t-b-24'>
+                <div className='flex items-center gap-1 sm:gap-2'>
+                  <span className='t-m-16 sm:t-m-18'>
+                    {selectedReview.userName ?? '익명'}의
+                  </span>
+                </div>
+                <span className='t-b-24 sm:t-b-32 text-primary break-words'>
+                  {artName}
+                </span>
+                <span className='t-m-16 sm:t-m-18'>작품 리뷰</span>
+              </DialogTitle>
+            </DialogHeader>
 
-        <div className='flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start gap-6 md:gap-8 xl:gap-16 min-h-[20vh]'>
-          <ReviewsModalImage
-            isEditing={isEditing}
-            imageUrl={imageUrl}
-            selectedReview={selectedReview}
-            setSelectedReview={setSelectedReview}
-          />
+            <div className='flex-1 overflow-y-auto px-4 sm:px-8 pb-4'>
+              <div className='flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-10'>
+                <ReviewsModalImage
+                  isEditing={isEditing}
+                  imageUrl={imageUrl}
+                  selectedReview={selectedReview}
+                  setSelectedReview={setSelectedReview}
+                />
 
-          <ReviewsModalTextArea
-            isEditing={isEditing}
-            editedText={editedText}
-            handleTextChange={handleTextChange}
-            handleKeyDown={handleKeyDown}
-          />
-        </div>
+                <ReviewsModalTextArea
+                  isEditing={isEditing}
+                  editedText={editedText}
+                  handleTextChange={handleTextChange}
+                  handleKeyDown={handleKeyDown}
+                />
+              </div>
+            </div>
 
-        {isButtonVisible && (
-          <ReviewsModalActions
-            isEditing={isEditing}
-            handleConfirmClick={handleConfirmClick}
-            handleEditClick={handleEditClick}
-            handleDeleteClick={handleDeleteClick}
-          />
-        )}
-      </DialogContent>
-    </Dialog>
+            <div className='absolute -top-20 left-1/2 -translate-x-1/2 flex gap-6 items-center justify-center'>
+              {(role === 'ADMIN' || userNo === selectedReview.userNo) && (
+                <ReviewsModalActions
+                  isEditing={isEditing}
+                  isAdmin={role === 'ADMIN'}
+                  handleCancelClick={handleCancelClick}
+                  handleConfirmClick={handleConfirmClick}
+                  handleEditClick={handleEditClick}
+                  handleDeleteClick={handleDeleteClick}
+                />
+              )}
+
+              <ReviewsModalActionsButton
+                icon={<X className='w-5 h-5' />}
+                name='닫기'
+                onClick={() => setIsDialogOpen(false)}
+              />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <DeleteReviewModal
+        isDeleteDialogOpen={isDeleteDialogOpen}
+        setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+        handleDeleteConfirm={handleDeleteConfirm}
+      />
+    </>
   );
 }

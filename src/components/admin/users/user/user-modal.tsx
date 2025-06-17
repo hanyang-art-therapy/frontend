@@ -6,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import {
   Select,
@@ -14,18 +15,17 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select';
-import { PatchUserRequest, UserResponse } from '@/types/admin/users';
-import { User } from '@/types';
-import type { MessageResponse } from '@/types';
+import { UserResponse, PatchUserRequest } from '@/types/admin/users';
+import { User, MessageResponse } from '@/types';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
 
-interface Props {
+type Props = {
   user: UserResponse;
   onEdit: (form: PatchUserRequest) => Promise<MessageResponse>;
   onClose: () => void;
-}
+};
 
 export default function UserModal({ user, onEdit, onClose }: Props) {
   type UserFormState = Omit<User, 'password'>;
@@ -120,6 +120,9 @@ export default function UserModal({ user, onEdit, onClose }: Props) {
       <DialogContent className='max-w-[700px]'>
         <DialogHeader>
           <DialogTitle className='text-center'>USER INFO</DialogTitle>
+          <DialogDescription className='text-center'>
+            회원 상세 정보
+          </DialogDescription>
         </DialogHeader>
 
         <div className='w-full border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>

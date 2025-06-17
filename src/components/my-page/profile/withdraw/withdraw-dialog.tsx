@@ -10,12 +10,14 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { useAuthStore } from '@/store/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export default function WithdrawDialog() {
   const navigate = useNavigate();
+  const { reset } = useAuthStore();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,7 +26,10 @@ export default function WithdrawDialog() {
       await withdraw();
 
       setIsOpen(false);
+      reset();
       navigate('/');
+
+      toast('회원 탈퇴가 완료되었습니다.');
     } catch (error) {
       const errorMessage = handleApiError(error);
       toast.error(errorMessage);

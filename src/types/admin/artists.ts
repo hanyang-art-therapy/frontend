@@ -1,6 +1,9 @@
 import { Artist } from '@/types';
 
-// [GET] 조회 및 상세조회
+// [GET] 조회
+export type ArtistsResponse = Artist;
+
+// [GET] 상세조회
 export type ArtistResponse = Artist;
 
 // [PATCH] 수정 요청

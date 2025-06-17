@@ -49,7 +49,7 @@ export const authHandlers = [
   }),
 
   // POST REFRESH 토큰 갱신
-  http.post(`${API_URL}/user/refresh`, async () => {}),
+  http.post(`${API_URL}/auth/refresh`, async () => {}),
 
   // POST 회원가입
   http.post(`${API_URL}/user/sign-up`, async () => {

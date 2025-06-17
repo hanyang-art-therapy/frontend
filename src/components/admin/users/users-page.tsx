@@ -8,7 +8,7 @@ export default function AdminUser() {
         <h2 className='t-b-24'>회원 조회</h2>
       </div>
       {/* 컨텐츠 */}
-      <div className='pt-[150px] min-h-[100vh]'>
+      <div className='pt-[150px]'>
         <UserView />
       </div>
     </>

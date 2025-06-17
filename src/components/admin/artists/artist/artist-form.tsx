@@ -1,17 +1,19 @@
 import FormField from '@/components/admin/form-field';
 import { Button } from '@/components/ui/button';
 import { postArtist } from '@/apis/admin/artists';
-import { PostArtistRequest } from '@/types/admin/artists';
-import { Artist } from '@/types';
-import { useState } from 'react';
+import { ArtistsResponse, PostArtistRequest } from '@/types/admin/artists';
+import { Artist, InfiniteScrollResponse } from '@/types';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
 
-interface Props {
-  onSuccess?: () => void;
-}
+type Props = {
+  setArtistsList: Dispatch<
+    SetStateAction<InfiniteScrollResponse<ArtistsResponse>>
+  >;
+};
 
-export default function ArtistForm({ onSuccess }: Props) {
+export default function ArtistForm({ setArtistsList }: Props) {
   const [form, setForm] = useState<Omit<Artist, 'artistNo'>>({
     artistName: '',
     studentNo: 0,
@@ -60,15 +62,14 @@ export default function ArtistForm({ onSuccess }: Props) {
     }
 
     try {
-      const submitForm: PostArtistRequest = {
-        artistName: form.artistName,
-        studentNo: form.studentNo,
-        cohort: form.cohort,
-      };
-      await postArtist(submitForm);
-      toast.success('등록이 완료되었습니다.');
+      const res = await postArtist(form);
+      toast.success(res.message);
+
       setForm({ artistName: '', studentNo: 0, cohort: 0 });
-      onSuccess?.();
+
+      setArtistsList((prev) => {
+        return { ...prev, form };
+      });
     } catch (error) {
       toast.error(handleApiError(error));
     }

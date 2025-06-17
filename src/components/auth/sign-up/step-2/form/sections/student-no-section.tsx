@@ -39,11 +39,18 @@ export default function StudentNoSection({
     onBlur(event);
 
     try {
-      await checkStudentNo({
-        studentNo: watchStudentNo,
+      const isStudentNoValid = await checkStudentNo({
+        studentNo: Number(watchStudentNo),
       });
 
-      setIsStudentNoValid(true);
+      if (isStudentNoValid) {
+        setIsStudentNoValid(true);
+      } else {
+        setError('studentNo', {
+          type: 'manual',
+          message: '이미 존재하는 학번입니다.',
+        });
+      }
     } catch (error) {
       const errorMessage = handleApiError(error);
 
@@ -61,7 +68,8 @@ export default function StudentNoSection({
       <label
         aria-label='학번'
         htmlFor='studentNo'
-        className='t-b-16 flex items-center'>
+        className='t-b-16 flex items-center'
+      >
         학번 <Required nbsp />
       </label>
       <div className='flex gap-[30px] h-[45px]'>

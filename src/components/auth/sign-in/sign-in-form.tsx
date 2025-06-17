@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 export default function SignInForm() {
   const navigate = useNavigate();
 
-  const { setAccessToken, setRole } = useAuthStore();
+  const { setAccessToken, setRole, setUserNo } = useAuthStore();
 
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState('');
@@ -42,13 +42,17 @@ export default function SignInForm() {
 
       if (response.role === 'ADMIN' || response.role === 'TESTER') {
         navigate('/admin/users');
+
+        toast.success('관리자로 로그인하였습니다');
       } else {
         navigate('/');
+        toast.success('로그인하였습니다');
       }
 
       setAccessToken(response.accessToken);
       localStorage.setItem('accessToken', response.accessToken);
       setRole(response.role);
+      setUserNo(response.userNo);
 
       if (isUserIdRemember) {
         localStorage.setItem('userId', userId);
@@ -115,7 +119,7 @@ export default function SignInForm() {
               onCheckedChange={() => setIsUserIdRemember(!isUserIdRemember)}
             />
             <label htmlFor='remember' className='t-r-14'>
-              이메일 저장
+              아이디 저장
             </label>
           </div>
 

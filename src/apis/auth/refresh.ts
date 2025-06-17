@@ -1,7 +1,9 @@
 import apiInstance from '@/lib/axios';
+import type { RefreshResponse } from '@/types/auth/sign-in';
+import { AxiosResponse } from 'axios';
 
-export const refresh = async () => {
-  const response = await apiInstance.post('/user/refresh', null, {
+export const refresh = async (): Promise<AxiosResponse<RefreshResponse>> => {
+  const response = await apiInstance.post('/auth/refresh', null, {
     withCredentials: true,
   });
 
