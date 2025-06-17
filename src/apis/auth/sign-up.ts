@@ -31,7 +31,7 @@ export const signUp = async ({
 // GET 아이디 중복검사 /user/check-id
 export const checkId = async ({
   userId,
-}: CheckUserIdRequest): Promise<MessageResponse> => {
+}: CheckUserIdRequest): Promise<boolean> => {
   const response = await apiInstance.get('/user/check-id', {
     params: { userId },
   });
@@ -53,7 +53,9 @@ export const checkEmail = async ({
 
 // GET 학번 중복검사 /user/check-studentNo
 // GET 학번 중복검사 /user/check-studentNo
-export const checkStudentNo = async ({ studentNo }: CheckStudentNoRequest) => {
+export const checkStudentNo = async ({
+  studentNo,
+}: CheckStudentNoRequest): Promise<boolean> => {
   const { data } = await apiInstance.get('/user/check-studentNo', {
     params: { studentNo },
   });
