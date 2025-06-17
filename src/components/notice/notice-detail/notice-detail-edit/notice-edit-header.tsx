@@ -50,10 +50,9 @@ export default function NoticeEditHeader() {
               />
             </div>
             {/* 구분 && 기간  */}
-            <div className='md:flex md:flex-row t-r-14 md:pb-[10px] px-[10px] flex gap-2 md:gap-4 flex-wrap'>
-              {/* 구분 */}
+           <div className='flex flex-row flex-wrap gap-2 px-[10px] t-r-14 md:gap-4 md:pb-[10px]'>
               <div className='flex items-center gap-2'>
-                <label className='font-semibold whitespace-nowrap t-b-16 w-[30px]'>
+                <label className='whitespace-nowrap t-b-16 w-[30px]'>
                   구분
                 </label>
                 <div>

@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import TitleInput from './editor-tools/title-input';
-import CategorySelect from './editor-tools/category-select';
 import DateInput from './editor-tools/date-input';
 import IsFixedCheckbox from './editor-tools/infixed-checkbox';
 import EditorSection from './editor-tools/editor-section';
@@ -19,6 +17,7 @@ import { handleApiError } from '@/components/common/error-handler';
 import { toast } from 'sonner';
 import NoticeNav from '../notice-nav.tsx/notice-nav';
 import { Button } from '@/components/ui/button';
+import TitleAndCategoryInput from './editor-tools/title-category-input';
 
 export default function NoticeWrite() {
   const navigate = useNavigate();
@@ -94,29 +93,26 @@ export default function NoticeWrite() {
   return (
     <div className='h-full w-full max-w-[1260px] pt-[100px] px-5 xl:px-0 mx-auto text-center'>
       <div className='w-full text-center'>
-        <div className='flex justify-start items-center gap-1 w-full pb-[18px]'>
-          <div className='p-2 rounded-[5px] text-shadow-bg-gray-fa bg-secondary'>
+        <div className='flex justify-start items-center gap-1 w-full pb-[12px] md:pb-[18px]'>
+          <div className='p-2 rounded-[5px] text-white bg-secondary'>
             <NotepadText size={32} strokeWidth={2} />
           </div>
           <strong className='p-2 ext-gray-6 t-b-24'>게시물 작성</strong>
         </div>
-
-        <div className='flex flex-col md:flex-row gap-4 mb-4 overflow-x-auto'>
-          <TitleInput title={title} setTitle={setTitle} />
-          <CategorySelect
-            selectedCategory={selectedCategory}
-            handleCategoryChange={handleCategoryChange}
-          />
-          <DateInput
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
-          />
-        </div>
-
         <IsFixedCheckbox isFixed={isFixed} setIsFixed={setIsFixed} />
-
+        <div className='flex flex-col md:flex-row gap-4 mb-4 overflow-x-auto'>
+          <TitleAndCategoryInput
+          title={title}
+          setTitle={setTitle}
+          selectedCategory={selectedCategory}
+          handleCategoryChange={handleCategoryChange}/>
+          <DateInput
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}/>
+          </div>
+  
         <EditorSection editor={editor} />
 
         <div className='flex justify-between mt-4 px-[8px]'>

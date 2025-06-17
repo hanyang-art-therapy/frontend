@@ -62,7 +62,7 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
   if (!editor) return null;
 
   return (
-    <div className='w-full md:border-1 md:rounded-sm md:border-b-bg-gray-d'>
+    <div className='w-full md:border-1 md:rounded-sm md:border-gray-300'>
       <div className='flex flex-col md:flex-row md:items-center justify-center md:justify-start md:p-[10px] gap-2 md:gap-0'>
         {/* 글씨 크기 */}
 
@@ -120,7 +120,6 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
 
         {/* Lists */}
         <div className='flex justify-center items-center gap-[10px]'>
-
           <ToolbarButton
             icon={List}
             className={buttonShadowClass}

@@ -4,7 +4,7 @@ import Toolbar from '../toolbar';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function EditorSection({ editor }: { editor: any }) {
   return (
-    <div className='m-1 border-1 rounded-sm border-b-bg-gray-d'>
+    <div className='m-1 border-1 rounded-sm border-gray-300'>
       {editor && <Toolbar editor={editor} />}
       <EditorContent
         editor={editor}

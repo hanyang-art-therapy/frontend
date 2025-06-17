@@ -10,9 +10,9 @@ export default function DateInput({
   setEndDate: (date: string) => void;
 }) {
   return (
-    <div className='flex'>
+    <div className='flex md:gap-4'>
       {/* 시작일 */}
-      <div className='flex items-center gap-2 pr-[10px] md:pr-0'>
+      <div className='flex items-center md:gap-4 pr-[10px] md:pr-0'>
         <label className='t-b-16 whitespace-nowrap t-b-16 w-[40px] mr-[8px] md:mr-0'>
           시작일
         </label>
@@ -20,12 +20,12 @@ export default function DateInput({
           type='date'
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className='border border-b-bg-gray-d rounded px-3 py-2 w-[100px] md:w-[140px]'
+          className='border border-gray-300 rounded px-3 py-2 w-auto md:w-[140px]'
         />
       </div>
 
       {/* 종료일 */}
-      <div className='flex items-center gap-2'>
+      <div className='flex items-center md:gap-4'>
         <label className='whitespace-nowrap t-b-16 w-[40px] mr-[8px] md:mr-0'>
           종료일
         </label>
@@ -33,7 +33,7 @@ export default function DateInput({
           type='date'
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-          className='border border-b-bg-gray-d rounded px-3 py-2 w-[100px] md:w-[140px]'
+          className='border border-gray-300 rounded px-3 py-2 w-auto md:w-[140px]'
         />
       </div>
     </div>

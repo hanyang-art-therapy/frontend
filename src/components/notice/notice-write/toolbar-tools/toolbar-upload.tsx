@@ -10,9 +10,10 @@ const ToolbarButton = ({
   icon: Icon,
   onClick,
   disabled = false,
-  color = '--color-gray-3',
+  color = '#333333',
   className = '',
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any;
   onClick: () => void;
   disabled?: boolean;
@@ -30,9 +31,9 @@ const ToolbarButton = ({
 );
 
 const buttonShadowClass =
-  'border-1 border-b-bg-gray-d p-1 rounded-sm bg-white';
+  'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)]';
 const buttonShadowClassHidden =
-  'border-1 border-b-bg-gray-d p-1 rounded-sm bg-white hidden md:block';
+  'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)] hidden md:block';
 
 export default function ToolbarFileUpload({ editor }: ToolbarProps) {
   const [uploadedItems, setUploadedItems] = useState<
@@ -68,12 +69,12 @@ export default function ToolbarFileUpload({ editor }: ToolbarProps) {
       <ToolbarButton
         icon={Paperclip}
         onClick={triggerFileUpload}
-        className={buttonShadowClassHidden}
+         className={buttonShadowClass}
       />
       <ToolbarButton
         icon={Image}
         onClick={() => {}}
-        className={buttonShadowClass}
+        className={buttonShadowClassHidden}
       />
 
       {uploadedItems.length > 0 && (
