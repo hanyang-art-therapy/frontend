@@ -91,12 +91,11 @@ export type Notice = {
   createdAt: string; // 작성 일자
   category: string; // 카테고리
   viewCount: number; // 조회수
-  periodStart: string; // 시작 일자 - TIMESTAMP
-  periodEnd: string; // 종료 일자 - TIMESTAMP
+  periodStart: string; // 시작 일자 - TimeStamp
+  periodEnd: string; // 종료 일자 - TimeStamp
   isFixed: boolean; // 고정 여부
 };
 
-// 공지사항 파일
 export type NoticeFiles = {
   noticeFilesNo: number; // 공지사항 파일 번호
   noticeNo: number; // 공지사항 번호
