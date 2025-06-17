@@ -105,7 +105,6 @@ export default function NoticeDetail() {
       <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
         <div
           className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start'
-          style={{ backgroundColor: 'rgba(221, 221, 221, 0.2)' }}
         >
           <div className='flex flex-col gap-4 mt-2 t-r-16 px-[20px]'>
             <h1 className='t-b-32 font-bold'>{noticeContents.title}</h1>

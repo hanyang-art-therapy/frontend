@@ -7,7 +7,7 @@ export default function TitleInput({
 }) {
   return (
     <div className='flex items-center gap-2 flex-grow t-b-16'>
-      <label className='font-semibold whitespace-nowrap w-[30px]'>제목</label>
+      <label className='t-b-16 whitespace-nowrap w-[30px]'>제목</label>
       <input
         type='text'
         value={title}

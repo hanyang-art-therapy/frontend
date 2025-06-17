@@ -61,7 +61,7 @@ export default function NoticeEditHeader() {
                     name='category'
                     value={formData.category}
                     onChange={handleInputChange}
-                    className='w-full p-2 border-2 border-gray-200 rounded-sm transition-colors bg-white'
+                    className='w-full p-2 border-2 border-b-bg-gray-d rounded-sm transition-colors bg-white'
                     required
                   >
                     <option value='GENERAL'>일반</option>
@@ -83,7 +83,7 @@ export default function NoticeEditHeader() {
                       name='periodStart'
                       value={formData.periodStart}
                       onChange={handleInputChange}
-                      className='w-full p-2 border-2 border-gray-200 rounded-sm'
+                      className='w-full p-2 border-2 border-b-bg-gray-d rounded-sm'
                     />
                   </div>
                   <div>
@@ -95,7 +95,7 @@ export default function NoticeEditHeader() {
                           name='periodEnd'
                           value={formData.periodEnd}
                           onChange={handleInputChange}
-                          className='w-full p-2 border-2 border-gray-200 rounded-sm'
+                          className='w-full p-2 border-2 border-b-bg-gray-d rounded-sm'
                         />
                       </div>
                     </div>

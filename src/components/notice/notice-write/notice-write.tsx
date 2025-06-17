@@ -95,7 +95,7 @@ export default function NoticeWrite() {
     <div className='h-full w-full max-w-[1260px] pt-[100px] px-5 xl:px-0 mx-auto text-center'>
       <div className='w-full text-center'>
         <div className='flex justify-start items-center gap-1 w-full pb-[18px]'>
-          <div className='p-2 rounded-[5px] text-white bg-secondary'>
+          <div className='p-2 rounded-[5px] text-shadow-bg-gray-fa bg-secondary'>
             <NotepadText size={32} strokeWidth={2} />
           </div>
           <strong className='p-2 ext-gray-6 t-b-24'>게시물 작성</strong>

@@ -46,7 +46,7 @@ export default function NoticeUploadEditor() {
                       {formData.files.map((file, index) => (
                         <div
                           key={index}
-                          className='flex items-center justify-between p-3 bg-gray-100 rounded-lg'
+                          className='flex items-center justify-between p-3 bg-bg-gray-fa rounded-lg'
                         >
                           <span className='text-bg-secondary hover:text-bg-secondary cursor-pointer'>
                             📎 {file.name}
@@ -54,7 +54,7 @@ export default function NoticeUploadEditor() {
                           <button
                             type='button'
                             onClick={() => removeFile(index)}
-                            className='text-[#ff4d00] hover:text-red-700 font-medium'
+                            className='text-[#ff4d00] hover:text-[#ff4d00] font-medium'
                           >
                             삭제
                           </button>

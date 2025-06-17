@@ -12,9 +12,9 @@ export default function IsFixedCheckbox({
         checked={isFixed}
         onChange={(e) => setIsFixed(e.target.checked)}
         id='isFixed'
-        className='w-4 h-4 border-[#ddd] rounded border'
+        className='w-4 h-4 border-b-bg-gray-d rounded border'
       />
-      <label htmlFor='isFixed' className='font-semibold'>
+      <label htmlFor='isFixed' className='t-b-16'>
         중요한 게시물로 설정
       </label>
     </div>

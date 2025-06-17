@@ -62,7 +62,7 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
   if (!editor) return null;
 
   return (
-    <div className='w-full md:border-1 md:rounded-sm md:border-[#cacad6]'>
+    <div className='w-full md:border-1 md:rounded-sm md:border-b-bg-gray-d'>
       <div className='flex flex-col md:flex-row md:items-center justify-center md:justify-start md:p-[10px] gap-2 md:gap-0'>
         {/* 글씨 크기 */}
 

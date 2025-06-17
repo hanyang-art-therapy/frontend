@@ -34,10 +34,10 @@ export default function NoticeList() {
     <div className='min-h-screen-vh mt-[10px] md:mt-[30px] flex flex-col items-center justify-start'>
       <div className='flex flex-col justify-start items-start w-full xl:px-0'>
         <div className='flex justify-start items-center pb-[20px] gap-2 w-full'>
-          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center  items-center text-white bg-secondary'>
+          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center  items-center text-btn-gray-fa bg-secondary'>
             <Volume2 size={30} strokeWidth={2} />
           </div>
-          <strong className='p-2 text-[#666] font-medium t-b-32'>
+          <strong className='p-2 text-btn-dark-3 font-medium t-b-32'>
             공지사항
           </strong>
         </div>

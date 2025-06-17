@@ -36,7 +36,7 @@ export default function NoticeContentEditor({
             <Button
               type='button'
               onClick={onCancel}
-              className='h-[20px] w-[80px] t-r-16 bg-orange-300 hover:bg-primary text-white rounded-sm'
+              className='h-[20px] w-[80px] t-r-16 bg-orange-300 hover:bg-primary text-btn-gray-fa rounded-sm'
             >
               취소
             </Button>
@@ -44,7 +44,7 @@ export default function NoticeContentEditor({
             <Button
               type='submit'
               disabled={loading}
-              className='h-[20px] w-[80px] t-r-16 bg-[rgba(0,68,131,0.5)] hover:bg-bg-secondary text-white rounded-sm'
+              className='h-[20px] w-[80px] t-r-16 bg-[rgba(0,68,131,0.5)] hover:bg-bg-secondary text-btn-gray-fa rounded-sm'
             >
               {loading ? '처리중...' : isEdit ? '수정 완료' : '작성 완료'}
             </Button>

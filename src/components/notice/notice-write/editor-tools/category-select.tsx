@@ -16,7 +16,7 @@ export default function CategorySelect({
 }) {
   return (
     <div className='flex items-center gap-2'>
-      <label className='font-semibold whitespace-nowrap t-b-16 w-[30px]'>
+      <label className='t-b-16 whitespace-nowrap w-[30px]'>
         구분
       </label>
       <Select
