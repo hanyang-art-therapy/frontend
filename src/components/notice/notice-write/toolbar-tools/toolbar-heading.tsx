@@ -12,8 +12,6 @@ import {
   AlignRight,
   Baseline,
   Highlighter,
-  Type,
-  PenLine,
 } from 'lucide-react';
 import ToolbarFileUpload from './toolbar-upload';
 
@@ -56,9 +54,6 @@ const Divider = () => (
 export default function ToolbarHeading({ editor }: ToolbarProps) {
   if (!editor) return null;
 
-  const applyTextColor = (color: string) => {
-    editor.chain().focus().setColor(color).run();
-  };
 
   const applyHighlightColor = (color: string) => {
     editor.chain().focus().toggleHighlight({ color }).run();

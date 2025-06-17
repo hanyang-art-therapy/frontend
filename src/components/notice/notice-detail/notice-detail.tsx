@@ -10,9 +10,6 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/auth';
 
-type NoticeTableProps = {
-  data: GetNoticeResponse | null;
-};
 
 const getType = (category: string) => {
   switch (category) {
@@ -31,20 +28,16 @@ const getType = (category: string) => {
   }
 };
 
-export default function NoticeDetail({ data }: NoticeTableProps) {
+export default function NoticeDetail() {
   const [noticeContents, setNoticeContents] =
     useState<GetNoticeResponse | null>(null);
   const { noticeNo } = useParams();
   const navigate = useNavigate();
 
-  // useAuthStore에서 role을 구조분해할당으로 가져오기
   const authStore = useAuthStore();
   const role = authStore.role || 'ADMIN';
 
-  // 또는 다른 방식으로 시도해보기
-  // const { role } = useAuthStore() || {};
-
-  // 디버깅용 로그 추가
+// 디버깅용 로그
   console.log('=== DEBUG INFO ===');
   console.log('authStore:', authStore);
   console.log('role:', role);
@@ -167,7 +160,6 @@ export default function NoticeDetail({ data }: NoticeTableProps) {
           </div>
 
           {/* 임시 테스트: role을 강제로 'ADMIN'으로 설정해서 테스트 */}
-          {/* 이 부분은 테스트 후 삭제하세요 */}
           <div className='flex gap-4 mt-4 justify-end items-end'>
             <Button
               onClick={handleEdit}
@@ -223,7 +215,7 @@ export default function NoticeDetail({ data }: NoticeTableProps) {
                     <a
                       href={file.url} // 파일 다운로드 URL
                       target='_blank' // 새 창에서 열기
-                      className='text-blue-600 hover:underline'
+                      className='text-bg-secondary hover:underline'
                     >
                       {file.name}
                     </a>

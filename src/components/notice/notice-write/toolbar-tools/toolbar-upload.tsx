@@ -35,8 +35,9 @@ const buttonShadowClassHidden =
   'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)] hidden md:block';
 
 export default function ToolbarFileUpload({ editor }: ToolbarProps) {
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const [uploadedItems, setUploadedItems] = useState<
+    { file: File; url: string }[]
+  >([]);
 
   if (!editor) return null;
 
@@ -45,19 +46,25 @@ export default function ToolbarFileUpload({ editor }: ToolbarProps) {
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
 
-    const url = URL.createObjectURL(file);
-    setUploadedFile(file);
-    setFileUrl(url);
+    const items = files.map((file) => ({
+      file,
+      url: URL.createObjectURL(file),
+    }));
+
+    // ✅ 기존 업로드 항목에 새 항목 누적 추가
+    setUploadedItems((prev) => [...prev, ...items]);
 
     editor.chain().focus().extendMarkRange('link');
+    // input 초기화 → 같은 파일 또 올릴 수 있게
+    e.target.value = '';
   };
 
   return (
     <>
-      <input type='file' id='fileUpload' hidden onChange={handleFileInput} />
+      <input type='file' id='fileUpload' hidden multiple onChange={handleFileInput} />
       <ToolbarButton
         icon={Paperclip}
         onClick={triggerFileUpload}
@@ -69,29 +76,39 @@ export default function ToolbarFileUpload({ editor }: ToolbarProps) {
         className={buttonShadowClass}
       />
 
-      {uploadedFile && fileUrl && (
-        <div className='p-4 border-t border-gray-300 w-full'>
+      {uploadedItems.length > 0 && (
+        <div className='p-4 border-1 border-gray-300 h-auto w-[1200px] text-start rounded-xs absolute bottom-[40%] right-[50%] transform translate-x-[50%] translate-y-[50%] bg-white z-10'>
           <p className='text-sm text-gray-500 mb-2'>첨부된 파일 미리보기:</p>
-          {uploadedFile.type.startsWith('image/') ? (
-            <img
-              src={fileUrl}
-              alt='업로드된 이미지'
-              className='max-w-[200px] rounded'
-            />
-          ) : uploadedFile.type === 'application/pdf' ? (
-            <a
-              href={fileUrl}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='text-blue-500 underline'
-            >
-              PDF 보기 또는 다운로드: {uploadedFile.name}
-            </a>
-          ) : (
-            <a href={fileUrl} download className='text-blue-500 underline'>
-              파일 다운로드: {uploadedFile.name}
-            </a>
-          )}
+          <ul className='space-y-2'>
+            {uploadedItems.map((item, index) => (
+              <li key={index}>
+                {item.file.type.startsWith('image/') ? (
+                  <img
+                    src={item.url}
+                    alt='업로드된 이미지'
+                    className='max-w-[200px] rounded'
+                  />
+                ) : item.file.type === 'application/pdf' ? (
+                  <a
+                    href={item.url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='text-blue-500 underline'
+                  >
+                    {item.file.name}
+                  </a>
+                ) : (
+                  <a
+                    href={item.url}
+                    download
+                    className='text-blue-500 underline'
+                  >
+                    파일 다운로드: {item.file.name}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </>

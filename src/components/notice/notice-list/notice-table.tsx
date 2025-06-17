@@ -13,9 +13,10 @@ export default function NoticeTable({ data }: NoticeTableProps) {
   const navigate = useNavigate();
   console.log(data);
 
-  if (!data || data.content.length === 0) {
-    return <NoticeNoData />;
-  }
+if (!data || !Array.isArray(data.content) || data.content.length === 0) {
+  return <NoticeNoData />;
+}
+
   const getType = (category: string) => {
     if (category === 'GENERAL') {
       return '일반';
