@@ -69,12 +69,13 @@ export default function SignUpForm({
             ? Number((data as MemberSignUpFormValues).studentNo)
             : undefined,
       });
+
+      setProgress(3);
     } catch (error) {
       const errorMessage = handleApiError(error);
       toast(errorMessage);
     }
 
-    setProgress(3);
     reset();
     setIsLoading(false);
   };

@@ -34,11 +34,18 @@ export default function UserIdSection({
     onBlur(event);
 
     try {
-      await checkId({
+      const isIdValid = await checkId({
         userId: watchUserId,
       });
 
-      setIsUserIdValid(true);
+      if (isIdValid) {
+        setIsUserIdValid(true);
+      } else {
+        setError('userId', {
+          type: 'manual',
+          message: '이미 존재하는 아이디입니다.',
+        });
+      }
     } catch (error) {
       const errorMessage = handleApiError(error);
 
