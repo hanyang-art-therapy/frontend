@@ -30,9 +30,9 @@ const ToolbarButton = ({
 );
 
 const buttonShadowClass =
-  'border-1 border-b-bg-gray-d p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)]';
+  'border-1 border-b-bg-gray-d p-1 rounded-sm bg-white';
 const buttonShadowClassHidden =
-  'border-1 border-b-bg-gray-d p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)] hidden md:block';
+  'border-1 border-b-bg-gray-d p-1 rounded-sm bg-white hidden md:block';
 
 export default function ToolbarFileUpload({ editor }: ToolbarProps) {
   const [uploadedItems, setUploadedItems] = useState<

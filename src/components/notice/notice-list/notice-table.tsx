@@ -36,7 +36,7 @@ if (!data || !Array.isArray(data.content) || data.content.length === 0) {
   return (
     <div className='w-full overflow-x-auto'>
       <table className='w-full border-collapse table-fixed'>
-        <thead className='bg-bg-gray-fa t-r-16 border-b border-t border-gray-300'>
+        <thead className='bg-white t-r-16 border-b border-t border-b-bg-gray-d'>
           <tr>
             <th className='p-2 w-[40px] md:w-[70px] min-w-[40px]'>번호</th>
             <th className='p-2 w-[80px] md:w-[100px] min-w-[50px]'>구분</th>
@@ -55,7 +55,7 @@ if (!data || !Array.isArray(data.content) || data.content.length === 0) {
             <tr
               key={item.noticeNo}
               onClick={() => navigate(`/notice/${item.noticeNo}`)}
-              className='hover:bg-[rgba(241,129,0,0.1)] cursor-pointer border-b border-gray-300 t-r-16 '
+              className='hover:bg-[rgba(241,129,0,0.1)] cursor-pointer border-b border-b-bg-gray-d t-r-16 '
             >
               <td className='p-2 text-center'>{item.noticeNo}</td>
               <td className='p-2 text-center'>{getType(item.category)}</td>
@@ -64,7 +64,7 @@ if (!data || !Array.isArray(data.content) || data.content.length === 0) {
                 <span>{item.title}</span>
 
                 {/* 툴팁 */}
-                <div className='absolute bottom-full left-0 mb-1 w-max max-w-[200px] px-2 py-1 bg-gray-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none'>
+                <div className='absolute bottom-full left-0 mb-1 w-max max-w-[200px] px-2 py-1 bg-btn-gray-9 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none'>
                   {item.title}
                 </div>
               </td>

@@ -13,7 +13,7 @@ export default function TitleInput({
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder='제목을 입력해주세요'
-        className='w-[94%] border border-gray-300 rounded px-3 py-2'
+        className='w-[94%] border border-b-bg-gray-d rounded px-3 py-2'
       />
     </div>
   );

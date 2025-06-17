@@ -120,17 +120,7 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
 
         {/* Lists */}
         <div className='flex justify-center items-center gap-[10px]'>
-          {/* <ToolbarButton
-            icon={Type}
-            className={buttonShadowClass}
-            color='blue'
-            onClick={() => applyTextColor('blue')}
-          /> */}
-          {/* <ToolbarButton
-            icon={PenLine}
-            className={buttonShadowClass}
-            onClick={() => editor.chain().focus().setHorizontalRule().run()}
-          /> */}
+
           <ToolbarButton
             icon={List}
             className={buttonShadowClass}

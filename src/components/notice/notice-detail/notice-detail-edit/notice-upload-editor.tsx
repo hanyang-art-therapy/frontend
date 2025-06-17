@@ -46,7 +46,7 @@ export default function NoticeUploadEditor() {
                       {formData.files.map((file, index) => (
                         <div
                           key={index}
-                          className='flex items-center justify-between p-3 bg-bg-gray-fa rounded-lg'
+                          className='flex items-center justify-between p-3 bg-white rounded-lg'
                         >
                           <span className='text-bg-secondary hover:text-bg-secondary cursor-pointer'>
                             📎 {file.name}

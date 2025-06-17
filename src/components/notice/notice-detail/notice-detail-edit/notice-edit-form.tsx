@@ -68,8 +68,8 @@ export default function NoticeEditForm() {
       });
     } catch (err) {
       console.error('Error fetching notice data:', err);
-      setError('데이터를 불러오는데 실패했습니다.');
-      toast.error('공지사항을 불러오는데 실패했습니다.');
+      setError('서버 오류가 발생했습니다.');
+      toast.error('서버 오류가 발생했습니다.');
     } finally {
       setDataLoading(false);
     }
@@ -81,12 +81,12 @@ export default function NoticeEditForm() {
     e.preventDefault();
 
     if (!formData.title.trim()) {
-      toast.error('제목을 입력해주세요.');
+      toast.error('제목과 내용, 카테고리 필수 입력 항목입니다.');
       return;
     }
 
     if (!formData.content.trim()) {
-      toast.error('내용을 입력해주세요.');
+      toast.error('제목과 내용, 카테고리 필수 입력 항목입니다.');
       return;
     }
 
@@ -108,7 +108,7 @@ export default function NoticeEditForm() {
 };
 
         const result = await createNotice(formData);
-        toast.success('공지사항이 작성되었습니다!');
+        toast.success('게시글 등록이 완료되었습니다.');
         // 새로 생성된 공지사항의 번호로 이동
         navigate(`/notice/${result.noticeNo}`);
         return;
@@ -120,8 +120,8 @@ export default function NoticeEditForm() {
       console.error('Submit error:', err);
       toast.error(
         isEdit
-          ? '공지사항 수정에 실패했습니다.'
-          : '공지사항 작성에 실패했습니다.'
+          ? '서버 오류가 발생했습니다.'
+          : '서버 오류가 발생했습니다.'
       );
     } finally {
       setLoading(false);
@@ -130,9 +130,9 @@ export default function NoticeEditForm() {
 
   if (dataLoading) {
     return (
-      <div className='w-full min-h-screen bg-gray-50 py-8'>
+      <div className='w-full min-h-screen bg-bg-gray-d py-8'>
         <div className='max-w-4xl mx-auto px-4'>
-          <div className='bg-white rounded-lg shadow-md p-8 text-center py-8 text-lg text-gray-600'>
+          <div className='bg-white rounded-lg shadow-md p-8 text-center py-8 text-lg text-btn-dark-3'>
             데이터를 불러오는 중...
           </div>
         </div>
@@ -146,10 +146,10 @@ export default function NoticeEditForm() {
         <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
           <div className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start bg-[rgba(221,221,221,0.2)]'>
             <div className='flex flex-col gap-4 mt-2 t-r-16 px-[20px]'>
-              <div className='text-lg text-red-600 mb-4'>{error}</div>
+              <div className='text-lg text-bg-primary mb-4'>{error}</div>
               <Button
                 onClick={() => navigate('/notice')}
-                className='px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg'
+                className='px-6 py-2 bg-bg-secondary hover:bg-bg-secondary text-white rounded-lg'
               >
                 공지사항 목록으로 돌아가기
               </Button>
