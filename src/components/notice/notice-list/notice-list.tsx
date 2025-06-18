@@ -12,7 +12,7 @@ export default function NoticeList() {
   const [fetchedNotices, setFetchedNotices] =
     useState<GetNoticesResponse | null>(null);
   const navigate = useNavigate();
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber] = useState(1);
 
   const handleWriteClick = () => {
     navigate('/notice/write');
@@ -37,9 +37,7 @@ export default function NoticeList() {
           <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center  items-center text-white bg-secondary'>
             <Volume2 size={30} strokeWidth={2} />
           </div>
-          <strong className='p-2 text-btn-dark-3 t-b-32'>
-            공지사항
-          </strong>
+          <strong className='p-2 text-btn-dark-3 t-b-32'>공지사항</strong>
         </div>
         <div className='p-4 bg-bg-gray-fa rounded t-r-16 flex-1 min-w-0'>
           본 게시판은 미술치료학과의 학사, 실습, 전시, 행사 등과 관련된 주요

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { getNotice, updateNotice, uploadFiles } from '@/apis/notice/notice';
+import { getNotice, updateNotice } from '@/apis/notice/notice';
 import { toast } from 'sonner';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
 import NoticeUploadEditor from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-upload-editor';
@@ -78,32 +78,30 @@ export default function NoticeEditForm() {
     }
   };
 
- // 🔧 수정: 파일 업로드 함수 - API 사용
-  const handleFileUpload = async (files: File[]): Promise<NoticeFile[]> => {
-    try {
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append('files', file); // 🔧 서버 API에 맞는 필드명 사용
-      });
+  // 🔧 수정: 파일 업로드 함수 - API 사용
+  // const handleFileUpload = async (files: File[]): Promise<NoticeFile[]> => {
+  //   try {
+  //     const formData = new FormData();
+  //     files.forEach((file) => {
+  //       formData.append('files', file); // 🔧 서버 API에 맞는 필드명 사용
+  //     });
 
-      const response = await uploadFiles(formData);
-      
-      // 🔧 업로드된 파일 정보 반환
-      return files.map((Files, index) => ({
-        filesNo: response.filesNo[index], // 서버에서 받은 파일 번호
-        name: Files.name,
-        url: `${process.env.REACT_APP_API_URL}/files/${response.filesNo[index]}`, // 🔧 실제 파일 URL
-        Files,
-        isNew: true,
-      }));
-    } catch (error) {
-      console.error('File upload error:', error);
-      toast.error('파일 업로드에 실패했습니다.');
-      return [];
-    }
-  };
+  //     const response = await uploadFiles(formData);
 
-
+  //     // 🔧 업로드된 파일 정보 반환
+  //     return files.map((Files, index) => ({
+  //       filesNo: response.filesNo[index], // 서버에서 받은 파일 번호
+  //       name: Files.name,
+  //       url: `${process.env.REACT_APP_API_URL}/files/${response.filesNo[index]}`, // 🔧 실제 파일 URL
+  //       Files,
+  //       isNew: true,
+  //     }));
+  //   } catch (error) {
+  //     console.error('File upload error:', error);
+  //     toast.error('파일 업로드에 실패했습니다.');
+  //     return [];
+  //   }
+  // };
 
   // 폼 제출 처리
   const handleSubmit = async (e: React.FormEvent) => {
@@ -132,9 +130,9 @@ export default function NoticeEditForm() {
       } else {
         // 생성 모드
         const createNotice = async (data: NoticeData) => {
-  const response = await axios.post('/api/notice', data);
-  return response.data;
-};
+          const response = await axios.post('/api/notice', data);
+          return response.data;
+        };
 
         const result = await createNotice(formData);
         toast.success('게시글 등록이 완료되었습니다.');
@@ -148,9 +146,7 @@ export default function NoticeEditForm() {
     } catch (err) {
       console.error('Submit error:', err);
       toast.error(
-        isEdit
-          ? '서버 오류가 발생했습니다.'
-          : '서버 오류가 발생했습니다.'
+        isEdit ? '서버 오류가 발생했습니다.' : '서버 오류가 발생했습니다.'
       );
     } finally {
       setLoading(false);
@@ -191,21 +187,25 @@ export default function NoticeEditForm() {
 
   return (
     <div className='w-full h-full mt-[80px] md:mt-[120px]'>
-  <div className='w-full max-w-[1260px] mx-auto px-5'>
-    <div className='flex justify-start items-center pb-[20px] gap-2'>
-      <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-btn-dark-3'>
-        <FilePenLine size={40} strokeWidth={2} />
+      <div className='w-full max-w-[1260px] mx-auto px-5'>
+        <div className='flex justify-start items-center pb-[20px] gap-2'>
+          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-btn-dark-3'>
+            <FilePenLine size={40} strokeWidth={2} />
+          </div>
+          <strong className='p-2 text-btn-dark-3 t-b-32'>게시물 수정</strong>
+        </div>
       </div>
-      <strong className='p-2 text-btn-dark-3 t-b-32'>게시물 수정</strong>
-    </div>
-    </div>
       <form
         className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'
         onSubmit={handleSubmit}
       >
-        <NoticeEditHeader formData={formData} setFormData={setFormData} loading={false} selectedCategory={''} handleCategoryChange={function (value: string): void {
-          throw new Error('Function not implemented.');
-        } } />
+        <NoticeEditHeader
+          formData={formData}
+          setFormData={setFormData}
+          loading={false}
+          selectedCategory={''}
+          handleCategoryChange={() => {}}
+        />
         {/* 본문 내용 */}
         <div className='w-full h-auto py-[10px] mt-[10px]'>
           <NoticeEditText
@@ -215,10 +215,10 @@ export default function NoticeEditForm() {
           />
 
           {/* 파일 */}
-          <NoticeUploadEditor 
-            formData={formData} 
+          <NoticeUploadEditor
+            formData={formData}
             setFormData={setFormData}
-            onFileUpload={handleFileUpload} // 🔧 파일 업로드 함수 전달
+            // onFileUpload={handleFileUpload} // 🔧 파일 업로드 함수 전달
           />
 
           {/* 이전글과 다음글 */}
