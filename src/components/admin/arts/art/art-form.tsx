@@ -118,7 +118,7 @@ export default function AdminArtForm({ setSelectedTab }: AdminArtFormProps) {
   ];
 
   return (
-    <form className='flex flex-col gap-[40px]'>
+    <form className='flex flex-col gap-[30px]'>
       <div className='flex gap-[30px] items-start'>
         <div className='flex flex-col items-center gap-[15px]'>
           <label
@@ -209,7 +209,7 @@ export default function AdminArtForm({ setSelectedTab }: AdminArtFormProps) {
         </div>
       </div>
 
-      <Button type='button' onClick={handleSubmit} className='w-full mx-auto'>
+      <Button type='button' onClick={handleSubmit} className='ml-auto'>
         작품 등록
       </Button>
     </form>

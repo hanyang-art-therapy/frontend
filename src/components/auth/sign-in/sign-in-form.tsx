@@ -42,11 +42,15 @@ export default function SignInForm() {
 
       if (response.role === 'ADMIN' || response.role === 'TESTER') {
         navigate('/admin/users');
+
+        toast.success('관리자로 로그인하였습니다');
       } else {
         navigate('/');
+        toast.success('로그인하였습니다');
       }
 
       setAccessToken(response.accessToken);
+      localStorage.setItem('accessToken', response.accessToken);
       setRole(response.role);
       setUserNo(response.userNo);
 

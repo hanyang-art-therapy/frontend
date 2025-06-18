@@ -39,11 +39,18 @@ export default function StudentNoSection({
     onBlur(event);
 
     try {
-      await checkStudentNo({
+      const isStudentNoValid = await checkStudentNo({
         studentNo: Number(watchStudentNo),
       });
 
-      setIsStudentNoValid(true);
+      if (isStudentNoValid) {
+        setIsStudentNoValid(true);
+      } else {
+        setError('studentNo', {
+          type: 'manual',
+          message: '이미 존재하는 학번입니다.',
+        });
+      }
     } catch (error) {
       const errorMessage = handleApiError(error);
 

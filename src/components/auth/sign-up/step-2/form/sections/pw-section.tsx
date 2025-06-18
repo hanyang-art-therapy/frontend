@@ -1,7 +1,8 @@
 import { Input } from '@/components/ui/input';
 import Required from '@/components/ui/required';
+import ShowPassword from '@/components/ui/show-password';
 import type { SignUpFormValues } from '@/schemas/sign-up/sign-up-schema';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type {
   FieldErrors,
   UseFormRegister,
@@ -25,6 +26,8 @@ export default function PwSection({
   const password = watch('password');
   const confirmPassword = watch('confirmPassword');
 
+  const [showPassword, setShowPassword] = useState(false);
+
   useEffect(() => {
     if (password && confirmPassword) trigger('confirmPassword');
   }, [password, confirmPassword, trigger]);
@@ -35,7 +38,8 @@ export default function PwSection({
         <label
           aria-label='비밀번호'
           htmlFor='password'
-          className='t-b-16 flex items-center'>
+          className='t-b-16 flex items-center'
+        >
           비밀번호 <Required nbsp />
         </label>
         <Input
@@ -46,6 +50,11 @@ export default function PwSection({
           placeholder='비밀번호를 입력해주세요.'
           {...register('password')}
         />
+        <ShowPassword
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+        />
+
         {errors.password && (
           <p className='text-destructive t-r-14'>{errors.password.message}</p>
         )}
@@ -55,7 +64,8 @@ export default function PwSection({
         <label
           aria-label='비밀번호 확인'
           htmlFor='confirmPassword'
-          className='t-b-16 flex items-center'>
+          className='t-b-16 flex items-center'
+        >
           비밀번호 확인 <Required nbsp />
         </label>
         <Input
@@ -66,6 +76,12 @@ export default function PwSection({
           placeholder='비밀번호를 입력해주세요.'
           {...register('confirmPassword')}
         />
+
+        <ShowPassword
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+        />
+
         {errors.confirmPassword && (
           <p className='text-destructive t-r-14'>
             {errors.confirmPassword.message}
