@@ -111,8 +111,8 @@ export default function NoticeWrite() {
           setStartDate={setStartDate}
           endDate={endDate}
           setEndDate={setEndDate}/>
-          </div>
   
+          </div>
         <EditorSection editor={editor} />
 
         <div className='flex justify-between mt-4 px-[8px]'>
