@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Download } from 'lucide-react';
+import { Download, Volume2 } from 'lucide-react';
 import NoticeNav from '../notice-nav.tsx/notice-nav';
 import NoticeNoResult from '../notice-noresult/notice-no-result';
 import { formatTimeStamp } from '@/lib/utils';
@@ -9,7 +9,6 @@ import { deleteNotice, getNotice } from '@/apis/notice/notice';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/auth';
-
 
 const getType = (category: string) => {
   switch (category) {
@@ -37,7 +36,7 @@ export default function NoticeDetail() {
   const authStore = useAuthStore();
   const role = authStore.role || 'ADMIN';
 
-// 디버깅용 로그
+  // 디버깅용 로그
   console.log('=== DEBUG INFO ===');
   console.log('authStore:', authStore);
   console.log('role:', role);
@@ -78,6 +77,7 @@ export default function NoticeDetail() {
       await deleteNotice({ noticeNo: parseInt(noticeNo ?? '1') });
       toast.success('게시글 삭제가 완료되었습니다.');
       navigate('/notice');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error('게시글 삭제 중 오류가 발생했습니다.');
     }
@@ -102,10 +102,16 @@ export default function NoticeDetail() {
 
   return (
     <div className='w-full h-full mt-[80px] md:mt-[120px]'>
+      <div className='w-full max-w-[1260px] mx-auto px-5'>
+        <div className='flex justify-start items-center pb-[20px] gap-2'>
+          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-btn-dark-3'>
+            <Volume2 size={40} strokeWidth={2} />
+            </div>
+            <strong className='p-2 text-btn-dark-3 t-b-32'>공지사항</strong>
+          </div>
+        </div>
       <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
-        <div
-          className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start'
-        >
+        <div className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start'>
           <div className='flex flex-col gap-4 mt-2 t-r-16 px-[20px]'>
             <h1 className='t-b-32 font-bold'>{noticeContents.title}</h1>
             <div className='md:flex md:flex-row t-r-14 md:p-[10px] flex gap-2 md:gap-4 flex-wrap'>
@@ -133,7 +139,7 @@ export default function NoticeDetail() {
         </div>
 
         {/* 본문 내용 */}
-        <div className='w-full h-auto p-[20px] md:p-[30px]'>
+        <div className='w-full h-auto min-h-[300px] p-[20px] md:p-[30px] relative'>
           <div className='mt-2 t-r-16 leading-relaxed'>
             {noticeContents.content.split('\n').map((line, idx) => (
               <p key={idx} className='mb-4'>
@@ -142,42 +148,9 @@ export default function NoticeDetail() {
             ))}
           </div>
 
-          {/* 디버깅: 항상 보이는 텍스트 */}
-          <div className='mt-4 p-2 bg-yellow-100 border'>
-            <p>디버깅 정보:</p>
-            <p>authStore: {JSON.stringify(authStore)}</p>
-            <p>role: {role || 'undefined'}</p>
-            <p>isAdmin: {isAdmin ? 'true' : 'false'}</p>
-            <p>role === 'ADMIN': {role === 'ADMIN' ? 'true' : 'false'}</p>
-          </div>
-
-          {/* 테스트용: 항상 보이는 버튼 */}
-          <div className='flex gap-4 mt-4 justify-end items-end'>
-            <Button className='h-[20px] w-[80px] t-r-16 bg-gray-500 text-white rounded-sm'>
-              테스트버튼
-            </Button>
-          </div>
-
-          {/* 임시 테스트: role을 강제로 'ADMIN'으로 설정해서 테스트 */}
-          <div className='flex gap-4 mt-4 justify-end items-end'>
-            <Button
-              onClick={handleEdit}
-              className='h-[20px] w-[80px] t-r-16 bg-green-300 hover:bg-primary text-white rounded-sm'
-            >
-              테스트수정
-            </Button>
-
-            <Button
-              onClick={handleDelete}
-              className='h-[20px] w-[80px] t-r-16 bg-pink-300 hover:bg-red-600 text-white rounded-sm'
-            >
-              테스트삭제
-            </Button>
-          </div>
-
           {/* 수정/삭제 버튼 (관리자일 경우만 표시) */}
           {role === 'ADMIN' && (
-            <div className='flex gap-4 mt-4 justify-end items-end'>
+            <div className='flex gap-4 mt-4 justify-end items-end absolute bottom-4 right-4'>
               <Button
                 onClick={handleEdit}
                 className='h-[20px] w-[80px] t-r-16 bg-orange-300 hover:bg-primary text-white rounded-sm'
