@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 export default function Sitemap() {
   let tabIndex = 1;
   return (
-    <div className='mt-[60px]'>
-      <div className='flex flex-col justify-center items-center gap-[50px]'>
-        <div className='w-full h-[400px] bg-bg-gray-fa flex justify-center items-center'>
+    <div className='h-[100vh] flex justify-center items-center'>
+      <div className=' flex flex-col justify-center items-center gap-[50px]'>
+        <div className='w-full flex justify-center items-center'>
           <h2 className='t-b-80'>SITE MAP</h2>
         </div>
-        <ul className='flex flex-row flex-wrap justify-center gap-[30px] px-[20px] py-10 mx-auto'>
-          <li className='bg-primary/10 p-[15px] rounded-md'>
+        <ul className='flex flex-row flex-wrap justify-center gap-[30px] px-[20px] mx-auto'>
+          <li>
             <ul className='flex flex-col gap-[10px]'>
               <li className='t-b-18 text-nowrap'>
                 <Link to={'/'} tabIndex={tabIndex++}>
@@ -35,7 +35,7 @@ export default function Sitemap() {
             </ul>
           </li>
           {NAV_MENU.map((menu) => (
-            <li className='flex flex-col gap-[10px] bg-primary/10 p-[15px] rounded-md'>
+            <li key={menu.title} className='flex flex-col gap-[10px]'>
               <h3 className='t-b-18 text-nowrap'>
                 <Link to={menu.path} tabIndex={tabIndex++}>
                   {menu.title}
@@ -43,7 +43,7 @@ export default function Sitemap() {
               </h3>
               <ul className='flex flex-col gap-[5px]'>
                 {menu.submenu.map((submenu) => (
-                  <li className='t-m-16 text-nowrap'>
+                  <li key={submenu.title} className='t-m-16 text-nowrap'>
                     <Link to={submenu.path} tabIndex={tabIndex++}>
                       {submenu.title}
                     </Link>
