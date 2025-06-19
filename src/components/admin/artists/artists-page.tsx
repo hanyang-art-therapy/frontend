@@ -1,42 +1,22 @@
-import TabButton from '@/components/admin/tab-btn';
-import ArtistView from '@/components/admin/artists/artist/artist-view';
 import ArtistForm from '@/components/admin/artists/artist/artist-form';
+import ArtistView from '@/components/admin/artists/artist/artist-view';
 import type { TabType } from '@/components/admin/tab-btn';
-import { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
-import { ArtistsResponse } from '@/types/admin/artists';
-import { InfiniteScrollResponse } from '@/types';
+import TabButton from '@/components/admin/tab-btn';
 import { useAuthStore } from '@/store/auth';
-import { getArtistsTest } from '@/apis/admin/artists';
+import { InfiniteScrollResponse } from '@/types';
+import { ArtistsResponse } from '@/types/admin/artists';
+import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 
 export default function AdminArtist() {
   const { role } = useAuthStore();
-  let loaderData = useLoaderData();
+
+  const loaderData = useLoaderData();
+
   const [artistsList, setArtistsList] =
     useState<InfiniteScrollResponse<ArtistsResponse>>(loaderData);
 
   const [selectedTab, setSelectedTab] = useState<TabType>('view');
-
-  const content =
-    selectedTab === 'view' ? (
-      <ArtistView
-        artistsList={artistsList}
-        setArtistsList={setArtistsList}
-        role={role}
-      />
-    ) : (
-      <ArtistForm setArtistsList={setArtistsList} />
-    );
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (role === 'TESTER') {
-        const response = await getArtistsTest({});
-        setArtistsList(response as InfiniteScrollResponse<ArtistsResponse>);
-      }
-    };
-    fetchData();
-  }, []);
 
   return (
     <>
@@ -58,7 +38,17 @@ export default function AdminArtist() {
         </div>
       </div>
 
-      <div className='pt-[215px]'>{content}</div>
+      <div className='pt-[215px]'>
+        {selectedTab === 'view' ? (
+          <ArtistView
+            artistsList={artistsList}
+            setArtistsList={setArtistsList}
+            role={role}
+          />
+        ) : (
+          <ArtistForm setArtistsList={setArtistsList} />
+        )}
+      </div>
     </>
   );
 }

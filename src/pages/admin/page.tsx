@@ -18,7 +18,7 @@ export default function AdminPage() {
       toast('관리자 권한이 없습니다.');
       navigate('/', { replace: true });
     }
-  }, [role, navigate]);
+  }, [role, navigate, isAdminOrTester]);
 
   if (pathname === '/admin') {
     return <NotFound />;

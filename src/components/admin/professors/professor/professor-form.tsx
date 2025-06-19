@@ -1,16 +1,14 @@
 import { postProfessor } from '@/apis/admin/professors';
+import { postProfessorTest } from '@/apis/admin/tester/professors';
 import { postFile } from '@/apis/common/file';
 import FormField from '@/components/admin/form-field';
 import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
-import { postFile } from '@/apis/common/file';
-import { postProfessor, postProfessorTest } from '@/apis/admin/professors';
+import { MAX_FILE_SIZE } from '@/constants/common/common';
+import { useAuthStore } from '@/store/auth';
 import { PostProfessorRequest } from '@/types/admin/professors';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { handleApiError } from '@/components/common/error-handler';
-import { useAuthStore } from '@/store/auth';
-import { MAX_FILE_SIZE } from '@/constants/common/common';
 
 export default function ProfessorForm() {
   const { role } = useAuthStore();
