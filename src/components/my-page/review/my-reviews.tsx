@@ -1,12 +1,11 @@
 import { getMyReviews } from '@/apis/my-page/reviews';
 import MyReviewList from '@/components/my-page/review/my-review-list';
 import MyPageHeader from '@/components/my-page/ui/my-page-header';
+import Pagination from '@/components/ui/pagination';
 import Search from '@/components/ui/search';
 import type { MyReviewPagination } from '@/types';
 import type { MyReviewData } from '@/types/my-page';
-import { useState, useEffect } from 'react';
-import Pagination from '@/components/ui/pagination';
-import MyReviewNoResult from './my-review-no-result';
+import { useEffect, useState } from 'react';
 
 type MyReviewsProps = {
   myReviews: MyReviewPagination<MyReviewData> | null;
@@ -41,11 +40,8 @@ export default function MyReveiws({ myReviews }: MyReviewsProps) {
     setSearchedReviews(response);
   };
 
-  if (!myReviews || searchedReviews === null || !searchedReviews.content.length)
-    return <MyReviewNoResult />;
-
   return (
-    <div className='space-y-[30px]'>
+    <section className='space-y-10'>
       <MyPageHeader title='내가 쓴 리뷰 관리' />
       <Search
         placeholder='댓글 검색'
@@ -53,12 +49,14 @@ export default function MyReveiws({ myReviews }: MyReviewsProps) {
         searchValue={searchValue}
         setSearchValue={setSearchValue}
       />
+
       <MyReviewList myReviews={searchedReviews} />
+
       <Pagination
         currentPage={searchedReviews?.page || 1}
         totalPages={searchedReviews?.totalPages || 1}
         onPageChange={handlePageChange}
       />
-    </div>
+    </section>
   );
 }

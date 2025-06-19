@@ -9,6 +9,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 export default function MyPageLayout() {
   const { pathname } = useLocation();
+
   const navigate = useNavigate();
   const defaultStep = MY_PAGE_STEP_ITEMS[0].value;
   const currentStep = pathname.split('/')[2] || defaultStep;

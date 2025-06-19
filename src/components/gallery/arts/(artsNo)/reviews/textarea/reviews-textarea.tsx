@@ -30,13 +30,12 @@ export default function ReviewsTextarea({
   };
 
   return (
-    <div className='flex-1 flex flex-col gap-4 w-[70%] md:w-[100%]'>
+    <div className='flex-1 flex flex-col gap-4 w-full'>
       <input
         ref={imageInputRef}
         id='imageInput'
         type='file'
         hidden
-        multiple
         accept='image/*'
         onChange={handleImageChange}
       />
@@ -48,7 +47,7 @@ export default function ReviewsTextarea({
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         onKeyDown={handleEnterKeyDown}
-        className='h-[100px] md:w-full md:h-[150px] border border-bg-gray-d rounded-sm px-3 py-2 text-sm focus:outline-none focus:ring-0'
+        className='h-[100px] md:w-full md:h-[150px] border border-bg-gray-d rounded-sm px-3 py-2 text-sm focus:outline-primary focus:ring-0'
       />
     </div>
   );

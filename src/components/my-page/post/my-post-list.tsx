@@ -1,18 +1,15 @@
 import { formatTimeStamp } from '@/lib/utils';
-import type { MyReviewPagination } from '@/types';
 import type { MyPostData } from '@/types/my-page';
 import { Link } from 'react-router-dom';
 
 type MyPostListProps = {
-  myPosts: MyReviewPagination<MyPostData>;
+  myPosts: MyPostData[];
 };
 
 export default function MyPostList({ myPosts }: MyPostListProps) {
-  const { content: posts, page, totalElements, size } = myPosts;
-
   return (
-    <ul className='flex flex-col border-t border-b border-t-black border-b-black'>
-      {posts.map((post, index) => (
+    <ul className='flex flex-col border-t border-b'>
+      {myPosts.map((post, index) => (
         <li
           key={post.artsNo}
           className='border-b border-b-black border-muted last:border-b-0 hover:bg-primary/10 hover:text-bg-primary transition-all duration-300'
@@ -22,14 +19,18 @@ export default function MyPostList({ myPosts }: MyPostListProps) {
             className='flex items-center gap-4 md:gap-[30px] px-1 md:px-5 py-[13px] cursor-pointer'
           >
             <p className='px-1 t-r-16 md:min-w-[46px] text-center'>
-              {totalElements - (page - 1) * size - index}
+              {index + 1}
             </p>
 
-            <p className='t-m-18 flex-1 truncate'>{post.artName}</p>
-            {post.artType === 'GROUP' && (
-              <p className='text-gray-6 t-r-16 md:inline hidden'>공동작품</p>
-            )}
-            <p className='text-gray-9 t-r-16'>
+            <div className='flex-1 min-w-0'>
+              <p className='t-m-18 truncate'>{post.artName}</p>
+            </div>
+
+            <p className='text-gray-6 t-m-14'>
+              {post.artType === 'SINGLE' ? '개인 작품' : '공동 작품'}
+            </p>
+
+            <p className='text-gray-9 t-r-14'>
               {formatTimeStamp(post.createdAt)}
             </p>
           </Link>
