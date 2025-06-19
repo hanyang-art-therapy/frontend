@@ -1,10 +1,15 @@
 import { Link } from 'react-router-dom';
 import { NAV_MENU } from '@/constants/nav';
+import { useAuthStore } from '@/store/auth';
 
 export default function DesktopMenu() {
+  const { role } = useAuthStore();
+  const isAdminOrTester = role === 'ADMIN' || role === 'TESTER';
+
   return (
     <ul className='flex gap-[30px] relative'>
       {NAV_MENU.map((menu, index) => {
+        if (menu.title === '관리자페이지' && !isAdminOrTester) return null;
         const hasSub = menu.submenu?.length > 0;
 
         return (

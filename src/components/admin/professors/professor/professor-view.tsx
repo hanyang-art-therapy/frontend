@@ -8,27 +8,33 @@ import {
   getProfessors,
   patchProfessor,
   deleteProfessor,
+  getProfessorsTest,
 } from '@/apis/admin/professors';
 import ProfessorModal from '@/components/admin/professors/professor/professor-modal';
 import { handleApiError } from '@/components/common/error-handler';
 import { toast } from 'sonner';
+import { useAuthStore } from '@/store/auth';
 
 export default function ProfessorView() {
+  const { role } = useAuthStore();
   const [professors, setProfessors] = useState<ProfessorsResponse[]>([]);
   const [selectedProfessors, setSelectedProfessors] =
     useState<ProfessorsResponse | null>(null);
 
   useEffect(() => {
-    getProfessors()
-      .then(setProfessors)
-      .catch((error) => {
-        toast.error(handleApiError(error));
-      });
-    getProfessors()
-      .then(setProfessors)
-      .catch((error) => {
-        toast.error(handleApiError(error));
-      });
+    if (role === 'TESTER') {
+      getProfessorsTest()
+        .then(setProfessors)
+        .catch((error) => {
+          toast.error(handleApiError(error));
+        });
+    } else {
+      getProfessors()
+        .then(setProfessors)
+        .catch((error) => {
+          toast.error(handleApiError(error));
+        });
+    }
   }, []);
 
   const handleEdit = async (

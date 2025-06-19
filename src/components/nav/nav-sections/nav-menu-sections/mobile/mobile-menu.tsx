@@ -1,12 +1,15 @@
 import AuthLinks from '@/components/header/links/auth-links';
 import MobileMenuItem from '@/components/nav/nav-sections/nav-menu-sections/mobile/mobile-menu-item';
 import { NAV_MENU } from '@/constants/nav';
+import { useAuthStore } from '@/store/auth';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function MobileMenu() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const location = useLocation();
+  const { role } = useAuthStore();
+  const isAdminOrTester = role === 'ADMIN' || role === 'TESTER';
 
   useEffect(() => {
     setOpenIndex(null);
@@ -21,15 +24,19 @@ export default function MobileMenu() {
       <div className='w-full h-[1px] bg-bg-gray-d' />
 
       <ul className='flex flex-col gap-4 p-8'>
-        {NAV_MENU.map((menu, index) => (
-          <MobileMenuItem
-            key={menu.title}
-            menu={menu}
-            index={index}
-            openIndex={openIndex}
-            setOpenIndex={setOpenIndex}
-          />
-        ))}
+        {NAV_MENU.map((menu, index) => {
+          if (menu.title === '관리자페이지' && !isAdminOrTester) return null;
+
+          return (
+            <MobileMenuItem
+              key={menu.title}
+              menu={menu}
+              index={index}
+              openIndex={openIndex}
+              setOpenIndex={setOpenIndex}
+            />
+          );
+        })}
       </ul>
     </div>
   );

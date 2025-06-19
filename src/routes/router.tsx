@@ -33,6 +33,7 @@ const ResetPwPage = lazy(() => import('@/pages/my-page/reset-pw/page'));
 const MyPageReviews = lazy(() => import('@/pages/my-page/reviews/page'));
 const MyPagePosts = lazy(() => import('@/pages/my-page/posts/page'));
 const MyPageProfile = lazy(() => import('@/pages/my-page/profile/page'));
+const SitemapPage = lazy(() => import('@/pages/sitemap/page'));
 
 const IntroPage = lazy(() => import('@/pages/intro/page'));
 const VisionPage = lazy(() => import('@/pages/intro/vision/page'));
@@ -191,6 +192,10 @@ const router = createBrowserRouter([
             element: lazyElement({ Element: AdminProfessorPage }),
           },
         ],
+      },
+      {
+        path: '/sitemap',
+        element: lazyElement(SitemapPage),
       },
     ],
   },

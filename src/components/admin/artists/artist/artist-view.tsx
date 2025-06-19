@@ -35,9 +35,14 @@ type Props = {
   setArtistsList: Dispatch<
     SetStateAction<InfiniteScrollResponse<ArtistsResponse>>
   >;
+  role: string | null;
 };
 
-export default function ArtistView({ artistsList, setArtistsList }: Props) {
+export default function ArtistView({
+  artistsList,
+  setArtistsList,
+  role,
+}: Props) {
   const [selectedArtist, setSelectedArtist] = useState<ArtistResponse | null>(
     null
   );
@@ -149,6 +154,7 @@ export default function ArtistView({ artistsList, setArtistsList }: Props) {
       toast.error(handleApiError(error));
     }
   };
+  console.log(artistsList);
 
   return (
     <>
@@ -221,7 +227,9 @@ export default function ArtistView({ artistsList, setArtistsList }: Props) {
             </div>
           </div>
         ))}
-        <div className='w-full h-1 bg-bg-gray-fa' ref={observerRef} />
+        {role !== 'TESTER' && (
+          <div className='w-full h-1 bg-bg-gray-fa' ref={observerRef} />
+        )}
       </div>
 
       {/* 작가 상세 모달 */}

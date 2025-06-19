@@ -52,4 +52,9 @@ export const NAV_MENU: NavMenu[] = [
     path: '/notice',
     submenu: [],
   },
+  {
+    title: '관리자페이지',
+    path: '/admin/users',
+    submenu: [],
+  },
 ] as const;

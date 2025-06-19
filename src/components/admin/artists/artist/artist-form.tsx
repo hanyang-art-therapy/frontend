@@ -76,15 +76,23 @@ export default function ArtistForm({ setArtistsList }: Props) {
   };
 
   const fields = [
-    { id: 'artistName', label: '이름' },
-    { id: 'studentNo', label: '학번' },
-    { id: 'cohort', label: '기수' },
+    { id: 'artistName', label: '이름', placeholder: '홍길동' },
+    {
+      id: 'studentNo',
+      label: '학번',
+      placeholder: '10자리 숫자로 입력',
+    },
+    {
+      id: 'cohort',
+      label: '기수',
+      placeholder: '1자리 이상의 숫자로 입력',
+    },
   ];
 
   return (
     <form className='flex flex-col gap-[30px]' onSubmit={handleSubmit}>
       <div className='border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
-        {fields.map(({ id, label }) => (
+        {fields.map(({ id, label, placeholder }) => (
           <FormField key={id} id={id} label={label}>
             <input
               id={id}
@@ -95,6 +103,7 @@ export default function ArtistForm({ setArtistsList }: Props) {
                   ? ''
                   : form[id as keyof PostArtistRequest] ?? ''
               }
+              placeholder={placeholder}
               onChange={handleChange}
               autoComplete='off'
               className='w-full px-[20px] outline-none cursor-pointer'

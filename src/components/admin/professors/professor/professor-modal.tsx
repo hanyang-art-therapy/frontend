@@ -16,8 +16,12 @@ import {
   PatchProfessorRequest,
   ProfessorsResponse,
 } from '@/types/admin/professors';
-import { useEffect, useRef, useState } from 'react';
+import type { MessageResponse } from '@/types';
+import { postFile } from '@/apis/common/file';
+import { getProfessor } from '@/apis/admin/professors';
+import { useRef, useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { handleApiError } from '@/components/common/error-handler';
 
 type Props = {
   professor: ProfessorsResponse;
@@ -42,7 +46,7 @@ export default function ProfessorModal({
     filesNo: null,
   });
 
-  const [previewUrl, setPreviewUrl] = useState('/images/no-image.jpg');
+  const [previewUrl, setPreviewUrl] = useState('');
 
   useEffect(() => {
     try {
@@ -57,7 +61,7 @@ export default function ProfessorModal({
           tel: response?.tel ?? '',
           filesNo: null,
         });
-        setPreviewUrl(response?.files?.url || '/images/no-image.jpg');
+        setPreviewUrl(response?.files?.url || '');
       };
 
       fetchProfessor();
@@ -101,7 +105,6 @@ export default function ProfessorModal({
       toast.error(handleApiError(error));
     } finally {
       setUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
@@ -166,15 +169,12 @@ export default function ProfessorModal({
         <div className='flex gap-[15px]'>
           {/* 이미지 업로드 */}
           <div className='flex flex-col items-center gap-[15px]'>
-            <div className='w-[100px] md:w-[130px] aspect-[4/5] rounded border border-btn-gray-d overflow-hidden'>
+            <div className='w-[100px] md:w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
               {previewUrl ? (
                 <img
                   src={previewUrl}
                   alt='preview'
                   className='w-full h-full object-cover'
-                  onError={(e) =>
-                    (e.currentTarget.src = '/images/no-image.jpg')
-                  }
                   style={{ cursor: 'default' }}
                 />
               ) : (
