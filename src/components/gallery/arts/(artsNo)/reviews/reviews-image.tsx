@@ -6,35 +6,32 @@ type PreviewImage = {
 };
 
 type ReviewsImageProps = {
-  previewImages: PreviewImage[];
-  handleRemoveImage: (index: number) => void;
+  previewImage: PreviewImage | null;
+  handleRemoveImage: () => void;
   handleAddImage: () => void;
   isLoading: boolean;
 };
 
 export default function ReviewsImage({
-  previewImages,
+  previewImage,
   handleRemoveImage,
   handleAddImage,
   isLoading,
 }: ReviewsImageProps) {
-  const maxImages = 5;
-
   return (
     <div className='flex flex-wrap gap-2 ml-auto'>
-      {/* 기존 이미지들 */}
-      {previewImages.map((image, imageIndex) => (
+      {previewImage && (
         <div
-          key={`${image.fileNo}-${imageIndex}`}
+          key={`${previewImage.fileNo}`}
           className='w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative bg-btn-gray-fa flex items-center justify-center'
         >
           <img
-            src={image.url}
-            alt={`미리보기 ${imageIndex + 1}`}
+            src={previewImage.url}
+            alt={`업로드 이미지 미리보기`}
             className='w-full h-full object-cover rounded'
           />
           <button
-            onClick={() => handleRemoveImage(imageIndex)}
+            onClick={() => handleRemoveImage()}
             className='absolute top-1 right-1 bg-black/80 hover:bg-black rounded-full w-6 h-6 flex items-center justify-center cursor-pointer'
             aria-label='이미지 삭제'
           >
@@ -44,10 +41,9 @@ export default function ReviewsImage({
             />
           </button>
         </div>
-      ))}
+      )}
 
-      {/* 이미지 추가 버튼 (5장 미만일 때만 표시) */}
-      {previewImages.length < maxImages && (
+      {!previewImage && (
         <div className='w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative bg-btn-gray-fa flex items-center justify-center'>
           {isLoading ? (
             <LoaderCircle className='w-8 h-8 animate-spin' strokeWidth={1} />

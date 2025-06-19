@@ -1,24 +1,28 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-
 import lazyElement from '@/components/common/lazy-element';
 import MainSkeleton from '@/components/main/main-skeleton';
+import MyPageSkeleton from '@/components/my-page/ui/my-page-skeleton';
 import { AuthLayout, IntroLayout, MyPageLayout, RootLayout } from '@/layouts';
 import CommingSoon from '@/pages/comming-soon/page';
 import NotFoundPage from '@/pages/not-found/page';
-import { rootLoader } from '@/routes/loaders/root-loader';
-import { adminArtistLoader } from './loaders/admin/artists';
-import { adminArtsLoader } from './loaders/admin/arts-loader';
-import { adminUserLoader } from './loaders/admin/users';
+import {
+  adminArtistLoader,
+  adminArtsLoader,
+  adminUserLoader,
+} from '@/routes/loaders/admin';
 import { artLoader } from '@/routes/loaders/art/art-loader';
 import { galleryLoader } from '@/routes/loaders/gallery/gallery-loader';
+import { homeLoader } from '@/routes/loaders/home/home-loader';
 import {
-  myProfileLoader,
+  myPageLoader,
   myPostsLoader,
+  myProfileLoader,
   myReviewsLoader,
 } from '@/routes/loaders/my-page';
+import { rootLoader } from '@/routes/loaders/root-loader';
+import { introProfessorLoader } from './loaders/intro/professor-loader';
 
-// LAZY LOADING
 const HomePage = lazy(() => import('@/pages/page'));
 const GalleryPage = lazy(() => import('@/pages/gallery/page'));
 const ArtsDetailPage = lazy(() => import('@/pages/gallery/[arts-no]/page'));
@@ -30,7 +34,6 @@ const MyPageReviews = lazy(() => import('@/pages/my-page/reviews/page'));
 const MyPagePosts = lazy(() => import('@/pages/my-page/posts/page'));
 const MyPageProfile = lazy(() => import('@/pages/my-page/profile/page'));
 
-// 학과소개
 const IntroPage = lazy(() => import('@/pages/intro/page'));
 const VisionPage = lazy(() => import('@/pages/intro/vision/page'));
 const ProfessorsPage = lazy(() => import('@/pages/intro/professors/page'));
@@ -40,7 +43,6 @@ const MapPage = lazy(() => import('@/pages/intro/map/page'));
 const ProspectPage = lazy(() => import('@/pages/intro/prospect/page'));
 const MouPage = lazy(() => import('@/pages/intro/mou/page'));
 
-// 임상치료
 const ClinicalPage = lazy(() => import('@/pages/clinical/page'));
 const DevelopmentalPage = lazy(
   () => import('@/pages/clinical/developmental/page')
@@ -51,17 +53,14 @@ const AdolescentPage = lazy(() => import('@/pages/clinical/adolescent/page'));
 const AdultPage = lazy(() => import('@/pages/clinical/adult/page'));
 const PreventionPage = lazy(() => import('@/pages/clinical/prevention/page'));
 
-// 입학안내
 const FreshmanPage = lazy(() => import('@/pages/enroll/freshman/page'));
 const ScholarshipPage = lazy(() => import('@/pages/enroll/scholarship/page'));
 
-// 공지사항
 const NoticePage = lazy(() => import('@/pages/notice/page'));
 const NoticeDetailPage = lazy(() => import('@/pages/notice/detail/page'));
 const NoticeEditPage = lazy(() => import('@/pages/notice/edit/page'));
 const NoticeWritePage = lazy(() => import('@/pages/notice/write/page'));
 
-// 관리자
 const AdminPage = lazy(() => import('@/pages/admin/page'));
 const AdminUsersPage = lazy(() => import('@/pages/admin/users/page'));
 const AdminArtPage = lazy(() => import('@/pages/admin/arts/page'));
@@ -81,15 +80,16 @@ const router = createBrowserRouter([
             <HomePage />
           </Suspense>
         ),
+        loader: homeLoader,
       },
       {
         path: '/gallery',
-        element: lazyElement(GalleryPage),
+        element: lazyElement({ Element: GalleryPage }),
         loader: galleryLoader,
       },
       {
         path: '/gallery/:artsNo',
-        element: lazyElement(ArtsDetailPage),
+        element: lazyElement({ Element: ArtsDetailPage }),
         loader: artLoader,
       },
 
@@ -98,31 +98,31 @@ const router = createBrowserRouter([
         children: [
           {
             path: '',
-            element: lazyElement(ClinicalPage),
+            element: lazyElement({ Element: ClinicalPage }),
           },
           {
             path: 'developmental',
-            element: lazyElement(DevelopmentalPage),
+            element: lazyElement({ Element: DevelopmentalPage }),
           },
           {
             path: 'infant',
-            element: lazyElement(InfantPage),
+            element: lazyElement({ Element: InfantPage }),
           },
           {
             path: 'children',
-            element: lazyElement(ChildrenPage),
+            element: lazyElement({ Element: ChildrenPage }),
           },
           {
             path: 'adolescent',
-            element: lazyElement(AdolescentPage),
+            element: lazyElement({ Element: AdolescentPage }),
           },
           {
             path: 'adult',
-            element: lazyElement(AdultPage),
+            element: lazyElement({ Element: AdultPage }),
           },
           {
             path: 'prevention',
-            element: lazyElement(PreventionPage),
+            element: lazyElement({ Element: PreventionPage }),
           },
         ],
       },
@@ -131,29 +131,29 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'freshman',
-            element: lazyElement(FreshmanPage),
+            element: lazyElement({ Element: FreshmanPage }),
           },
           {
             path: 'scholarship',
-            element: lazyElement(ScholarshipPage),
+            element: lazyElement({ Element: ScholarshipPage }),
           },
         ],
       },
       {
         path: '/notice',
-        element: lazyElement(NoticePage),
+        element: lazyElement({ Element: NoticePage }),
       },
       {
         path: 'notice/:noticeNo',
-        element: lazyElement(NoticeDetailPage),
+        element: lazyElement({ Element: NoticeDetailPage }),
       },
       {
-        path: 'notice/:noticeNo/edit', // 수정 페이지 라우트 추가
-        element: lazyElement(NoticeEditPage), // 수정 페이지 컴포넌트
+        path: 'notice/:noticeNo/edit',
+        element: lazyElement({ Element: NoticeEditPage }),
       },
       {
         path: 'notice/write',
-        element: lazyElement(NoticeWritePage),
+        element: lazyElement({ Element: NoticeWritePage }),
       },
       {
         path: '/comming-soon',
@@ -165,25 +165,31 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin',
-        element: lazyElement(AdminPage),
+        element: lazyElement({ Element: AdminPage }),
         children: [
           {
             path: 'users',
-            element: lazyElement(AdminUsersPage),
+            element: lazyElement({ Element: AdminUsersPage }),
             loader: adminUserLoader,
           },
           {
             path: 'arts',
-            element: lazyElement(AdminArtPage),
+            element: lazyElement({ Element: AdminArtPage }),
             loader: adminArtsLoader,
           },
           {
             path: 'artists',
-            element: lazyElement(AdminArtistPage),
+            element: lazyElement({ Element: AdminArtistPage }),
             loader: adminArtistLoader,
           },
-          { path: 'galleries', element: lazyElement(AdminGalleryPage) },
-          { path: 'professors', element: lazyElement(AdminProfessorPage) },
+          {
+            path: 'galleries',
+            element: lazyElement({ Element: AdminGalleryPage }),
+          },
+          {
+            path: 'professors',
+            element: lazyElement({ Element: AdminProfessorPage }),
+          },
         ],
       },
     ],
@@ -193,32 +199,39 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/sign-in',
-        element: lazyElement(SignInPage),
+        element: lazyElement({ Element: SignInPage }),
       },
       {
         path: '/sign-up',
-        element: lazyElement(SignUpPage),
+        element: lazyElement({ Element: SignUpPage }),
       },
       {
         path: '/find-my',
-        element: lazyElement(FindMyPage),
+        element: lazyElement({ Element: FindMyPage }),
       },
     ],
   },
   {
     element: <MyPageLayout />,
+    loader: myPageLoader,
     children: [
       {
         path: '/my-page',
         children: [
           {
             path: 'reviews',
-            element: lazyElement(MyPageReviews),
+            element: lazyElement({
+              Element: MyPageReviews,
+              fallback: <MyPageSkeleton />,
+            }),
             loader: myReviewsLoader,
           },
           {
             path: 'posts',
-            element: lazyElement(MyPagePosts),
+            element: lazyElement({
+              Element: MyPagePosts,
+              fallback: <MyPageSkeleton />,
+            }),
             loader: myPostsLoader,
           },
           {
@@ -226,12 +239,18 @@ const router = createBrowserRouter([
             children: [
               {
                 path: '',
-                element: lazyElement(MyPageProfile),
+                element: lazyElement({
+                  Element: MyPageProfile,
+                  fallback: <MyPageSkeleton />,
+                }),
                 loader: myProfileLoader,
               },
               {
                 path: 'reset-pw',
-                element: lazyElement(ResetPwPage),
+                element: lazyElement({
+                  Element: ResetPwPage,
+                  fallback: <MyPageSkeleton />,
+                }),
               },
             ],
           },
@@ -247,35 +266,36 @@ const router = createBrowserRouter([
         children: [
           {
             path: '',
-            element: lazyElement(IntroPage),
+            element: lazyElement({ Element: IntroPage }),
           },
           {
             path: 'vision',
-            element: lazyElement(VisionPage),
+            element: lazyElement({ Element: VisionPage }),
           },
           {
             path: 'professors',
-            element: lazyElement(ProfessorsPage),
+            element: lazyElement({ Element: ProfessorsPage }),
+            loader: introProfessorLoader,
           },
           {
             path: 'curriculums',
-            element: lazyElement(CurriculumsPage),
+            element: lazyElement({ Element: CurriculumsPage }),
           },
           {
             path: 'certificates',
-            element: lazyElement(CertificatesPage),
+            element: lazyElement({ Element: CertificatesPage }),
           },
           {
             path: 'prospect',
-            element: lazyElement(ProspectPage),
+            element: lazyElement({ Element: ProspectPage }),
           },
           {
             path: 'mou',
-            element: lazyElement(MouPage),
+            element: lazyElement({ Element: MouPage }),
           },
           {
             path: 'map',
-            element: lazyElement(MapPage),
+            element: lazyElement({ Element: MapPage }),
           },
         ],
       },

@@ -5,7 +5,7 @@ import { LoaderFunctionArgs } from 'react-router-dom';
 export const artLoader = async ({ params }: LoaderFunctionArgs) => {
   const [artDetailResponse, reviewsResponse] = await Promise.all([
     getArtDetail(Number(params.artsNo)),
-    getReviews(Number(params.artsNo)),
+    getReviews({ artsNo: Number(params.artsNo) }),
   ]);
 
   return { artDetailResponse, reviewsResponse };
