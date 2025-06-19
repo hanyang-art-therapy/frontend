@@ -1,4 +1,4 @@
-import { deleteReview, patchReview } from '@/apis/gallery/review';
+import { banReview, deleteReview, patchReview } from '@/apis/gallery/review';
 import { handleApiError } from '@/components/common/error-handler';
 import DeleteReviewModal from '@/components/gallery/arts/(artsNo)/reviews/modal/actions/delete-review-modal';
 import ReviewsModalActions from '@/components/gallery/arts/(artsNo)/reviews/modal/actions/reviews-modal-actions';
@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useAuthStore } from '@/store/auth';
+import type { ArtReviewsPagination } from '@/types';
 import type { ArtReview } from '@/types/gallery/review';
 import { X } from 'lucide-react';
 import type {
@@ -30,7 +31,7 @@ type ReviewsModalProps = {
   setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
   selectedReview: ArtReview;
   setSelectedReview: Dispatch<SetStateAction<ArtReview>>;
-  fetchReviews: () => void;
+  setReviews: Dispatch<SetStateAction<ArtReviewsPagination<ArtReview>>>;
 };
 
 export default function ReviewsModal({
@@ -40,9 +41,10 @@ export default function ReviewsModal({
   setIsDialogOpen,
   selectedReview,
   setSelectedReview,
-  fetchReviews,
+  setReviews,
 }: ReviewsModalProps) {
-  const imageUrl = selectedReview.files?.[0]?.url;
+  const reviewImages = selectedReview.files;
+  const imageUrl = reviewImages?.[0]?.url;
   const { role, userNo } = useAuthStore();
 
   const [editedText, setEditedText] = useState(selectedReview.reviewText);
@@ -71,7 +73,7 @@ export default function ReviewsModal({
     }
   };
 
-  const handleDeleteClick = async () => {
+  const handleDeleteButtonClick = async () => {
     setIsDeleteDialogOpen(true);
   };
 
@@ -85,7 +87,15 @@ export default function ReviewsModal({
         reviewsNo: selectedReview.reviewsNo,
       });
 
-      fetchReviews();
+      setReviews((prev) => {
+        return {
+          ...prev,
+          content: prev.content.filter(
+            (review) => review.reviewsNo !== selectedReview.reviewsNo
+          ),
+        };
+      });
+
       toast.success('리뷰가 삭제되었습니다.');
     } catch (error) {
       const errorMessage = handleApiError(error);
@@ -96,6 +106,22 @@ export default function ReviewsModal({
   const handleCancelClick = () => {
     setIsEditing(false);
     setEditedText(selectedReview.reviewText);
+  };
+
+  const handleBanClick = async () => {
+    try {
+      const response = await banReview({
+        artsNo: artsNo,
+        reviewsNo: selectedReview.reviewsNo,
+      });
+
+      console.log(response);
+
+      toast.success('리뷰가 정지되었습니다.');
+    } catch (error) {
+      const errorMessage = handleApiError(error);
+      toast.error(errorMessage);
+    }
   };
 
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -160,7 +186,8 @@ export default function ReviewsModal({
                   handleCancelClick={handleCancelClick}
                   handleConfirmClick={handleConfirmClick}
                   handleEditClick={handleEditClick}
-                  handleDeleteClick={handleDeleteClick}
+                  handleDeleteClick={handleDeleteButtonClick}
+                  handleBanClick={handleBanClick}
                 />
               )}
 
