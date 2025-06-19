@@ -1,13 +1,16 @@
 import FormField from '@/components/admin/form-field';
 import { Button } from '@/components/ui/button';
 import { postFile } from '@/apis/common/file';
-import { postProfessor } from '@/apis/admin/professors';
+import { postProfessor, postProfessorTest } from '@/apis/admin/professors';
 import { PostProfessorRequest } from '@/types/admin/professors';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
+import { useAuthStore } from '@/store/auth';
 
 export default function ProfessorForm() {
+  const { role } = useAuthStore();
+
   const [form, setForm] = useState<PostProfessorRequest>({
     professorName: '',
     position: '',
@@ -79,8 +82,14 @@ export default function ProfessorForm() {
     }
 
     try {
-      const res = await postProfessor(form);
-      toast.success(res.message);
+      let res;
+      if (role === 'TESTER') {
+        await postProfessorTest(form);
+      } else {
+        res = await postProfessor(form);
+      }
+
+      toast.success(res?.message);
       setForm({
         professorName: '',
         position: '',
