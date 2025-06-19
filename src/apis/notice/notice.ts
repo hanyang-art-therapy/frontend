@@ -1,3 +1,4 @@
+//import apiInstance from '@/lib/axios';
 import apiInstance from '@/lib/axios';
 import { MessageResponse } from '@/types';
 import type {
@@ -65,7 +66,7 @@ export const updateNotice = async ({
   isFixed,
 }: UpdateNoticeRequest): Promise<GetNoticeResponse> => {
   const response = await apiInstance.patch(`/notices/${noticeNo}`, {
-    noticeNo,
+    // noticeNo,
     title,
     category,
     periodStart,
@@ -83,6 +84,17 @@ export const deleteNotice = async ({
   noticeNo,
 }: GetNoticeRequest): Promise<MessageResponse> => {
   const response = await apiInstance.delete(`/notices/${noticeNo}`);
+
+  return response.data;
+};
+
+// 🔧 추가: 파일 업로드 API
+export const uploadFiles = async (formData: FormData): Promise<{ filesNo: number[] }> => {
+  const response = await apiInstance.post('/files/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
   return response.data;
 };

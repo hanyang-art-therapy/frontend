@@ -195,7 +195,7 @@ export default function AdminArtView() {
             </div>
           ))}
 
-          <div ref={observerRef} className='h-0 w-full border-none' />
+          <div ref={observerRef} className='h-1 w-full border-none' />
         </div>
       </div>
 

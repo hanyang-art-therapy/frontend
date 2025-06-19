@@ -1,16 +1,20 @@
+import { getProfessor } from '@/apis/admin/professors';
+import { postFile } from '@/apis/common/file';
 import FormField from '@/components/admin/form-field';
+import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
-  DialogDescription,
 } from '@/components/ui/dialog';
+import type { MessageResponse } from '@/types';
 import {
-  ProfessorsResponse,
   PatchProfessorRequest,
+  ProfessorsResponse,
 } from '@/types/admin/professors';
 import type { MessageResponse } from '@/types';
 import { postFile } from '@/apis/common/file';
@@ -85,13 +89,6 @@ export default function ProfessorModal({
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
-
-    const maxSize = 5 * 1024 * 1024;
-    if (selected.size > maxSize) {
-      toast.error('파일의 용량이 5MB를 초과하였습니다.');
-      e.target.value = '';
-      return;
-    }
 
     setUploading(true);
     try {

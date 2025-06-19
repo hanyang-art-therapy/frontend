@@ -10,7 +10,7 @@ export default function DateInput({
   setEndDate: (date: string) => void;
 }) {
   return (
-    <div className='flex md:gap-4'>
+    <div className='flex flex-col md:flex-row gap-2 md:gap-4'>
       {/* 시작일 */}
       <div className='flex items-center md:gap-4 pr-[10px] md:pr-0'>
         <label className='t-b-16 whitespace-nowrap t-b-16 w-[40px] mr-[8px] md:mr-0'>
@@ -20,7 +20,7 @@ export default function DateInput({
           type='date'
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className='border border-gray-300 rounded px-3 py-2 w-auto md:w-[140px]'
+          className='border border-gray-300 rounded px-3 py-2 min-w-[140px] md:w-[140px]'
         />
       </div>
 

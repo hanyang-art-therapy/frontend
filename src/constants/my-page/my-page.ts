@@ -1,8 +1,8 @@
 import type { MyPostData } from '@/types/my-page';
 
 export const MY_PAGE_STEP_ITEMS = [
-  { label: '내가 쓴 댓글', value: 'reviews' },
-  { label: '나의 게시물', value: 'posts' },
+  { label: '내가 쓴 리뷰', value: 'reviews' },
+  { label: '나의 작품', value: 'posts' },
   { label: '개인정보 관리', value: 'profile' },
 ];
 

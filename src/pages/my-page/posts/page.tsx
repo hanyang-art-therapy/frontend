@@ -1,5 +1,9 @@
 import MyPosts from '@/components/my-page/post/my-posts';
+import type { MyPostData } from '@/types/my-page';
+import { useLoaderData } from 'react-router-dom';
 
 export default function MyPagePosts() {
-  return <MyPosts myPosts={null} />;
+  const myPosts = useLoaderData() as MyPostData[];
+
+  return <MyPosts myPosts={myPosts} />;
 }

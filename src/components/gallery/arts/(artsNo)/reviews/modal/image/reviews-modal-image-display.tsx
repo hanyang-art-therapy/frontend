@@ -13,7 +13,7 @@ export default function ReviewsModalImageDisplay({
   onDelete,
 }: ReviewsModalImageDisplayProps) {
   return (
-    <div className='relative min-h-[150px] rounded-[5px] overflow-hidden transition-all duration-300 group'>
+    <div className='relative min-h-[150px] max-h-[300px] sm:max-h-full aspect-[1/1] rounded-[5px] overflow-hidden transition-all duration-300 group'>
       <img
         src={imageUrl || '/placeholder.svg'}
         alt='리뷰 이미지'
