@@ -1,4 +1,5 @@
 import apiInstance from '@/lib/axios';
+import { supabase } from '@/lib/supabase';
 import type {
   InfiniteKeywordSearchRequest,
   InfiniteScrollResponse,
@@ -42,6 +43,25 @@ export const getArtists = async ({
   return res.data;
 };
 
+export const getArtistsTest = async ({
+  filter,
+  keyword,
+}: InfiniteKeywordSearchRequest) => {
+  if (filter && keyword) {
+    const res = await supabase
+      .from('artists')
+      .select('artists_no, artists_name, student_no, cohort')
+      .ilike(keyword, filter)
+      .single()
+      .overrideTypes<InfiniteScrollResponse<ArtistResponse>>();
+    return res.data;
+  }
+
+  const res = await supabase.from('artists').select('*');
+
+  return res.data;
+};
+
 export const getArtist = async (artistNo: number): Promise<ArtistResponse> => {
   const res = await apiInstance.get(`/admin/artists/${artistNo}`);
   return res.data;
@@ -55,6 +75,21 @@ export const patchArtist = async (
   return res.data;
 };
 
+export const patchArtistTest = async (
+  artistNo: number,
+  data: Omit<PatchArtistRequest, 'artistNo'>
+) => {
+  const res = await supabase
+    .from('artists')
+    .update({
+      artist_name: data.artistName,
+      student_no: data.studentNo,
+      cohort: data.cohort,
+    })
+    .eq('artist_no', artistNo);
+  return res.data;
+};
+
 export const deleteArtist = async (
   artistNo: number
 ): Promise<MessageResponse> => {
@@ -62,9 +97,22 @@ export const deleteArtist = async (
   return res.data;
 };
 
+export const deleteArtistTest = async (artistNo: number) => {
+  await supabase.from('artists').delete().eq('artist_no', artistNo);
+};
+
 export const postArtist = async (
   data: PostArtistRequest
 ): Promise<MessageResponse> => {
   const res = await apiInstance.post('/admin/artists', data);
+  return res.data;
+};
+
+export const postArtistTest = async (data: PostArtistRequest) => {
+  const res = await supabase.from('artists').insert({
+    artist_name: data.artistName,
+    student_no: data.studentNo,
+    cohort: data.cohort,
+  });
   return res.data;
 };

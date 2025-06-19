@@ -80,12 +80,12 @@ export default function ArtistForm({ setArtistsList }: Props) {
     {
       id: 'studentNo',
       label: '학번',
-      placeholder: '10자리 이상의 숫자로 입력하세요.',
+      placeholder: '10자리 숫자로 입력',
     },
     {
       id: 'cohort',
       label: '기수',
-      placeholder: '1자리 이상의 숫자로 입력하세요.',
+      placeholder: '1자리 이상의 숫자로 입력',
     },
   ];
 

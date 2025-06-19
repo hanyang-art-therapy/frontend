@@ -28,12 +28,13 @@ export default function ProfessorView() {
         .catch((error) => {
           toast.error(handleApiError(error));
         });
+    } else {
+      getProfessors()
+        .then(setProfessors)
+        .catch((error) => {
+          toast.error(handleApiError(error));
+        });
     }
-    getProfessors()
-      .then(setProfessors)
-      .catch((error) => {
-        toast.error(handleApiError(error));
-      });
   }, []);
 
   const handleEdit = async (
