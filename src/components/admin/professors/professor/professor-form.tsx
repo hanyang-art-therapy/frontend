@@ -1,11 +1,12 @@
-import FormField from '@/components/admin/form-field';
-import { Button } from '@/components/ui/button';
-import { postFile } from '@/apis/common/file';
 import { postProfessor } from '@/apis/admin/professors';
+import { postFile } from '@/apis/common/file';
+import FormField from '@/components/admin/form-field';
+import { handleApiError } from '@/components/common/error-handler';
+import { Button } from '@/components/ui/button';
+import { MAX_FILE_SIZE } from '@/constants/common/common';
 import { PostProfessorRequest } from '@/types/admin/professors';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { handleApiError } from '@/components/common/error-handler';
 
 export default function ProfessorForm() {
   const [form, setForm] = useState<PostProfessorRequest>({
@@ -30,8 +31,7 @@ export default function ProfessorForm() {
     const selected = e.target.files?.[0];
     if (!selected) return;
 
-    const maxSize = 5 * 1024 * 1024;
-    if (selected.size > maxSize) {
+    if (selected.size > MAX_FILE_SIZE) {
       toast.error('파일의 용량이 5MB를 초과하였습니다.');
       e.target.value = '';
       return;
