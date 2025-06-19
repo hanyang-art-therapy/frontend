@@ -23,13 +23,15 @@ export default function MobileMenuItem({
 
   if (!hasSub)
     return (
-      <Link to={menu.path} className='t-m-18 block'>
-        {menu.title}
-      </Link>
+      <li className='py-1'>
+        <Link to={menu.path} className='t-m-18 block'>
+          {menu.title}
+        </Link>
+      </li>
     );
 
   return (
-    <li>
+    <li className='py-1'>
       <Button
         type='button'
         variant='ghost'
@@ -46,7 +48,7 @@ export default function MobileMenuItem({
           <ChevronDown className='size-6' />
         </span>
       </Button>
-      <ul className={cn('menu-wrapper pt-2 t-m-18', isOpen && 'open')}>
+      <ul className={cn('menu-wrapper t-m-18', isOpen && 'open')}>
         {menu.submenu.map((sub) => (
           <li key={sub.title} className='px-[10px] py-[8px]'>
             <Link to={sub.path} className='block hover:opacity-70 t-r-16'>

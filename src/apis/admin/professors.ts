@@ -1,7 +1,6 @@
 import apiInstance from '@/lib/axios';
 import type {
   ProfessorsResponse,
-  ProfessorResponse,
   PatchProfessorRequest,
   PostProfessorRequest,
 } from '@/types/admin/professors';
@@ -14,7 +13,7 @@ export const getProfessors = async (): Promise<ProfessorsResponse[]> => {
 
 export const getProfessor = async (
   professorNo: number
-): Promise<ProfessorResponse> => {
+): Promise<ProfessorsResponse> => {
   const res = await apiInstance.get(`/admin/professors/${professorNo}`);
   return res.data;
 };

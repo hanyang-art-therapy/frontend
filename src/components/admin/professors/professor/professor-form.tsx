@@ -117,7 +117,6 @@ export default function ProfessorForm() {
                 src={previewUrl}
                 alt='preview'
                 className='w-full h-full object-cover'
-                onError={(e) => (e.currentTarget.src = '/images/no-image.jpg')}
               />
             ) : (
               <span className='t-r-14 text-gray-6'>NO IMAGE</span>
@@ -160,7 +159,7 @@ export default function ProfessorForm() {
           ))}
         </div>
       </div>
-      <Button type='submit' className='mx-auto'>
+      <Button type='submit' className='ml-auto'>
         교수진 등록
       </Button>
     </form>

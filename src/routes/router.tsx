@@ -29,6 +29,7 @@ const ResetPwPage = lazy(() => import('@/pages/my-page/reset-pw/page'));
 const MyPageReviews = lazy(() => import('@/pages/my-page/reviews/page'));
 const MyPagePosts = lazy(() => import('@/pages/my-page/posts/page'));
 const MyPageProfile = lazy(() => import('@/pages/my-page/profile/page'));
+const SitemapPage = lazy(() => import('@/pages/sitemap/page'));
 
 // 학과소개
 const IntroPage = lazy(() => import('@/pages/intro/page'));
@@ -185,6 +186,10 @@ const router = createBrowserRouter([
           { path: 'galleries', element: lazyElement(AdminGalleryPage) },
           { path: 'professors', element: lazyElement(AdminProfessorPage) },
         ],
+      },
+      {
+        path: '/sitemap',
+        element: lazyElement(SitemapPage),
       },
     ],
   },
