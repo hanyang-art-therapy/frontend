@@ -22,7 +22,7 @@ export default function ArtDetail({
   return (
     <div className='max-w-[1260px] mx-auto px-5 xl:px-0 text-center'>
       {/* 작품 상세 타이틀: YYYY ART+THERAPY 전 */}
-      <ArtDetailTitle />
+      <ArtDetailTitle title={artDetail.title} startDate={artDetail.startDate} />
 
       {/* 작품 상세 내용 */}
       <Art artDetail={artDetail} />

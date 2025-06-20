@@ -1,11 +1,7 @@
 import { deleteAdminArt, getAdminArts, patchAdminArt } from '@/apis/admin/arts';
 import AdminArtModal from '@/components/admin/arts/art/art-modal';
 import { handleApiError } from '@/components/common/error-handler';
-import type { InfiniteScrollResponse, MessageResponse } from '@/types';
-import { AdminArtsResponse, PatchAdminArtRequest } from '@/types/admin/arts';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
-import { toast } from 'sonner';
+import Search from '@/components/ui/search';
 import {
   Select,
   SelectContent,
@@ -13,16 +9,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import Search from '@/components/ui/search';
+import type { InfiniteScrollResponse, MessageResponse } from '@/types';
+import { AdminArtsResponse, PatchAdminArtRequest } from '@/types/admin/arts';
+import type { GalleriesResponse } from '@/types/admin/galleries';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
-export default function AdminArtView() {
-  const { artsResponse } = useLoaderData();
+type AdminArtViewProps = {
+  arts: InfiniteScrollResponse<AdminArtsResponse>;
+  galleries: GalleriesResponse[];
+};
 
+export default function AdminArtView({ arts, galleries }: AdminArtViewProps) {
   const [keyword, setKeyword] = useState('');
   const [filter, setFilter] = useState('artName');
-  const [arts, setArts] = useState<AdminArtsResponse[]>(artsResponse.content);
-  const [lastId, setLastId] = useState(artsResponse.lastId);
-  const [hasNext, setHasNext] = useState(artsResponse.hasNext);
+  const [searhedArts, setSearhedArts] = useState<AdminArtsResponse[]>(
+    arts.content
+  );
+  const [lastId, setLastId] = useState(arts.lastId);
+  const [hasNext, setHasNext] = useState(arts.hasNext);
   const [selectedArt, setSelectedArt] = useState<AdminArtsResponse | null>(
     null
   );
@@ -35,16 +40,16 @@ export default function AdminArtView() {
   useEffect(() => {
     // 검색 데이터가 존재하는 경우
     if (searchedData) {
-      setArts(searchedData.content);
+      setSearhedArts(searchedData.content);
       setHasNext(searchedData.hasNext);
       setLastId(searchedData.lastId);
     } else {
       // 검색 데이터가 존재하지 않는 경우 초기 데이터로 초기화
-      setArts(artsResponse.content);
-      setHasNext(artsResponse.hasNext);
-      setLastId(artsResponse.lastId);
+      setSearhedArts(arts.content);
+      setHasNext(arts.hasNext);
+      setLastId(arts.lastId);
     }
-  }, [searchedData, artsResponse]);
+  }, [searchedData, arts]);
 
   const handleEdit = async (
     form: PatchAdminArtRequest
@@ -70,17 +75,35 @@ export default function AdminArtView() {
       artists: artists.map((value) => ({
         artistNo: value.artistNo,
         description: value.description,
+        name: value.name,
       })),
       artsNo,
     });
+
     setSelectedArt(null);
+
+    setSearhedArts((searchedArts) =>
+      searchedArts.map((searchedArt) =>
+        searchedArt.artsNo === artsNo
+          ? {
+              ...searchedArt,
+              artName,
+              caption,
+              artType,
+              coDescription,
+              filesNo,
+              artists: artists.map((value) => value.name),
+            }
+          : searchedArt
+      )
+    );
 
     return res;
   };
 
   const handleDelete = async (artsNo: number): Promise<MessageResponse> => {
     const response = await deleteAdminArt(artsNo);
-    setArts((prev) => prev.filter((art) => art.artsNo !== artsNo));
+    setSearhedArts((prev) => prev.filter((art) => art.artsNo !== artsNo));
     setSelectedArt(null);
 
     return response;
@@ -104,7 +127,7 @@ export default function AdminArtView() {
     try {
       const response = await getAdminArts({ lastId, filter, keyword });
 
-      setArts((prev) => [...prev, ...response.content]);
+      setSearhedArts((prev) => [...prev, ...response.content]);
       setLastId(response.lastId);
       setHasNext(response.hasNext);
     } catch (error) {
@@ -179,7 +202,7 @@ export default function AdminArtView() {
 
         {/* 작품 목록 */}
         <div className='overflow-y-auto max-h-[400px] divide-y divide-btn-gray-d'>
-          {arts.map((art, index) => (
+          {searhedArts.map((art, index) => (
             <div
               key={art.artsNo}
               onClick={() => setSelectedArt(art)}
@@ -187,11 +210,13 @@ export default function AdminArtView() {
             >
               <div className='px-[15px]'>{index + 1}</div>
 
-              <div className='px-[15px] border-r border-btn-gray-d'>
+              <div className='px-[15px] border-r border-btn-gray-d truncate'>
                 {art.artName || '-'}
               </div>
 
-              <div className='px-[15px]'>{renderArtists(art.artists)}</div>
+              <div className='px-[15px] truncate'>
+                {renderArtists(art.artists)}
+              </div>
             </div>
           ))}
 
@@ -203,6 +228,7 @@ export default function AdminArtView() {
       {selectedArt && (
         <AdminArtModal
           artsNo={selectedArt.artsNo}
+          galleries={galleries}
           onEdit={handleEdit}
           onDelete={handleDelete}
           onClose={handleClose}

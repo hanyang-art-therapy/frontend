@@ -1,11 +1,6 @@
 import type { ProfessorsResponse } from '@/types/admin/professors';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { User, GraduationCap, Briefcase } from 'lucide-react';
+import ProfessorDetailDialog from './professor-detail-dialog';
 
 type ProfessorCardProps = {
   professor: ProfessorsResponse;
@@ -13,89 +8,50 @@ type ProfessorCardProps = {
 
 export default function ProfessorsCard({ professor }: ProfessorCardProps) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <li
-          key={professor.professorNo}
-          aria-label={`${professor.professorName} 교수 정보`}
-          tabIndex={0}
-          className='cursor-pointer group'
-        >
-          <div className='relative aspect-[3/4] overflow-hidden rounded-lg bg-gray-100'>
-            {/* {professor.files[0]?.url ? (
+    <ProfessorDetailDialog professor={professor}>
+      <li
+        key={professor.professorNo}
+        aria-label={`${professor.professorName} 교수 정보`}
+        tabIndex={0}
+        className='cursor-pointer group p-6 bg-white rounded-[5px] border border-btn-gray-d hover:border-primary hover:shadow-lg transition-all duration-300'
+      >
+        <div className='flex items-start gap-4'>
+          <div className='relative w-20 h-24 flex-shrink-0 overflow-hidden rounded-[5px]'>
+            {professor.files?.url ? (
               <img
-                src={professor.files[0].url}
-                alt={`${professor.professorName} 교수님 프로필`}
-                className='object-cover w-full h-full transition-transform duration-300 group-hover:scale-105'
+                src={professor.files.url}
+                alt={`${professor.professorName} 교수`}
+                className='w-full h-full object-cover'
               />
             ) : (
-              <div className='absolute inset-0 flex items-center justify-center bg-gray-200'>
-                <span className='text-4xl text-gray-400'>👨‍🏫</span>
-              </div>
-            )} */}
-          </div>
-          <div className='mt-4 space-y-1'>
-            <h3 className='text-lg font-semibold'>{professor.professorName}</h3>
-            {professor.position && (
-              <p className='text-sm text-gray-600'>{professor.position}</p>
-            )}
-            {professor.major && (
-              <p className='text-sm text-gray-600'>{professor.major}</p>
-            )}
-          </div>
-        </li>
-      </DialogTrigger>
-
-      <DialogContent className='sm:max-w-[600px]'>
-        <DialogHeader>
-          <DialogTitle className='text-2xl font-bold'>
-            {professor.professorName}
-          </DialogTitle>
-        </DialogHeader>
-
-        <div className='flex flex-col md:flex-row gap-6 mt-4'>
-          {/* <div className='relative aspect-[3/4] w-full md:w-1/3 overflow-hidden rounded-lg bg-gray-100'>
-              {professor.files[0]?.url ? (
-              <img
-                src={professor.files[0].url}
-                alt={`${professor.professorName} 교수님 프로필`}
-                className='object-cover w-full h-full'
-              />
-            ) : (
-              <div className='absolute inset-0 flex items-center justify-center bg-gray-200'>
-                <span className='text-4xl text-gray-400'>👨‍🏫</span>
+              <div className='w-full h-full flex items-center justify-center text-gray-6'>
+                <User size={24} />
               </div>
             )}
-          </div> */}
+          </div>
 
-          <div className='flex-1 space-y-4'>
-            <div className='space-y-2'>
+          <div className='flex-1 min-w-0'>
+            <h3 className='t-m-18 mb-1 group-hover:text-primary transition-colors'>
+              {professor.professorName}
+            </h3>
+
+            <div className='space-y-1'>
               {professor.position && (
-                <p className='text-gray-600'>
-                  <span className='font-semibold'>직위:</span>{' '}
-                  {professor.position}
-                </p>
+                <div className='flex items-center gap-1.5 text-gray-6'>
+                  <Briefcase size={14} className='flex-shrink-0' />
+                  <span className='t-r-14 truncate'>{professor.position}</span>
+                </div>
               )}
               {professor.major && (
-                <p className='text-gray-600'>
-                  <span className='font-semibold'>전공:</span> {professor.major}
-                </p>
+                <div className='flex items-center gap-1.5 text-gray-6'>
+                  <GraduationCap size={14} className='flex-shrink-0' />
+                  <span className='t-r-14 truncate'>{professor.major}</span>
+                </div>
               )}
-              {/* {professor.email && (
-                <p className='text-gray-600'>
-                  <span className='font-semibold'>이메일:</span>{' '}
-                  {professor.email}
-                </p>
-              )}
-              {professor.tel && (
-                <p className='text-gray-600'>
-                  <span className='font-semibold'>연락처:</span> {professor.tel}
-                </p> 
-              )}*/}
             </div>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </li>
+    </ProfessorDetailDialog>
   );
 }

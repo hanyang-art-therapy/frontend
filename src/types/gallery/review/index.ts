@@ -1,4 +1,4 @@
-import type { Review, User, Files } from '@/types';
+import type { Files, Review, User } from '@/types';
 
 export type FilesResponse = Pick<
   Files,

@@ -247,12 +247,12 @@ export default function AddArtistSheet({
                         <div className='flex-1'>
                           <label
                             htmlFor={artist.artistNo.toString()}
-                            className='text-sm font-medium cursor-pointer'
+                            className='t-r-14  cursor-pointer'
                           >
                             <span className='block'>
                               {artist.cohort}기 {artist.artistName}
                             </span>
-                            <span className='text-xs text-gray-500'>
+                            <span className='t-r-12 text-gray-6'>
                               학번: {artist.studentNo}
                             </span>
                           </label>
@@ -262,7 +262,7 @@ export default function AddArtistSheet({
                       {isSelected && (
                         <textarea
                           placeholder='작가 설명을 입력하세요'
-                          className='w-full p-2 border border-gray-300 rounded text-sm'
+                          className='w-full py-2 px-[15px] border border-btn-gray-d rounded t-r-14 focus:outline-primary'
                           rows={3}
                           value={selectedArtist?.description || ''}
                           onChange={(e) =>
@@ -279,7 +279,7 @@ export default function AddArtistSheet({
                 <div ref={observerRef} className='h-1 w-full' />
               </>
             ) : (
-              <div className='text-center text-gray-500 py-8'>
+              <div className='text-center t-r-14 text-gray-6 py-8'>
                 검색된 작가가 없습니다.
               </div>
             )}

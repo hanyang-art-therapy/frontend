@@ -96,7 +96,7 @@ export default function SelectArtistDialog({
     artistList: Pick<PostAdminArtRequest, 'artistList'>
   ) => {
     if (!artistList.artistList.length) {
-      return '작가를 선택해주세요.';
+      return '작가를 선택해주세요';
     }
 
     const artistNames = artists.content
@@ -284,7 +284,7 @@ export default function SelectArtistDialog({
                         {isSelected && (
                           <div className='mt-2'>
                             <textarea
-                              placeholder='작가 설명을 입력하세요'
+                              placeholder='해당 작가의 작품 설명을 입력해주세요.'
                               className='w-full p-2 border border-gray-9 rounded t-r-14'
                               rows={3}
                               value={textAreaDescription(fetchedArtist)}
@@ -301,7 +301,7 @@ export default function SelectArtistDialog({
               </ul>
             ) : (
               <div className='text-center text-primary py-8'>
-                검색된 작가가 존재하지 않습니다.
+                검색된 작가가 존재하지 않습니다
               </div>
             )}
 

@@ -16,12 +16,8 @@ import {
   PatchProfessorRequest,
   ProfessorsResponse,
 } from '@/types/admin/professors';
-import type { MessageResponse } from '@/types';
-import { postFile } from '@/apis/common/file';
-import { getProfessor } from '@/apis/admin/professors';
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { handleApiError } from '@/components/common/error-handler';
 
 type Props = {
   professor: ProfessorsResponse;

@@ -8,8 +8,8 @@ import {
   getProfessors,
   patchProfessor,
   deleteProfessor,
-  getProfessorsTest,
 } from '@/apis/admin/professors';
+import { getProfessorsTest } from '@/apis/admin/tester/professors';
 import ProfessorModal from '@/components/admin/professors/professor/professor-modal';
 import { handleApiError } from '@/components/common/error-handler';
 import { toast } from 'sonner';
