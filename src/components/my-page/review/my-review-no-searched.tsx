@@ -1,4 +1,4 @@
-export default function MyPageNoSearchResult() {
+export default function MyReviewNoSearched() {
   return (
     <div className='flex min-h-[300px] flex-col items-center justify-center gap-8'>
       <img

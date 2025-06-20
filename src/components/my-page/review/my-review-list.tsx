@@ -1,4 +1,4 @@
-import MyPageNoSearchResult from '@/components/my-page/my-page-no-search-result';
+import MyReviewNoSearched from '@/components/my-page/review/my-review-no-searched';
 import MyReviewNoResult from '@/components/my-page/review/my-review-no-result';
 import { formatTimeStamp } from '@/lib/utils';
 import type { MyReviewPagination } from '@/types';
@@ -15,7 +15,7 @@ export default function MyReviewList({ myReviews }: MyReviewListProps) {
   }
 
   if (myReviews.content.length === 0) {
-    return <MyPageNoSearchResult />;
+    return <MyReviewNoSearched />;
   }
 
   const { content: reviews, page, totalElements, size } = myReviews;
