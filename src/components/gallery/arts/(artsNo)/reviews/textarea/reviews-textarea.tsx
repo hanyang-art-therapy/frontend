@@ -47,7 +47,7 @@ export default function ReviewsTextarea({
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         onKeyDown={handleEnterKeyDown}
-        className='h-[100px] md:w-full md:h-[150px] border border-bg-gray-d rounded-sm px-3 py-2 text-sm focus:outline-primary focus:ring-0'
+        className='h-[100px] md:w-full md:h-[150px] border border-bg-gray-d rounded-sm px-3 py-2 t-r-14 focus:outline-primary focus:ring-0'
       />
     </div>
   );

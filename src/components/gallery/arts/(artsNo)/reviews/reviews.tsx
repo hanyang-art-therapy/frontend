@@ -1,7 +1,6 @@
 import { postFile } from '@/apis/common/file';
 import { getReviews, postReview } from '@/apis/gallery/review';
 import { handleApiError } from '@/components/common/error-handler';
-import ReviewsModal from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal';
 import ReviewsImage from '@/components/gallery/arts/(artsNo)/reviews/reviews-image';
 import ReviewsTitle from '@/components/gallery/arts/(artsNo)/reviews/reviews-title';
 import ReviewsTextarea from '@/components/gallery/arts/(artsNo)/reviews/textarea/reviews-textarea';
@@ -11,7 +10,14 @@ import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/auth';
 import { ArtReviewsPagination } from '@/types';
 import type { ArtReview } from '@/types/gallery/review';
-import { ChangeEvent, useCallback, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  lazy,
+  Suspense,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
 import { toast } from 'sonner';
 
 type ReviewsProps = {
@@ -24,6 +30,10 @@ type PreviewImage = {
   url: string;
   fileNo: number;
 };
+
+const ReviewsModal = lazy(
+  () => import('@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal')
+);
 
 export default function Reviews({
   artName,
@@ -180,15 +190,17 @@ export default function Reviews({
 
       {/* 모달 */}
       {isDialogOpen && (
-        <ReviewsModal
-          artsNo={Number(artsNo)}
-          artName={artName}
-          isDialogOpen={isDialogOpen}
-          setIsDialogOpen={setIsDialogOpen}
-          selectedReview={selectedReview}
-          setSelectedReview={setSelectedReview}
-          setReviews={setReviews}
-        />
+        <Suspense fallback={null}>
+          <ReviewsModal
+            artsNo={Number(artsNo)}
+            artName={artName}
+            isDialogOpen={isDialogOpen}
+            setIsDialogOpen={setIsDialogOpen}
+            selectedReview={selectedReview}
+            setSelectedReview={setSelectedReview}
+            setReviews={setReviews}
+          />
+        </Suspense>
       )}
 
       {!reviews.isLast && (
