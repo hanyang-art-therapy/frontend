@@ -23,7 +23,7 @@ export default function ArtsNoResult() {
         <h4 className='t-m-18 mb-4 flex items-center justify-center gap-2'>
           검색 팁 <Lightbulb className='w-4 h-4 text-primary' />
         </h4>
-        <ul className='t-r-12 text-gray-600 space-y-1 text-left'>
+        <ul className='t-r-12 text-gray-6 space-y-1 text-left'>
           <li>• 다른 연도나 기수를 선택해보세요</li>
           <li>• 검색 필터를 초기화해보세요</li>
         </ul>

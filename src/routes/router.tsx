@@ -1,5 +1,3 @@
-import { Suspense, lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
 import lazyElement from '@/components/common/lazy-element';
 import MainSkeleton from '@/components/main/main-skeleton';
 import MyPageSkeleton from '@/components/my-page/ui/my-page-skeleton';
@@ -21,6 +19,8 @@ import {
   myReviewsLoader,
 } from '@/routes/loaders/my-page';
 import { rootLoader } from '@/routes/loaders/root-loader';
+import { Suspense, lazy } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
 import { introProfessorLoader } from './loaders/intro/professor-loader';
 
 const HomePage = lazy(() => import('@/pages/page'));
@@ -33,6 +33,7 @@ const ResetPwPage = lazy(() => import('@/pages/my-page/reset-pw/page'));
 const MyPageReviews = lazy(() => import('@/pages/my-page/reviews/page'));
 const MyPagePosts = lazy(() => import('@/pages/my-page/posts/page'));
 const MyPageProfile = lazy(() => import('@/pages/my-page/profile/page'));
+const SitemapPage = lazy(() => import('@/pages/sitemap/page'));
 
 const IntroPage = lazy(() => import('@/pages/intro/page'));
 const VisionPage = lazy(() => import('@/pages/intro/vision/page'));
@@ -165,7 +166,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin',
-        element: lazyElement({ Element: AdminPage }),
+        element: <AdminPage />,
         children: [
           {
             path: 'users',
@@ -191,6 +192,10 @@ const router = createBrowserRouter([
             element: lazyElement({ Element: AdminProfessorPage }),
           },
         ],
+      },
+      {
+        path: '/sitemap',
+        element: lazyElement({ Element: SitemapPage }),
       },
     ],
   },

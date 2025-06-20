@@ -72,7 +72,7 @@ export default function GalleryForm({ postedYears }: Props) {
   };
 
   const fields = [
-    { id: 'title', label: '제목' },
+    { id: 'title', label: '제목', placeholder: '전시회명' },
     { id: 'startDate', label: '시작 일자' },
     { id: 'endDate', label: '종료 일자' },
   ];
@@ -80,13 +80,14 @@ export default function GalleryForm({ postedYears }: Props) {
   return (
     <form className='flex flex-col gap-[30px]' onSubmit={handleSubmit}>
       <div className='border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
-        {fields.map(({ id, label }) => (
+        {fields.map(({ id, label, placeholder }) => (
           <FormField key={id} id={id} label={label}>
             <input
               id={id}
               name={id}
               type={id === 'startDate' || id === 'endDate' ? 'date' : 'text'}
               value={form[id as keyof PostGalleryRequest] ?? ''}
+              placeholder={placeholder}
               onChange={handleChange}
               autoComplete='off'
               className='w-full px-[15px] outline-none cursor-pointer'

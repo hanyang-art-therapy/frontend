@@ -1,3 +1,4 @@
+import MyPostNoResult from '@/components/my-page/post/my-post-no-result';
 import { formatTimeStamp } from '@/lib/utils';
 import type { MyPostData } from '@/types/my-page';
 import { Link } from 'react-router-dom';
@@ -7,6 +8,10 @@ type MyPostListProps = {
 };
 
 export default function MyPostList({ myPosts }: MyPostListProps) {
+  if (myPosts.length === 0) {
+    return <MyPostNoResult />;
+  }
+
   return (
     <ul className='flex flex-col border-t border-b'>
       {myPosts.map((post, index) => (

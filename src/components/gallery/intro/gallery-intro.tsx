@@ -20,7 +20,8 @@ export default function GalleryIntro() {
         <StaggeredList
           className='space-y-[10px]'
           staggerDelay={0.08}
-          itemClassName='t-r-16'>
+          itemClassName='t-r-16'
+        >
           {intro.content.map((text) => (
             <span key={text}>{parseTextWithBold(text)}</span>
           ))}
@@ -34,12 +35,11 @@ export default function GalleryIntro() {
         <StaggeredList
           className='space-y-5'
           staggerDelay={0.08}
-          itemClassName='bg-bg-gray-fa p-[30px] rounded-lg'>
+          itemClassName='bg-bg-gray-fa p-[30px] rounded-lg'
+        >
           {purpose.content.map(({ subTitle, description }) => (
             <>
-              <h3 className='font-semibold text-lg mb-[10px] t-b-24'>
-                {subTitle}
-              </h3>
+              <h3 className='t-m-16 mb-[10px] t-b-24'>{subTitle}</h3>
               <p className='t-r-16'>{description}</p>
             </>
           ))}
@@ -56,7 +56,8 @@ export default function GalleryIntro() {
         <StaggeredList
           className='space-y-[10px]'
           staggerDelay={0.08}
-          itemClassName='t-r-16'>
+          itemClassName='t-r-16'
+        >
           {participants.content.map((text) => (
             <span key={text}>{parseTextWithBold(text)}</span>
           ))}
@@ -74,7 +75,8 @@ export default function GalleryIntro() {
         <StaggeredList
           className='space-y-[10px]'
           staggerDelay={0.08}
-          itemClassName='t-r-16'>
+          itemClassName='t-r-16'
+        >
           {artTherapy.content.map((text) => (
             <span key={text}>{parseTextWithBold(text)}</span>
           ))}
@@ -88,7 +90,8 @@ export default function GalleryIntro() {
         <StaggeredList
           className='space-y-5'
           staggerDelay={0.12}
-          itemClassName='flex items-start gap-[10px]'>
+          itemClassName='flex items-start gap-[10px]'
+        >
           {schedule.content.map(({ icon: Icon, subTitle, description }) => (
             <div key={description} className='space-y-2.5'>
               <div className='flex items-center gap-2.5'>
@@ -110,7 +113,8 @@ export default function GalleryIntro() {
         <StaggeredList
           className='space-y-[10px]'
           staggerDelay={0.08}
-          itemClassName='t-r-16'>
+          itemClassName='t-r-16'
+        >
           {guide.content.map((text) => (
             <span key={text}>{parseTextWithBold(text)}</span>
           ))}

@@ -1,4 +1,4 @@
-import { getProfessors } from '@/apis/admin/professors';
+import { getProfessors } from '@/apis/common/professors';
 import type { ProfessorsResponse } from '@/types/admin/professors';
 
 export const introProfessorLoader = async (): Promise<ProfessorsResponse[]> => {

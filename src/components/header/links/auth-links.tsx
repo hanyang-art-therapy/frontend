@@ -2,21 +2,27 @@ import { signOut } from '@/apis/auth/sign-out';
 import { handleApiError } from '@/components/common/error-handler';
 import { useAuthStore } from '@/store/auth';
 import { LogIn, LogOut, UserPlus, UserRound } from 'lucide-react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export default function AuthLinks() {
-  const navigate = useNavigate();
+  const [isSignOutLoading, setIsSignOutLoading] = useState(false);
   const { accessToken, reset } = useAuthStore();
+
+  const navigate = useNavigate();
   const isSignedIn = !!accessToken;
 
   const handleLogout = async () => {
     try {
+      setIsSignOutLoading(true);
       await signOut();
       navigate('/');
       reset();
     } catch (error) {
       toast.error(handleApiError(error));
+    } finally {
+      setIsSignOutLoading(false);
     }
   };
 
@@ -27,6 +33,7 @@ export default function AuthLinks() {
           onClick={handleLogout}
           className='mobile-menu-btn group'
           aria-label='로그아웃'
+          disabled={isSignOutLoading}
         >
           <LogOut className='flex xl:hidden' size={20} />
           <span className='group-hover:underline'>로그아웃</span>

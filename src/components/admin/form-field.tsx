@@ -9,11 +9,12 @@ export default function FormField({ label, id, children }: FormFieldProps) {
     <div className='grid grid-cols-[2fr_4fr] md:grid-cols-[1fr_4fr] t-m-16 divide-x divide-btn-gray-d bg-white hover:bg-primary/10'>
       <label
         htmlFor={id}
-        className='min-h-[44px] flex items-center justify-center text-center t-b-14 bg-bg-gray-fa whitespace-pre'
+        className='min-h-[44px] flex items-center justify-center text-center t-b-14 bg-bg-gray-fa truncate'
       >
-        {label}
+        <span className='px-2 truncate'>{label}</span>
       </label>
-      <div className='min-h-[44px] flex items-center justify-center t-r-14'>
+
+      <div className='min-h-[44px] flex items-center justify-center t-r-14 truncate'>
         {children}
       </div>
     </div>
