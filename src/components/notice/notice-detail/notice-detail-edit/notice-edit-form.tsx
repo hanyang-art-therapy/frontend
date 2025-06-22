@@ -207,7 +207,7 @@ export default function NoticeEditForm() {
           formData={formData}
           setFormData={setFormData}
           loading={false}
-          selectedCategory={getType(formData.category)} // 👈 한글로 보여주기
+          selectedCategory={getType(formData.category)}
           handleCategoryChange={(value: string) => {
             const converted = ENG_CATEGORY_MAP[value] || value;
             setFormData((prev) => ({
