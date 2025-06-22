@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   Select,
   SelectContent,
@@ -7,7 +8,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Search from '@/components/ui/search';
-import { useSearchParams } from 'react-router-dom';
 import { CATEGORY_LIST } from '@/constants/notice/notice-category';
 
 const categoryList = CATEGORY_LIST;

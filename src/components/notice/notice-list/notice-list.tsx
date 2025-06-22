@@ -1,12 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-
-import NoticeTable from './notice-table';
-import { Button } from '@/components/ui/button';
-import { FileText, Volume2 } from 'lucide-react';
-import { NoticeSearch } from '../notice-search/notice-search';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FileText, Volume2 } from 'lucide-react';
 import { getNotices } from '@/apis/notice/notice';
 import { GetNoticesResponse } from '@/types/notice/notice';
+import { Button } from '@/components/ui/button';
+import NoticeTable from '@/components/notice/notice-list/notice-table';
+import { NoticeSearch } from '@/components/notice/notice-search/notice-search';
 
 export default function NoticeList() {
   const [fetchedNotices, setFetchedNotices] =

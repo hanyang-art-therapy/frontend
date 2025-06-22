@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { getNotice, updateNotice } from '@/apis/notice/notice';
+import axios from 'axios';
 import { toast } from 'sonner';
+import { FilePenLine } from 'lucide-react';
+import { NoticeCategory } from '@/types/notice/notice';
+import { getNotice, patchNotice, uploadFiles } from '@/apis/notice/notice';
+import { Button } from '@/components/ui/button';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
 import NoticeUploadEditor from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-upload-editor';
 import NoticeEditHeader from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-header';
 import NoticeEditText from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-text';
-import axios from 'axios';
-import { FilePenLine } from 'lucide-react';
 
-interface NoticeFile {
+type NoticeFile = {
   name: string;
   url: string;
-}
+};
 
 interface NoticeData {
   title: string;
@@ -78,30 +79,29 @@ export default function NoticeEditForm() {
     }
   };
 
-  // 🔧 수정: 파일 업로드 함수 - API 사용
-  // const handleFileUpload = async (files: File[]): Promise<NoticeFile[]> => {
-  //   try {
-  //     const formData = new FormData();
-  //     files.forEach((file) => {
-  //       formData.append('files', file); // 🔧 서버 API에 맞는 필드명 사용
-  //     });
+  const handleFileUpload = async (files: File[]): Promise<NoticeFile[]> => {
+    try {
+      const formData = new FormData();
+      files.forEach((file) => {
+        formData.append('files', file);
+      });
 
-  //     const response = await uploadFiles(formData);
+      const response = await uploadFiles(formData);
 
-  //     // 🔧 업로드된 파일 정보 반환
-  //     return files.map((Files, index) => ({
-  //       filesNo: response.filesNo[index], // 서버에서 받은 파일 번호
-  //       name: Files.name,
-  //       url: `${process.env.REACT_APP_API_URL}/files/${response.filesNo[index]}`, // 🔧 실제 파일 URL
-  //       Files,
-  //       isNew: true,
-  //     }));
-  //   } catch (error) {
-  //     console.error('File upload error:', error);
-  //     toast.error('파일 업로드에 실패했습니다.');
-  //     return [];
-  //   }
-  // };
+      // 🔧 업로드된 파일 정보 반환
+      return files.map((Files, index) => ({
+        filesNo: response.filesNo[index], // 서버에서 받은 파일 번호
+        name: Files.name,
+        url: `${process.env.REACT_APP_API_URL}/files/${response.filesNo[index]}`, // 🔧 실제 파일 URL
+        Files,
+        isNew: true,
+      }));
+    } catch (error) {
+      console.error('File upload error:', error);
+      toast.error('파일 업로드에 실패했습니다.');
+      return [];
+    }
+  };
 
   // 폼 제출 처리
   const handleSubmit = async (e: React.FormEvent) => {

@@ -6,21 +6,20 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { CATEGORY_LIST } from '@/constants/notice/notice-category';
-// import { useNavigate, useParams } from 'react-router-dom';
 
-interface NoticeFile {
+type NoticeFile = {
   name: string;
   url: string;
-}
+};
 
-interface NoticeData {
+type NoticeData = {
   title: string;
   category: string;
   content: string;
   periodStart: string;
   periodEnd: string;
   files?: NoticeFile[];
-}
+};
 
 interface Props {
   formData: NoticeData;
