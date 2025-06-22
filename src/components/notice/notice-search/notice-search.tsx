@@ -48,7 +48,7 @@ export const NoticeSearch = () => {
   const [searchValue, setSearchValue] = useState('');
   const handleSearch = () => {
     console.log('검색:', searchValue);
-    // 여기서 검색 결과 처리 로직 추가 가능
+
     if (searchValue) {
       setSearchParams((prev) => {
         prev.set('keyword', searchValue);

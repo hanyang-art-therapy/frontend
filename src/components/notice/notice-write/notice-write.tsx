@@ -35,6 +35,7 @@ export default function NoticeWrite() {
   const [isFixed, setIsFixed] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category') ?? '일반';
+  const [uploadedFiles, setUploadedFiles] = useState<NoticeFile[]>([]);
 
   const editor = useEditor({
     extensions: [
@@ -75,19 +76,25 @@ export default function NoticeWrite() {
     });
   };
 
-  const handleButtonClick = async () => {
+  const handleSubmit = async () => {
     try {
-      if (editor) {
-        // 게시물 등록 API 호출
-        await postNotice({
-          title,
-          category: getEnCategory(selectedCategory),
-          periodStart: startDate,
-          periodEnd: endDate,
-          content: editor.getHTML(),
-          filesNo: [],
-          isFixed,
-        });
+      if (!editor) {
+        toast.error('에디터가 준비되지 않았습니다.');
+        return;
+      }
+      const filesNo = uploadedFiles
+        .map((file) => file.filesNo)
+        .filter((id): id is number => typeof id === 'number');
+
+      await postNotice({
+        title,
+        category: getEnCategory(selectedCategory),
+        periodStart: startDate,
+        periodEnd: endDate,
+        content: editor.getHTML(),
+        filesNo,
+        isFixed,
+      });
 
         // 성공 시 notice-list 페이지로 리디렉션
         navigate('/notice');
@@ -129,7 +136,7 @@ export default function NoticeWrite() {
           <Button
             type='button'
             className='h-[30px] md:h-[40px] w-[80px] md:w-[120px]'
-            onClick={handleButtonClick}
+            onClick={handleSubmit}
           >
             작성완료
           </Button>
