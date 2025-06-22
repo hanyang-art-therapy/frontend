@@ -15,11 +15,11 @@ type NoticeData = {
   files?: NoticeFile[];
 };
 
-interface Props {
+type Props = {
   formData: NoticeData;
   setFormData: React.Dispatch<React.SetStateAction<NoticeData>>;
   loading: boolean;
-}
+};
 
 export default function NoticeEditText({
   formData,
@@ -61,14 +61,14 @@ export default function NoticeEditText({
         <Button
           type='button'
           onClick={handleCancel}
-          className='h-[20px] w-[80px] t-r-16 bg-orange-300 hover:bg-primary text-white rounded-sm'
+          className='h-[20px] w-[80px] t-r-16 bg-bg-primary/50 hover:bg-bg-primary text-white rounded-sm'
         >
           취소
         </Button>
         <Button
           type='submit'
           disabled={loading}
-          className='h-[20px] w-[80px] t-r-16 bg-[rgba(0,68,131,0.5)] hover:bg-bg-secondary text-white rounded-sm'
+          className='h-[20px] w-[80px] t-r-16 bg-bg-secondary/50 hover:bg-bg-secondary text-white rounded-sm'
         >
           {loading ? '처리중...' : isEdit ? '수정 완료' : '작성 완료'}
         </Button>

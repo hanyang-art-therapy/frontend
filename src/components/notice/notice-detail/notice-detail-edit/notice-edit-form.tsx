@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { FilePenLine } from 'lucide-react';
 import { NoticeCategory } from '@/types/notice/notice';
-import { getNotice, patchNotice, uploadFiles } from '@/apis/notice/notice';
+import { getNotice, patchNotice } from '@/apis/notice/notice';
 import { Button } from '@/components/ui/button';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
 import NoticeUploadEditor from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-upload-editor';
@@ -73,33 +73,10 @@ export default function NoticeEditForm() {
         files: data.files || [],
       });
     } catch (err) {
-      console.error('Error fetching notice data:', err);
       setError('서버 오류가 발생했습니다.');
       toast.error('서버 오류가 발생했습니다.');
     } finally {
       setDataLoading(false);
-    }
-  };
-
-  const handleFileUpload = async (files: File[]): Promise<NoticeFile[]> => {
-    try {
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append('files', file);
-      });
-
-      const response = await uploadFiles(formData);
-
-      return files.map((file, index) => ({
-        filesNo: response.filesNo[index],
-        name: file.name,
-        url: `${process.env.REACT_APP_API_URL}/files/${response.filesNo[index]}`,
-        isNew: true,
-      }));
-    } catch (error) {
-      console.error('File upload error:', error);
-      toast.error('파일 업로드에 실패했습니다.');
-      return [];
     }
   };
 
@@ -115,7 +92,6 @@ export default function NoticeEditForm() {
 
     try {
       if (isEdit && noticeNo) {
-        // 🔧 파일 번호 추출 간단하게 수정
         await patchNotice(parseInt(noticeNo), {
           title: formData.title,
           content: formData.content,
@@ -167,7 +143,7 @@ export default function NoticeEditForm() {
     return (
       <div className='w-full h-full mt-[80px] md:mt-[120px]'>
         <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
-          <div className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start bg-[rgba(221,221,221,0.2)]'>
+          <div className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start bg-btn-dark-3/50'>
             <div className='flex flex-col gap-4 mt-2 t-r-16 px-[20px]'>
               <div className='text-lg text-bg-primary mb-4'>{error}</div>
               <Button
@@ -214,11 +190,7 @@ export default function NoticeEditForm() {
             loading={loading}
           />
 
-          <NoticeUploadEditor
-            formData={formData}
-            setFormData={setFormData}
-            onFileUpload={handleFileUpload}
-          />
+          <NoticeUploadEditor formData={formData} setFormData={setFormData} />
 
           <div className='w-full px-5 xl:px-0 py-6 border-t t-r-16 flex justify-center'></div>
 
