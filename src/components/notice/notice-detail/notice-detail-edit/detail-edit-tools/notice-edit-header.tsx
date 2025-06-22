@@ -80,7 +80,7 @@ export default function NoticeEditHeader({
                 value={selectedCategory}
                 onValueChange={handleCategoryChange}
               >
-                <SelectTrigger className='border border-gray-300 rounded px-1 py-0 md:w-[140px]'>
+                <SelectTrigger className='border border-b-bg-gray-d rounded px-1 py-0 md:w-[140px]'>
                   <SelectValue placeholder='전체' />
                 </SelectTrigger>
                 <SelectContent>
@@ -103,7 +103,7 @@ export default function NoticeEditHeader({
                   name='periodStart'
                   value={formData.periodStart}
                   onChange={handleInputChange}
-                  className='border border-gray-300 rounded px-2 py-2 w-[122px] md:w-[140px]'
+                  className='border border-b-bg-gray-d rounded px-2 py-2 w-[122px] md:w-[140px]'
                 />
               </div>
             </div>
@@ -116,7 +116,7 @@ export default function NoticeEditHeader({
                 name='periodEnd'
                 value={formData.periodEnd}
                 onChange={handleInputChange}
-                className='border border-gray-300 rounded px-2 py-2 w-[122px] md:w-[140px]'
+                className='border border-b-bg-gray-d rounded px-2 py-2 w-[122px] md:w-[140px]'
               />
             </div>
           </div>

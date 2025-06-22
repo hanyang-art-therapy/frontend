@@ -62,6 +62,8 @@ export type PatchNoticeRequest = {
   filesNo: number[] | null;
 };
 export type PaginationResponse<T> = {
+  total: number;
+  totalElements: number;
   content(content: any): unknown;
   data: T[];
   totalCount: number;

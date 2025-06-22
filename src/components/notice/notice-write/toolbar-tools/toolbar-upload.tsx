@@ -150,8 +150,6 @@ export default function ToolbarUpload({
 
   const previewFiles = (actualUploadedFiles || []).filter((file) => file.isNew);
 
-  console.log('렌더링 시 uploadedFiles 상태:', actualUploadedFiles);
-
   return (
     <div className='relative'>
       <input
@@ -177,13 +175,13 @@ export default function ToolbarUpload({
           disabled={uploading}
         />
         {uploading && (
-          <span className='text-sm text-blue-600'>업로드 중...</span>
+          <span className='text-sm text-bg-secondary'>업로드 중...</span>
         )}
       </div>
 
       {actualUploadedFiles && actualUploadedFiles.length > 0 && (
-        <div className='mt-4 p-4 border border-gray-200 rounded-lg bg-gray-50'>
-          <p className='text-sm text-gray-700 mb-2 font-medium'>
+        <div className='mt-4 p-4 border border-b-bg-gray-d rounded-lg bg-bg-gray-fa'>
+          <p className='text-sm text-btn-dark-3 mb-2 font-medium'>
             첨부된 파일 ({actualUploadedFiles.length}개):
           </p>
           <div className='space-y-2'>
@@ -193,12 +191,12 @@ export default function ToolbarUpload({
                 className='flex items-center justify-between group bg-white p-2 rounded border'
               >
                 <div className='flex items-center gap-2'>
-                  <div className='bg-blue-600 w-[20px] h-[20px] rounded-sm flex justify-center items-center'>
+                  <div className='bg-bg-secondary w-[20px] h-[20px] rounded-sm flex justify-center items-center'>
                     <Download size={14} color='white' strokeWidth={2} />
                   </div>
-                  <span className='text-blue-600 text-sm'>{file.name}</span>
+                  <span className='bg-bg-secondary t-r-16'>{file.name}</span>
                   {file.isNew && (
-                    <span className='text-xs bg-green-100 text-green-800 px-2 py-1 rounded'>
+                    <span className='text-xs bg-bg-gray-fa text-btn-dark-3 px-2 py-1 rounded'>
                       새 파일
                     </span>
                   )}
@@ -206,7 +204,7 @@ export default function ToolbarUpload({
                 <button
                   type='button'
                   onClick={() => removeFile(index)}
-                  className='text-red-500 hover:text-red-600 text-sm opacity-0 group-hover:opacity-100 transition-opacity'
+                  className='text-bg-primary/50 hover:text-bg-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity'
                 >
                   삭제
                 </button>
@@ -217,22 +215,20 @@ export default function ToolbarUpload({
       )}
 
       {showPreview && previewFiles.length > 0 && (
-        <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
+        <div className='fixed inset-0 bg-btn-dark-3 bg-opacity-50 flex items-center justify-center z-50'>
           <div className='bg-white p-6 rounded-lg max-w-4xl max-h-[80vh] overflow-y-auto relative'>
             <button
               onClick={closePreview}
-              className='absolute top-4 right-4 text-gray-500 hover:text-gray-700'
+              className='absolute top-4 right-4 text-btn-gray-9/50 hover:text-btn-gray-9'
             >
               <X size={24} />
             </button>
-            <h3 className='text-lg font-semibold mb-4'>
-              새로 추가된 파일 미리보기
-            </h3>
+            <h3 className='text-r-24 mb-4'>새로 추가된 파일 미리보기</h3>
             <div className='space-y-4'>
               {previewFiles.map((item, index) => (
                 <div key={index} className='border p-4 rounded-lg'>
                   <div className='flex justify-between items-start mb-2'>
-                    <h4 className='font-medium'>{item.name}</h4>
+                    <h4 className='t-m-16'>{item.name}</h4>
                     <button
                       onClick={() => {
                         const originalIndex = actualUploadedFiles.findIndex(
@@ -242,7 +238,7 @@ export default function ToolbarUpload({
                           removeFile(originalIndex);
                         }
                       }}
-                      className='text-red-500 hover:text-red-700 text-sm'
+                      className='text-bg-primary/50 hover:text-bg-primary t-r-16'
                     >
                       삭제
                     </button>
@@ -262,7 +258,7 @@ export default function ToolbarUpload({
                         href={item.url}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='text-gray-600 underline'
+                        className='text-btn-gray-9 underline'
                       >
                         PDF 파일 - {item.name}
                       </a>
@@ -274,7 +270,7 @@ export default function ToolbarUpload({
                         href={item.url}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='text-gray-600 underline'
+                        className='text-btn-gray-9 underline'
                       >
                         파일 - {item.name}
                       </a>

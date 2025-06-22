@@ -1,11 +1,24 @@
 import { useNavigate } from 'react-router-dom';
 import { Paperclip } from 'lucide-react';
 import { formatTimeStamp } from '@/lib/utils';
-import { GetNoticesResponse } from '@/types/notice/notice';
 import NoticeNoData from '../notice-noresult/notice-no-data';
 
 type NoticeTableProps = {
   data: GetNoticesResponse | null;
+};
+
+export type Notice = {
+  noticeNo: number;
+  title: string;
+  category: string;
+  hasFile: boolean;
+  viewCount: number;
+  createdAt: string;
+};
+
+export type GetNoticesResponse = {
+  content: Notice[];
+  totalElements?: number;
 };
 
 export default function NoticeTable({ data }: NoticeTableProps) {
@@ -30,6 +43,7 @@ export default function NoticeTable({ data }: NoticeTableProps) {
 
     return '학술';
   };
+
   return (
     <div className='w-full overflow-x-auto'>
       <table className='w-full border-collapse table-fixed'>
@@ -48,7 +62,7 @@ export default function NoticeTable({ data }: NoticeTableProps) {
           </tr>
         </thead>
         <tbody>
-          {data.content.map((item) => (
+          {data.content.map((item: any) => (
             <tr
               key={item.noticeNo}
               onClick={() => navigate(`/notice/${item.noticeNo}`)}
