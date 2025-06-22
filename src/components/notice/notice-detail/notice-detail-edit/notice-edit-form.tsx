@@ -26,6 +26,32 @@ interface NoticeData {
   files?: NoticeFile[];
 }
 
+const getType = (category: string) => {
+  switch (category) {
+    case 'GENERAL':
+      return '일반';
+    case 'PRACTICE':
+      return '실습';
+    case 'RECRUIT':
+      return '모집';
+    case 'EXHIBITION':
+      return '전시';
+    case 'ACADEMIC':
+      return '학술';
+    default:
+      return '';
+  }
+};
+
+// 한글 → 영문
+const ENG_CATEGORY_MAP: Record<string, NoticeCategory> = {
+  일반: 'GENERAL',
+  실습: 'PRACTICE',
+  모집: 'RECRUIT',
+  전시: 'EXHIBITION',
+  학술: 'ACADEMIC',
+};
+
 export default function NoticeEditForm() {
   const { noticeNo } = useParams<{ noticeNo: string }>();
   const navigate = useNavigate();
@@ -95,10 +121,13 @@ export default function NoticeEditForm() {
 
     try {
       if (isEdit && noticeNo) {
+        const convertedCategory =
+          ENG_CATEGORY_MAP[getType(formData.category)] || formData.category;
+
         await patchNotice(parseInt(noticeNo), {
           title: formData.title,
           content: formData.content,
-          category: formData.category as NoticeCategory,
+          category: convertedCategory,
           periodStart: formData.periodStart,
           periodEnd: formData.periodEnd,
           isFixed: formData.isFixed ?? false,
@@ -109,13 +138,7 @@ export default function NoticeEditForm() {
         });
         toast.success('게시글 수정이 완료되었습니다.');
       } else {
-        // 생성 모드
-        const createNotice = async (data: NoticeData) => {
-          const response = await axios.post('/api/notice', data);
-          return response.data;
-        };
-
-        const result = await createNotice(formData);
+        const result = await axios.post('/api/notice', formData);
         toast.success('게시글 등록이 완료되었습니다.');
         // 새로 생성된 공지사항의 번호로 이동
         navigate(`/notice/${result.noticeNo}`);
@@ -184,8 +207,14 @@ export default function NoticeEditForm() {
           formData={formData}
           setFormData={setFormData}
           loading={false}
-          selectedCategory={''}
-          handleCategoryChange={() => {}}
+          selectedCategory={getType(formData.category)} // 👈 한글로 보여주기
+          handleCategoryChange={(value: string) => {
+            const converted = ENG_CATEGORY_MAP[value] || value;
+            setFormData((prev) => ({
+              ...prev,
+              category: converted,
+            }));
+          }}
         />
         {/* 본문 내용 */}
         <div className='w-full h-auto py-[10px] mt-[10px]'>
@@ -199,7 +228,6 @@ export default function NoticeEditForm() {
 
           {/* 이전글과 다음글 */}
           <div className='w-full px-5 xl:px-0 py-6 border-t t-r-16 flex justify-center'></div>
-          {/* 이전글과 다음글 */}
           <div className='w-full px-5 xl:px-0 py-6 t-r-16 flex justify-center'>
             <NoticeNav noticeNo={noticeNo ?? ''} />
           </div>

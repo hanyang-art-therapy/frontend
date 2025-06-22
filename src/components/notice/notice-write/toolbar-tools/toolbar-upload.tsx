@@ -63,53 +63,156 @@ export default function ToolbarFileUpload({ editor }: ToolbarProps) {
     e.target.value = '';
   };
 
+  const removeFile = (index: number) => {
+    const fileToRemove = actualUploadedFiles[index];
+    if (fileToRemove?.url?.startsWith('blob:')) {
+      URL.revokeObjectURL(fileToRemove.url);
+    }
+
+    actualSetUploadedFiles((prev) => {
+      const updated = (prev || []).filter((_, i) => i !== index);
+      console.log('파일 삭제 후 상태:', updated);
+      return updated;
+    });
+    toast.success('파일이 삭제되었습니다.');
+  };
+
+  const closePreview = () => {
+    setShowPreview(false);
+  };
+
+  const previewFiles = (actualUploadedFiles || []).filter((file) => file.isNew);
+
   return (
-    <>
-      <input type='file' id='fileUpload' hidden multiple onChange={handleFileInput} />
-      <ToolbarButton
-        icon={Paperclip}
-        onClick={triggerFileUpload}
-         className={buttonShadowClass}
-      />
-      <ToolbarButton
-        icon={Image}
-        onClick={() => {}}
-        className={buttonShadowClassHidden}
+    <div className='relative'>
+      <input
+        type='file'
+        hidden
+        multiple
+        ref={fileInputRef}
+        onChange={handleFileInput}
+        disabled={uploading}
       />
 
-      {uploadedItems.length > 0 && (
-        <div className='p-4 border-1 border-b-bg-gray-d h-auto w-[1200px] text-start rounded-xs absolute bottom-[40%] right-[50%] transform translate-x-[50%] translate-y-[50%] bg-white z-10'>
-          <p className='t-r-16 text-btn-gray-9 mb-2'>첨부된 파일 미리보기:</p>
-          <ul className='space-y-2'>
-            {uploadedItems.map((item, index) => (
-              <li key={index}>
-                {item.file.type.startsWith('image/') ? (
-                  <img
-                    src={item.url}
-                    alt='업로드된 이미지'
-                    className='max-w-[200px] rounded'
-                  />
-                ) : item.file.type === 'application/pdf' ? (
-                  <a
-                    href={item.url}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='text-bg-secondary underline'
-                  >
-                    {item.file.name}
-                  </a>
-                ) : (
-                  <a
-                    href={item.url}
-                    download
-                    className='text-bg-secondary underline'
-                  >
-                    파일 다운로드: {item.file.name}
-                  </a>
-                )}
-              </li>
+      <div className='flex gap-2 items-center'>
+        <ToolbarButton
+          icon={Paperclip}
+          onClick={triggerFileUpload}
+          className={buttonShadowClass}
+          disabled={uploading}
+        />
+        <ToolbarButton
+          icon={Image}
+          onClick={triggerFileUpload}
+          className={buttonShadowClassHidden}
+          disabled={uploading}
+        />
+        {uploading && (
+          <span className='text-sm text-bg-secondary'>업로드 중...</span>
+        )}
+      </div>
+
+      {actualUploadedFiles && actualUploadedFiles.length > 0 && (
+        <div className='mt-4 p-4 border border-b-bg-gray-d rounded-lg bg-bg-gray-fa'>
+          <p className='text-sm text-btn-dark-3 mb-2 font-medium'>
+            첨부된 파일 ({actualUploadedFiles.length}개):
+          </p>
+          <div className='space-y-2'>
+            {actualUploadedFiles.map((file, index) => (
+              <div
+                key={index}
+                className='flex items-center justify-between group bg-white p-2 rounded border'
+              >
+                <div className='flex items-center gap-2'>
+                  <div className='bg-bg-secondary w-[20px] h-[20px] rounded-sm flex justify-center items-center'>
+                    <Download size={14} color='white' strokeWidth={2} />
+                  </div>
+                  <span className='bg-bg-secondary t-r-16'>{file.name}</span>
+                  {file.isNew && (
+                    <span className='text-xs bg-bg-gray-fa text-btn-dark-3 px-2 py-1 rounded'>
+                      새 파일
+                    </span>
+                  )}
+                </div>
+                <button
+                  type='button'
+                  onClick={() => removeFile(index)}
+                  className='text-bg-primary/50 hover:text-bg-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity'
+                >
+                  삭제
+                </button>
+              </div>
             ))}
-          </ul>
+          </div>
+        </div>
+      )}
+
+      {showPreview && previewFiles.length > 0 && (
+        <div className='fixed inset-0 bg-btn-dark-3 bg-opacity-50 flex items-center justify-center z-50'>
+          <div className='bg-white p-6 rounded-lg max-w-4xl max-h-[80vh] overflow-y-auto relative'>
+            <button
+              onClick={closePreview}
+              className='absolute top-4 right-4 text-btn-gray-9/50 hover:text-btn-gray-9'
+            >
+              <X size={24} />
+            </button>
+            <h3 className='text-r-24 mb-4'>새로 추가된 파일 미리보기</h3>
+            <div className='space-y-4'>
+              {previewFiles.map((item, index) => (
+                <div key={index} className='border p-4 rounded-lg'>
+                  <div className='flex justify-between items-start mb-2'>
+                    <h4 className='t-m-16'>{item.name}</h4>
+                    <button
+                      onClick={() => {
+                        const originalIndex = actualUploadedFiles.findIndex(
+                          (f) => f === item
+                        );
+                        if (originalIndex !== -1) {
+                          removeFile(originalIndex);
+                        }
+                      }}
+                      className='text-bg-primary/50 hover:text-bg-primary t-r-16'
+                    >
+                      삭제
+                    </button>
+                  </div>
+                  {item.file?.type?.startsWith('image/') ||
+                  item.url.match(/\.(jpg|jpeg|png|gif)$/i) ? (
+                    <img
+                      src={item.url}
+                      alt='업로드된 이미지'
+                      className='max-w-[300px] max-h-[200px] object-contain rounded'
+                    />
+                  ) : item.file?.type === 'application/pdf' ||
+                    item.url.endsWith('.pdf') ? (
+                    <div className='flex items-center gap-2'>
+                      <span>📄</span>
+                      <a
+                        href={item.url}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='text-btn-gray-9 underline'
+                      >
+                        PDF 파일 - {item.name}
+                      </a>
+                    </div>
+                  ) : (
+                    <div className='flex items-center gap-2'>
+                      <span>📎</span>
+                      <a
+                        href={item.url}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='text-btn-gray-9 underline'
+                      >
+                        파일 - {item.name}
+                      </a>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </>

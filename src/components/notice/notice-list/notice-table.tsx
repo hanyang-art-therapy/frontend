@@ -1,21 +1,33 @@
 import { useNavigate } from 'react-router-dom';
 import { Paperclip } from 'lucide-react';
 import { formatTimeStamp } from '@/lib/utils';
-// import { Notice } from '@/types';
-import { GetNoticesResponse } from '@/types/notice/notice';
 import NoticeNoData from '../notice-noresult/notice-no-data';
 
 type NoticeTableProps = {
   data: GetNoticesResponse | null;
 };
 
+export type Notice = {
+  noticeNo: number;
+  title: string;
+  category: string;
+  hasFile: boolean;
+  viewCount: number;
+  createdAt: string;
+};
+
+export type GetNoticesResponse = {
+  content: Notice[];
+  totalElements?: number;
+};
+
 export default function NoticeTable({ data }: NoticeTableProps) {
   const navigate = useNavigate();
   console.log(data);
 
-if (!data || !Array.isArray(data.content) || data.content.length === 0) {
-  return <NoticeNoData />;
-}
+  if (!data || !Array.isArray(data.content) || data.content.length === 0) {
+    return <NoticeNoData />;
+  }
 
   const getType = (category: string) => {
     if (category === 'GENERAL') {
@@ -33,6 +45,7 @@ if (!data || !Array.isArray(data.content) || data.content.length === 0) {
 
     return '학술';
   };
+
   return (
     <div className='w-full overflow-x-auto'>
       <table className='w-full border-collapse table-fixed'>
@@ -51,7 +64,7 @@ if (!data || !Array.isArray(data.content) || data.content.length === 0) {
           </tr>
         </thead>
         <tbody>
-          {data.content.map((item) => (
+          {data.content.map((item: any) => (
             <tr
               key={item.noticeNo}
               onClick={() => navigate(`/notice/${item.noticeNo}`)}

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FileText, Volume2 } from 'lucide-react';
 import { getNotices } from '@/apis/notice/notice';
 import { GetNoticesResponse } from '@/types/notice/notice';
@@ -11,29 +11,60 @@ export default function NoticeList() {
   const [fetchedNotices, setFetchedNotices] =
     useState<GetNoticesResponse | null>(null);
   const navigate = useNavigate();
-  const [pageNumber] = useState(1);
+  const location = useLocation();
+  const [pageNumber, setPageNumber] = useState(1);
+  const [actualNoticeCount, setActualNoticeCount] = useState<number>(0);
+  const [isCountLoading, setIsCountLoading] = useState(true);
 
   const handleWriteClick = () => {
     navigate('/notice/write');
   };
 
-  useEffect(() => {
-    const fetchNotices = async () => {
+  // useCallback으로 함수 안정화
+  const fetchNotices = useCallback(async () => {
+    setIsCountLoading(true);
+    // 서버 응답 확인
+    try {
       const response = await getNotices({
         page: pageNumber,
       });
+      if (response) {
+        setFetchedNotices(response);
 
-      setFetchedNotices(response);
-    };
+        // 즉시 게시물 수 설정 (별도 함수 없이)
+        const totalCount =
+          response.totalElements || response.total || response.totalCount || 0;
+        setActualNoticeCount(totalCount);
+      } else {
+        console.warn('API 응답이 null입니다');
+        setFetchedNotices(null);
+        setActualNoticeCount(0);
+      }
+    } catch (error) {
+      console.error('공지사항 불러오기 실패:', error);
+      setFetchedNotices(null);
+      setActualNoticeCount(0);
+    } finally {
+      setIsCountLoading(false);
+    }
+  }, [pageNumber]);
 
+  // 새로고침 데이터 불러오기
+  useEffect(() => {
     fetchNotices();
-  }, []);
+  }, [pageNumber, location.key]);
+
+  useEffect(() => {
+    if (location.state?.refresh) {
+      fetchNotices();
+    }
+  }, [location.state, fetchNotices]);
 
   return (
     <div className='min-h-screen-vh mt-[10px] md:mt-[30px] flex flex-col items-center justify-start'>
       <div className='flex flex-col justify-start items-start w-full xl:px-0'>
         <div className='flex justify-start items-center pb-[20px] gap-2 w-full'>
-          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center  items-center text-white bg-secondary'>
+          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-secondary'>
             <Volume2 size={30} strokeWidth={2} />
           </div>
           <strong className='p-2 text-btn-dark-3 t-b-32'>공지사항</strong>
@@ -44,18 +75,29 @@ export default function NoticeList() {
           확인해주세요.
         </div>
       </div>
+
       <div className='w-full text-center'>
         <NoticeSearch />
         <div className='flex flex-col'>
-          <strong className='flex justify-start items-center pb-[12px] gap-1 t-b-16'>
-            <FileText size={16} strokeWidth={1.5} />총 10개의 게시물
-          </strong>
+          {(fetchedNotices?.content || fetchedNotices?.data) &&
+            Array.isArray(fetchedNotices?.content || fetchedNotices?.data) && (
+              <strong className='flex justify-start items-center pb-[12px] gap-1 t-b-16'>
+                <FileText size={16} strokeWidth={1.5} />총{' '}
+                {isCountLoading ? (
+                  <span className='animate-pulse'>계산중...</span>
+                ) : (
+                  actualNoticeCount
+                )}
+                개의 게시물
+              </strong>
+            )}
           <NoticeTable data={fetchedNotices} />
+
           <div className='flex w-full justify-center items-center'>
             <Button
               type='button'
               onClick={handleWriteClick}
-              className='h-[30px] md:h-[40px] w-[80px]  md:w-[120px] mt-[30px]'
+              className='h-[30px] md:h-[40px] w-[80px] md:w-[120px] mt-[30px]'
             >
               글쓰기
             </Button>
