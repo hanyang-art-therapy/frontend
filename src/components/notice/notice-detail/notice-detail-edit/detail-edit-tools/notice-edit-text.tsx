@@ -1,19 +1,19 @@
-import { Button } from '@/components/ui/button';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
-interface NoticeFile {
+type NoticeFile = {
   name: string;
   url: string;
-}
+};
 
-interface NoticeData {
+type NoticeData = {
   title: string;
   category: string;
   content: string;
   periodStart: string;
   periodEnd: string;
   files?: NoticeFile[];
-}
+};
 
 interface Props {
   formData: NoticeData;

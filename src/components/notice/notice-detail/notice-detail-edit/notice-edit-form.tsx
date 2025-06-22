@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { getNotice, patchNotice, uploadFiles } from '@/apis/notice/notice';
+import axios from 'axios';
 import { toast } from 'sonner';
+import { FilePenLine } from 'lucide-react';
+import { NoticeCategory } from '@/types/notice/notice';
+import { getNotice, patchNotice, uploadFiles } from '@/apis/notice/notice';
+import { Button } from '@/components/ui/button';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
 import NoticeUploadEditor from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-upload-editor';
 import NoticeEditHeader from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-header';
 import NoticeEditText from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-text';
-import axios from 'axios';
-import { FilePenLine } from 'lucide-react';
-import { NoticeCategory } from '@/types/notice/notice';
 
-// 🔧 확장된 NoticeFile 타입
 type NoticeFile = {
   name: string;
   url: string;
@@ -82,7 +81,6 @@ export default function NoticeEditForm() {
     }
   };
 
-  // 🔧 파일 업로드 함수 수정
   const handleFileUpload = async (files: File[]): Promise<NoticeFile[]> => {
     try {
       const formData = new FormData();

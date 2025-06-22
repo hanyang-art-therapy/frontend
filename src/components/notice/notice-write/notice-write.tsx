@@ -1,24 +1,23 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import DateInput from './editor-tools/date-input';
-import IsFixedCheckbox from './editor-tools/infixed-checkbox';
-import EditorSection from './editor-tools/editor-section';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import { postNotice } from '@/apis/notice/notice';
 import { NotepadText } from 'lucide-react';
 import { useEditor } from '@tiptap/react';
+import Color from '@tiptap/extension-color';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
-import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
-import { handleApiError } from '@/components/common/error-handler';
-import { toast } from 'sonner';
-import NoticeNav from '../notice-nav.tsx/notice-nav';
 import { Button } from '@/components/ui/button';
-import TitleAndCategoryInput from './editor-tools/title-category-input';
-import ToolbarUpload from './toolbar-tools/toolbar-upload';
+import { handleApiError } from '@/components/common/error-handler';
+import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
+import TitleAndCategoryInput from '@/components/notice/notice-write/editor-tools/title-category-input';
+import ToolbarUpload from '@/components/notice/notice-write/toolbar-tools/toolbar-upload';
+import IsFixedCheckbox from '@/components/notice/notice-write/editor-tools/infixed-checkbox';
+import DateInput from '@/components/notice/notice-write/editor-tools/date-input';
+import EditorSection from '@/components/notice/notice-write/editor-tools/editor-section';
 
 type NoticeFile = {
   filesNo?: number;

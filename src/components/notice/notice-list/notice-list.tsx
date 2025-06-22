@@ -1,12 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-
-import NoticeTable from './notice-table';
-import { Button } from '@/components/ui/button';
-import { FileText, Volume2 } from 'lucide-react';
-import { NoticeSearch } from '../notice-search/notice-search';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FileText, Volume2 } from 'lucide-react';
 import { getNotices } from '@/apis/notice/notice';
 import { GetNoticesResponse } from '@/types/notice/notice';
+import { Button } from '@/components/ui/button';
+import NoticeTable from '@/components/notice/notice-list/notice-table';
+import { NoticeSearch } from '@/components/notice/notice-search/notice-search';
 
 export default function NoticeList() {
   const [fetchedNotices, setFetchedNotices] =
@@ -37,9 +36,7 @@ export default function NoticeList() {
           <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center  items-center text-white bg-secondary'>
             <Volume2 size={30} strokeWidth={2} />
           </div>
-          <strong className='p-2 text-btn-dark-3 t-b-32'>
-            공지사항
-          </strong>
+          <strong className='p-2 text-btn-dark-3 t-b-32'>공지사항</strong>
         </div>
         <div className='p-4 bg-bg-gray-fa rounded t-r-16 flex-1 min-w-0'>
           본 게시판은 미술치료학과의 학사, 실습, 전시, 행사 등과 관련된 주요

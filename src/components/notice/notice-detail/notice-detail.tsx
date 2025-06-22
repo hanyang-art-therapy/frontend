@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '@/store/auth';
+import { toast } from 'sonner';
 import { Download, Volume2 } from 'lucide-react';
-import NoticeNav from '../notice-nav.tsx/notice-nav';
-import NoticeNoResult from '../notice-noresult/notice-no-result';
 import { formatTimeStamp } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import { GetNoticeResponse } from '@/types/notice/notice';
 import { deleteNotice, getNotice } from '@/apis/notice/notice';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
-import { useAuthStore } from '@/store/auth';
+import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
+import NoticeNoResult from '@/components/notice/notice-noresult/notice-no-result';
 
 const getType = (category: string) => {
   switch (category) {

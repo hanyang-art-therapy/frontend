@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import NoticeList from '@/components/notice/notice-list/notice-list';
 import { useAuthStore } from '@/store/auth';
+import NoticeList from '@/components/notice/notice-list/notice-list';
 
 export default function Notice() {
   const { role } = useAuthStore();

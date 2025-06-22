@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button';
-import { Home, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Home, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-interface NoticeNavProps {
+type NoticeNavProps = {
   noticeNo?: string;
-}
+};
 
 export default function NoticeNav({ noticeNo }: NoticeNavProps) {
   const navigate = useNavigate();
