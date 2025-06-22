@@ -59,11 +59,6 @@ export default function NoticeDetail() {
       return;
     }
 
-    // 삭제 확인 다이얼로그
-    if (!window.confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
-      return;
-    }
-
     try {
       await deleteNotice({ noticeNo: parseInt(noticeNo ?? '1') });
       toast.success('게시글 삭제가 완료되었습니다.');
@@ -169,8 +164,8 @@ export default function NoticeDetail() {
                       <Download size={16} color='white' strokeWidth={2} />
                     </div>
                     <a
-                      href={file.url} // 파일 다운로드 URL
-                      target='_blank' // 새 창에서 열기
+                      href={file.url}
+                      target='_blank'
                       className='text-bg-secondary hover:underline'
                     >
                       {file.name}

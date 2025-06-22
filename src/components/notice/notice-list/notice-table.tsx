@@ -74,7 +74,6 @@ export default function NoticeTable({ data }: NoticeTableProps) {
               <td className='max-w-[100px] sm:w-[90px] p-2 text-left relative group overflow-hidden whitespace-nowrap text-ellipsis'>
                 <span>{item.title}</span>
 
-                {/* 툴팁 */}
                 <div className='absolute bottom-full left-0 mb-1 w-max max-w-[200px] px-2 py-1 bg-btn-gray-9 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none'>
                   {item.title}
                 </div>

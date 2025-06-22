@@ -20,7 +20,6 @@ export default function NoticeList() {
     navigate('/notice/write');
   };
 
-  // useCallback으로 함수 안정화
   const fetchNotices = useCallback(async () => {
     setIsCountLoading(true);
     // 서버 응답 확인
@@ -31,7 +30,6 @@ export default function NoticeList() {
       if (response) {
         setFetchedNotices(response);
 
-        // 즉시 게시물 수 설정 (별도 함수 없이)
         const totalCount =
           response.totalElements || response.total || response.totalCount || 0;
         setActualNoticeCount(totalCount);
