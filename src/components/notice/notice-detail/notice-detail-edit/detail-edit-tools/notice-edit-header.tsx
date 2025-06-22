@@ -21,13 +21,13 @@ type NoticeData = {
   files?: NoticeFile[];
 };
 
-interface Props {
+type Props = {
   formData: NoticeData;
   setFormData: React.Dispatch<React.SetStateAction<NoticeData>>;
   loading: boolean;
   selectedCategory: string;
   handleCategoryChange: (value: string) => void;
-}
+};
 
 export default function NoticeEditHeader({
   formData,
@@ -72,8 +72,6 @@ export default function NoticeEditHeader({
         {/* 구분 && 기간 */}
         <div className='flex flex-row flex-wrap gap-2 pt-r-14 md:gap-4 md:pb-[10px]'>
           {/* 구분 */}
-
-          {/* 기간 */}
           <div className='flex items-center gap-2 t-r-16'>
             <div className='flex flex-col md:flex-row items-center gap-2 md:gap-4'>
               <label className='t-b-16 whitespace-nowrap'>구분</label>

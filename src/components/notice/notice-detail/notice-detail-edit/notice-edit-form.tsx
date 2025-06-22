@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { FilePenLine } from 'lucide-react';
 import { NoticeCategory } from '@/types/notice/notice';
-import { getNotice, patchNotice, uploadFiles } from '@/apis/notice/notice';
+import { getNotice, patchNotice } from '@/apis/notice/notice';
 import { Button } from '@/components/ui/button';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
 import NoticeUploadEditor from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-upload-editor';
@@ -71,7 +71,6 @@ export default function NoticeEditForm() {
         files: data.files || [],
       });
     } catch (err) {
-      console.error('Error fetching notice data:', err);
       setError('서버 오류가 발생했습니다.');
       toast.error('서버 오류가 발생했습니다.');
     } finally {
@@ -79,31 +78,6 @@ export default function NoticeEditForm() {
     }
   };
 
-  const handleFileUpload = async (files: File[]): Promise<NoticeFile[]> => {
-    try {
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append('files', file);
-      });
-
-      const response = await uploadFiles(formData);
-
-      // 🔧 업로드된 파일 정보 반환
-      return files.map((Files, index) => ({
-        filesNo: response.filesNo[index], // 서버에서 받은 파일 번호
-        name: Files.name,
-        url: `${process.env.REACT_APP_API_URL}/files/${response.filesNo[index]}`, // 🔧 실제 파일 URL
-        Files,
-        isNew: true,
-      }));
-    } catch (error) {
-      console.error('File upload error:', error);
-      toast.error('파일 업로드에 실패했습니다.');
-      return [];
-    }
-  };
-
-  // 폼 제출 처리
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -121,10 +95,17 @@ export default function NoticeEditForm() {
 
     try {
       if (isEdit && noticeNo) {
-        // 수정 모드
-        await updateNotice({
-          noticeNo: parseInt(noticeNo),
-          ...formData,
+        await patchNotice(parseInt(noticeNo), {
+          title: formData.title,
+          content: formData.content,
+          category: formData.category as NoticeCategory,
+          periodStart: formData.periodStart,
+          periodEnd: formData.periodEnd,
+          isFixed: formData.isFixed ?? false,
+          filesNo:
+            formData.files
+              ?.map((file) => file.filesNo!)
+              .filter((id): id is number => !!id) ?? null,
         });
         toast.success('게시글 수정이 완료되었습니다.');
       } else {
@@ -169,7 +150,7 @@ export default function NoticeEditForm() {
     return (
       <div className='w-full h-full mt-[80px] md:mt-[120px]'>
         <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
-          <div className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start bg-[rgba(221,221,221,0.2)]'>
+          <div className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start bg-btn-dark-3/50'>
             <div className='flex flex-col gap-4 mt-2 t-r-16 px-[20px]'>
               <div className='text-lg text-bg-primary mb-4'>{error}</div>
               <Button
@@ -214,12 +195,7 @@ export default function NoticeEditForm() {
             loading={loading}
           />
 
-          {/* 파일 */}
-          <NoticeUploadEditor
-            formData={formData}
-            setFormData={setFormData}
-            // onFileUpload={handleFileUpload} // 🔧 파일 업로드 함수 전달
-          />
+          <NoticeUploadEditor formData={formData} setFormData={setFormData} />
 
           {/* 이전글과 다음글 */}
           <div className='w-full px-5 xl:px-0 py-6 border-t t-r-16 flex justify-center'></div>

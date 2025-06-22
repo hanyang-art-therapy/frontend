@@ -32,17 +32,8 @@ export default function NoticeDetail() {
     useState<GetNoticeResponse | null>(null);
   const { noticeNo } = useParams();
   const navigate = useNavigate();
-
   const authStore = useAuthStore();
   const role = authStore.role || 'ADMIN';
-
-  // 디버깅용 로그
-  console.log('=== DEBUG INFO ===');
-  console.log('authStore:', authStore);
-  console.log('role:', role);
-  console.log('role type:', typeof role);
-  console.log('role === "ADMIN":', role === 'ADMIN');
-  console.log('noticeNo:', noticeNo);
 
   useEffect(() => {
     window.scrollTo({
@@ -116,14 +107,14 @@ export default function NoticeDetail() {
             <h1 className='t-b-32 font-bold'>{noticeContents.title}</h1>
             <div className='md:flex md:flex-row t-r-14 md:p-[10px] flex gap-2 md:gap-4 flex-wrap'>
               <div className='flex items-center gap-2 w-1.5/2 md:w-auto t-r-16'>
-                <strong className='text-shadow-gray-6'>구분</strong>
+                <strong className='text-btn-gray-9'>구분</strong>
                 {getType(noticeContents.category)}
-                <strong className='text-shadow-gray-6'>작성일</strong>
+                <strong className='text-btn-gray-9'>작성일</strong>
                 {formatTimeStamp(noticeContents.createdAt)}
               </div>
 
               <div className='flex items-center gap-2 w-1.5/2 md:w-auto t-r-16'>
-                <strong className='text-shadow-gray-6'>기간</strong>
+                <strong className='text-btn-gray-9'>기간</strong>
                 {noticeContents.periodStart
                   ? formatTimeStamp(noticeContents.periodStart)
                   : '기간 없음'}
@@ -131,7 +122,7 @@ export default function NoticeDetail() {
                 {noticeContents.periodEnd
                   ? formatTimeStamp(noticeContents.periodEnd)
                   : '기간 없음'}
-                <strong className='text-shadow-gray-6'>조회수</strong>
+                <strong className='text-btn-gray-9'>조회수</strong>
                 {noticeContents.viewCount}
               </div>
             </div>
@@ -153,14 +144,14 @@ export default function NoticeDetail() {
             <div className='flex gap-4 mt-4 justify-end items-end absolute bottom-4 right-4'>
               <Button
                 onClick={handleEdit}
-                className='h-[20px] w-[80px] t-r-16 bg-orange-300 hover:bg-primary text-white rounded-sm'
+                className='h-[20px] w-[80px] t-r-16 bg-bg-primary/50 hover:bg-primary text-white rounded-sm'
               >
                 수정
               </Button>
 
               <Button
                 onClick={handleDelete}
-                className='h-[20px] w-[80px] t-r-16 bg-red-300 hover:bg-red-600 text-white rounded-sm'
+                className='h-[20px] w-[80px] t-r-16 bg-bg-secondary/50 hover:bg-bg-secondary text-white rounded-sm'
               >
                 삭제
               </Button>
@@ -169,10 +160,7 @@ export default function NoticeDetail() {
         </div>
 
         {/* 파일 */}
-        <div
-          className='w-full h-auto md:px-5 py-4 md:py-6 border-t flex flex-col gap-2'
-          style={{ backgroundColor: 'rgba(221, 221, 221, 0.2)' }}
-        >
+        <div className='w-full h-auto md:px-5 py-4 md:py-6 border-t flex flex-col gap-2 bg-bg-gray-fa'>
           <div className='px-6 flex flex-col gap-4'>
             <div className='flex flex-col gap-2 t-r-16'>
               {noticeContents.files && noticeContents.files.length > 0 ? (
@@ -199,7 +187,6 @@ export default function NoticeDetail() {
             </div>
           </div>
         </div>
-
         {/* 이전글과 다음글 */}
         <div className='w-full px-5 xl:px-0 py-6 border-t t-r-16 flex justify-center'>
           <NoticeNav noticeNo={noticeNo ?? ''} />
