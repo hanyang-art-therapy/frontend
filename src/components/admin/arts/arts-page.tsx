@@ -1,26 +1,10 @@
 import AdminArtForm from '@/components/admin/arts/art/art-form';
 import AdminArtView from '@/components/admin/arts/art/art-view';
 import TabButton from '@/components/admin/tab-btn';
-import type { InfiniteScrollResponse } from '@/types';
-import type { AdminArtsResponse } from '@/types/admin/arts';
-import type { ArtistResponse } from '@/types/admin/artists';
-import type { GalleriesResponse } from '@/types/admin/galleries';
+
 import { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
 
 export default function AdminArt() {
-  const { galleriesResponse } = useLoaderData() as {
-    galleriesResponse: GalleriesResponse[];
-  };
-
-  const { artistsResponse } = useLoaderData() as {
-    artistsResponse: InfiniteScrollResponse<ArtistResponse>;
-  };
-
-  const { artsResponse } = useLoaderData() as {
-    artsResponse: InfiniteScrollResponse<AdminArtsResponse>;
-  };
-
   const [selectedTab, setSelectedTab] = useState<'view' | 'form'>('view');
 
   return (
@@ -46,15 +30,9 @@ export default function AdminArt() {
       </div>
 
       <div className='pt-[215px]'>
-        {selectedTab === 'view' && (
-          <AdminArtView arts={artsResponse} galleries={galleriesResponse} />
-        )}
+        {selectedTab === 'view' && <AdminArtView />}
         {selectedTab === 'form' && (
-          <AdminArtForm
-            setSelectedTab={setSelectedTab}
-            galleries={galleriesResponse}
-            artists={artistsResponse}
-          />
+          <AdminArtForm setSelectedTab={setSelectedTab} />
         )}
       </div>
     </>

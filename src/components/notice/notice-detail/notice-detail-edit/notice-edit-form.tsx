@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { getNotice, updateNotice } from '@/apis/notice/notice';
+import { getNotice, patchNotice, uploadFiles } from '@/apis/notice/notice';
 import { toast } from 'sonner';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
 import NoticeUploadEditor from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-upload-editor';
@@ -9,21 +9,25 @@ import NoticeEditHeader from '@/components/notice/notice-detail/notice-detail-ed
 import NoticeEditText from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-text';
 import axios from 'axios';
 import { FilePenLine } from 'lucide-react';
+import { NoticeCategory } from '@/types/notice/notice';
 
-interface NoticeFile {
+// 🔧 확장된 NoticeFile 타입
+type NoticeFile = {
   name: string;
   url: string;
-}
+  filesNo?: number;
+  isNew?: boolean;
+};
 
-interface NoticeData {
+type NoticeData = {
   title: string;
   category: string;
   content: string;
   periodStart: string;
   periodEnd: string;
-  isFixed?: boolean; // 🔧 추가: 고정 여부
+  isFixed?: boolean;
   files?: NoticeFile[];
-}
+};
 
 export default function NoticeEditForm() {
   const { noticeNo } = useParams<{ noticeNo: string }>();
@@ -78,41 +82,33 @@ export default function NoticeEditForm() {
     }
   };
 
-  // 🔧 수정: 파일 업로드 함수 - API 사용
-  // const handleFileUpload = async (files: File[]): Promise<NoticeFile[]> => {
-  //   try {
-  //     const formData = new FormData();
-  //     files.forEach((file) => {
-  //       formData.append('files', file); // 🔧 서버 API에 맞는 필드명 사용
-  //     });
+  // 🔧 파일 업로드 함수 수정
+  const handleFileUpload = async (files: File[]): Promise<NoticeFile[]> => {
+    try {
+      const formData = new FormData();
+      files.forEach((file) => {
+        formData.append('files', file);
+      });
 
-  //     const response = await uploadFiles(formData);
+      const response = await uploadFiles(formData);
 
-  //     // 🔧 업로드된 파일 정보 반환
-  //     return files.map((Files, index) => ({
-  //       filesNo: response.filesNo[index], // 서버에서 받은 파일 번호
-  //       name: Files.name,
-  //       url: `${process.env.REACT_APP_API_URL}/files/${response.filesNo[index]}`, // 🔧 실제 파일 URL
-  //       Files,
-  //       isNew: true,
-  //     }));
-  //   } catch (error) {
-  //     console.error('File upload error:', error);
-  //     toast.error('파일 업로드에 실패했습니다.');
-  //     return [];
-  //   }
-  // };
+      return files.map((file, index) => ({
+        filesNo: response.filesNo[index],
+        name: file.name,
+        url: `${process.env.REACT_APP_API_URL}/files/${response.filesNo[index]}`,
+        isNew: true,
+      }));
+    } catch (error) {
+      console.error('File upload error:', error);
+      toast.error('파일 업로드에 실패했습니다.');
+      return [];
+    }
+  };
 
-  // 폼 제출 처리
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.title.trim()) {
-      toast.error('제목과 내용, 카테고리 필수 입력 항목입니다.');
-      return;
-    }
-
-    if (!formData.content.trim()) {
+    if (!formData.title.trim() || !formData.content.trim()) {
       toast.error('제목과 내용, 카테고리 필수 입력 항목입니다.');
       return;
     }
@@ -121,12 +117,22 @@ export default function NoticeEditForm() {
 
     try {
       if (isEdit && noticeNo) {
-        // 수정 모드
-        await updateNotice({
-          noticeNo: parseInt(noticeNo),
-          ...formData,
+        // 🔧 파일 번호 추출 간단하게 수정
+        await patchNotice(parseInt(noticeNo), {
+          title: formData.title,
+          content: formData.content,
+          category: formData.category as NoticeCategory,
+          periodStart: formData.periodStart,
+          periodEnd: formData.periodEnd,
+          isFixed: formData.isFixed ?? false,
+          filesNo:
+            formData.files
+              ?.map((file) => file.filesNo!)
+              .filter((id): id is number => !!id) ?? null,
         });
+
         toast.success('게시글 수정이 완료되었습니다.');
+        navigate(`/notice/${noticeNo}`);
       } else {
         // 생성 모드
         const createNotice = async (data: NoticeData) => {
@@ -136,18 +142,12 @@ export default function NoticeEditForm() {
 
         const result = await createNotice(formData);
         toast.success('게시글 등록이 완료되었습니다.');
-        // 새로 생성된 공지사항의 번호로 이동
         navigate(`/notice/${result.noticeNo}`);
         return;
       }
-
-      // 수정 완료 후 상세 페이지로 이동
-      navigate(`/notice/${noticeNo}`);
     } catch (err) {
       console.error('Submit error:', err);
-      toast.error(
-        isEdit ? '서버 오류가 발생했습니다.' : '서버 오류가 발생했습니다.'
-      );
+      toast.error('서버 오류가 발생했습니다.');
     } finally {
       setLoading(false);
     }
@@ -204,9 +204,11 @@ export default function NoticeEditForm() {
           setFormData={setFormData}
           loading={false}
           selectedCategory={''}
-          handleCategoryChange={() => {}}
+          handleCategoryChange={function (value: string): void {
+            throw new Error('Function not implemented.');
+          }}
         />
-        {/* 본문 내용 */}
+
         <div className='w-full h-auto py-[10px] mt-[10px]'>
           <NoticeEditText
             formData={formData}
@@ -214,16 +216,14 @@ export default function NoticeEditForm() {
             loading={loading}
           />
 
-          {/* 파일 */}
           <NoticeUploadEditor
             formData={formData}
             setFormData={setFormData}
-            // onFileUpload={handleFileUpload} // 🔧 파일 업로드 함수 전달
+            onFileUpload={handleFileUpload}
           />
 
-          {/* 이전글과 다음글 */}
           <div className='w-full px-5 xl:px-0 py-6 border-t t-r-16 flex justify-center'></div>
-          {/* 이전글과 다음글 */}
+
           <div className='w-full px-5 xl:px-0 py-6 t-r-16 flex justify-center'>
             <NoticeNav noticeNo={noticeNo ?? ''} />
           </div>

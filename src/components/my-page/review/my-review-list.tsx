@@ -1,23 +1,13 @@
-import MyReviewNoSearched from '@/components/my-page/review/my-review-no-searched';
-import MyReviewNoResult from '@/components/my-page/review/my-review-no-result';
 import { formatTimeStamp } from '@/lib/utils';
 import type { MyReviewPagination } from '@/types';
 import type { MyReviewData } from '@/types/my-page';
 import { Link } from 'react-router-dom';
 
 type MyReviewListProps = {
-  myReviews: MyReviewPagination<MyReviewData> | null;
+  myReviews: MyReviewPagination<MyReviewData>;
 };
 
 export default function MyReviewList({ myReviews }: MyReviewListProps) {
-  if (myReviews === null) {
-    return <MyReviewNoResult />;
-  }
-
-  if (myReviews.content.length === 0) {
-    return <MyReviewNoSearched />;
-  }
-
   const { content: reviews, page, totalElements, size } = myReviews;
 
   return (

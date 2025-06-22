@@ -42,8 +42,7 @@ export type PatchAdminArtRequest = Pick<
 > & {
   filesNo: number | null;
   artists:
-    | (Pick<Artist, 'artistNo'> &
-        Pick<ArtArtistRel, 'description'> & { name: string })[]
+    | (Pick<Artist, 'artistNo'> & Pick<ArtArtistRel, 'description'>)[]
     | [];
 };
 

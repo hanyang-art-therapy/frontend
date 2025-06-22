@@ -1,23 +1,23 @@
-import { getProfessor } from '@/apis/admin/professors';
-import { postFile } from '@/apis/common/file';
 import FormField from '@/components/admin/form-field';
-import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
+  DialogDescription,
 } from '@/components/ui/dialog';
-import type { MessageResponse } from '@/types';
 import {
-  PatchProfessorRequest,
   ProfessorsResponse,
+  PatchProfessorRequest,
 } from '@/types/admin/professors';
-import { useEffect, useRef, useState } from 'react';
+import type { MessageResponse } from '@/types';
+import { postFile } from '@/apis/common/file';
+import { useRef, useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { handleApiError } from '@/components/common/error-handler';
+import { getProfessor } from '@/apis/admin/professors';
 
 type Props = {
   professor: ProfessorsResponse;
@@ -42,7 +42,7 @@ export default function ProfessorModal({
     filesNo: null,
   });
 
-  const [previewUrl, setPreviewUrl] = useState('');
+  const [previewUrl, setPreviewUrl] = useState('/images/no-image.jpg');
 
   useEffect(() => {
     try {
@@ -57,7 +57,7 @@ export default function ProfessorModal({
           tel: response?.tel ?? '',
           filesNo: null,
         });
-        setPreviewUrl(response?.files?.url || '');
+        setPreviewUrl(response?.files?.url || '/images/no-image.jpg');
       };
 
       fetchProfessor();
@@ -86,6 +86,13 @@ export default function ProfessorModal({
     const selected = e.target.files?.[0];
     if (!selected) return;
 
+    const maxSize = 5 * 1024 * 1024;
+    if (selected.size > maxSize) {
+      toast.error('파일의 용량이 5MB를 초과하였습니다.');
+      e.target.value = '';
+      return;
+    }
+
     setUploading(true);
     try {
       const uploadedFile = await postFile([selected]);
@@ -101,6 +108,7 @@ export default function ProfessorModal({
       toast.error(handleApiError(error));
     } finally {
       setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
@@ -165,12 +173,15 @@ export default function ProfessorModal({
         <div className='flex gap-[15px]'>
           {/* 이미지 업로드 */}
           <div className='flex flex-col items-center gap-[15px]'>
-            <div className='w-[100px] md:w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
+            <div className='w-[100px] md:w-[130px] aspect-[4/5] rounded border border-btn-gray-d overflow-hidden'>
               {previewUrl ? (
                 <img
                   src={previewUrl}
                   alt='preview'
                   className='w-full h-full object-cover'
+                  onError={(e) =>
+                    (e.currentTarget.src = '/images/no-image.jpg')
+                  }
                   style={{ cursor: 'default' }}
                 />
               ) : (

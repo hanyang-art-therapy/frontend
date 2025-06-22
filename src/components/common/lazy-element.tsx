@@ -1,17 +1,11 @@
 import LazySkeleton from '@/components/common/lazy-skeleton';
 import { type JSX, type LazyExoticComponent, Suspense } from 'react';
 
-type LazyElementProps = {
-  Element: LazyExoticComponent<() => JSX.Element>;
-  fallback?: React.ReactNode;
-};
-
-export default function lazyElement({
-  Element,
-  fallback = <LazySkeleton />,
-}: LazyElementProps) {
+export default function lazyElement(
+  Element: LazyExoticComponent<() => JSX.Element>
+) {
   return (
-    <Suspense fallback={fallback}>
+    <Suspense fallback={<LazySkeleton />}>
       <Element />
     </Suspense>
   );

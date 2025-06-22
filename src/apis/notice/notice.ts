@@ -10,6 +10,7 @@ import type {
   UpdateNoticeRequest,
 } from '@/types/notice/notice';
 
+
 // GET 공지사항 전체 조회
 export const getNotices = async ({
   page,
@@ -78,6 +79,15 @@ export const updateNotice = async ({
 
   return response.data;
 };
+
+// 공지사항 수정 다시
+export const patchNotice = async (
+  noticeNo : number,
+  data: Omit<UpdateNoticeRequest, 'noticeNo'>,
+  ) : Promise<MessageResponse> => {
+    const res = await apiInstance.patch(`/notices/${noticeNo}`, data);
+    return res.data;
+  }
 
 // DELETE 공지사항 삭제 /notices/:noticeNo
 export const deleteNotice = async ({

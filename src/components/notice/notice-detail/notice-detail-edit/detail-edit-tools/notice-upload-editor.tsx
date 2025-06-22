@@ -1,3 +1,4 @@
+// NoticeUploadEditor.tsx
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Paperclip, Image, Download, X } from 'lucide-react';
@@ -33,7 +34,8 @@ const ToolbarButton = ({
   color = '#333333',
   className = '',
 }: {
-  icon: React.ElementType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  icon: any;
   onClick: () => void;
   disabled?: boolean;
   color?: string;
@@ -65,15 +67,17 @@ export default function NoticeUploadEditor({
   const triggerFileUpload = () => {
     fileInputRef.current?.click();
   };
+
   const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
 
     setUploading(true);
     try {
-      const uploadedFiles = await postFile(files);
+      // postFile가 { filesNo: number[], names: string[], urls: string[] } 반환한다고 가정
+      const response = await postFile(files);
 
-      const noticeFiles: NoticeFile[] = uploadedFiles.map((file, i) => ({
+      const uploadedFiles: NoticeFile[] = response.map((file, i) => ({
         filesNo: file.filesNo,
         name: file.name,
         url: file.url,
@@ -83,13 +87,13 @@ export default function NoticeUploadEditor({
 
       setFormData((prev) => ({
         ...prev,
-        files: [...(prev.files || []), ...noticeFiles],
+        files: [...(prev.files || []), ...uploadedFiles],
       }));
 
       setShowPreview(true);
-      toast.success(`${noticeFiles.length}개의 파일이 업로드되었습니다.`);
+      toast.success(`${uploadedFiles.length}개의 파일이 업로드되었습니다.`);
     } catch (error) {
-      console.error(error);
+      console.error('파일 업로드 에러:', error);
       toast.error('파일 업로드에 실패했습니다.');
     } finally {
       setUploading(false);
@@ -217,23 +221,37 @@ export default function NoticeUploadEditor({
                       삭제
                     </button>
                   </div>
-                  {item.file && item.file.type.startsWith('image/') ? (
+                  {item.file?.type?.startsWith('image/') ||
+                  item.url.match(/\.(jpg|jpeg|png|gif)$/i) ? (
                     <img
                       src={item.url}
                       alt='업로드된 이미지'
                       className='max-w-[300px] max-h-[200px] object-contain rounded'
                     />
-                  ) : item.file?.type === 'application/pdf' ? (
+                  ) : item.file?.type === 'application/pdf' ||
+                    item.url.endsWith('.pdf') ? (
                     <div className='flex items-center gap-2'>
                       <span>📄</span>
-                      <span className='text-gray-600'>
+                      <a
+                        href={item.url}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='text-gray-600 underline'
+                      >
                         PDF 파일 - {item.name}
-                      </span>
+                      </a>
                     </div>
                   ) : (
                     <div className='flex items-center gap-2'>
                       <span>📎</span>
-                      <span className='text-gray-600'>파일 - {item.name}</span>
+                      <a
+                        href={item.url}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='text-gray-600 underline'
+                      >
+                        파일 - {item.name}
+                      </a>
                     </div>
                   )}
                 </div>

@@ -132,15 +132,6 @@ export type MyReviewPagination<T> = {
   totalPages: number;
 };
 
-export type NoticesPagination<T> = {
-  content: T[];
-  page: number;
-  size: number;
-  totalElements: number;
-  totalPages: number;
-  isLast: boolean;
-};
-
 export type ArtsPagination<T> = {
   content: T[];
   lastId: number;

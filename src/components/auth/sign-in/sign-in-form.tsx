@@ -50,6 +50,7 @@ export default function SignInForm() {
       }
 
       setAccessToken(response.accessToken);
+      localStorage.setItem('accessToken', response.accessToken);
       setRole(response.role);
       setUserNo(response.userNo);
 

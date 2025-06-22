@@ -13,7 +13,6 @@ import {
   Baseline,
   Highlighter,
 } from 'lucide-react';
-import ToolbarFileUpload from './toolbar-upload';
 
 type ToolbarProps = {
   editor: Editor | null;
@@ -26,6 +25,7 @@ const ToolbarButton = ({
   color = '#333333',
   className = '',
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any;
   onClick: () => void;
   disabled?: boolean;
@@ -53,7 +53,6 @@ const Divider = () => (
 
 export default function ToolbarHeading({ editor }: ToolbarProps) {
   if (!editor) return null;
-
 
   const applyHighlightColor = (color: string) => {
     editor.chain().focus().toggleHighlight({ color }).run();
@@ -103,12 +102,6 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
             onClick={() => editor.chain().focus().toggleUnderline().run()}
             disabled={!editor.can().chain().focus().toggleUnderline().run()}
           />
-          {/* <ToolbarButton
-            icon={Type}
-            className={buttonShadowClass}
-            color='red'
-            onClick={() => applyTextColor('red')}
-          /> */}
           <ToolbarButton
             icon={Highlighter}
             className={buttonShadowClassHidden}
@@ -130,9 +123,7 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
             className={buttonShadowClass}
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
           />
-          <div className='flex gap-[8px] md:pl-[8px]'>
-            <ToolbarFileUpload editor={editor} />
-          </div>
+
           <Divider />
 
           {/* Align */}

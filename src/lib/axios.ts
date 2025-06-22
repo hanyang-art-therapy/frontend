@@ -13,7 +13,6 @@ const apiInstance = axios.create({
 // Request 인터셉터
 apiInstance.interceptors.request.use((config) => {
   const { accessToken } = useAuthStore.getState();
-
   if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
 
   return config;

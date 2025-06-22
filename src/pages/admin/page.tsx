@@ -1,24 +1,10 @@
 import AdminMenu from '@/components/admin/admin-menu';
 import NotFound from '@/components/not-found/not-found';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { useAuthStore } from '@/store/auth';
-import { useEffect } from 'react';
-import { toast } from 'sonner';
 
 export default function AdminPage() {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const { role } = useAuthStore();
-  const isAdminOrTester = role === 'ADMIN' || role === 'TESTER';
-
-  useEffect(() => {
-    // 관리자거나 테스터인 경우
-    if (!isAdminOrTester) {
-      toast('관리자 권한이 없습니다.');
-      navigate('/', { replace: true });
-    }
-  }, [role, navigate, isAdminOrTester]);
 
   if (pathname === '/admin') {
     return <NotFound />;

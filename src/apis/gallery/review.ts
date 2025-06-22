@@ -1,27 +1,19 @@
 import axiosInstance from '@/lib/axios';
-import type { ArtReviewsPagination, MessageResponse } from '@/types';
+import type { ArtReviewsPagination } from '@/types';
 import type {
   ArtReview,
   DeleteReviewRequest,
-  GetReviewsRequest,
   PatchReviewRequest,
   PostReviewRequest,
   PostReviewResponse,
-  BanReviewRequest,
 } from '@/types/gallery/review';
 
 // GET /gallery/arts/:artsNo/reviews
-export const getReviews = async ({
-  artsNo,
-  page,
-  size,
-}: GetReviewsRequest): Promise<ArtReviewsPagination<ArtReview>> => {
-  const response = await axiosInstance.get(
-    `/galleries/arts/${artsNo}/reviews`,
-    {
-      params: { page, size },
-    }
-  );
+export const getReviews = async (
+  artsNo: number
+): Promise<ArtReviewsPagination<ArtReview>> => {
+  const response = await axiosInstance.get(`/galleries/arts/${artsNo}/reviews`);
+
   return response.data;
 };
 
@@ -53,22 +45,17 @@ export const patchReview = async ({
   });
 };
 
+// DELETE 리뷰 삭제 /gallery/arts/:artsNo/reviews/:reviewNo
+// export const deleteReview = async ({
+//   artsNo,
+//   reviewsNo,
+// }: DeleteReviewRequest) => {
+//   await apiInstance.delete(`/galleries/arts/${artsNo}/reviews/${reviewsNo}`);
+// };
+
 export const deleteReview = async ({
   artsNo,
   reviewsNo,
 }: DeleteReviewRequest) => {
   await axiosInstance.delete(`/galleries/arts/${artsNo}/reviews/${reviewsNo}`);
-};
-
-export const banReview = async ({
-  artsNo,
-  reviewsNo,
-}: BanReviewRequest): Promise<MessageResponse> => {
-  const response = await axiosInstance.patch(
-    `/galleries/arts/${artsNo}/reviews/${reviewsNo}/ban`
-  );
-
-  console.log(response);
-
-  return response.data;
 };

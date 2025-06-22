@@ -1,7 +1,8 @@
 import { getAdminArtByNo } from '@/apis/admin/arts';
+import { getGalleries } from '@/apis/admin/galleries';
 import { postFile } from '@/apis/common/file';
-import AddArtistSheet from '@/components/admin/arts/art/add-artist-sheet';
 import FormField from '@/components/admin/form-field';
+import AddArtistSheet from '@/components/admin/arts/art/add-artist-sheet';
 import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,10 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import type { MessageResponse } from '@/types';
-import type {
-  AdminArtResponse,
-  PatchAdminArtRequest,
-} from '@/types/admin/arts';
+import { AdminArtResponse, PatchAdminArtRequest } from '@/types/admin/arts';
 import type { GalleriesResponse } from '@/types/admin/galleries';
 import {
   ChangeEvent,
@@ -33,9 +31,8 @@ import {
 } from 'react';
 import { toast } from 'sonner';
 
-type AdminArtModalProps = {
+type Props = {
   artsNo: number;
-  galleries: GalleriesResponse[];
   onEdit: (form: PatchAdminArtRequest) => Promise<MessageResponse>;
   onDelete: (artsNo: number) => Promise<MessageResponse>;
   onClose: () => void;
@@ -43,12 +40,12 @@ type AdminArtModalProps = {
 
 export default function AdminArtModal({
   artsNo,
-  galleries,
   onClose,
   onEdit,
   onDelete,
-}: AdminArtModalProps) {
+}: Props) {
   const [art, setArt] = useState<AdminArtResponse | null>(null);
+  const [galleries, setGalleries] = useState<GalleriesResponse[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [artImageUrl, setArtImageUrl] = useState('/images/no-image.jpg');
   const [newFileNo, setNewFileNo] = useState<number | null>(null);
@@ -59,10 +56,14 @@ export default function AdminArtModal({
   useEffect(() => {
     try {
       const fetchData = async () => {
-        const artData = await getAdminArtByNo(artsNo);
+        const [artResponse, galleriesResponse] = await Promise.all([
+          getAdminArtByNo(artsNo),
+          getGalleries(),
+        ]);
 
-        setArt(artData);
-        setArtImageUrl(artData.fileUrl || '/images/no-image.jpg');
+        setArt(artResponse);
+        setGalleries(galleriesResponse);
+        setArtImageUrl(artResponse.fileUrl || '/images/no-image.jpg');
       };
 
       fetchData();
@@ -198,7 +199,7 @@ export default function AdminArtModal({
         galleriesNo: art.galleriesNo,
         artName: art.artName,
         caption: art.caption,
-        artType: art.artists.length > 1 ? 'GROUP' : 'SINGLE',
+        artType: art.artType as 'SINGLE' | 'GROUP',
         coDescription: art.coDescription,
         filesNo: newFileNo,
         artists: art.artists.map((artist) => ({
@@ -317,7 +318,7 @@ export default function AdminArtModal({
                   onChange={handleInputChange}
                   autoComplete='off'
                   disabled={id === 'artType'}
-                  className='w-full px-[15px] outline-none py-2'
+                  className='w-full px-[15px] outline-none'
                 />
               </FormField>
             ))}
@@ -328,8 +329,8 @@ export default function AdminArtModal({
                 value={art?.galleriesNo?.toString() || ''}
                 onValueChange={handleGalleryChange}
               >
-                <SelectTrigger className='w-full border-none outline-none focus:ring-0 focus:ring-offset-0 '>
-                  <SelectValue placeholder='전시회를 선택해주세요' />
+                <SelectTrigger className='w-full border-none outline-none focus:ring-0 focus:ring-offset-0'>
+                  <SelectValue placeholder='전시회를 선택하세요' />
                 </SelectTrigger>
                 <SelectContent>
                   {galleries.map((gallery) => (
@@ -358,7 +359,7 @@ export default function AdminArtModal({
                     handleArtistDescriptionChange(artist.artistNo, e)
                   }
                   autoComplete='off'
-                  className='w-full px-[15px] outline-none py-2'
+                  className='w-full px-[15px] outline-none'
                   rows={6}
                 />
               </FormField>
@@ -372,7 +373,7 @@ export default function AdminArtModal({
                   value={art?.coDescription ?? ''}
                   onChange={handleCoDescriptionChange}
                   autoComplete='off'
-                  className='w-full px-[15px] outline-none py-2'
+                  className='w-full px-[15px] outline-none'
                   rows={4}
                 />
               </FormField>

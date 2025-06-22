@@ -1,57 +1,62 @@
 import type { ProfessorsResponse } from '@/types/admin/professors';
-import { User, GraduationCap, Briefcase } from 'lucide-react';
-import ProfessorDetailDialog from './professor-detail-dialog';
+import { cn } from '@/lib/utils';
+// import ProfessorsCartFront from './professors-cart-front';
+import ProfessorsCardBack from './professors-card-back';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 type ProfessorCardProps = {
   professor: ProfessorsResponse;
 };
 
 export default function ProfessorsCard({ professor }: ProfessorCardProps) {
+  const [flippedCard, setFlippedCard] = useState<number | null>(null);
+
+  const isFlipped = flippedCard === professor.professorNo;
+  const navigate = useNavigate();
+
+  const handleMouseEnter = (id: number) => {
+    setFlippedCard(id);
+  };
+
+  const handleMouseLeave = () => {
+    setFlippedCard(null);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLLIElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleCardClick();
+    }
+  };
+
+  const handleCardClick = () => {
+    navigate(
+      'https://gsic.hanyang.ac.kr/front/department-intro/art-therapy/art-therapy-prof'
+    );
+  };
+
   return (
-    <ProfessorDetailDialog professor={professor}>
-      <li
-        key={professor.professorNo}
-        aria-label={`${professor.professorName} 교수 정보`}
-        tabIndex={0}
-        className='cursor-pointer group p-6 bg-white rounded-[5px] border border-btn-gray-d hover:border-primary hover:shadow-lg transition-all duration-300'
+    <li
+      key={professor.professorNo}
+      role='button'
+      aria-label={`${professor.professorName} 교수 정보 카드`}
+      tabIndex={0}
+      className='relative h-[140px] sm:h-[180px] [perspective:1000px] cursor-pointer group'
+      onClick={handleCardClick}
+      onMouseEnter={() => handleMouseEnter(professor.professorNo)}
+      onMouseLeave={handleMouseLeave}
+      onKeyDown={handleKeyDown}
+    >
+      <div
+        className={cn(
+          'relative w-full h-full transition-transform duration-700 ease-in-out [transform-style:preserve-3d] box-shadow-style rounded-xl',
+          isFlipped && '[transform:rotateY(180deg)]'
+        )}
       >
-        <div className='flex items-start gap-4'>
-          <div className='relative w-20 h-24 flex-shrink-0 overflow-hidden rounded-[5px]'>
-            {professor.files?.url ? (
-              <img
-                src={professor.files.url}
-                alt={`${professor.professorName} 교수`}
-                className='w-full h-full object-cover'
-              />
-            ) : (
-              <div className='w-full h-full flex items-center justify-center text-gray-6'>
-                <User size={24} />
-              </div>
-            )}
-          </div>
-
-          <div className='flex-1 min-w-0'>
-            <h3 className='t-m-18 mb-1 group-hover:text-primary transition-colors'>
-              {professor.professorName}
-            </h3>
-
-            <div className='space-y-1'>
-              {professor.position && (
-                <div className='flex items-center gap-1.5 text-gray-6'>
-                  <Briefcase size={14} className='flex-shrink-0' />
-                  <span className='t-r-14 truncate'>{professor.position}</span>
-                </div>
-              )}
-              {professor.major && (
-                <div className='flex items-center gap-1.5 text-gray-6'>
-                  <GraduationCap size={14} className='flex-shrink-0' />
-                  <span className='t-r-14 truncate'>{professor.major}</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </li>
-    </ProfessorDetailDialog>
+        {/* <ProfessorsCartFront {...professor} /> */}
+        <ProfessorsCardBack handleCardClick={handleCardClick} />
+      </div>
+    </li>
   );
 }

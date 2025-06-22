@@ -4,7 +4,6 @@ let initAuthPromise: Promise<void> | null = null;
 
 export const initializeAuth = (): Promise<void> => {
   const { setAccessToken, setUserNo, setRole, reset } = useAuthStore.getState();
-
   if (initAuthPromise) return initAuthPromise;
 
   initAuthPromise = (async () => {

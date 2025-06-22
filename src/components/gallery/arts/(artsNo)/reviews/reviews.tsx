@@ -1,23 +1,16 @@
 import { postFile } from '@/apis/common/file';
 import { getReviews, postReview } from '@/apis/gallery/review';
 import { handleApiError } from '@/components/common/error-handler';
+import ReviewsModal from '@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal';
 import ReviewsImage from '@/components/gallery/arts/(artsNo)/reviews/reviews-image';
 import ReviewsTitle from '@/components/gallery/arts/(artsNo)/reviews/reviews-title';
 import ReviewsTextarea from '@/components/gallery/arts/(artsNo)/reviews/textarea/reviews-textarea';
 import ReviewsTextareaActions from '@/components/gallery/arts/(artsNo)/reviews/textarea/reviews-textarea-actions';
 import UploadedReviews from '@/components/gallery/arts/(artsNo)/reviews/uploaded-reviews';
-import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/auth';
 import { ArtReviewsPagination } from '@/types';
 import type { ArtReview } from '@/types/gallery/review';
-import {
-  ChangeEvent,
-  lazy,
-  Suspense,
-  useCallback,
-  useRef,
-  useState,
-} from 'react';
+import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 type ReviewsProps = {
@@ -31,10 +24,6 @@ type PreviewImage = {
   fileNo: number;
 };
 
-const ReviewsModal = lazy(
-  () => import('@/components/gallery/arts/(artsNo)/reviews/modal/reviews-modal')
-);
-
 export default function Reviews({
   artName,
   artsNo,
@@ -44,12 +33,11 @@ export default function Reviews({
 
   const { userNo } = useAuthStore();
 
-  const [page, setPage] = useState(1);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [comment, setComment] = useState('');
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isImageUploadLoading, setIsImageUploadLoading] = useState(false);
-  const [previewImage, setPreviewImage] = useState<PreviewImage | null>(null);
+  const [previewImages, setPreviewImages] = useState<PreviewImage[]>([]);
   const [reviews, setReviews] = useState<ArtReviewsPagination<ArtReview>>(
     initialReviews ?? {
       content: [],
@@ -63,24 +51,15 @@ export default function Reviews({
 
   const fetchReviews = useCallback(async () => {
     try {
-      const response = await getReviews({
-        artsNo: Number(artsNo),
-        page,
-      });
+      const reviews = await getReviews(Number(artsNo));
 
-      setReviews((prev) => ({
-        ...prev,
-        content: [...prev.content, ...response.content],
-        isLast: response.isLast,
-      }));
-
-      setPage(response.page + 1);
+      setReviews(reviews);
     } catch (error) {
       const errorMessage = handleApiError(error);
 
       toast.error(errorMessage);
     }
-  }, [artsNo, page]);
+  }, [artsNo]);
 
   const handlePostReview = async () => {
     if (!comment.trim()) return toast.error('댓글을 입력해주세요.');
@@ -88,13 +67,13 @@ export default function Reviews({
     try {
       setIsSubmitLoading(true);
       setComment('');
-      setPreviewImage(null);
+      setPreviewImages([]);
 
       const response = await postReview({
         userNo: Number(userNo),
         artsNo: Number(artsNo),
         reviewText: comment,
-        filesNo: previewImage ? [previewImage.fileNo] : [],
+        filesNo: previewImages.map((previewImage) => previewImage.fileNo),
       });
 
       setReviews((prev) => {
@@ -118,10 +97,14 @@ export default function Reviews({
     const files = e.target.files;
 
     if (files && files.length > 0) {
+      if (previewImages.length + files.length > 5) {
+        toast.error('이미지는 최대 5장까지 첨부 가능합니다.');
+        return;
+      }
+
       try {
         setIsImageUploadLoading(true);
         const fileArray = Array.from(files);
-
         const response = await postFile(fileArray);
 
         const newImages = response.map((file) => ({
@@ -129,7 +112,7 @@ export default function Reviews({
           fileNo: file.filesNo,
         }));
 
-        setPreviewImage(newImages[0]);
+        setPreviewImages((prev) => [...prev, ...newImages]);
       } catch (error) {
         toast.error(handleApiError(error));
       } finally {
@@ -141,20 +124,23 @@ export default function Reviews({
     }
   };
 
-  const handleRemoveImage = () => {
-    setPreviewImage(null);
+  const handleRemoveImage = (imageIndex: number) => {
+    setPreviewImages((prev) =>
+      prev.filter((_, previewImageIndex) => previewImageIndex !== imageIndex)
+    );
 
     if (imageInputRef.current) imageInputRef.current.value = '';
   };
 
   return (
-    <div className='flex w-full flex-col items-start gap-4'>
+    <div className='flex w-full flex-col items-start gap-[10px]'>
       {/* 미술관 미술치료 + 리뷰 개수 */}
       <ReviewsTitle commentsLength={reviews?.content.length || 0} />
 
       {/* 리뷰 작성 */}
-      <div className='flex flex-col w-full border border-bg-gray-d p-2 gap-5 md:pb-6 rounded-[5px]'>
-        <div className='flex flex-col gap-4'>
+      <div className='flex flex-col w-full border border-bg-gray-d p-[10px] gap-[20px] md:pb-[22px] rounded-sm'>
+        <div className='flex gap-[10px]'>
+          {/* 리뷰 텍스트 편집기 */}
           <ReviewsTextarea
             comment={comment}
             imageInputRef={imageInputRef}
@@ -162,15 +148,15 @@ export default function Reviews({
             handleImageChange={handleImageChange}
             handlePostReview={handlePostReview}
           />
-
-          {/* 리뷰 이미지 */}
-          <ReviewsImage
-            previewImage={previewImage}
-            handleRemoveImage={handleRemoveImage}
-            handleAddImage={() => imageInputRef.current?.click()}
-            isLoading={isImageUploadLoading}
-          />
         </div>
+
+        {/* 리뷰 이미지 */}
+        <ReviewsImage
+          previewImages={previewImages}
+          handleRemoveImage={handleRemoveImage}
+          handleAddImage={() => imageInputRef.current?.click()}
+          isLoading={isImageUploadLoading}
+        />
 
         {/* 리뷰 텍스트 하단 버튼 (수정, 삭제, 닫기) */}
         <ReviewsTextareaActions
@@ -190,23 +176,15 @@ export default function Reviews({
 
       {/* 모달 */}
       {isDialogOpen && (
-        <Suspense fallback={null}>
-          <ReviewsModal
-            artsNo={Number(artsNo)}
-            artName={artName}
-            isDialogOpen={isDialogOpen}
-            setIsDialogOpen={setIsDialogOpen}
-            selectedReview={selectedReview}
-            setSelectedReview={setSelectedReview}
-            setReviews={setReviews}
-          />
-        </Suspense>
-      )}
-
-      {!reviews.isLast && (
-        <Button className='w-full mt-12' onClick={fetchReviews}>
-          더보기
-        </Button>
+        <ReviewsModal
+          artsNo={Number(artsNo)}
+          artName={artName}
+          isDialogOpen={isDialogOpen}
+          setIsDialogOpen={setIsDialogOpen}
+          selectedReview={selectedReview}
+          setSelectedReview={setSelectedReview}
+          fetchReviews={fetchReviews}
+        />
       )}
     </div>
   );

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Paperclip } from 'lucide-react';
 import { formatTimeStamp } from '@/lib/utils';
-// import { Notice } from '@/types';
 import { GetNoticesResponse } from '@/types/notice/notice';
 import NoticeNoData from '../notice-noresult/notice-no-data';
 
@@ -11,11 +10,9 @@ type NoticeTableProps = {
 
 export default function NoticeTable({ data }: NoticeTableProps) {
   const navigate = useNavigate();
-  console.log(data);
-
-if (!data || !Array.isArray(data.content) || data.content.length === 0) {
-  return <NoticeNoData />;
-}
+  if (!data || !Array.isArray(data.content) || data.content.length === 0) {
+    return <NoticeNoData />;
+  }
 
   const getType = (category: string) => {
     if (category === 'GENERAL') {

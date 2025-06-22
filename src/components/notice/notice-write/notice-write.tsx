@@ -18,6 +18,15 @@ import { toast } from 'sonner';
 import NoticeNav from '../notice-nav.tsx/notice-nav';
 import { Button } from '@/components/ui/button';
 import TitleAndCategoryInput from './editor-tools/title-category-input';
+import ToolbarUpload from './toolbar-tools/toolbar-upload';
+
+type NoticeFile = {
+  filesNo?: number;
+  name: string;
+  url: string;
+  file?: File;
+  isNew?: boolean;
+};
 
 export default function NoticeWrite() {
   const navigate = useNavigate();
@@ -27,6 +36,9 @@ export default function NoticeWrite() {
   const [isFixed, setIsFixed] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category') ?? '일반';
+
+  // 파일 상태 추가
+  const [uploadedFiles, setUploadedFiles] = useState<NoticeFile[]>([]);
 
   const editor = useEditor({
     extensions: [
@@ -40,7 +52,6 @@ export default function NoticeWrite() {
     content: '<p style="text-align:left;">여기에 내용을 입력하세요</p>',
   });
 
-  // 카테고리를 영어로 변환하는 함수
   const getEnCategory = (category: string) => {
     switch (category) {
       case '일반':
@@ -67,25 +78,32 @@ export default function NoticeWrite() {
     });
   };
 
-  const handleButtonClick = async () => {
+  // **여기서 handleSubmit 함수 정의**
+  const handleSubmit = async () => {
     try {
-      if (editor) {
-        // 게시물 등록 API 호출
-        await postNotice({
-          title,
-          category: getEnCategory(selectedCategory),
-          periodStart: startDate,
-          periodEnd: endDate,
-          content: editor.getHTML(),
-          filesNo: [],
-          isFixed,
-        });
-
-        // 성공 시 notice-list 페이지로 리디렉션
-        navigate('/notice');
+      if (!editor) {
+        toast.error('에디터가 준비되지 않았습니다.');
+        return;
       }
+
+      // 업로드된 파일들의 filesNo 배열 추출
+      const filesNo = uploadedFiles
+        .map((file) => file.filesNo)
+        .filter((id): id is number => typeof id === 'number');
+
+      await postNotice({
+        title,
+        category: getEnCategory(selectedCategory),
+        periodStart: startDate,
+        periodEnd: endDate,
+        content: editor.getHTML(),
+        filesNo,
+        isFixed,
+      });
+
+      toast.success('게시글이 성공적으로 등록되었습니다.');
+      navigate('/notice');
     } catch (error) {
-      // 에러 처리 및 토스트 메시지 띄우기
       toast.error(handleApiError(error));
     }
   };
@@ -99,28 +117,37 @@ export default function NoticeWrite() {
           </div>
           <strong className='p-2 ext-gray-6 t-b-24'>게시물 작성</strong>
         </div>
+
         <IsFixedCheckbox isFixed={isFixed} setIsFixed={setIsFixed} />
+
         <div className='flex flex-col md:flex-row gap-4 mb-4 overflow-x-auto'>
           <TitleAndCategoryInput
-          title={title}
-          setTitle={setTitle}
-          selectedCategory={selectedCategory}
-          handleCategoryChange={handleCategoryChange}/>
+            title={title}
+            setTitle={setTitle}
+            selectedCategory={selectedCategory}
+            handleCategoryChange={handleCategoryChange}
+          />
           <DateInput
-          startDate={startDate}
-          setStartDate={setStartDate}
-          endDate={endDate}
-          setEndDate={setEndDate}/>
-  
-          </div>
-        <EditorSection editor={editor} />
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+          />
+        </div>
 
+        <EditorSection editor={editor} />
+        <ToolbarUpload
+          editor={editor}
+          uploadedFiles={uploadedFiles}
+          setUploadedFiles={setUploadedFiles}
+        />
         <div className='flex justify-between mt-4 px-[8px]'>
           <NoticeNav />
+          {/* 버튼 클릭 시 handleSubmit 실행 */}
           <Button
             type='button'
             className='h-[30px] md:h-[40px] w-[80px] md:w-[120px]'
-            onClick={handleButtonClick}
+            onClick={handleSubmit} // 버튼 클릭 시 실행
           >
             작성완료
           </Button>

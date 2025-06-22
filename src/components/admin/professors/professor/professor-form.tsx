@@ -1,18 +1,13 @@
-import { postProfessor } from '@/apis/admin/professors';
-import { postProfessorTest } from '@/apis/admin/tester/professors';
-import { postFile } from '@/apis/common/file';
 import FormField from '@/components/admin/form-field';
-import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
-import { MAX_FILE_SIZE } from '@/constants/common/common';
-import { useAuthStore } from '@/store/auth';
+import { postFile } from '@/apis/common/file';
+import { postProfessor } from '@/apis/admin/professors';
 import { PostProfessorRequest } from '@/types/admin/professors';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { handleApiError } from '@/components/common/error-handler';
 
 export default function ProfessorForm() {
-  const { role } = useAuthStore();
-
   const [form, setForm] = useState<PostProfessorRequest>({
     professorName: '',
     position: '',
@@ -35,7 +30,8 @@ export default function ProfessorForm() {
     const selected = e.target.files?.[0];
     if (!selected) return;
 
-    if (selected.size > MAX_FILE_SIZE) {
+    const maxSize = 5 * 1024 * 1024;
+    if (selected.size > maxSize) {
       toast.error('파일의 용량이 5MB를 초과하였습니다.');
       e.target.value = '';
       return;
@@ -83,14 +79,8 @@ export default function ProfessorForm() {
     }
 
     try {
-      let res;
-      if (role === 'TESTER') {
-        await postProfessorTest(form);
-      } else {
-        res = await postProfessor(form);
-      }
-
-      toast.success(res?.message);
+      const res = await postProfessor(form);
+      toast.success(res.message);
       setForm({
         professorName: '',
         position: '',
@@ -127,6 +117,7 @@ export default function ProfessorForm() {
                 src={previewUrl}
                 alt='preview'
                 className='w-full h-full object-cover'
+                onError={(e) => (e.currentTarget.src = '/images/no-image.jpg')}
               />
             ) : (
               <span className='t-r-14 text-gray-6'>NO IMAGE</span>
@@ -169,7 +160,7 @@ export default function ProfessorForm() {
           ))}
         </div>
       </div>
-      <Button type='submit' className='ml-auto'>
+      <Button type='submit' className='mx-auto'>
         교수진 등록
       </Button>
     </form>

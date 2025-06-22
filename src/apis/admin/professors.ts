@@ -1,10 +1,11 @@
 import apiInstance from '@/lib/axios';
-import { MessageResponse } from '@/types';
 import type {
+  ProfessorsResponse,
+  ProfessorResponse,
   PatchProfessorRequest,
   PostProfessorRequest,
-  ProfessorsResponse,
 } from '@/types/admin/professors';
+import { MessageResponse } from '@/types';
 
 export const getProfessors = async (): Promise<ProfessorsResponse[]> => {
   const res = await apiInstance.get('/admin/professors');
@@ -13,7 +14,7 @@ export const getProfessors = async (): Promise<ProfessorsResponse[]> => {
 
 export const getProfessor = async (
   professorNo: number
-): Promise<ProfessorsResponse> => {
+): Promise<ProfessorResponse> => {
   const res = await apiInstance.get(`/admin/professors/${professorNo}`);
   return res.data;
 };
