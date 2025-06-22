@@ -35,8 +35,6 @@ export default function NoticeWrite() {
   const [isFixed, setIsFixed] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category') ?? '일반';
-
-  // 파일 상태 추가
   const [uploadedFiles, setUploadedFiles] = useState<NoticeFile[]>([]);
 
   const editor = useEditor({
@@ -77,15 +75,12 @@ export default function NoticeWrite() {
     });
   };
 
-  // **여기서 handleSubmit 함수 정의**
   const handleSubmit = async () => {
     try {
       if (!editor) {
         toast.error('에디터가 준비되지 않았습니다.');
         return;
       }
-
-      // 업로드된 파일들의 filesNo 배열 추출
       const filesNo = uploadedFiles
         .map((file) => file.filesNo)
         .filter((id): id is number => typeof id === 'number');
@@ -116,9 +111,7 @@ export default function NoticeWrite() {
           </div>
           <strong className='p-2 ext-gray-6 t-b-24'>게시물 작성</strong>
         </div>
-
         <IsFixedCheckbox isFixed={isFixed} setIsFixed={setIsFixed} />
-
         <div className='flex flex-col md:flex-row gap-4 mb-4 overflow-x-auto'>
           <TitleAndCategoryInput
             title={title}
@@ -133,7 +126,6 @@ export default function NoticeWrite() {
             setEndDate={setEndDate}
           />
         </div>
-
         <EditorSection editor={editor} />
         <ToolbarUpload
           editor={editor}
@@ -142,11 +134,10 @@ export default function NoticeWrite() {
         />
         <div className='flex justify-between mt-4 px-[8px]'>
           <NoticeNav />
-          {/* 버튼 클릭 시 handleSubmit 실행 */}
           <Button
             type='button'
             className='h-[30px] md:h-[40px] w-[80px] md:w-[120px]'
-            onClick={handleSubmit} // 버튼 클릭 시 실행
+            onClick={handleSubmit}
           >
             작성완료
           </Button>
