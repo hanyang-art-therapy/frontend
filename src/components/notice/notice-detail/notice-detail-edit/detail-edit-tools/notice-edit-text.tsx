@@ -1,5 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Editor, EditorContent } from '@tiptap/react';
+
 
 type NoticeFile = {
   name: string;
@@ -15,29 +17,23 @@ type NoticeData = {
   files?: NoticeFile[];
 };
 
-type Props = {
+
+type NoticeEditTextProps = {
   formData: NoticeData;
   setFormData: React.Dispatch<React.SetStateAction<NoticeData>>;
   loading: boolean;
+  editor: Editor | null;
 };
+
 
 export default function NoticeEditText({
   formData,
-  setFormData,
   loading,
-}: Props) {
+  editor,
+}: NoticeEditTextProps) {
   const { noticeNo } = useParams<{ noticeNo: string }>();
   const navigate = useNavigate();
   const isEdit = Boolean(noticeNo);
-
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
 
   const handleCancel = () => {
     navigate(isEdit ? `/notice/${noticeNo}` : '/notice');
@@ -46,15 +42,19 @@ export default function NoticeEditText({
   return (
     <div className='mt-2 t-r-16 leading-relaxed'>
       <div>
-        <textarea
-          name='content'
-          value={formData.content}
-          onChange={handleInputChange}
-          rows={12}
-          className='w-full h-[200px] px-4 resize-vertical'
-          placeholder='내용을 입력하세요'
-          required
-        />
+        {/* textarea 대신 TipTap EditorContent 사용 */}
+        <div className='w-full border border-gray-300 rounded-sm'>
+          <EditorContent 
+            editor={editor}
+            className='min-h-[200px] p-4 prose prose-sm max-w-none
+            [&_.ProseMirror]:outline-none 
+            [&_.ProseMirror]:min-h-[200px]
+            [&_.ProseMirror]:resize-y
+            [&_.ProseMirror]:overflow-auto
+            [&_.ProseMirror_p]:margin-0
+            [&_.ProseMirror_p]:padding-0'
+          />
+        </div>
       </div>
       {/* 버튼 */}
       <div className='flex gap-4 mt-4 justify-end items-end pb-[20px]'>
