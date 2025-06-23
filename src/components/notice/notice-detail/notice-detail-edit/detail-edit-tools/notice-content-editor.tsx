@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 
-interface NoticeContentEditorProps {
+type NoticeContentEditorProps = {
   content: string;
   loading: boolean;
   isEdit: boolean;

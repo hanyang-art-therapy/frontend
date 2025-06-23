@@ -154,7 +154,6 @@ export default function ArtistView({
       toast.error(handleApiError(error));
     }
   };
-  console.log(artistsList);
 
   return (
     <>

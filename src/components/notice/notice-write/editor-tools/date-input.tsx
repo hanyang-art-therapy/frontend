@@ -20,7 +20,7 @@ export default function DateInput({
           type='date'
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className='border border-gray-300 rounded px-3 py-2 min-w-[140px] md:w-[140px]'
+          className='border-2 border-bg-gray-d/60 rounded px-3 py-2 min-w-[140px] md:w-[140px]'
         />
       </div>
 
@@ -33,7 +33,7 @@ export default function DateInput({
           type='date'
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-          className='border border-gray-300 rounded px-3 py-2 w-auto md:w-[140px]'
+          className='border-2 border-bg-gray-d/60 rounded px-3 py-2 w-auto md:w-[140px]'
         />
       </div>
     </div>

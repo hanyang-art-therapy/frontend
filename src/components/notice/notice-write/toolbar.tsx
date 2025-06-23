@@ -9,7 +9,7 @@ export default function Toolbar({ editor }: ToolbarProps) {
   if (!editor) return null;
 
   return (
-    <div className='flex items-center justify-start p-[10px] border-b border-gray-300'>
+    <div className='flex items-center justify-start p-[10px] border-b-2 border-bg-gray-d/60'>
       <ToolbarHeading editor={editor} />
     </div>
   );

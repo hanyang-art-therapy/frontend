@@ -1,3 +1,4 @@
+
 import {
   Select,
   SelectContent,
@@ -6,29 +7,28 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { CATEGORY_LIST } from '@/constants/notice/notice-category';
-// import { useNavigate, useParams } from 'react-router-dom';
 
-interface NoticeFile {
+type NoticeFile = {
   name: string;
   url: string;
-}
+};
 
-interface NoticeData {
+type NoticeData = {
   title: string;
   category: string;
   content: string;
   periodStart: string;
   periodEnd: string;
   files?: NoticeFile[];
-}
+};
 
-interface Props {
+type Props = {
   formData: NoticeData;
   setFormData: React.Dispatch<React.SetStateAction<NoticeData>>;
   loading: boolean;
   selectedCategory: string;
   handleCategoryChange: (value: string) => void;
-}
+};
 
 export default function NoticeEditHeader({
   formData,
@@ -36,9 +36,6 @@ export default function NoticeEditHeader({
   selectedCategory,
   handleCategoryChange,
 }: Props) {
-  // const { noticeNo } = useParams<{ noticeNo: string }>();
-  // const navigate = useNavigate();
-  // const isEdit = Boolean(noticeNo);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -49,32 +46,27 @@ export default function NoticeEditHeader({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // const handleCancel = () => {
-  //   navigate(isEdit ? `/notice/${noticeNo}` : '/notice');
-  // };
-
   return (
     <div className='w-full md:h-[140px] xl:px-0 text-start'>
       <div className='flex flex-col gap-4 mt-2 t-r-16 px-[12px] md:px-[20px]'>
         {/* 제목 */}
         <div>
           <div className='w-[90%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
-          <input
-            type='text'
-            name='title'
-            value={formData.title}
-            onChange={handleInputChange}
-            className='w-full t-b-32 px-[10px]'
-            placeholder='제목을 입력하세요'
-            required
-          />
+        <input
+        type="text"
+        name="title"
+        value={formData.title}
+        onChange={handleInputChange}
+        className="max-w-[310px] t-b-32 px-[10px] 
+          overflow-hidden text-ellipsis whitespace-nowrap"
+        placeholder="제목을 입력하세요"
+        required
+        />
         </div>
 
         {/* 구분 && 기간 */}
-        <div className='flex flex-row flex-wrap gap-2 pt-r-14 md:gap-4 md:pb-[10px]'>
+        <div className='flex flex-row flex-wrap gap-2 pt-r-14 md:gap-4 pb-[10px] md:pb-[10px]'>
           {/* 구분 */}
-
-          {/* 기간 */}
           <div className='flex items-center gap-2 t-r-16'>
             <div className='flex flex-col md:flex-row items-center gap-2 md:gap-4'>
               <label className='t-b-16 whitespace-nowrap'>구분</label>
@@ -82,7 +74,7 @@ export default function NoticeEditHeader({
                 value={selectedCategory}
                 onValueChange={handleCategoryChange}
               >
-                <SelectTrigger className='border border-gray-300 rounded px-1 py-0 md:w-[140px]'>
+                <SelectTrigger className='border border-b-bg-gray-d rounded px-1 py-0 md:w-[140px]'>
                   <SelectValue placeholder='전체' />
                 </SelectTrigger>
                 <SelectContent>
@@ -105,7 +97,7 @@ export default function NoticeEditHeader({
                   name='periodStart'
                   value={formData.periodStart}
                   onChange={handleInputChange}
-                  className='border border-gray-300 rounded px-2 py-2 w-[122px] md:w-[140px]'
+                  className='border-2 border-bg-gray-d/60 rounded px-2 py-2 w-[122px] md:w-[140px]'
                 />
               </div>
             </div>
@@ -118,7 +110,7 @@ export default function NoticeEditHeader({
                 name='periodEnd'
                 value={formData.periodEnd}
                 onChange={handleInputChange}
-                className='border border-gray-300 rounded px-2 py-2 w-[122px] md:w-[140px]'
+                className='border-2 border-bg-gray-d/60 rounded px-2 py-2 w-[122px] md:w-[140px]'
               />
             </div>
           </div>

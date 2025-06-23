@@ -1,29 +1,127 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { getNotice, updateNotice } from '@/apis/notice/notice';
+import axios from 'axios';
 import { toast } from 'sonner';
+import { FilePenLine } from 'lucide-react';
+import { useEditor } from '@tiptap/react';
+import { Extension } from '@tiptap/core';
+import Color from '@tiptap/extension-color';
+import StarterKit from '@tiptap/starter-kit';
+import TextAlign from '@tiptap/extension-text-align';
+import TextStyle from '@tiptap/extension-text-style';
+import Underline from '@tiptap/extension-underline';
+import Highlight from '@tiptap/extension-highlight';
+import Link from '@tiptap/extension-link';
+import { NoticeCategory } from '@/types/notice/notice';
+import { getNotice, patchNotice } from '@/apis/notice/notice';
+import { Button } from '@/components/ui/button';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
 import NoticeUploadEditor from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-upload-editor';
 import NoticeEditHeader from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-header';
 import NoticeEditText from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-text';
-import axios from 'axios';
-import { FilePenLine } from 'lucide-react';
+import ToolbarHeading from '@/components/notice/notice-write/toolbar-tools/toolbar-heading'; // 실제 경로로 수정 필요
 
-interface NoticeFile {
+type NoticeFile = {
   name: string;
   url: string;
-}
+  filesNo?: number;
+  isNew?: boolean;
+};
 
-interface NoticeData {
+type NoticeData = {
   title: string;
   category: string;
   content: string;
   periodStart: string;
   periodEnd: string;
-  isFixed?: boolean; // 🔧 추가: 고정 여부
+  isFixed?: boolean;
   files?: NoticeFile[];
+};
+
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    fontSize: {
+      setFontSize: (fontSize: string) => ReturnType;
+      unsetFontSize: () => ReturnType;
+    };
+  }
 }
+
+const FontSize = Extension.create({
+  name: 'fontSize',
+
+  addOptions() {
+    return {
+      types: ['textStyle'],
+    };
+  },
+
+  addGlobalAttributes() {
+    return [
+      {
+        types: this.options.types,
+        attributes: {
+          fontSize: {
+            default: null,
+            parseHTML: (element) => element.style.fontSize || null,
+            renderHTML: (attributes) => {
+              if (!attributes.fontSize) {
+                return {};
+              }
+              return {
+                style: `font-size: ${attributes.fontSize}`,
+              };
+            },
+          },
+        },
+      },
+    ];
+  },
+
+  addCommands() {
+    return {
+      setFontSize:
+        (fontSize: string) =>
+        ({ chain }) => {
+          return chain().setMark('textStyle', { fontSize }).run();
+        },
+      unsetFontSize:
+        () =>
+        ({ chain }) => {
+          return chain()
+            .setMark('textStyle', { fontSize: null })
+            .removeEmptyTextStyle()
+            .run();
+        },
+    };
+  },
+});
+
+const getType = (category: string) => {
+  switch (category) {
+    case 'GENERAL':
+      return '일반';
+    case 'PRACTICE':
+      return '실습';
+    case 'RECRUIT':
+      return '모집';
+    case 'EXHIBITION':
+      return '전시';
+    case 'ACADEMIC':
+      return '학술';
+    default:
+      return '';
+  }
+};
+
+// 한글 → 영문
+const ENG_CATEGORY_MAP: Record<string, NoticeCategory> = {
+  일반: 'GENERAL',
+  실습: 'PRACTICE',
+  모집: 'RECRUIT',
+  전시: 'EXHIBITION',
+  학술: 'ACADEMIC',
+};
 
 export default function NoticeEditForm() {
   const { noticeNo } = useParams<{ noticeNo: string }>();
@@ -42,6 +140,102 @@ export default function NoticeEditForm() {
   const [dataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const isEdit = Boolean(noticeNo);
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      TextStyle,
+      FontSize,
+      Underline,
+      Color,
+      Highlight.configure({ multicolor: true }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: 'https',
+        protocols: ['http', 'https'],
+        isAllowedUri: (url, ctx) => {
+          try {
+            const parsedUrl = url.includes(':')
+              ? new URL(url)
+              : new URL(`${ctx.defaultProtocol}://${url}`);
+            if (!ctx.defaultValidate(parsedUrl.href)) {
+              return false;
+            }
+            const disallowedProtocols = ['ftp', 'file', 'mailto'];
+            const protocol = parsedUrl.protocol.replace(':', '');
+
+            if (disallowedProtocols.includes(protocol)) {
+              return false;
+            }
+            const allowedProtocols = ctx.protocols.map((p) =>
+              typeof p === 'string' ? p : p.scheme
+            );
+
+            if (!allowedProtocols.includes(protocol)) {
+              return false;
+            }
+            const disallowedDomains = [
+              'example-phishing.com',
+              'malicious-site.net',
+            ];
+            const domain = parsedUrl.hostname;
+
+            if (disallowedDomains.includes(domain)) {
+              return false;
+            }
+            return true;
+          } catch {
+            return false;
+          }
+        },
+        shouldAutoLink: (url) => {
+          try {
+            const parsedUrl = url.includes(':')
+              ? new URL(url)
+              : new URL(`https://${url}`);
+            const disallowedDomains = [
+              'example-no-autolink.com',
+              'another-no-autolink.com',
+            ];
+            const domain = parsedUrl.hostname;
+
+            return !disallowedDomains.includes(domain);
+          } catch {
+            return false;
+          }
+        },
+      }),
+    ],
+    content: formData.content || '<p>여기에 내용을 입력하세요</p>',
+  });
+
+  useEffect(() => {
+    if (editor && !editor.isDestroyed) {
+      const handleUpdate = () => {
+        const html = editor.getHTML();
+        setFormData((prev) => ({
+          ...prev,
+          content: html,
+        }));
+      };
+
+      editor.on('update', handleUpdate);
+      return () => {
+        editor.off('update', handleUpdate);
+      };
+    }
+  }, [editor]);
+
+  useEffect(() => {
+    if (
+      editor &&
+      !editor.isDestroyed &&
+      formData.content !== editor.getHTML()
+    ) {
+      editor.commands.setContent(formData.content);
+    }
+  }, [formData.content, editor]);
 
   useEffect(() => {
     if (isEdit && noticeNo) {
@@ -69,8 +263,7 @@ export default function NoticeEditForm() {
         isFixed: data.isFixed || false,
         files: data.files || [],
       });
-    } catch (err) {
-      console.error('Error fetching notice data:', err);
+    } catch {
       setError('서버 오류가 발생했습니다.');
       toast.error('서버 오류가 발생했습니다.');
     } finally {
@@ -78,41 +271,10 @@ export default function NoticeEditForm() {
     }
   };
 
-  // 🔧 수정: 파일 업로드 함수 - API 사용
-  // const handleFileUpload = async (files: File[]): Promise<NoticeFile[]> => {
-  //   try {
-  //     const formData = new FormData();
-  //     files.forEach((file) => {
-  //       formData.append('files', file); // 🔧 서버 API에 맞는 필드명 사용
-  //     });
-
-  //     const response = await uploadFiles(formData);
-
-  //     // 🔧 업로드된 파일 정보 반환
-  //     return files.map((Files, index) => ({
-  //       filesNo: response.filesNo[index], // 서버에서 받은 파일 번호
-  //       name: Files.name,
-  //       url: `${process.env.REACT_APP_API_URL}/files/${response.filesNo[index]}`, // 🔧 실제 파일 URL
-  //       Files,
-  //       isNew: true,
-  //     }));
-  //   } catch (error) {
-  //     console.error('File upload error:', error);
-  //     toast.error('파일 업로드에 실패했습니다.');
-  //     return [];
-  //   }
-  // };
-
-  // 폼 제출 처리
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.title.trim()) {
-      toast.error('제목과 내용, 카테고리 필수 입력 항목입니다.');
-      return;
-    }
-
-    if (!formData.content.trim()) {
+    if (!formData.title.trim() || !formData.content.trim()) {
       toast.error('제목과 내용, 카테고리 필수 입력 항목입니다.');
       return;
     }
@@ -121,33 +283,33 @@ export default function NoticeEditForm() {
 
     try {
       if (isEdit && noticeNo) {
-        // 수정 모드
-        await updateNotice({
-          noticeNo: parseInt(noticeNo),
-          ...formData,
-        });
-        toast.success('게시글 수정이 완료되었습니다.');
-      } else {
-        // 생성 모드
-        const createNotice = async (data: NoticeData) => {
-          const response = await axios.post('/api/notice', data);
-          return response.data;
-        };
+        const convertedCategory =
+          ENG_CATEGORY_MAP[getType(formData.category)] || formData.category;
 
-        const result = await createNotice(formData);
+        await patchNotice(parseInt(noticeNo), {
+          title: formData.title,
+          content: editor?.getHTML() || formData.content,
+          category: convertedCategory,
+          periodStart: formData.periodStart,
+          periodEnd: formData.periodEnd,
+          isFixed: formData.isFixed ?? false,
+          filesNo:
+            formData.files
+              ?.map((file) => file.filesNo!)
+              .filter((id): id is number => !!id) ?? null,
+        });
+
+        toast.success('게시글 수정이 완료되었습니다.');
+        navigate(`/notice/${noticeNo}`);
+      } else {
+        const result = await axios.post('/api/notice', formData);
         toast.success('게시글 등록이 완료되었습니다.');
-        // 새로 생성된 공지사항의 번호로 이동
-        navigate(`/notice/${result.noticeNo}`);
+        navigate(`/notice/${result.data.noticeNo}`);
         return;
       }
-
-      // 수정 완료 후 상세 페이지로 이동
-      navigate(`/notice/${noticeNo}`);
     } catch (err) {
       console.error('Submit error:', err);
-      toast.error(
-        isEdit ? '서버 오류가 발생했습니다.' : '서버 오류가 발생했습니다.'
-      );
+      toast.error('서버 오류가 발생했습니다.');
     } finally {
       setLoading(false);
     }
@@ -169,7 +331,7 @@ export default function NoticeEditForm() {
     return (
       <div className='w-full h-full mt-[80px] md:mt-[120px]'>
         <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
-          <div className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start bg-[rgba(221,221,221,0.2)]'>
+          <div className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start bg-btn-dark-3/50'>
             <div className='flex flex-col gap-4 mt-2 t-r-16 px-[20px]'>
               <div className='text-lg text-bg-primary mb-4'>{error}</div>
               <Button
@@ -188,7 +350,7 @@ export default function NoticeEditForm() {
   return (
     <div className='w-full h-full mt-[80px] md:mt-[120px]'>
       <div className='w-full max-w-[1260px] mx-auto px-5'>
-        <div className='flex justify-start items-center pb-[20px] gap-2'>
+        <div className='flex justify-start items-center pb-[10px] md:pb-[20px] gap-2'>
           <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-btn-dark-3'>
             <FilePenLine size={40} strokeWidth={2} />
           </div>
@@ -203,27 +365,27 @@ export default function NoticeEditForm() {
           formData={formData}
           setFormData={setFormData}
           loading={false}
-          selectedCategory={''}
-          handleCategoryChange={() => {}}
+          selectedCategory={getType(formData.category)}
+          handleCategoryChange={(value: string) => {
+            const converted = ENG_CATEGORY_MAP[value] || value;
+            setFormData((prev) => ({
+              ...prev,
+              category: converted,
+            }));
+          }}
         />
-        {/* 본문 내용 */}
-        <div className='w-full h-auto py-[10px] mt-[10px]'>
+        <div className='w-full xl:px-0 mb-4'>
+          <ToolbarHeading editor={editor} />
+        </div>
+
+        <div className='w-full h-auto'>
           <NoticeEditText
-            formData={formData}
             setFormData={setFormData}
             loading={loading}
+            editor={editor}
           />
-
-          {/* 파일 */}
-          <NoticeUploadEditor
-            formData={formData}
-            setFormData={setFormData}
-            // onFileUpload={handleFileUpload} // 🔧 파일 업로드 함수 전달
-          />
-
-          {/* 이전글과 다음글 */}
+          <NoticeUploadEditor formData={formData} setFormData={setFormData} />
           <div className='w-full px-5 xl:px-0 py-6 border-t t-r-16 flex justify-center'></div>
-          {/* 이전글과 다음글 */}
           <div className='w-full px-5 xl:px-0 py-6 t-r-16 flex justify-center'>
             <NoticeNav noticeNo={noticeNo ?? ''} />
           </div>

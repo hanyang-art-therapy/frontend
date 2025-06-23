@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   Select,
   SelectContent,
@@ -7,7 +8,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Search from '@/components/ui/search';
-import { useSearchParams } from 'react-router-dom';
 import { CATEGORY_LIST } from '@/constants/notice/notice-category';
 
 const categoryList = CATEGORY_LIST;
@@ -36,7 +36,6 @@ export const NoticeSearch = () => {
   const handleCategoryChange = async (category: string) => {
     setSearchParams((prevSearchParams) => {
       const enCategory = getEgType(category);
-      console.log(prevSearchParams);
 
       if (category === 'all') prevSearchParams.delete('category');
       else prevSearchParams.set('category', enCategory);
@@ -47,8 +46,6 @@ export const NoticeSearch = () => {
 
   const [searchValue, setSearchValue] = useState('');
   const handleSearch = () => {
-    console.log('검색:', searchValue);
-    // 여기서 검색 결과 처리 로직 추가 가능
     if (searchValue) {
       setSearchParams((prev) => {
         prev.set('keyword', searchValue);
