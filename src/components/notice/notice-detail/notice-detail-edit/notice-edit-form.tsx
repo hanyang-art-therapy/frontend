@@ -143,7 +143,7 @@ export default function NoticeEditForm() {
       StarterKit,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       TextStyle,
-      FontSize, // 커스텀 FontSize 확장 추가
+      FontSize,
       Underline,
       Color,
       Highlight.configure({ multicolor: true }),
@@ -291,7 +291,7 @@ export default function NoticeEditForm() {
 
         await patchNotice(parseInt(noticeNo), {
           title: formData.title,
-          content: editor?.getHTML() || formData.content, // 에디터 내용 사용
+          content: editor?.getHTML() || formData.content,
           category: convertedCategory,
           periodStart: formData.periodStart,
           periodEnd: formData.periodEnd,
@@ -386,7 +386,6 @@ export default function NoticeEditForm() {
 
         <div className='w-full h-auto'>
           <NoticeEditText
-            formData={formData}
             setFormData={setFormData}
             loading={loading}
             editor={editor}

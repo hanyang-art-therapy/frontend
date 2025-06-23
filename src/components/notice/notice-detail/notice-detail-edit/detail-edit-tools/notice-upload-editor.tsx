@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { Paperclip, Image, Download, X } from 'lucide-react';
+import { Paperclip, Image, Download } from 'lucide-react';
 import { postFile } from '@/apis/common/file';
 
 type NoticeFile = {

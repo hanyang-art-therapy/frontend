@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/auth';
 import { toast } from 'sonner';
 import { Download, Volume2 } from 'lucide-react';
@@ -34,6 +34,8 @@ export default function NoticeDetail() {
   const navigate = useNavigate();
   const authStore = useAuthStore();
   const role = authStore.role || 'ADMIN';
+  const location = useLocation();
+  const totalCount = location.state?.totalCount as number | undefined;
 
   useEffect(() => {
     window.scrollTo({
@@ -127,8 +129,8 @@ export default function NoticeDetail() {
         {/* 본문 내용 */}
         <div className='w-full h-auto min-h-[300px] p-[20px] md:p-[30px] relative'>
           <div
-          className='mt-2 t-r-16 leading-relaxed prose prose-sm md:prose-base max-w-none'
-          dangerouslySetInnerHTML={{ __html: noticeContents.content }}
+            className='mt-2 t-r-16 leading-relaxed prose prose-sm md:prose-base max-w-none'
+            dangerouslySetInnerHTML={{ __html: noticeContents.content }}
           />
           {role === 'ADMIN' && (
             <div className='flex gap-4 mt-4 justify-end items-end absolute bottom-4 right-4'>
@@ -179,7 +181,9 @@ export default function NoticeDetail() {
         </div>
         {/* 이전글과 다음글 */}
         <div className='w-full px-5 xl:px-0 py-6 border-t t-r-16 flex justify-center'>
-          <NoticeNav noticeNo={noticeNo ?? ''} />
+          {noticeContents && (
+            <NoticeNav noticeNo={noticeNo ?? ''} totalCount={totalCount} />
+          )}
         </div>
       </div>
     </div>
