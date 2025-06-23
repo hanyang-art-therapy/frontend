@@ -160,60 +160,76 @@ export default function ToolbarUpload({
         onChange={handleFileInput}
         disabled={uploading}
       />
+      <div className='w-full h-auto min-h-[70px] md:px-5 py-4 md:py-6 border-t flex flex-col gap-2 bg-btn-gray-fa'>
+        <div className='px-6 flex flex-col gap-4'>
+          <div className='flex gap-2 items-center'>
+            <span className='t-r-16s text-btn-dark-3 mr-4'>파일 첨부:</span>
+            <input
+              type='file'
+              id='fileUpload'
+              hidden
+              multiple
+              ref={fileInputRef}
+              onChange={handleFileInput}
+              disabled={uploading}
+            />
+            <ToolbarButton
+              icon={Paperclip}
+              onClick={triggerFileUpload}
+              className={buttonShadowClass}
+              disabled={uploading}
+            />
+            <ToolbarButton
+              icon={Image}
+              onClick={triggerFileUpload}
+              className={buttonShadowClassHidden}
+              disabled={uploading}
+            />
+            {uploading && (
+              <span className='t-r-16 text-bg-secondary'>업로드 중...</span>
+            )}
+          </div>
 
-      <div className='flex gap-2 items-center'>
-        <ToolbarButton
-          icon={Paperclip}
-          onClick={triggerFileUpload}
-          className={buttonShadowClass}
-          disabled={uploading}
-        />
-        <ToolbarButton
-          icon={Image}
-          onClick={triggerFileUpload}
-          className={buttonShadowClassHidden}
-          disabled={uploading}
-        />
-        {uploading && (
-          <span className='text-sm text-bg-secondary'>업로드 중...</span>
-        )}
-      </div>
-
-      {actualUploadedFiles && actualUploadedFiles.length > 0 && (
-        <div className='mt-4 p-4 border border-b-bg-gray-d rounded-lg bg-bg-gray-fa'>
-          <p className='text-sm text-btn-dark-3 mb-2 font-medium'>
-            첨부된 파일 ({actualUploadedFiles.length}개):
-          </p>
-          <div className='space-y-2'>
-            {actualUploadedFiles.map((file, index) => (
-              <div
-                key={index}
-                className='flex items-center justify-between group bg-white p-2 rounded border'
-              >
-                <div className='flex items-center gap-2'>
-                  <div className='bg-bg-secondary w-[20px] h-[20px] rounded-sm flex justify-center items-center'>
-                    <Download size={14} color='white' strokeWidth={2} />
-                  </div>
-                  <span className='bg-bg-secondary t-r-16'>{file.name}</span>
-                  {file.isNew && (
-                    <span className='text-xs bg-bg-gray-fa text-btn-dark-3 px-2 py-1 rounded'>
-                      새 파일
-                    </span>
-                  )}
-                </div>
-                <button
-                  type='button'
-                  onClick={() => removeFile(index)}
-                  className='text-bg-primary/50 hover:text-bg-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity'
+          <div className='flex flex-col gap-2 t-r-16'>
+            {!actualUploadedFiles || actualUploadedFiles.length === 0 ? (
+              <div>첨부된 파일이 없습니다.</div>
+            ) : (
+              actualUploadedFiles.map((file, index) => (
+                <div
+                  key={index}
+                  className='flex items-center justify-between group'
                 >
-                  삭제
-                </button>
-              </div>
-            ))}
+                  <div className='flex items-center gap-2 cursor-pointer w-max border-b border-transparent hover:border-b hover:border-gray-400'>
+                    <div className='bg-bg-secondary w-[20px] h-[20px] md:w-[22px] md:h-[22px] rounded-sm flex justify-center items-center'>
+                      <Download size={16} color='white' strokeWidth={2} />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-bg-secondary'>{file.name}</span>
+                      {file.isNew && (
+                        <span className='text-xs bg-bg-secondary/40 text-btn-dark-3 px-2 py-1 rounded'>
+                          새 파일
+                        </span>
+                      )}
+                      {file.filesNo && (
+                        <span className='text-xs bg-bg-gray-fa text-btn-dark-3 px-2 py-1 rounded'>
+                          ID: {file.filesNo}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    type='button'
+                    onClick={() => removeFile(index)}
+                    className='text-bg-primary/60 hover:text-bg-primary font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
+                  >
+                    삭제
+                  </button>
+                </div>
+              ))
+            )}
           </div>
         </div>
-      )}
-
+      </div>
       {showPreview && previewFiles.length > 0 && (
         <div className='fixed inset-0 bg-btn-dark-3 bg-opacity-50 flex items-center justify-center z-50'>
           <div className='bg-white p-6 rounded-lg max-w-4xl max-h-[80vh] overflow-y-auto relative'>

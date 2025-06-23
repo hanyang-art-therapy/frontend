@@ -122,15 +122,10 @@ export default function NoticeDetail() {
 
         {/* 본문 내용 */}
         <div className='w-full h-auto min-h-[300px] p-[20px] md:p-[30px] relative'>
-          <div className='mt-2 t-r-16 leading-relaxed'>
-            {noticeContents.content.split('\n').map((line, idx) => (
-              <p key={idx} className='mb-4'>
-                {line}
-              </p>
-            ))}
-          </div>
-
-          {/* 수정/삭제 버튼 (관리자일 경우만 표시) */}
+          <div
+          className='mt-2 t-r-16 leading-relaxed prose prose-sm md:prose-base max-w-none'
+          dangerouslySetInnerHTML={{ __html: noticeContents.content }}
+          />
           {role === 'ADMIN' && (
             <div className='flex gap-4 mt-4 justify-end items-end absolute bottom-4 right-4'>
               <Button

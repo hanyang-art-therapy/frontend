@@ -3,6 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { FilePenLine } from 'lucide-react';
+import { useEditor } from '@tiptap/react';
+import { Extension } from '@tiptap/core';
+import Color from '@tiptap/extension-color';
+import StarterKit from '@tiptap/starter-kit';
+import TextAlign from '@tiptap/extension-text-align';
+import TextStyle from '@tiptap/extension-text-style';
+import Underline from '@tiptap/extension-underline';
+import Highlight from '@tiptap/extension-highlight';
 import { NoticeCategory } from '@/types/notice/notice';
 import { getNotice, patchNotice } from '@/apis/notice/notice';
 import { Button } from '@/components/ui/button';
@@ -10,6 +18,7 @@ import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
 import NoticeUploadEditor from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-upload-editor';
 import NoticeEditHeader from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-header';
 import NoticeEditText from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-text';
+import ToolbarHeading from '@/components/notice/notice-write/toolbar-tools/toolbar-heading'; // 실제 경로로 수정 필요
 
 type NoticeFile = {
   name: string;
@@ -27,6 +36,65 @@ type NoticeData = {
   isFixed?: boolean;
   files?: NoticeFile[];
 };
+
+
+// 커스텀 FontSize 확장 추가 (ToolbarHeading에서 사용)
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    fontSize: {
+      setFontSize: (fontSize: string) => ReturnType;
+      unsetFontSize: () => ReturnType;
+    };
+  }
+}
+
+const FontSize = Extension.create({
+  name: 'fontSize',
+  
+  addOptions() {
+    return {
+      types: ['textStyle'],
+    };
+  },
+
+  addGlobalAttributes() {
+    return [
+      {
+        types: this.options.types,
+        attributes: {
+          fontSize: {
+            default: null,
+            parseHTML: element => element.style.fontSize || null,
+            renderHTML: attributes => {
+              if (!attributes.fontSize) {
+                return {};
+              }
+              return {
+                style: `font-size: ${attributes.fontSize}`,
+              };
+            },
+          },
+        },
+      },
+    ];
+  },
+
+  addCommands() {
+    return {
+      setFontSize: (fontSize: string) => ({ chain }) => {
+        return chain()
+          .setMark('textStyle', { fontSize })
+          .run();
+      },
+      unsetFontSize: () => ({ chain }) => {
+        return chain()
+          .setMark('textStyle', { fontSize: null })
+          .removeEmptyTextStyle()
+          .run();
+      },
+    };
+  },
+});
 
 const getType = (category: string) => {
   switch (category) {
@@ -72,6 +140,45 @@ export default function NoticeEditForm() {
   const [error, setError] = useState<string | null>(null);
   const isEdit = Boolean(noticeNo);
 
+  // 에디터 설정 - ToolbarHeading에서 사용할 수 있도록 추가
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      TextStyle,
+      FontSize, // 커스텀 FontSize 확장 추가
+      Underline,
+      Color,
+      Highlight.configure({ multicolor: true }),
+    ],
+    content: formData.content || '<p>여기에 내용을 입력하세요</p>',
+  });
+
+  // 에디터 내용이 변경될 때 formData 업데이트
+  useEffect(() => {
+    if (editor && !editor.isDestroyed) {
+      const handleUpdate = () => {
+        const html = editor.getHTML();
+        setFormData(prev => ({
+          ...prev,
+          content: html
+        }));
+      };
+      
+      editor.on('update', handleUpdate);
+      return () => {
+        editor.off('update', handleUpdate);
+      };
+    }
+  }, [editor]);
+
+  // formData.content가 변경될 때 에디터 내용 업데이트
+  useEffect(() => {
+    if (editor && !editor.isDestroyed && formData.content !== editor.getHTML()) {
+      editor.commands.setContent(formData.content);
+    }
+  }, [formData.content, editor]);
+
   useEffect(() => {
     if (isEdit && noticeNo) {
       fetchNoticeData(noticeNo);
@@ -98,7 +205,7 @@ export default function NoticeEditForm() {
         isFixed: data.isFixed || false,
         files: data.files || [],
       });
-    } catch (err) {
+    } catch {
       setError('서버 오류가 발생했습니다.');
       toast.error('서버 오류가 발생했습니다.');
     } finally {
@@ -123,7 +230,7 @@ export default function NoticeEditForm() {
 
         await patchNotice(parseInt(noticeNo), {
           title: formData.title,
-          content: formData.content,
+          content: editor?.getHTML() || formData.content, // 에디터 내용 사용
           category: convertedCategory,
           periodStart: formData.periodStart,
           periodEnd: formData.periodEnd,
@@ -139,7 +246,7 @@ export default function NoticeEditForm() {
       } else {
         const result = await axios.post('/api/notice', formData);
         toast.success('게시글 등록이 완료되었습니다.');
-        navigate(`/notice/${result.noticeNo}`);
+        navigate(`/notice/${result.data.noticeNo}`);
         return;
       }
     } catch (err) {
@@ -209,16 +316,20 @@ export default function NoticeEditForm() {
             }));
           }}
         />
+        
+        {/* ToolbarHeading 추가 */}
+        <div className='w-full px-5 xl:px-0 mb-4'>
+          <ToolbarHeading editor={editor} />
+        </div>
 
         <div className='w-full h-auto py-[10px] mt-[10px]'>
           <NoticeEditText
             formData={formData}
             setFormData={setFormData}
             loading={loading}
+            editor={editor} 
           />
-
           <NoticeUploadEditor formData={formData} setFormData={setFormData} />
-
           <div className='w-full px-5 xl:px-0 py-6 border-t t-r-16 flex justify-center'></div>
           <div className='w-full px-5 xl:px-0 py-6 t-r-16 flex justify-center'>
             <NoticeNav noticeNo={noticeNo ?? ''} />

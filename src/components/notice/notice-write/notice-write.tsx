@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { postNotice } from '@/apis/notice/notice';
 import { NotepadText } from 'lucide-react';
 import { useEditor } from '@tiptap/react';
+import { Extension } from '@tiptap/core';
 import Color from '@tiptap/extension-color';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
@@ -27,6 +28,64 @@ type NoticeFile = {
   isNew?: boolean;
 };
 
+// 커스텀 FontSize 확장 추가
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    fontSize: {
+      setFontSize: (fontSize: string) => ReturnType;
+      unsetFontSize: () => ReturnType;
+    };
+  }
+}
+
+const FontSize = Extension.create({
+  name: 'fontSize',
+  
+  addOptions() {
+    return {
+      types: ['textStyle'],
+    };
+  },
+
+  addGlobalAttributes() {
+    return [
+      {
+        types: this.options.types,
+        attributes: {
+          fontSize: {
+            default: null,
+            parseHTML: element => element.style.fontSize || null,
+            renderHTML: attributes => {
+              if (!attributes.fontSize) {
+                return {};
+              }
+              return {
+                style: `font-size: ${attributes.fontSize}`,
+              };
+            },
+          },
+        },
+      },
+    ];
+  },
+
+  addCommands() {
+    return {
+      setFontSize: (fontSize: string) => ({ chain }) => {
+        return chain()
+          .setMark('textStyle', { fontSize })
+          .run();
+      },
+      unsetFontSize: () => ({ chain }) => {
+        return chain()
+          .setMark('textStyle', { fontSize: null })
+          .removeEmptyTextStyle()
+          .run();
+      },
+    };
+  },
+});
+
 export default function NoticeWrite() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
@@ -37,11 +96,13 @@ export default function NoticeWrite() {
   const selectedCategory = searchParams.get('category') ?? '일반';
   const [uploadedFiles, setUploadedFiles] = useState<NoticeFile[]>([]);
 
+  // 에디터 설정에 FontSize 확장 추가
   const editor = useEditor({
     extensions: [
       StarterKit,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       TextStyle,
+      FontSize, // 커스텀 FontSize 확장 추가
       Underline,
       Color,
       Highlight.configure({ multicolor: true }),
