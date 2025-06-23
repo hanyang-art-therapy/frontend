@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+
 import {
   Select,
   SelectContent,
@@ -36,9 +36,6 @@ export default function NoticeEditHeader({
   selectedCategory,
   handleCategoryChange,
 }: Props) {
-  const { noticeNo } = useParams<{ noticeNo: string }>();
-  const navigate = useNavigate();
-  const isEdit = Boolean(noticeNo);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -47,10 +44,6 @@ export default function NoticeEditHeader({
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleCancel = () => {
-    navigate(isEdit ? `/notice/${noticeNo}` : '/notice');
   };
 
   return (

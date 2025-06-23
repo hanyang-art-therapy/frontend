@@ -29,7 +29,6 @@ type NoticeFile = {
   isNew?: boolean;
 };
 
-// 커스텀 FontSize 확장 추가
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     fontSize: {
@@ -41,7 +40,6 @@ declare module '@tiptap/core' {
 
 const FontSize = Extension.create({
   name: 'fontSize',
-  
   addOptions() {
     return {
       types: ['textStyle'],
@@ -96,8 +94,6 @@ export default function NoticeWrite() {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category') ?? '일반';
   const [uploadedFiles, setUploadedFiles] = useState<NoticeFile[]>([]);
-
-// NoticeWrite 컴포넌트에서 에디터 설정 부분을 다음과 같이 수정하세요:
 
 const editor = useEditor({
   extensions: [
@@ -220,12 +216,10 @@ const editor = useEditor({
     return null
   }
 
-  
-
   return (
-    <div className='h-full w-full max-w-[1260px] pt-[100px] px-5 xl:px-0 mx-auto text-center'>
+    <div className='h-full w-full max-w-[1260px] pt-[80px] px-1 md:px-5 xl:px-0 mx-auto text-center'>
       <div className='w-full text-center'>
-        <div className='flex justify-start items-center gap-1 w-full pb-[12px] md:pb-[18px]'>
+        <div className='flex justify-start items-center gap-1 w-full px-2 md:px-0 pb-[12px] md:pb-[18px]'>
           <div className='p-2 rounded-[5px] text-white bg-secondary'>
             <NotepadText size={32} strokeWidth={2} />
           </div>
