@@ -1,5 +1,6 @@
 import { Editor } from '@tiptap/react';
 import { useState, useEffect } from 'react';
+import { Link, Link2Off } from 'lucide-react';
 import {
   AArrowDown,
   AArrowUp,
@@ -14,6 +15,7 @@ import {
   Baseline,
   Highlighter,
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 type ToolbarProps = {
   editor: Editor | null;
@@ -141,8 +143,111 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
     editor.chain().focus().toggleHighlight({ color }).run();
   };
 
+  const setLink = () => {
+    if (!editor) {
+      console.error('Editor is not available');
+      return;
+    }
+
+    if (!editor.isEditable) {
+      console.error('Editor is not ready');
+      toast.error('에디터가 아직 준비되지 않았습니다. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+
+    // 디버깅: 모든 확장 확인
+    console.log('All extensions:', editor.extensionManager.extensions.map(ext => ext.name));
+    console.log('Available commands:', Object.keys(editor.commands));
+
+    // Link 확장이 로드되었는지 확인하는 더 간단한 방법
+    const hasLinkExtension = editor.extensionManager.extensions.some(ext => ext.name === 'link');
+    console.log('Has link extension:', hasLinkExtension);
+    
+    // 명령어로도 확인
+    const hasSetLinkCommand = 'setLink' in editor.commands;
+    console.log('Has setLink command:', hasSetLinkCommand);
+    
+    if (!hasLinkExtension || !hasSetLinkCommand) {
+      console.error('Link extension or command is not available');
+      toast.error('링크 기능을 사용할 수 없습니다. 확장이 로드되지 않았습니다.');
+      return;
+    }
+
+    // 현재 선택된 텍스트 확인
+    const { from, to } = editor.state.selection;
+    const selectedText = editor.state.doc.textBetween(from, to);
+    
+    console.log('Selected text:', selectedText);
+    
+    // 텍스트가 선택되지 않았다면 사용자에게 알림
+    if (!selectedText) {
+      toast.error('링크를 적용할 텍스트를 먼저 선택해주세요.');
+      return;
+    }
+    
+    const previousUrl = editor.getAttributes('link').href;
+    const url = window.prompt('링크 주소를 입력하세요:', previousUrl || '');
+
+    // 취소된 경우
+    if (url === null) {
+      return;
+    }
+
+    // 빈 문자열인 경우 링크 제거
+    if (url === '') {
+      try {
+        editor.chain().focus().unsetLink().run();
+        toast.success('링크가 제거되었습니다.');
+      } catch (error) {
+        console.error('Error removing link:', error);
+        toast.error('링크 제거 중 오류가 발생했습니다.');
+      }
+      return;
+    }
+
+    // URL 유효성 검사 및 링크 설정
+    let validUrl = url.trim();
+    if (!validUrl.startsWith('http://') && !validUrl.startsWith('https://') && !validUrl.startsWith('mailto:')) {
+      validUrl = 'https://' + validUrl;
+    }
+
+    console.log('Setting link:', validUrl);
+    
+    try {
+      // 링크 설정 - 더 간단한 방법 사용
+      editor
+        .chain()
+        .focus()
+        .setLink({ href: validUrl })
+        .run();
+        
+      toast.success('링크가 설정되었습니다.');
+        
+      // 설정 후 확인
+      setTimeout(() => {
+        const linkAttrs = editor.getAttributes('link');
+        console.log('Link attributes after setting:', linkAttrs);
+      }, 100);
+    } catch (error) {
+      console.error('Error setting link:', error);
+      toast.error('링크 설정 중 오류가 발생했습니다.');
+    }
+  };
+
+  const removeLink = () => {
+    if (!editor) return;
+    
+    try {
+      editor.chain().focus().unsetLink().run();
+      toast.success('링크가 제거되었습니다.');
+    } catch (error) {
+      console.error('Error removing link:', error);
+      toast.error('링크 제거 중 오류가 발생했습니다.');
+    }
+  };
+
   return (
-    <div className='w-full md:border-1 md:rounded-sm md:border-gray-300'>
+    <div className='w-full md:border-1 md:rounded-sm md:border-b-2 border-bg-gray-d/60'>
       <div className='flex flex-col md:flex-row md:items-center justify-center md:justify-start md:p-[10px] gap-2 md:gap-0'>
         {/* 글씨 크기 */}
         <div className='flex justify-center items-center gap-[10px]'>
@@ -163,6 +268,40 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
             disabled={currentFontSize >= fontSizes[fontSizes.length - 1]}
           />
           <Divider />
+          <ToolbarButton
+            icon={() => (
+              <div className="w-[26px] h-[26px] bg-[#da0016] border border-gray-300" />
+            )}
+            className={buttonShadowClass}
+            onClick={() => editor.chain().focus().setColor('red').run()}
+          />
+          <ToolbarButton
+            icon={() => (
+              <div className="w-[26px] h-[26px] bg-[#0000e7] border border-gray-300" />
+            )}
+            className={buttonShadowClass}
+            onClick={() => editor.chain().focus().setColor('#0000e7').run()}
+          />
+          <ToolbarButton
+            icon={() => (
+              <div className="w-[26px] h-[26px] bg-btn-dark-3 border border-gray-300" />
+            )}
+            className={buttonShadowClass}
+            onClick={() => editor.chain().focus().setColor('#333333').run()}
+          />
+          <Divider />
+          <ToolbarButton
+            icon={Link}
+            className={`${buttonShadowClass} ${editor.isActive('link') ? 'bg-blue-100' : ''}`}
+            onClick={setLink}
+          />
+          <ToolbarButton
+            icon={Link2Off}
+            className={buttonShadowClass}
+            onClick={removeLink}
+            disabled={!editor.isActive('link')}
+          />
+
           {/* 글꼴 스타일 */}
           <ToolbarButton
             icon={Bold}
@@ -182,22 +321,21 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
             onClick={() => editor.chain().focus().toggleStrike().run()}
             disabled={!editor.can().chain().focus().toggleStrike().run()}
           />
-          {/* 밑줄 */}
+        </div>
+        {/* 목록 */}
+        <div className='flex justify-center items-center gap-[10px] mb-0 ml-2.5'>
           <ToolbarButton
             icon={Baseline}
             className={buttonShadowClass}
             onClick={() => editor.chain().focus().toggleUnderline().run()}
             disabled={!editor.can().chain().focus().toggleUnderline().run()}
           />
+          <Divider />
           <ToolbarButton
             icon={Highlighter}
             className={buttonShadowClassHidden}
             onClick={() => applyHighlightColor('yellow')}
           />
-        </div>
-        <Divider />
-        {/* 목록 */}
-        <div className='flex justify-center items-center gap-[10px]'>
           <ToolbarButton
             icon={List}
             className={buttonShadowClass}

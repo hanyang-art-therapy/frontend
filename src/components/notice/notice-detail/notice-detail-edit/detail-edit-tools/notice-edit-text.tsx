@@ -57,7 +57,7 @@ export default function NoticeEditText({
         </div>
       </div>
       {/* 버튼 */}
-      <div className='flex gap-4 mt-4 justify-end items-end pb-[20px]'>
+      <div className='flex gap-4 mt-4 justify-end items-end pb-[20px] px-2'>
         <Button
           type='button'
           onClick={handleCancel}

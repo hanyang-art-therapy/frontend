@@ -123,7 +123,7 @@ export default function ToolbarUpload({
       editor.chain().focus().extendMarkRange('link').run();
     } catch (error) {
       console.error('파일 업로드 에러:', error);
-      toast.error('파일 업로드에 실패했습니다.');
+      toast.error('파일 용량이 커서 업로드에 실패하였습니다.');
     } finally {
       setUploading(false);
       e.target.value = '';
@@ -143,12 +143,6 @@ export default function ToolbarUpload({
     });
     toast.success('파일이 삭제되었습니다.');
   };
-
-  const closePreview = () => {
-    setShowPreview(false);
-  };
-
-  const previewFiles = (actualUploadedFiles || []).filter((file) => file.isNew);
 
   return (
     <div className='relative'>
@@ -210,17 +204,13 @@ export default function ToolbarUpload({
                           새 파일
                         </span>
                       )}
-                      {file.filesNo && (
-                        <span className='text-xs bg-bg-gray-fa text-btn-dark-3 px-2 py-1 rounded'>
-                          ID: {file.filesNo}
-                        </span>
-                      )}
+                  
                     </div>
                   </div>
                   <button
                     type='button'
                     onClick={() => removeFile(index)}
-                    className='text-bg-primary/60 hover:text-bg-primary font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
+                    className='cursor-pointer hover:bg-btn-dark-3 p-1 rounded-sm text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
                   >
                     삭제
                   </button>
@@ -230,74 +220,7 @@ export default function ToolbarUpload({
           </div>
         </div>
       </div>
-      {showPreview && previewFiles.length > 0 && (
-        <div className='fixed inset-0 bg-btn-dark-3 bg-opacity-50 flex items-center justify-center z-50'>
-          <div className='bg-white p-6 rounded-lg max-w-4xl max-h-[80vh] overflow-y-auto relative'>
-            <button
-              onClick={closePreview}
-              className='absolute top-4 right-4 text-btn-gray-9/50 hover:text-btn-gray-9'
-            >
-              <X size={24} />
-            </button>
-            <h3 className='text-r-24 mb-4'>새로 추가된 파일 미리보기</h3>
-            <div className='space-y-4'>
-              {previewFiles.map((item, index) => (
-                <div key={index} className='border p-4 rounded-lg'>
-                  <div className='flex justify-between items-start mb-2'>
-                    <h4 className='t-m-16'>{item.name}</h4>
-                    <button
-                      onClick={() => {
-                        const originalIndex = actualUploadedFiles.findIndex(
-                          (f) => f === item
-                        );
-                        if (originalIndex !== -1) {
-                          removeFile(originalIndex);
-                        }
-                      }}
-                      className='text-bg-primary/50 hover:text-bg-primary t-r-16'
-                    >
-                      삭제
-                    </button>
-                  </div>
-                  {item.file?.type?.startsWith('image/') ||
-                  item.url.match(/\.(jpg|jpeg|png|gif)$/i) ? (
-                    <img
-                      src={item.url}
-                      alt='업로드된 이미지'
-                      className='max-w-[300px] max-h-[200px] object-contain rounded'
-                    />
-                  ) : item.file?.type === 'application/pdf' ||
-                    item.url.endsWith('.pdf') ? (
-                    <div className='flex items-center gap-2'>
-                      <span>📄</span>
-                      <a
-                        href={item.url}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='text-btn-gray-9 underline'
-                      >
-                        PDF 파일 - {item.name}
-                      </a>
-                    </div>
-                  ) : (
-                    <div className='flex items-center gap-2'>
-                      <span>📎</span>
-                      <a
-                        href={item.url}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='text-btn-gray-9 underline'
-                      >
-                        파일 - {item.name}
-                      </a>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+
     </div>
   );
 }
