@@ -28,6 +28,7 @@ const ToolbarButton = ({
   color = '#333333',
   className = '',
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any;
   onClick: () => void;
   disabled?: boolean;
@@ -64,7 +65,7 @@ const FontSizeButton = ({
     onClick={onClick}
     disabled={disabled}
   >
-    <Icon strokeWidth={1.5} width={26} height={26} color={color} />
+    <Icon strokeWidth={1.5} width={20} height={20} color={color} />
   </button>
 );
 
@@ -202,17 +203,10 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
       validUrl = 'https://' + validUrl;
     }
 
-    console.log('Setting link:', validUrl);
-
     try {
       editor.chain().focus().setLink({ href: validUrl }).run();
 
       toast.success('링크가 설정되었습니다.');
-
-      setTimeout(() => {
-        const linkAttrs = editor.getAttributes('link');
-        console.log('Link attributes after setting:', linkAttrs);
-      }, 100);
     } catch (error) {
       console.error('Error setting link:', error);
       toast.error('링크 설정 중 오류가 발생했습니다.');

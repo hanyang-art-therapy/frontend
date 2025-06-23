@@ -36,7 +36,6 @@ export const NoticeSearch = () => {
   const handleCategoryChange = async (category: string) => {
     setSearchParams((prevSearchParams) => {
       const enCategory = getEgType(category);
-      console.log(prevSearchParams);
 
       if (category === 'all') prevSearchParams.delete('category');
       else prevSearchParams.set('category', enCategory);
@@ -47,8 +46,6 @@ export const NoticeSearch = () => {
 
   const [searchValue, setSearchValue] = useState('');
   const handleSearch = () => {
-    console.log('검색:', searchValue);
-
     if (searchValue) {
       setSearchParams((prev) => {
         prev.set('keyword', searchValue);

@@ -33,7 +33,8 @@ const ToolbarButton = ({
   color = '#333333',
   className = '',
 }: {
-  icon: React.ElementType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  icon: any;
   onClick: () => void;
   disabled?: boolean;
   color?: string;
@@ -65,6 +66,7 @@ export default function NoticeUploadEditor({
   const triggerFileUpload = () => {
     fileInputRef.current?.click();
   };
+
   const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;

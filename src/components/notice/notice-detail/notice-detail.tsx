@@ -54,7 +54,6 @@ export default function NoticeDetail() {
   }, [noticeNo]);
 
   const handleDelete = async () => {
-    console.log('Delete button clicked, role:', role);
     // 관리자 권한 확인
     if (role !== 'ADMIN') {
       toast.error('관리자만 삭제할 수 있습니다.');
@@ -72,7 +71,6 @@ export default function NoticeDetail() {
   };
 
   const handleEdit = () => {
-    console.log('Edit button clicked, role:', role);
     // 관리자 권한 확인
     if (role !== 'ADMIN') {
       toast.error('관리자만 수정할 수 있습니다.');
@@ -82,10 +80,6 @@ export default function NoticeDetail() {
     navigate(`/notice/${noticeNo}/edit`);
   };
 
-  // 관리자인지 확인 - null과 undefined도 체크
-  const isAdmin = role === 'ADMIN';
-  console.log('isAdmin:', isAdmin);
-
   if (!noticeContents) return <NoticeNoResult />;
 
   return (
@@ -94,10 +88,10 @@ export default function NoticeDetail() {
         <div className='flex justify-start items-center pb-[20px] gap-2'>
           <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-btn-dark-3'>
             <Volume2 size={40} strokeWidth={2} />
-            </div>
-            <strong className='p-2 text-btn-dark-3 t-b-32'>공지사항</strong>
           </div>
+          <strong className='p-2 text-btn-dark-3 t-b-32'>공지사항</strong>
         </div>
+      </div>
       <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
         <div className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start'>
           <div className='flex flex-col gap-4 mt-2 t-r-16 px-[20px]'>

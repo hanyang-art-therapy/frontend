@@ -110,12 +110,10 @@ export default function ReviewsModal({
 
   const handleBanClick = async () => {
     try {
-      const response = await banReview({
+      await banReview({
         artsNo: artsNo,
         reviewsNo: selectedReview.reviewsNo,
       });
-
-      console.log(response);
 
       toast.success('리뷰가 정지되었습니다.');
     } catch (error) {

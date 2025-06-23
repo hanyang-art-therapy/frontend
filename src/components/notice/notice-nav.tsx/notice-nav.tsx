@@ -22,11 +22,7 @@ export default function NoticeNav({ noticeNo, totalCount }: NoticeNavProps) {
       const fetchTotalNotices = async () => {
         try {
           const response = await getNotices({ page: 1 });
-          const total =
-            response.totalElements ||
-            response.total ||
-            response.totalCount ||
-            0;
+          const total = response.totalElements || response.totalCount || 0;
           setMaxNoticeNo(total);
         } catch (err) {
           console.error('전체 공지사항 수 불러오기 실패:', err);

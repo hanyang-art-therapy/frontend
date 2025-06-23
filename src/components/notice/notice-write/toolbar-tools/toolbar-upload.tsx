@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Editor } from '@tiptap/react';
 import { Paperclip, Image, Download, LucideIcon } from 'lucide-react';
 import { toast } from 'sonner';
@@ -14,6 +14,17 @@ type NoticeFile = {
 
 type ToolbarProps = {
   editor: Editor | null;
+  onFilesSelected?: (files: File[]) => void;
+  uploadedFiles?: NoticeFile[];
+  setUploadedFiles?: React.Dispatch<React.SetStateAction<NoticeFile[]>>;
+};
+
+type ToolbarButtonProps = {
+  icon: LucideIcon;
+  onClick: () => void;
+  disabled?: boolean;
+  color?: string;
+  className?: string;
 };
 
 const ToolbarButton = ({
@@ -22,14 +33,7 @@ const ToolbarButton = ({
   disabled = false,
   color = '#333333',
   className = '',
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
-  onClick: () => void;
-  disabled?: boolean;
-  color?: string;
-  className?: string;
-}) => (
+}: ToolbarButtonProps) => (
   <button
     type='button'
     className={`cursor-pointer ${className}`}
@@ -68,7 +72,7 @@ export default function ToolbarUpload({
   if (!editor) return null;
 
   const triggerFileUpload = () => {
-    document.getElementById('fileUpload')?.click();
+    fileInputRef.current?.click();
   };
 
   const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {

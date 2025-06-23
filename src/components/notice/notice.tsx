@@ -1,13 +1,8 @@
+import NoticeList from '@/components/notice/notice-list/notice-list';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useAuthStore } from '@/store/auth';
-import NoticeList from '@/components/notice/notice-list/notice-list';
 
 export default function Notice() {
-  const { role } = useAuthStore();
-
-  console.log(role);
-
   useEffect(() => {
     window.scrollTo({
       top: 0,

@@ -68,7 +68,5 @@ export const banReview = async ({
     `/galleries/arts/${artsNo}/reviews/${reviewsNo}/ban`
   );
 
-  console.log(response);
-
   return response.data;
 };

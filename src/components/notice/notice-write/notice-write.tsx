@@ -159,7 +159,6 @@ const editor = useEditor({
   },
 });
 
-  // 카테고리를 영어로 변환하는 함수
   const getEnCategory = (category: string) => {
     switch (category) {
       case '일반':
@@ -206,11 +205,9 @@ const editor = useEditor({
         isFixed,
       });
 
-        // 성공 시 notice-list 페이지로 리디렉션
-        navigate('/notice');
-      }
+      toast.success('게시글이 성공적으로 등록되었습니다.');
+      navigate('/notice');
     } catch (error) {
-      // 에러 처리 및 토스트 메시지 띄우기
       toast.error(handleApiError(error));
     }
   };

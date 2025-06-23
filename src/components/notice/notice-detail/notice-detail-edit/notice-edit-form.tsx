@@ -24,17 +24,19 @@ import ToolbarHeading from '@/components/notice/notice-write/toolbar-tools/toolb
 type NoticeFile = {
   name: string;
   url: string;
+  filesNo?: number;
+  isNew?: boolean;
 };
 
-interface NoticeData {
+type NoticeData = {
   title: string;
   category: string;
   content: string;
   periodStart: string;
   periodEnd: string;
-  isFixed?: boolean; // 🔧 추가: 고정 여부
+  isFixed?: boolean;
   files?: NoticeFile[];
-}
+};
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -272,12 +274,7 @@ export default function NoticeEditForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.title.trim()) {
-      toast.error('제목과 내용, 카테고리 필수 입력 항목입니다.');
-      return;
-    }
-
-    if (!formData.content.trim()) {
+    if (!formData.title.trim() || !formData.content.trim()) {
       toast.error('제목과 내용, 카테고리 필수 입력 항목입니다.');
       return;
     }
@@ -301,21 +298,18 @@ export default function NoticeEditForm() {
               ?.map((file) => file.filesNo!)
               .filter((id): id is number => !!id) ?? null,
         });
+
         toast.success('게시글 수정이 완료되었습니다.');
+        navigate(`/notice/${noticeNo}`);
       } else {
         const result = await axios.post('/api/notice', formData);
         toast.success('게시글 등록이 완료되었습니다.');
         navigate(`/notice/${result.data.noticeNo}`);
         return;
       }
-
-      // 수정 완료 후 상세 페이지로 이동
-      navigate(`/notice/${noticeNo}`);
     } catch (err) {
       console.error('Submit error:', err);
-      toast.error(
-        isEdit ? '서버 오류가 발생했습니다.' : '서버 오류가 발생했습니다.'
-      );
+      toast.error('서버 오류가 발생했습니다.');
     } finally {
       setLoading(false);
     }

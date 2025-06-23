@@ -1,3 +1,4 @@
+
 import {
   Select,
   SelectContent,
@@ -35,6 +36,7 @@ export default function NoticeEditHeader({
   selectedCategory,
   handleCategoryChange,
 }: Props) {
+
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -50,16 +52,16 @@ export default function NoticeEditHeader({
         {/* 제목 */}
         <div>
           <div className='w-[90%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
-          <input
-            type='text'
-            name='title'
-            value={formData.title}
-            onChange={handleInputChange}
-            className='max-w-[310px] t-b-32 px-[10px] 
-          overflow-hidden text-ellipsis whitespace-nowrap'
-            placeholder='제목을 입력하세요'
-            required
-          />
+        <input
+        type="text"
+        name="title"
+        value={formData.title}
+        onChange={handleInputChange}
+        className="max-w-[310px] t-b-32 px-[10px] 
+          overflow-hidden text-ellipsis whitespace-nowrap"
+        placeholder="제목을 입력하세요"
+        required
+        />
         </div>
 
         {/* 구분 && 기간 */}

@@ -8,6 +8,8 @@ import NoticeTable, {
   Notice,
 } from '@/components/notice/notice-list/notice-table';
 import { NoticeSearch } from '@/components/notice/notice-search/notice-search';
+import { toast } from 'sonner';
+import { handleApiError } from '@/components/common/error-handler';
 
 export default function NoticeList() {
   const [fetchedNotices, setFetchedNotices] =
@@ -32,8 +34,7 @@ export default function NoticeList() {
       if (response) {
         setFetchedNotices(response);
 
-        const totalCount =
-          response.totalElements || response.total || response.totalCount || 0;
+        const totalCount = response.totalElements || response.totalCount || 0;
         setActualNoticeCount(totalCount);
       } else {
         console.warn('API 응답이 null입니다');
@@ -41,7 +42,7 @@ export default function NoticeList() {
         setActualNoticeCount(0);
       }
     } catch (error) {
-      console.error('공지사항 불러오기 실패:', error);
+      toast.error(handleApiError(error));
       setFetchedNotices(null);
       setActualNoticeCount(0);
     } finally {
@@ -49,10 +50,9 @@ export default function NoticeList() {
     }
   }, [pageNumber]);
 
-  // 새로고침 데이터 불러오기
   useEffect(() => {
     fetchNotices();
-  }, [pageNumber, location.key]);
+  }, [pageNumber, location.key, fetchNotices]);
 
   useEffect(() => {
     if (location.state?.refresh) {
