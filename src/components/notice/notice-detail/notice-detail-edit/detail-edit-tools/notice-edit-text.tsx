@@ -2,7 +2,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Editor, EditorContent } from '@tiptap/react';
 
-
 type NoticeFile = {
   name: string;
   url: string;
@@ -17,17 +16,13 @@ type NoticeData = {
   files?: NoticeFile[];
 };
 
-
 type NoticeEditTextProps = {
-  formData: NoticeData;
   setFormData: React.Dispatch<React.SetStateAction<NoticeData>>;
   loading: boolean;
   editor: Editor | null;
 };
 
-
 export default function NoticeEditText({
-  formData,
   loading,
   editor,
 }: NoticeEditTextProps) {

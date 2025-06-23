@@ -35,10 +35,6 @@ export default function NoticeEditHeader({
   selectedCategory,
   handleCategoryChange,
 }: Props) {
-  // const { noticeNo } = useParams<{ noticeNo: string }>();
-  // const navigate = useNavigate();
-  // const isEdit = Boolean(noticeNo);
-
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -48,26 +44,22 @@ export default function NoticeEditHeader({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // const handleCancel = () => {
-  //   navigate(isEdit ? `/notice/${noticeNo}` : '/notice');
-  // };
-
   return (
     <div className='w-full md:h-[140px] xl:px-0 text-start'>
       <div className='flex flex-col gap-4 mt-2 t-r-16 px-[12px] md:px-[20px]'>
         {/* 제목 */}
         <div>
           <div className='w-[90%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
-        <input
-        type="text"
-        name="title"
-        value={formData.title}
-        onChange={handleInputChange}
-        className="max-w-[310px] t-b-32 px-[10px] 
-          overflow-hidden text-ellipsis whitespace-nowrap"
-        placeholder="제목을 입력하세요"
-        required
-        />
+          <input
+            type='text'
+            name='title'
+            value={formData.title}
+            onChange={handleInputChange}
+            className='max-w-[310px] t-b-32 px-[10px] 
+          overflow-hidden text-ellipsis whitespace-nowrap'
+            placeholder='제목을 입력하세요'
+            required
+          />
         </div>
 
         {/* 구분 && 기간 */}

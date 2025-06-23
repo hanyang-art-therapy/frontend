@@ -40,31 +40,7 @@ const ToolbarButton = ({
     onClick={onClick}
     disabled={disabled}
   >
-    <Icon strokeWidth={1.5} width={26} height={26} color={color} />
-  </button>
-);
-
-const FontSizeButton = ({
-  icon: Icon,
-  onClick,
-  disabled = false,
-  color = '#333333',
-  className = '',
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
-  onClick: () => void;
-  disabled?: boolean;
-  color?: string;
-  className?: string;
-}) => (
-  <button
-    type='button'
-    className={`cursor-pointer ${className}`}
-    onClick={onClick}
-    disabled={disabled}
-  >
-    <Icon strokeWidth={1.5} width={26} height={26} color={color} />
+    <Icon strokeWidth={1.5} width={20} height={20} color={color} />
   </button>
 );
 
@@ -142,7 +118,6 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
     return 16;
   };
 
-  // 폰트 사이즈 증가
   const increaseFontSize = () => {
     const currentIndex = fontSizes.indexOf(currentFontSize);
     const nextIndex = Math.min(currentIndex + 1, fontSizes.length - 1);
@@ -152,7 +127,6 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
     setCurrentFontSize(newSize);
   };
 
-  // 폰트 사이즈 감소
   const decreaseFontSize = () => {
     const currentIndex = fontSizes.indexOf(currentFontSize);
     const prevIndex = Math.max(currentIndex - 1, 0);
@@ -180,22 +154,10 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
       return;
     }
 
-    // 디버깅: 모든 확장 확인
-    console.log(
-      'All extensions:',
-      editor.extensionManager.extensions.map((ext) => ext.name)
-    );
-    console.log('Available commands:', Object.keys(editor.commands));
-
-    // Link 확장이 로드되었는지 확인하는 더 간단한 방법
     const hasLinkExtension = editor.extensionManager.extensions.some(
       (ext) => ext.name === 'link'
     );
-    console.log('Has link extension:', hasLinkExtension);
-
-    // 명령어로도 확인
     const hasSetLinkCommand = 'setLink' in editor.commands;
-    console.log('Has setLink command:', hasSetLinkCommand);
 
     if (!hasLinkExtension || !hasSetLinkCommand) {
       console.error('Link extension or command is not available');
@@ -204,14 +166,9 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
       );
       return;
     }
-
-    // 현재 선택된 텍스트 확인
     const { from, to } = editor.state.selection;
     const selectedText = editor.state.doc.textBetween(from, to);
 
-    console.log('Selected text:', selectedText);
-
-    // 텍스트가 선택되지 않았다면 사용자에게 알림
     if (!selectedText) {
       toast.error('링크를 적용할 텍스트를 먼저 선택해주세요.');
       return;
@@ -219,13 +176,11 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
 
     const previousUrl = editor.getAttributes('link').href;
     const url = window.prompt('링크 주소를 입력하세요:', previousUrl || '');
-
-    // 취소된 경우
     if (url === null) {
       return;
     }
 
-    // 빈 문자열인 경우 링크 제거
+    // 링크 제거
     if (url === '') {
       try {
         editor.chain().focus().unsetLink().run();
@@ -250,12 +205,10 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
     console.log('Setting link:', validUrl);
 
     try {
-      // 링크 설정 - 더 간단한 방법 사용
       editor.chain().focus().setLink({ href: validUrl }).run();
 
       toast.success('링크가 설정되었습니다.');
 
-      // 설정 후 확인
       setTimeout(() => {
         const linkAttrs = editor.getAttributes('link');
         console.log('Link attributes after setting:', linkAttrs);
@@ -284,7 +237,7 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
         {/* 글씨 크기 */}
         <div className='flex justify-center items-center gap-[10px]'>
           {/* 현재 폰트 사이즈 */}
-          <span className='text-sm font-medium px-2 min-w-[40px] text-center'>
+          <span className='hidden md:block t-r-16 font px-2 min-w-[40px] text-center'>
             {currentFontSize}px
           </span>
           <FontSizeButton
@@ -302,39 +255,26 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
           <Divider />
           <ToolbarButton
             icon={() => (
-              <div className='w-[26px] h-[26px] bg-[#da0016] border border-gray-300' />
+              <div className='w-[20px] h-[20px] bg-[#da0016] border border-gray-300' />
             )}
             className={buttonShadowClass}
             onClick={() => editor.chain().focus().setColor('red').run()}
           />
           <ToolbarButton
             icon={() => (
-              <div className='w-[26px] h-[26px] bg-[#0000e7] border border-gray-300' />
+              <div className='w-[20px] h-[20px] bg-[#0000e7] border border-gray-300' />
             )}
             className={buttonShadowClass}
             onClick={() => editor.chain().focus().setColor('#0000e7').run()}
           />
           <ToolbarButton
             icon={() => (
-              <div className='w-[26px] h-[26px] bg-btn-dark-3 border border-gray-300' />
+              <div className='w-[20px] h-[20px] bg-btn-dark-3 border border-gray-300' />
             )}
             className={buttonShadowClass}
             onClick={() => editor.chain().focus().setColor('#333333').run()}
           />
           <Divider />
-          <ToolbarButton
-            icon={Link}
-            className={`${buttonShadowClass} ${
-              editor.isActive('link') ? 'bg-blue-100' : ''
-            }`}
-            onClick={setLink}
-          />
-          <ToolbarButton
-            icon={Link2Off}
-            className={buttonShadowClass}
-            onClick={removeLink}
-            disabled={!editor.isActive('link')}
-          />
 
           {/* 글꼴 스타일 */}
           <ToolbarButton
@@ -358,6 +298,19 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
         </div>
         {/* 목록 */}
         <div className='flex justify-center items-center gap-[10px] mb-0 ml-2.5'>
+          <ToolbarButton
+            icon={Link}
+            className={`${buttonShadowClass} ${
+              editor.isActive('link') ? 'bg-blue-100' : ''
+            }`}
+            onClick={setLink}
+          />
+          <ToolbarButton
+            icon={Link2Off}
+            className={buttonShadowClass}
+            onClick={removeLink}
+            disabled={!editor.isActive('link')}
+          />
           <ToolbarButton
             icon={Baseline}
             className={buttonShadowClass}

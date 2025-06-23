@@ -21,7 +21,7 @@ export default function TitleAndCategoryInput({
   return (
     <div className='flex flex-wrap items-center gap-2 md:gap-4 t-b-16 w-full'>
       {/* 제목 */}
-      <div className='flex items-center gap-2 flex-grow min-w-[200px]'>
+      <div className='flex items-center gap-2 flex-grow min-w-[200px] mr-2 md:mr-0'>
         <label className='whitespace-nowrap w-[30px]'>제목</label>
         <input
           type='text'

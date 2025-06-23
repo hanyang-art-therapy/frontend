@@ -36,7 +36,6 @@ interface NoticeData {
   files?: NoticeFile[];
 }
 
-// 커스텀 FontSize 확장 추가 (ToolbarHeading에서 사용)
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     fontSize: {
@@ -139,8 +138,6 @@ export default function NoticeEditForm() {
   const [dataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const isEdit = Boolean(noticeNo);
-
-  // 에디터 설정 - ToolbarHeading에서 사용할 수 있도록 추가
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -211,7 +208,6 @@ export default function NoticeEditForm() {
     content: formData.content || '<p>여기에 내용을 입력하세요</p>',
   });
 
-  // 에디터 내용이 변경될 때 formData 업데이트
   useEffect(() => {
     if (editor && !editor.isDestroyed) {
       const handleUpdate = () => {
@@ -229,7 +225,6 @@ export default function NoticeEditForm() {
     }
   }, [editor]);
 
-  // formData.content가 변경될 때 에디터 내용 업데이트
   useEffect(() => {
     if (
       editor &&
