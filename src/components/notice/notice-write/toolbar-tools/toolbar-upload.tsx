@@ -46,21 +46,61 @@ export default function ToolbarFileUpload({ editor }: ToolbarProps) {
     document.getElementById('fileUpload')?.click();
   };
 
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
 
-    const items = files.map((file) => ({
-      file,
-      url: URL.createObjectURL(file),
-    }));
+    setUploading(true);
+    try {
+      if (typeof postFile === 'function') {
+        const response = await postFile(files);
 
-    // ✅ 기존 업로드 항목에 새 항목 누적 추가
-    setUploadedItems((prev) => [...prev, ...items]);
+        const newFiles: NoticeFile[] = response.map((file, i) => ({
+          filesNo: file.filesNo,
+          name: file.name,
+          url: file.url,
+          file: files[i],
+          isNew: true,
+        }));
 
-    editor.chain().focus().extendMarkRange('link');
-    // input 초기화 → 같은 파일 또 올릴 수 있게
-    e.target.value = '';
+        actualSetUploadedFiles((prev) => {
+          const updated = [...(prev || []), ...newFiles];
+          console.log('업로드 후 상태 (newFiles 추가됨):', updated);
+          return updated;
+        });
+
+        setShowPreview(true);
+        toast.success(`${newFiles.length}개의 파일이 업로드되었습니다.`);
+      } else {
+        const items = files.map((file) => ({
+          file,
+          name: file.name,
+          url: URL.createObjectURL(file),
+          isNew: true,
+        }));
+
+        actualSetUploadedFiles((prev) => {
+          const updated = [...(prev || []), ...items];
+          console.log('업로드 후 상태 (파일 선택):', updated);
+          return updated;
+        });
+
+        setShowPreview(true);
+        toast.success(`${items.length}개의 파일이 선택되었습니다.`);
+      }
+
+      if (onFilesSelected) {
+        onFilesSelected(files);
+      }
+
+      editor.chain().focus().extendMarkRange('link').run();
+    } catch (error) {
+      console.error('파일 업로드 에러:', error);
+      toast.error('파일 용량이 커서 업로드에 실패하였습니다.');
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
   };
 
   const removeFile = (index: number) => {
@@ -76,12 +116,6 @@ export default function ToolbarFileUpload({ editor }: ToolbarProps) {
     });
     toast.success('파일이 삭제되었습니다.');
   };
-
-  const closePreview = () => {
-    setShowPreview(false);
-  };
-
-  const previewFiles = (actualUploadedFiles || []).filter((file) => file.isNew);
 
   return (
     <div className='relative'>
@@ -143,17 +177,12 @@ export default function ToolbarFileUpload({ editor }: ToolbarProps) {
                           새 파일
                         </span>
                       )}
-                      {file.filesNo && (
-                        <span className='text-xs bg-bg-gray-fa text-btn-dark-3 px-2 py-1 rounded'>
-                          ID: {file.filesNo}
-                        </span>
-                      )}
                     </div>
                   </div>
                   <button
                     type='button'
                     onClick={() => removeFile(index)}
-                    className='text-bg-primary/60 hover:text-bg-primary font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
+                    className='cursor-pointer hover:bg-btn-dark-3 p-1 rounded-sm text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
                   >
                     삭제
                   </button>
@@ -163,74 +192,6 @@ export default function ToolbarFileUpload({ editor }: ToolbarProps) {
           </div>
         </div>
       </div>
-      {showPreview && previewFiles.length > 0 && (
-        <div className='fixed inset-0 bg-btn-dark-3 bg-opacity-50 flex items-center justify-center z-50'>
-          <div className='bg-white p-6 rounded-lg max-w-4xl max-h-[80vh] overflow-y-auto relative'>
-            <button
-              onClick={closePreview}
-              className='absolute top-4 right-4 text-btn-gray-9/50 hover:text-btn-gray-9'
-            >
-              <X size={24} />
-            </button>
-            <h3 className='text-r-24 mb-4'>새로 추가된 파일 미리보기</h3>
-            <div className='space-y-4'>
-              {previewFiles.map((item, index) => (
-                <div key={index} className='border p-4 rounded-lg'>
-                  <div className='flex justify-between items-start mb-2'>
-                    <h4 className='t-m-16'>{item.name}</h4>
-                    <button
-                      onClick={() => {
-                        const originalIndex = actualUploadedFiles.findIndex(
-                          (f) => f === item
-                        );
-                        if (originalIndex !== -1) {
-                          removeFile(originalIndex);
-                        }
-                      }}
-                      className='text-bg-primary/50 hover:text-bg-primary t-r-16'
-                    >
-                      삭제
-                    </button>
-                  </div>
-                  {item.file?.type?.startsWith('image/') ||
-                  item.url.match(/\.(jpg|jpeg|png|gif)$/i) ? (
-                    <img
-                      src={item.url}
-                      alt='업로드된 이미지'
-                      className='max-w-[300px] max-h-[200px] object-contain rounded'
-                    />
-                  ) : item.file?.type === 'application/pdf' ||
-                    item.url.endsWith('.pdf') ? (
-                    <div className='flex items-center gap-2'>
-                      <span>📄</span>
-                      <a
-                        href={item.url}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='text-btn-gray-9 underline'
-                      >
-                        PDF 파일 - {item.name}
-                      </a>
-                    </div>
-                  ) : (
-                    <div className='flex items-center gap-2'>
-                      <span>📎</span>
-                      <a
-                        href={item.url}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='text-btn-gray-9 underline'
-                      >
-                        파일 - {item.name}
-                      </a>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    </div>
   );
 }

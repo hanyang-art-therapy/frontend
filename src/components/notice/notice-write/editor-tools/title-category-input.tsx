@@ -28,7 +28,7 @@ export default function TitleAndCategoryInput({
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder='제목을 입력해주세요'
-          className='flex-grow border border-gray-300 rounded px-3 py-2 min-w-[150px]'
+          className='flex-grow border-2 border-bg-gray-d/60 rounded px-3 py-2 min-w-[150px]'
         />
       </div>
 

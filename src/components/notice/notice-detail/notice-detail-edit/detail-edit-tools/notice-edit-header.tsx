@@ -58,19 +58,20 @@ export default function NoticeEditHeader({
         {/* 제목 */}
         <div>
           <div className='w-[90%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
-          <input
-            type='text'
-            name='title'
-            value={formData.title}
-            onChange={handleInputChange}
-            className='w-full t-b-32 px-[10px]'
-            placeholder='제목을 입력하세요'
-            required
-          />
+        <input
+        type="text"
+        name="title"
+        value={formData.title}
+        onChange={handleInputChange}
+        className="max-w-[310px] t-b-32 px-[10px] 
+          overflow-hidden text-ellipsis whitespace-nowrap"
+        placeholder="제목을 입력하세요"
+        required
+        />
         </div>
 
         {/* 구분 && 기간 */}
-        <div className='flex flex-row flex-wrap gap-2 pt-r-14 md:gap-4 md:pb-[10px]'>
+        <div className='flex flex-row flex-wrap gap-2 pt-r-14 md:gap-4 pb-[10px] md:pb-[10px]'>
           {/* 구분 */}
           <div className='flex items-center gap-2 t-r-16'>
             <div className='flex flex-col md:flex-row items-center gap-2 md:gap-4'>
@@ -102,7 +103,7 @@ export default function NoticeEditHeader({
                   name='periodStart'
                   value={formData.periodStart}
                   onChange={handleInputChange}
-                  className='border border-b-bg-gray-d rounded px-2 py-2 w-[122px] md:w-[140px]'
+                  className='border-2 border-bg-gray-d/60 rounded px-2 py-2 w-[122px] md:w-[140px]'
                 />
               </div>
             </div>
@@ -115,7 +116,7 @@ export default function NoticeEditHeader({
                 name='periodEnd'
                 value={formData.periodEnd}
                 onChange={handleInputChange}
-                className='border border-b-bg-gray-d rounded px-2 py-2 w-[122px] md:w-[140px]'
+                className='border-2 border-bg-gray-d/60 rounded px-2 py-2 w-[122px] md:w-[140px]'
               />
             </div>
           </div>

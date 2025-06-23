@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { postNotice } from '@/apis/notice/notice';
 import { NotepadText } from 'lucide-react';
-import { useEditor } from '@tiptap/react';
+import {useEditor } from '@tiptap/react';
 import { Extension } from '@tiptap/core';
 import Color from '@tiptap/extension-color';
 import StarterKit from '@tiptap/starter-kit';
@@ -11,6 +11,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import Highlight from '@tiptap/extension-highlight';
+import Link from '@tiptap/extension-link';
 import { Button } from '@/components/ui/button';
 import { handleApiError } from '@/components/common/error-handler';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
@@ -96,19 +97,71 @@ export default function NoticeWrite() {
   const selectedCategory = searchParams.get('category') ?? '일반';
   const [uploadedFiles, setUploadedFiles] = useState<NoticeFile[]>([]);
 
-  // 에디터 설정에 FontSize 확장 추가
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      TextStyle,
-      FontSize, // 커스텀 FontSize 확장 추가
-      Underline,
-      Color,
-      Highlight.configure({ multicolor: true }),
-    ],
-    content: '<p style="text-align:left;">여기에 내용을 입력하세요</p>',
-  });
+// NoticeWrite 컴포넌트에서 에디터 설정 부분을 다음과 같이 수정하세요:
+
+const editor = useEditor({
+  extensions: [
+    StarterKit,
+    TextAlign.configure({ types: ['heading', 'paragraph'] }),
+    TextStyle,
+    FontSize,
+    Underline,
+    Color,
+    Highlight.configure({ multicolor: true }),    
+    Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: 'https',
+        protocols: ['http', 'https'],
+        isAllowedUri: (url, ctx) => {
+          try {
+            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`${ctx.defaultProtocol}://${url}`)
+            if (!ctx.defaultValidate(parsedUrl.href)) {
+              return false
+            }
+            const disallowedProtocols = ['ftp', 'file', 'mailto']
+            const protocol = parsedUrl.protocol.replace(':', '')
+
+            if (disallowedProtocols.includes(protocol)) {
+              return false
+            }
+            const allowedProtocols = ctx.protocols.map(p => (typeof p === 'string' ? p : p.scheme))
+
+            if (!allowedProtocols.includes(protocol)) {
+              return false
+            }
+            const disallowedDomains = ['example-phishing.com', 'malicious-site.net']
+            const domain = parsedUrl.hostname
+
+            if (disallowedDomains.includes(domain)) {
+              return false
+            }
+            return true
+          } catch {
+            return false
+          }
+        },
+        shouldAutoLink: url => {
+          try {
+            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`https://${url}`)
+            const disallowedDomains = ['example-no-autolink.com', 'another-no-autolink.com']
+            const domain = parsedUrl.hostname
+
+            return !disallowedDomains.includes(domain)
+          } catch {
+            return false
+          }
+        },
+
+      }),
+  ],
+  content: '<p style="text-align:left;">여기에 내용을 입력하세요</p>',
+  editorProps: {
+    attributes: {
+      class: 'prose prose-lg max-w-none focus:outline-none',
+    },
+  },
+});
 
   // 카테고리를 영어로 변환하는 함수
   const getEnCategory = (category: string) => {
@@ -166,6 +219,12 @@ export default function NoticeWrite() {
     }
   };
 
+  if (!editor) {
+    return null
+  }
+
+  
+
   return (
     <div className='h-full w-full max-w-[1260px] pt-[100px] px-5 xl:px-0 mx-auto text-center'>
       <div className='w-full text-center'>
@@ -190,7 +249,13 @@ export default function NoticeWrite() {
             setEndDate={setEndDate}
           />
         </div>
-        <EditorSection editor={editor} />
+        <EditorSection editor={editor} className="ProseMirror [&_a]:underline [&_a]:cursor-pointer [&_a]:text-blue-600 [&_a]:hover:text-blue"/>
+
+        <ToolbarUpload
+          editor={editor}
+          uploadedFiles={uploadedFiles}
+          setUploadedFiles={setUploadedFiles}
+        />
 
         <div className='flex justify-between mt-4 px-[8px]'>
           <NoticeNav />

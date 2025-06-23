@@ -11,6 +11,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import Highlight from '@tiptap/extension-highlight';
+import Link from '@tiptap/extension-link';
 import { NoticeCategory } from '@/types/notice/notice';
 import { getNotice, patchNotice } from '@/apis/notice/notice';
 import { Button } from '@/components/ui/button';
@@ -149,6 +150,63 @@ export default function NoticeEditForm() {
       Underline,
       Color,
       Highlight.configure({ multicolor: true }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: 'https',
+        protocols: ['http', 'https'],
+        isAllowedUri: (url, ctx) => {
+          try {
+            const parsedUrl = url.includes(':')
+              ? new URL(url)
+              : new URL(`${ctx.defaultProtocol}://${url}`);
+            if (!ctx.defaultValidate(parsedUrl.href)) {
+              return false;
+            }
+            const disallowedProtocols = ['ftp', 'file', 'mailto'];
+            const protocol = parsedUrl.protocol.replace(':', '');
+
+            if (disallowedProtocols.includes(protocol)) {
+              return false;
+            }
+            const allowedProtocols = ctx.protocols.map((p) =>
+              typeof p === 'string' ? p : p.scheme
+            );
+
+            if (!allowedProtocols.includes(protocol)) {
+              return false;
+            }
+            const disallowedDomains = [
+              'example-phishing.com',
+              'malicious-site.net',
+            ];
+            const domain = parsedUrl.hostname;
+
+            if (disallowedDomains.includes(domain)) {
+              return false;
+            }
+            return true;
+          } catch {
+            return false;
+          }
+        },
+        shouldAutoLink: (url) => {
+          try {
+            const parsedUrl = url.includes(':')
+              ? new URL(url)
+              : new URL(`https://${url}`);
+            const disallowedDomains = [
+              'example-no-autolink.com',
+              'another-no-autolink.com',
+            ];
+            const domain = parsedUrl.hostname;
+
+            return !disallowedDomains.includes(domain);
+          } catch {
+            return false;
+          }
+        },
+      }),
     ],
     content: formData.content || '<p>여기에 내용을 입력하세요</p>',
   });
@@ -303,7 +361,7 @@ export default function NoticeEditForm() {
   return (
     <div className='w-full h-full mt-[80px] md:mt-[120px]'>
       <div className='w-full max-w-[1260px] mx-auto px-5'>
-        <div className='flex justify-start items-center pb-[20px] gap-2'>
+        <div className='flex justify-start items-center pb-[10px] md:pb-[20px] gap-2'>
           <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-btn-dark-3'>
             <FilePenLine size={40} strokeWidth={2} />
           </div>
@@ -327,13 +385,11 @@ export default function NoticeEditForm() {
             }));
           }}
         />
-
-        {/* ToolbarHeading 추가 */}
-        <div className='w-full px-5 xl:px-0 mb-4'>
+        <div className='w-full xl:px-0 mb-4'>
           <ToolbarHeading editor={editor} />
         </div>
 
-        <div className='w-full h-auto py-[10px] mt-[10px]'>
+        <div className='w-full h-auto'>
           <NoticeEditText
             formData={formData}
             setFormData={setFormData}
