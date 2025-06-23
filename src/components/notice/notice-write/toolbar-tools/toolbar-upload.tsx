@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Editor } from '@tiptap/react';
-import { Paperclip, Image, Download, X, LucideIcon } from 'lucide-react';
+import { Paperclip, Image, Download, LucideIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { postFile } from '@/apis/common/file';
 
@@ -57,14 +57,16 @@ export default function ToolbarUpload({
 }: ToolbarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // 내부 상태 관리 (uploadedFiles, setUploadedFiles가 없을 때 대비)
   const [internalUploadedFiles, setInternalUploadedFiles] = useState<
     NoticeFile[]
   >([]);
 
-  const actualUploadedFiles = uploadedFiles;
+  // 실제 사용하는 파일 상태와 setter
+  const actualUploadedFiles = uploadedFiles.length
+    ? uploadedFiles
+    : internalUploadedFiles;
   const actualSetUploadedFiles = setUploadedFiles || setInternalUploadedFiles;
 
   if (!editor) return null;
@@ -90,13 +92,7 @@ export default function ToolbarUpload({
           isNew: true,
         }));
 
-        actualSetUploadedFiles((prev) => {
-          const updated = [...(prev || []), ...newFiles];
-          console.log('업로드 후 상태 (newFiles 추가됨):', updated);
-          return updated;
-        });
-
-        setShowPreview(true);
+        actualSetUploadedFiles((prev) => [...(prev || []), ...newFiles]);
         toast.success(`${newFiles.length}개의 파일이 업로드되었습니다.`);
       } else {
         const items = files.map((file) => ({
@@ -106,13 +102,7 @@ export default function ToolbarUpload({
           isNew: true,
         }));
 
-        actualSetUploadedFiles((prev) => {
-          const updated = [...(prev || []), ...items];
-          console.log('업로드 후 상태 (파일 선택):', updated);
-          return updated;
-        });
-
-        setShowPreview(true);
+        actualSetUploadedFiles((prev) => [...(prev || []), ...items]);
         toast.success(`${items.length}개의 파일이 선택되었습니다.`);
       }
 
@@ -136,13 +126,14 @@ export default function ToolbarUpload({
       URL.revokeObjectURL(fileToRemove.url);
     }
 
-    actualSetUploadedFiles((prev) => {
-      const updated = (prev || []).filter((_, i) => i !== index);
-      console.log('파일 삭제 후 상태:', updated);
-      return updated;
-    });
+    actualSetUploadedFiles((prev) =>
+      (prev || []).filter((_, i) => i !== index)
+    );
     toast.success('파일이 삭제되었습니다.');
   };
+
+  // showPreview 대신 파일 존재 여부로 미리보기 표시 결정
+  const hasFiles = actualUploadedFiles && actualUploadedFiles.length > 0;
 
   return (
     <div className='relative'>
@@ -185,7 +176,7 @@ export default function ToolbarUpload({
           </div>
 
           <div className='flex flex-col gap-2 t-r-16'>
-            {!actualUploadedFiles || actualUploadedFiles.length === 0 ? (
+            {!hasFiles ? (
               <div>첨부된 파일이 없습니다.</div>
             ) : (
               actualUploadedFiles.map((file, index) => (
@@ -204,7 +195,6 @@ export default function ToolbarUpload({
                           새 파일
                         </span>
                       )}
-                  
                     </div>
                   </div>
                   <button
@@ -220,7 +210,6 @@ export default function ToolbarUpload({
           </div>
         </div>
       </div>
-
     </div>
   );
 }

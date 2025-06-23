@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { Paperclip, Image, Download, X } from 'lucide-react';
+import { Paperclip, Image, Download } from 'lucide-react';
 import { postFile } from '@/apis/common/file';
 
 type NoticeFile = {
@@ -89,7 +89,7 @@ export default function NoticeUploadEditor({
 
       setShowPreview(true);
       toast.success(`${uploadedFiles.length}개의 파일이 업로드되었습니다.`);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error('파일 업로드에 실패했습니다.');
     } finally {
@@ -164,7 +164,6 @@ export default function NoticeUploadEditor({
                           새 파일
                         </span>
                       )}
-                    
                     </div>
                   </div>
                   <button
