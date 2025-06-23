@@ -1,5 +1,4 @@
-import { Files, Notice, NoticesPagination } from '@/types';
-
+import { Files, Notice } from '@/types';
 export type NoticeCategory =
   | 'GENERAL'
   | 'PRACTICE'
@@ -21,6 +20,7 @@ export type GetNoticesRequest = {
 };
 
 export type GetNoticeRequest = Pick<Notice, 'noticeNo'>;
+
 export type UpdateNoticeRequest = Pick<Notice, 'noticeNo'> &
   Partial<
     Pick<
@@ -31,7 +31,25 @@ export type UpdateNoticeRequest = Pick<Notice, 'noticeNo'> &
     }
   >;
 
-export type GetNoticesResponse = NoticesPagination<
+export type PatchNoticeRequest = {
+  title: string;
+  content: string;
+  category: NoticeCategory;
+  periodStart?: string;
+  periodEnd?: string;
+  isFixed?: boolean;
+  filesNo: number[] | null;
+};
+
+export type PaginationResponse<T> = {
+  totalElements: number;
+  content: T[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+};
+
+export type GetNoticesResponse = PaginationResponse<
   Pick<
     Notice,
     'noticeNo' | 'category' | 'title' | 'createdAt' | 'viewCount'

@@ -1,21 +1,39 @@
 import { useNavigate } from 'react-router-dom';
 import { Paperclip } from 'lucide-react';
 import { formatTimeStamp } from '@/lib/utils';
-// import { Notice } from '@/types';
-import { GetNoticesResponse } from '@/types/notice/notice';
 import NoticeNoData from '../notice-noresult/notice-no-data';
 
 type NoticeTableProps = {
-  data: GetNoticesResponse | null;
+  data: Notice[]; // 여기서 GetNoticesResponse -> Notice[] 로 변경
+  totalCount: number;
+  onPageChange: (page: number) => void;
+  currentPage: number;
+};
+
+export type Notice = {
+  noticeNo: number;
+  title: string;
+  category: string;
+  hasFile: boolean;
+  viewCount: number;
+  createdAt: string;
+};
+
+export type GetNoticesResponse = {
+  content: Notice[];
+  totalElements?: number;
 };
 
 export default function NoticeTable({ data }: NoticeTableProps) {
   const navigate = useNavigate();
-  console.log(data);
 
-if (!data || !Array.isArray(data.content) || data.content.length === 0) {
-  return <NoticeNoData />;
-}
+  // data가 없거나 content 배열이 없거나 비어있으면 NoData 출력
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    return <NoticeNoData />;
+  }
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    return <NoticeNoData />;
+  }
 
   const getType = (category: string) => {
     if (category === 'GENERAL') {
@@ -33,6 +51,7 @@ if (!data || !Array.isArray(data.content) || data.content.length === 0) {
 
     return '학술';
   };
+
   return (
     <div className='w-full overflow-x-auto'>
       <table className='w-full border-collapse table-fixed'>
@@ -51,7 +70,7 @@ if (!data || !Array.isArray(data.content) || data.content.length === 0) {
           </tr>
         </thead>
         <tbody>
-          {data.content.map((item) => (
+          {data.map((item) => (
             <tr
               key={item.noticeNo}
               onClick={() => navigate(`/notice/${item.noticeNo}`)}
@@ -59,11 +78,8 @@ if (!data || !Array.isArray(data.content) || data.content.length === 0) {
             >
               <td className='p-2 text-center'>{item.noticeNo}</td>
               <td className='p-2 text-center'>{getType(item.category)}</td>
-
               <td className='max-w-[100px] sm:w-[90px] p-2 text-left relative group overflow-hidden whitespace-nowrap text-ellipsis'>
                 <span>{item.title}</span>
-
-                {/* 툴팁 */}
                 <div className='absolute bottom-full left-0 mb-1 w-max max-w-[200px] px-2 py-1 bg-btn-gray-9 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none'>
                   {item.title}
                 </div>
