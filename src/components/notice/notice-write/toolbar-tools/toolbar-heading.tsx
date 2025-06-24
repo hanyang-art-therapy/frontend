@@ -226,10 +226,10 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
   };
 
   return (
-    <div className='w-full md:border-1 md:rounded-sm md:border-b-2 border-bg-gray-d/60'>
-      <div className='flex flex-col md:flex-row md:items-center justify-center md:justify-start md:p-[10px] gap-2 md:gap-0'>
+    <div className='w-full md:border-1 md:rounded-sm md:border-b-2 border-bg-gray-d/60 md:mx-0'>
+      <div className='flex flex-col md:flex-row md:items-center justify-center md:justify-start md:p-[8px] gap-2 md:gap-0'>
         {/* 글씨 크기 */}
-        <div className='flex justify-center items-center gap-[10px]'>
+        <div className='flex justify-start md:justify-center md:pl-2 items-center gap-2 md:gap-[10px]'>
           {/* 현재 폰트 사이즈 */}
           <span className='hidden md:block t-r-16 font px-2 min-w-[40px] text-center'>
             {currentFontSize}px
@@ -291,7 +291,7 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
           />
         </div>
         {/* 목록 */}
-        <div className='flex justify-center items-center gap-[10px] mb-0 ml-2.5'>
+        <div className='flex justify-start md:justify-center md:pl-3 items-center gap-2 md:gap-[10px] '>
           <ToolbarButton
             icon={Link}
             className={`${buttonShadowClass} ${

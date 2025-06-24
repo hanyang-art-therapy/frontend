@@ -20,6 +20,7 @@ import { FilePenLine } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
+import { AlertTriangle } from 'lucide-react';
 
 type NoticeFile = {
   name: string;
@@ -305,12 +306,13 @@ export default function NoticeEditForm() {
     return (
       <div className='w-full h-full mt-[80px] md:mt-[120px]'>
         <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
-          <div className='w-full md:h-[140px] xl:px-0 border-t py-[10px] text-start bg-black'>
-            <div className='flex flex-col gap-4 mt-2 t-r-16 px-[20px]'>
-              <div className='text-lg text-bg-primary mb-4'>{error}</div>
+          <div className='flex justify-center items-center w-full h-[400px] md:h-[140px] xl:px-0 py-[10px] text-start bg-white'>
+            <div className='flex flex-col justify-center items-center gap-4 mt-2 t-r-16 px-[20px]'>
+              <AlertTriangle color='#333333' size={32}/>
+              <div className='t-b-16 text-btn-dark-3 mb-4 text-center'>{error}</div>
               <Button
                 onClick={() => navigate('/notice')}
-                className='px-6 py-2 bg-bg-secondary hover:bg-bg-secondary text-white rounded-lg'
+                className='w-[180px] h-[40px] t-b-16 bg-bg-primary hover:bg-bg-secondary text-white rounded-sm'
               >
                 공지사항 목록으로 돌아가기
               </Button>
@@ -323,18 +325,20 @@ export default function NoticeEditForm() {
 
   return (
     <div className='w-full h-full mt-[80px] md:mt-[120px]'>
-      <div className='w-full max-w-[1260px] mx-auto px-5'>
+      <div className='w-full max-w-[1260px] mx-auto px-5 md:px-0'>
         <div className='flex justify-start items-center pb-[10px] md:pb-[20px] gap-2'>
-          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-black'>
+          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-bg-secondary/90'>
             <FilePenLine size={40} strokeWidth={2} />
           </div>
           <strong className='p-2 text-bg-black t-b-32'>게시물 수정</strong>
         </div>
+        <div className='w-[96%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
       </div>
       <form
         className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'
         onSubmit={handleSubmit}
       >
+
         <NoticeEditHeader
           formData={formData}
           setFormData={setFormData}
@@ -347,8 +351,11 @@ export default function NoticeEditForm() {
               category: converted,
             }));
           }}
+          
         />
-        <div className='w-full xl:px-0 mb-4'>
+        <div className='md:mt-[40px]'>
+        </div>
+        <div className='w-full xl:px-0 mb-4 ml-12 md:ml-0'>
           <ToolbarHeading editor={editor} />
         </div>
 
@@ -359,8 +366,8 @@ export default function NoticeEditForm() {
             editor={editor}
           />
           <NoticeUploadEditor formData={formData} setFormData={setFormData} />
-          <div className='w-full px-5 xl:px-0 py-6 border-t t-r-16 flex justify-center'></div>
-          <div className='w-full px-5 xl:px-0 py-6 t-r-16 flex justify-center'>
+          <div className='w-full px-5 xl:px-0 py-6 t-r-16 flex justify-center'></div>
+          <div className='w-full t-r-16 flex justify-center'>
             <NoticeNav noticeNo={noticeNo ?? ''} />
           </div>
         </div>
