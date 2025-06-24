@@ -9,7 +9,6 @@ import type {
   PostArtistRequest,
 } from '@/types/admin/artists';
 import { toast } from 'sonner';
-import { promise } from 'zod';
 
 export const getArtistsTest = async ({
   filter,
