@@ -1,5 +1,5 @@
 import { postAdminArt } from '@/apis/admin/arts';
-import { postFile } from '@/apis/common/file';
+import { postFile, postFileTest } from '@/apis/common/file';
 import SelectArtistDialog from '@/components/admin/arts/art/select-artist-dialog';
 import FormField from '@/components/admin/form-field';
 import { handleApiError } from '@/components/common/error-handler';
@@ -20,25 +20,28 @@ import {
   type ChangeEvent,
   type Dispatch,
   type SetStateAction,
+  useRef,
   useState,
 } from 'react';
 import { toast } from 'sonner';
 
 type AdminArtFormProps = {
+  role: string | null;
   setSelectedTab: Dispatch<SetStateAction<'view' | 'form'>>;
   galleries: GalleriesResponse[];
   artists: InfiniteScrollResponse<ArtistResponse>;
 };
 
 export default function AdminArtForm({
+  role,
   setSelectedTab,
   galleries,
   artists,
 }: AdminArtFormProps) {
-  const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [form, setForm] = useState<PostAdminArtRequest>({
     artName: '',
     caption: '',
@@ -59,33 +62,23 @@ export default function AdminArtForm({
 
     try {
       setIsUploading(true);
-      setPreviewUrl(URL.createObjectURL(uploadedImage));
-      setFile(uploadedImage);
-    } catch (error) {
-      toast.error(handleApiError(error));
-      e.target.value = '';
-    } finally {
-      setIsUploading(false);
-    }
-  };
 
-  // 이미지 업로드 버튼 핸들러
-  const handleFileUploadButtonClick = async () => {
-    if (!file) {
-      toast.error('이미지를 선택해주세요.');
-      return;
-    }
+      let response;
 
-    try {
-      setIsUploading(true);
+      if (role === 'TESTER') {
+        response = await postFileTest([uploadedImage], 'arts');
+      } else {
+        response = await postFile([uploadedImage]);
+      }
 
-      const response = await postFile([file]);
       setForm((prev) => ({ ...prev, filesNo: response[0].filesNo }));
+      setPreviewUrl(response[0].url);
 
       toast.success('작품 이미지가 등록되었습니다. 작품 등록을 진행해주세요.');
     } catch (error) {
       toast.error(handleApiError(error));
       setForm((prev) => ({ ...prev, filesNo: 0 }));
+      e.target.value = '';
     } finally {
       setIsUploading(false);
     }
@@ -136,10 +129,7 @@ export default function AdminArtForm({
     <form className='flex flex-col gap-[30px]'>
       <div className='flex gap-[30px] items-start'>
         <div className='flex flex-col items-center gap-[15px]'>
-          <label
-            htmlFor='file-upload'
-            className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded cursor-pointer hover:opacity-70 flex items-center justify-center overflow-hidden'
-          >
+          <div className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
             {previewUrl ? (
               <img
                 src={previewUrl}
@@ -149,11 +139,12 @@ export default function AdminArtForm({
             ) : (
               <span className='t-r-14 text-gray-6'>NO IMAGE</span>
             )}
-          </label>
+          </div>
 
           <input
             id='file-upload'
             type='file'
+            ref={fileInputRef}
             accept='image/*'
             onChange={handleFileChange}
             className='hidden'
@@ -164,7 +155,7 @@ export default function AdminArtForm({
             variant='secondary'
             size='sm'
             className='w-full'
-            onClick={handleFileUploadButtonClick}
+            onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
           >
             {isUploading ? (

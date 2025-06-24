@@ -3,12 +3,23 @@ import ProfessorForm from '@/components/admin/professors/professor/professor-for
 import TabButton from '@/components/admin/tab-btn';
 import { TabType } from '@/components/admin/tab-btn';
 import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
+import { ProfessorsResponse } from '@/types/admin/professors';
 
 export default function AdminProfessor() {
+  const loaderData = useLoaderData();
+
   const [selectedTab, setSelectedTab] = useState<TabType>('view');
 
+  const [professors, setProfessors] =
+    useState<ProfessorsResponse[]>(loaderData);
+
   const content =
-    selectedTab === 'view' ? <ProfessorView /> : <ProfessorForm />;
+    selectedTab === 'view' ? (
+      <ProfessorView professors={professors} setProfessors={setProfessors} />
+    ) : (
+      <ProfessorForm setProfessors={setProfessors} />
+    );
 
   return (
     <>

@@ -5,10 +5,12 @@ import type { InfiniteScrollResponse } from '@/types';
 import type { AdminArtsResponse } from '@/types/admin/arts';
 import type { ArtistResponse } from '@/types/admin/artists';
 import type { GalleriesResponse } from '@/types/admin/galleries';
+import { useAuthStore } from '@/store/auth';
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
 export default function AdminArt() {
+  const { role } = useAuthStore.getState();
   const { galleriesResponse } = useLoaderData() as {
     galleriesResponse: GalleriesResponse[];
   };
@@ -47,10 +49,15 @@ export default function AdminArt() {
 
       <div className='pt-[215px]'>
         {selectedTab === 'view' && (
-          <AdminArtView arts={artsResponse} galleries={galleriesResponse} />
+          <AdminArtView
+            role={role}
+            arts={artsResponse}
+            galleries={galleriesResponse}
+          />
         )}
         {selectedTab === 'form' && (
           <AdminArtForm
+            role={role}
             setSelectedTab={setSelectedTab}
             galleries={galleriesResponse}
             artists={artistsResponse}

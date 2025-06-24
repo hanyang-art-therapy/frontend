@@ -8,6 +8,8 @@ import {
   adminArtistLoader,
   adminArtsLoader,
   adminUserLoader,
+  adminProfessorsLoader,
+  adminGalleriesLoader,
 } from '@/routes/loaders/admin';
 import { artLoader } from '@/routes/loaders/art/art-loader';
 import { galleryLoader } from '@/routes/loaders/gallery/gallery-loader';
@@ -188,10 +190,12 @@ const router = createBrowserRouter([
           {
             path: 'galleries',
             element: lazyElement({ Element: AdminGalleryPage }),
+            loader: adminGalleriesLoader,
           },
           {
             path: 'professors',
             element: lazyElement({ Element: AdminProfessorPage }),
+            loader: adminProfessorsLoader,
           },
         ],
       },

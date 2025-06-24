@@ -1,5 +1,6 @@
-import { getAdminArtByNo } from '@/apis/admin/arts';
-import { postFile } from '@/apis/common/file';
+import { getAdminArt } from '@/apis/admin/arts';
+import { getAdminArtTest } from '@/apis/admin/tester/arts';
+import { postFile, postFileTest } from '@/apis/common/file';
 import AddArtistSheet from '@/components/admin/arts/art/add-artist-sheet';
 import FormField from '@/components/admin/form-field';
 import { handleApiError } from '@/components/common/error-handler';
@@ -24,6 +25,7 @@ import type {
   PatchAdminArtRequest,
 } from '@/types/admin/arts';
 import type { GalleriesResponse } from '@/types/admin/galleries';
+import { LoaderCircle } from 'lucide-react';
 import {
   ChangeEvent,
   SyntheticEvent,
@@ -34,6 +36,7 @@ import {
 import { toast } from 'sonner';
 
 type AdminArtModalProps = {
+  role: string | null;
   artsNo: number;
   galleries: GalleriesResponse[];
   onEdit: (form: PatchAdminArtRequest) => Promise<MessageResponse>;
@@ -42,6 +45,7 @@ type AdminArtModalProps = {
 };
 
 export default function AdminArtModal({
+  role,
   artsNo,
   galleries,
   onClose,
@@ -49,7 +53,6 @@ export default function AdminArtModal({
   onDelete,
 }: AdminArtModalProps) {
   const [art, setArt] = useState<AdminArtResponse | null>(null);
-  const [file, setFile] = useState<File | null>(null);
   const [artImageUrl, setArtImageUrl] = useState('/images/no-image.jpg');
   const [newFileNo, setNewFileNo] = useState<number | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -59,17 +62,24 @@ export default function AdminArtModal({
   useEffect(() => {
     try {
       const fetchData = async () => {
-        const artData = await getAdminArtByNo(artsNo);
+        if (role === 'TESTER') {
+          const artData = await getAdminArtTest(artsNo);
 
-        setArt(artData);
-        setArtImageUrl(artData.fileUrl || '/images/no-image.jpg');
+          setArt(artData);
+          setArtImageUrl(artData.fileUrl || '/images/no-image.jpg');
+        } else {
+          const artData = await getAdminArt(artsNo);
+
+          setArt(artData);
+          setArtImageUrl(artData.fileUrl || '/images/no-image.jpg');
+        }
       };
 
       fetchData();
     } catch (error) {
       toast.error(handleApiError(error));
     }
-  }, [artsNo]);
+  }, [artsNo, role]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -154,30 +164,24 @@ export default function AdminArtModal({
     }
 
     try {
-      setArtImageUrl(URL.createObjectURL(uploadedImage));
-      setFile(uploadedImage);
-    } catch (error) {
-      toast.error(handleApiError(error));
-      e.target.value = '';
-    }
-  };
-
-  const handleFileUpload = async () => {
-    if (!file) {
-      toast.error('이미지를 선택해주세요.');
-      return;
-    }
-
-    try {
       setUploading(true);
-      const response = await postFile([file]);
+
+      let response;
+
+      if (role === 'TESTER') {
+        response = await postFileTest([uploadedImage], 'arts');
+      } else {
+        response = await postFile([uploadedImage]);
+      }
 
       setNewFileNo(response[0].filesNo);
+      setArtImageUrl(response[0].url);
 
       toast.success('작품 이미지가 등록되었습니다. 작품 등록을 진행해주세요.');
     } catch (error) {
       toast.error(handleApiError(error));
       setNewFileNo(null);
+      e.target.value = '';
     } finally {
       setUploading(false);
     }
@@ -240,7 +244,6 @@ export default function AdminArtModal({
     return '';
   };
 
-  // 작가 업데이트 핸들러
   const handleUpdateArtists = (
     updatedArtists: Array<{
       artistNo: number;
@@ -275,17 +278,14 @@ export default function AdminArtModal({
         <div className='flex gap-[15px]'>
           {/* 이미지 업로드 */}
           <div className='flex flex-col items-center gap-[10px]'>
-            <label
-              htmlFor='file-upload'
-              className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded cursor-pointer hover:opacity-70 flex items-center justify-center overflow-hidden'
-            >
+            <div className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
               <img
                 src={artImageUrl}
                 alt='preview'
                 className='w-full h-full object-cover'
                 onError={handleImageError}
               />
-            </label>
+            </div>
             <input
               id='file-upload'
               type='file'
@@ -296,13 +296,17 @@ export default function AdminArtModal({
             />
             <Button
               type='button'
-              onClick={handleFileUpload}
+              onClick={() => fileInputRef.current?.click()}
               size='sm'
               variant='secondary'
               className='w-full'
               disabled={uploading}
             >
-              {uploading ? '업로드 중...' : '이미지 업로드'}
+              {uploading ? (
+                <LoaderCircle className='w-4 h-4 ml-2 animate-spin' />
+              ) : (
+                '이미지 업로드'
+              )}
             </Button>
           </div>
 

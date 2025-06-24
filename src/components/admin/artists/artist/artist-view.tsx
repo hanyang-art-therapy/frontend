@@ -29,6 +29,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Search from '@/components/ui/search';
+import {
+  deleteArtistTest,
+  getArtistsTest,
+  getArtistTest,
+  patchArtistTest,
+} from '@/apis/admin/tester/artists';
 
 type Props = {
   artistsList: InfiniteScrollResponse<ArtistsResponse>;
@@ -56,36 +62,63 @@ export default function ArtistView({
   const handleEdit = async (
     form: PatchArtistRequest
   ): Promise<MessageResponse> => {
+    let response;
     const { artistNo, artistName, studentNo, cohort } = form;
-    const res = await patchArtist(artistNo, { artistName, studentNo, cohort });
 
-    try {
-      const updated = await getArtists({});
-      setArtistsList(updated);
-    } catch (error) {
-      toast.error(handleApiError(error));
+    if (role === 'TESTER') {
+      response = await patchArtistTest(artistNo, {
+        artistName,
+        studentNo,
+        cohort,
+      });
+
+      await getArtistsTest({}).then(setArtistsList);
+    } else {
+      response = await patchArtist(artistNo, {
+        artistName,
+        studentNo,
+        cohort,
+      });
+
+      await getArtists({}).then(setArtistsList);
     }
 
     setSelectedArtist(null);
-    return res;
+    return response;
   };
 
   const handleSelectArtist = async (artistNo: number) => {
     try {
-      const artistDetail = await getArtist(artistNo);
-      setSelectedArtist(artistDetail);
+      let artist;
+
+      if (role === 'TESTER') {
+        artist = await getArtistTest(artistNo);
+      } else {
+        artist = await getArtist(artistNo);
+      }
+
+      setSelectedArtist(artist);
     } catch (error) {
       toast.error(handleApiError(error));
     }
   };
 
   const handleDelete = async (artistNo: number): Promise<MessageResponse> => {
-    const res = await deleteArtist(artistNo);
+    let response;
 
-    await getArtists({}).then((artistsList) => setArtistsList(artistsList));
+    if (role === 'TESTER') {
+      response = await deleteArtistTest(artistNo);
+      await getArtistsTest({}).then((artistsList) =>
+        setArtistsList(artistsList)
+      );
+    } else {
+      response = await deleteArtist(artistNo);
+      await getArtists({}).then((artistsList) => setArtistsList(artistsList));
+    }
+
     setSelectedArtist(null);
 
-    return res;
+    return response;
   };
 
   const handleClose = () => setSelectedArtist(null);

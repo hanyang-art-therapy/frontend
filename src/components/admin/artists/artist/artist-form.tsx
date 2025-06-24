@@ -1,19 +1,22 @@
 import FormField from '@/components/admin/form-field';
 import { Button } from '@/components/ui/button';
-import { postArtist } from '@/apis/admin/artists';
+import { getArtists, postArtist } from '@/apis/admin/artists';
 import { ArtistsResponse, PostArtistRequest } from '@/types/admin/artists';
 import { Artist, InfiniteScrollResponse } from '@/types';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
+import { getArtistsTest, postArtistTest } from '@/apis/admin/tester/artists';
 
 type Props = {
   setArtistsList: Dispatch<
     SetStateAction<InfiniteScrollResponse<ArtistsResponse>>
   >;
+  role: string | null;
 };
 
-export default function ArtistForm({ setArtistsList }: Props) {
+export default function ArtistForm({ setArtistsList, role }: Props) {
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<Omit<Artist, 'artistNo'>>({
     artistName: '',
     studentNo: 0,
@@ -30,6 +33,7 @@ export default function ArtistForm({ setArtistsList }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     // 유효성 검사
     if (!form.artistName || !form.studentNo || !form.cohort) {
@@ -62,16 +66,25 @@ export default function ArtistForm({ setArtistsList }: Props) {
     }
 
     try {
-      const res = await postArtist(form);
-      toast.success(res.message);
+      let response;
+
+      if (role === 'TESTER') {
+        response = await postArtistTest(form);
+        await getArtistsTest({}).then((artistsList) =>
+          setArtistsList(artistsList)
+        );
+      } else {
+        response = await postArtist(form);
+        await getArtists({}).then((artistsList) => setArtistsList(artistsList));
+      }
+
+      toast.success(response.message);
 
       setForm({ artistName: '', studentNo: 0, cohort: 0 });
-
-      setArtistsList((prev) => {
-        return { ...prev, form };
-      });
     } catch (error) {
       toast.error(handleApiError(error));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -111,7 +124,7 @@ export default function ArtistForm({ setArtistsList }: Props) {
           </FormField>
         ))}
       </div>
-      <Button type='submit' className='ml-auto'>
+      <Button type='submit' className='ml-auto' disabled={loading}>
         작가 등록
       </Button>
     </form>

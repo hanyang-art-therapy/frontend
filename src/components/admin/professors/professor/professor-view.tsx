@@ -1,71 +1,83 @@
-import { useEffect, useState } from 'react';
-import type {
-  ProfessorsResponse,
-  PatchProfessorRequest,
-} from '@/types/admin/professors';
-import { MessageResponse } from '@/types';
 import {
+  deleteProfessor,
   getProfessors,
   patchProfessor,
-  deleteProfessor,
 } from '@/apis/admin/professors';
-import { getProfessorsTest } from '@/apis/admin/tester/professors';
+import {
+  deleteProfessorTest,
+  getProfessorsTest,
+  patchProfessorTest,
+} from '@/apis/admin/tester/professors';
 import ProfessorModal from '@/components/admin/professors/professor/professor-modal';
-import { handleApiError } from '@/components/common/error-handler';
-import { toast } from 'sonner';
 import { useAuthStore } from '@/store/auth';
+import { MessageResponse } from '@/types';
+import type {
+  PatchProfessorRequest,
+  ProfessorsResponse,
+} from '@/types/admin/professors';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-export default function ProfessorView() {
+type Props = {
+  professors: ProfessorsResponse[];
+  setProfessors: Dispatch<SetStateAction<ProfessorsResponse[]>>;
+};
+
+export default function ProfessorView({ professors, setProfessors }: Props) {
   const { role } = useAuthStore();
-  const [professors, setProfessors] = useState<ProfessorsResponse[]>([]);
   const [selectedProfessors, setSelectedProfessors] =
     useState<ProfessorsResponse | null>(null);
-
-  useEffect(() => {
-    if (role === 'TESTER') {
-      getProfessorsTest()
-        .then(setProfessors)
-        .catch((error) => {
-          toast.error(handleApiError(error));
-        });
-    } else {
-      getProfessors()
-        .then(setProfessors)
-        .catch((error) => {
-          toast.error(handleApiError(error));
-        });
-    }
-  }, []);
 
   const handleEdit = async (
     form: PatchProfessorRequest
   ): Promise<MessageResponse> => {
     const { professorNo, professorName, position, major, email, tel, filesNo } =
       form;
-    const res = await patchProfessor(professorNo, {
-      professorName,
-      position,
-      major,
-      email,
-      tel,
-      filesNo,
-    });
 
-    await getProfessors().then((professors) => setProfessors(professors));
+    let response;
+
+    if (role === 'TESTER') {
+      response = await patchProfessorTest(professorNo, {
+        professorName,
+        position,
+        major,
+        email,
+        tel,
+        filesNo,
+      });
+      await getProfessorsTest().then((professors) => setProfessors(professors));
+    } else {
+      response = await patchProfessor(professorNo, {
+        professorName,
+        position,
+        major,
+        email,
+        tel,
+        filesNo,
+      });
+      await getProfessors().then((professors) => setProfessors(professors));
+    }
+
     setSelectedProfessors(null);
 
-    return res;
+    return response;
   };
 
   const handleDelete = async (
     professorNo: number
   ): Promise<MessageResponse> => {
-    const res = await deleteProfessor(professorNo);
+    let response;
 
-    await getProfessors().then((professors) => setProfessors(professors));
+    if (role === 'TESTER') {
+      response = await deleteProfessorTest(professorNo);
+      await getProfessorsTest().then((professors) => setProfessors(professors));
+    } else {
+      response = await deleteProfessor(professorNo);
+      await getProfessors().then((professors) => setProfessors(professors));
+    }
+
     setSelectedProfessors(null);
 
-    return res;
+    return response;
   };
 
   const handleClose = () => setSelectedProfessors(null);
@@ -121,6 +133,7 @@ export default function ProfessorView() {
       {/* 교수진 상세 모달 */}
       {selectedProfessors && (
         <ProfessorModal
+          role={role}
           professor={selectedProfessors}
           onEdit={handleEdit}
           onDelete={handleDelete}
