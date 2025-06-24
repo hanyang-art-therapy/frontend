@@ -196,10 +196,6 @@
 |<span style="white-space: nowrap;"><img src="https://github.com/user-attachments/assets/bbc28cdd-d135-477f-b7a8-d94cec309a04" height="400"/> <img src="https://github.com/user-attachments/assets/e5118de9-4bdd-42a7-b6ac-256c112a5351"  height="400"/></span>|
 |공용으로 재사용 가능한 commin-soon 페이지|
 
-
----
-다은 작성 라인
-
 |작품 상세 페이지|
 |:---:|
 |<img src="https://github.com/user-attachments/assets/18f0284c-e0be-4bed-830a-a2a82edbb9cd" width="70%"/> <img src="https://github.com/user-attachments/assets/544953d4-6e2a-41fe-b8f7-4cd11449ef60" width="29%"/>|
