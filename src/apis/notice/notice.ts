@@ -13,9 +13,10 @@ import type {
 export const getNotices = async ({
   page,
   keyword,
+  category,
 }: GetNoticesRequest): Promise<GetNoticesResponse> => {
   const response = await apiInstance.get('/notices', {
-    params: { page, keyword },
+    params: { page, keyword, category },
   });
 
   return response.data;
