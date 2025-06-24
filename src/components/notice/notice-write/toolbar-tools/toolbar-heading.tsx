@@ -263,7 +263,7 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
           />
           <ToolbarButton
             icon={() => (
-              <div className='w-[20px] h-[20px] bg-btn-dark-3 border border-gray-300' />
+              <div className='w-[20px] h-[20px] bg-black border border-gray-300' />
             )}
             className={buttonShadowClass}
             onClick={() => editor.chain().focus().setColor('#333333').run()}
