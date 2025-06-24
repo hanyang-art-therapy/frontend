@@ -18,7 +18,7 @@ export default function MyReviewList({ myReviews }: MyReviewListProps) {
     return <MyReviewNoSearched />;
   }
 
-  const { content: reviews, page, totalElements, size } = myReviews;
+  const { content: reviews } = myReviews;
 
   return (
     <ul className='flex flex-col border-t border-b'>
@@ -32,7 +32,7 @@ export default function MyReviewList({ myReviews }: MyReviewListProps) {
             className='flex items-center gap-4 md:gap-[30px] px-1 md:px-5 py-[13px] cursor-pointer'
           >
             <p className='px-1 t-r-16 md:min-w-[46px] text-center'>
-              {totalElements - (page - 1) * size - index}
+              {index + 1}
             </p>
 
             <div className='flex-1 min-w-0'>

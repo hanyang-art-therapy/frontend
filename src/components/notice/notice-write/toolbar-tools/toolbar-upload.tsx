@@ -148,7 +148,7 @@ export default function ToolbarUpload({
       <div className='w-full h-auto min-h-[70px] md:px-5 py-4 md:py-6 border-t flex flex-col gap-2 bg-btn-gray-fa'>
         <div className='px-6 flex flex-col gap-4'>
           <div className='flex gap-2 items-center'>
-            <span className='t-r-16s text-btn-dark-3 mr-4'>파일 첨부:</span>
+            <span className='t-r-16s text-bg-black mr-4'>파일 첨부:</span>
             <input
               type='file'
               id='fileUpload'
@@ -191,7 +191,7 @@ export default function ToolbarUpload({
                     <div className='flex items-center gap-2'>
                       <span className='text-bg-secondary'>{file.name}</span>
                       {file.isNew && (
-                        <span className='text-xs bg-bg-secondary/40 text-btn-dark-3 px-2 py-1 rounded'>
+                        <span className='text-xs bg-bg-secondary/40 text-bg-black px-2 py-1 rounded'>
                           새 파일
                         </span>
                       )}
@@ -200,7 +200,7 @@ export default function ToolbarUpload({
                   <button
                     type='button'
                     onClick={() => removeFile(index)}
-                    className='cursor-pointer hover:bg-btn-dark-3 p-1 rounded-sm text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
+                    className='cursor-pointer hover:bg-black p-1 rounded-sm text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
                   >
                     삭제
                   </button>

@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'sonner';
-import { FilePenLine } from 'lucide-react';
-import { useEditor } from '@tiptap/react';
+import { getNotice, patchNotice } from '@/apis/notice/notice';
+import NoticeEditHeader from '@/components/notice/detail/edit/detail-edit-tools/notice-edit-header';
+import NoticeEditText from '@/components/notice/detail/edit/detail-edit-tools/notice-edit-text';
+import NoticeUploadEditor from '@/components/notice/detail/edit/detail-edit-tools/notice-upload-editor';
+import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
+import ToolbarHeading from '@/components/notice/notice-write/toolbar-tools/toolbar-heading'; // 실제 경로로 수정 필요
+import { Button } from '@/components/ui/button';
+import { getEgType, getKoType } from '@/lib/helper/notice';
 import { Extension } from '@tiptap/core';
 import Color from '@tiptap/extension-color';
-import StarterKit from '@tiptap/starter-kit';
+import Highlight from '@tiptap/extension-highlight';
+import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
-import Highlight from '@tiptap/extension-highlight';
-import Link from '@tiptap/extension-link';
-import { NoticeCategory } from '@/types/notice/notice';
-import { getNotice, patchNotice } from '@/apis/notice/notice';
-import { Button } from '@/components/ui/button';
-import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
-import NoticeUploadEditor from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-upload-editor';
-import NoticeEditHeader from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-header';
-import NoticeEditText from '@/components/notice/notice-detail/notice-detail-edit/detail-edit-tools/notice-edit-text';
-import ToolbarHeading from '@/components/notice/notice-write/toolbar-tools/toolbar-heading'; // 실제 경로로 수정 필요
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import axios from 'axios';
+import { FilePenLine } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 
 type NoticeFile = {
   name: string;
@@ -97,32 +97,6 @@ const FontSize = Extension.create({
   },
 });
 
-const getType = (category: string) => {
-  switch (category) {
-    case 'GENERAL':
-      return '일반';
-    case 'PRACTICE':
-      return '실습';
-    case 'RECRUIT':
-      return '모집';
-    case 'EXHIBITION':
-      return '전시';
-    case 'ACADEMIC':
-      return '학술';
-    default:
-      return '';
-  }
-};
-
-// 한글 → 영문
-const ENG_CATEGORY_MAP: Record<string, NoticeCategory> = {
-  일반: 'GENERAL',
-  실습: 'PRACTICE',
-  모집: 'RECRUIT',
-  전시: 'EXHIBITION',
-  학술: 'ACADEMIC',
-};
-
 export default function NoticeEditForm() {
   const { noticeNo } = useParams<{ noticeNo: string }>();
   const navigate = useNavigate();
@@ -136,7 +110,7 @@ export default function NoticeEditForm() {
     files: [],
   });
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [dataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const isEdit = Boolean(noticeNo);
@@ -279,12 +253,12 @@ export default function NoticeEditForm() {
       return;
     }
 
-    setLoading(true);
+    setIsLoading(true);
 
     try {
       if (isEdit && noticeNo) {
         const convertedCategory =
-          ENG_CATEGORY_MAP[getType(formData.category)] || formData.category;
+          getEgType(formData.category) || formData.category;
 
         await patchNotice(parseInt(noticeNo), {
           title: formData.title,
@@ -311,7 +285,7 @@ export default function NoticeEditForm() {
       console.error('Submit error:', err);
       toast.error('서버 오류가 발생했습니다.');
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -319,7 +293,7 @@ export default function NoticeEditForm() {
     return (
       <div className='w-full flex justify-center items-center min-h-screen bg-bg-gray-d py-8'>
         <div className='max-w-4xl mx-auto px-4'>
-          <div className='bg-white rounded-lg shadow-md p-8 text-center py-8 text-lg text-btn-dark-3'>
+          <div className='bg-white rounded-lg shadow-md p-8 text-center py-8 text-lg text-bg-black'>
             데이터를 불러오는 중...
           </div>
         </div>
@@ -331,7 +305,7 @@ export default function NoticeEditForm() {
     return (
       <div className='w-full h-full mt-[80px] md:mt-[120px]'>
         <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
-          <div className='w-full md:h-[140px] xl:px-0 border-t-2 py-[10px] text-start bg-btn-dark-3/50'>
+          <div className='w-full md:h-[140px] xl:px-0 border-t py-[10px] text-start bg-black'>
             <div className='flex flex-col gap-4 mt-2 t-r-16 px-[20px]'>
               <div className='text-lg text-bg-primary mb-4'>{error}</div>
               <Button
@@ -351,10 +325,10 @@ export default function NoticeEditForm() {
     <div className='w-full h-full mt-[80px] md:mt-[120px]'>
       <div className='w-full max-w-[1260px] mx-auto px-5'>
         <div className='flex justify-start items-center pb-[10px] md:pb-[20px] gap-2'>
-          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-btn-dark-3'>
+          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-black'>
             <FilePenLine size={40} strokeWidth={2} />
           </div>
-          <strong className='p-2 text-btn-dark-3 t-b-32'>게시물 수정</strong>
+          <strong className='p-2 text-bg-black t-b-32'>게시물 수정</strong>
         </div>
       </div>
       <form
@@ -365,9 +339,9 @@ export default function NoticeEditForm() {
           formData={formData}
           setFormData={setFormData}
           loading={false}
-          selectedCategory={getType(formData.category)}
+          selectedCategory={getKoType(formData.category)}
           handleCategoryChange={(value: string) => {
-            const converted = ENG_CATEGORY_MAP[value] || value;
+            const converted = getEgType(value) || value;
             setFormData((prev) => ({
               ...prev,
               category: converted,
@@ -381,7 +355,7 @@ export default function NoticeEditForm() {
         <div className='w-full h-auto'>
           <NoticeEditText
             setFormData={setFormData}
-            loading={loading}
+            isLoading={isLoading}
             editor={editor}
           />
           <NoticeUploadEditor formData={formData} setFormData={setFormData} />

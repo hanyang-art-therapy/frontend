@@ -1,4 +1,4 @@
-import NoticeList from '@/components/notice/notice-list/notice-list';
+import NoticeContent from '@/components/notice/content/notice-content';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ export default function Notice() {
   return (
     <div className='min-h-screen-vh mt-15 flex flex-col items-center justify-center'>
       <div className='w-full max-w-[1260px] px-5 xl:px-0 text-center'>
-        <NoticeList />
+        <NoticeContent />
         <Outlet />
       </div>
     </div>
