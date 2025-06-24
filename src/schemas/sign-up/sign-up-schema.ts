@@ -23,6 +23,8 @@ const baseSchema = z.object({
   //   .string()
   //   .min(1, { message: '이메일 도메인을 입력해주세요' })
   //   .max(100, { message: '이메일 도메인은 100자 이하이어야 합니다' }),
+  emailId: z.string().optional(),
+  emailDomain: z.string().optional(),
 });
 
 export const signUpSchema = baseSchema
