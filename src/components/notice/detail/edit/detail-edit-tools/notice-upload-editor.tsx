@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Paperclip, Image, Download } from 'lucide-react';
 import { postFile } from '@/apis/common/file';
+import { LucideIcon } from 'lucide-react';
 
 type NoticeFile = {
   filesNo?: number;
@@ -33,8 +34,7 @@ const ToolbarButton = ({
   color = '#333333',
   className = '',
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
+  icon: LucideIcon;
   onClick: () => void;
   disabled?: boolean;
   color?: string;
@@ -117,7 +117,7 @@ export default function NoticeUploadEditor({
       <div className='w-full h-auto min-h-[70px] md:px-5 py-4 md:py-6 border-t border-bg-gray-d flex flex-col gap-2 bg-btn-gray-fa'>
         <div className='px-6 flex flex-col gap-4'>
           <div className='flex gap-2 items-center'>
-            <span className='t-r-16s text-btn-dark-3 mr-4'>파일 첨부:</span>
+            <span className='t-r-16s text-bg-black mr-4'>파일 첨부:</span>
             <input
               type='file'
               id='fileUpload'
@@ -154,13 +154,13 @@ export default function NoticeUploadEditor({
                   className='flex items-center justify-between group'
                 >
                   <div className='flex items-center gap-2 cursor-pointer w-max border-b border-transparent hover:border-bg-gray-d'>
-                    <div className='bg-bg-secondary w-[20px] h-[20px] md:w-[22px] md:h-[22px] rounded-sm flex justify-center items-center'>
-                      <Download size={16} color='white' strokeWidth={2} />
+                    <div className='w-[20px] h-[20px] md:w-[22px] md:h-[22px] text-primary flex justify-center items-center'>
+                      <Download size={16} strokeWidth={2} />
                     </div>
                     <div className='flex items-center gap-2'>
                       <span className='text-bg-secondary'>{file.name}</span>
                       {file.isNew && (
-                        <span className='text-xs bg-bg-secondary/40 text-btn-dark-3 px-2 py-1 rounded'>
+                        <span className='t-r-12 bg-primary text-white px-2 py-1 rounded-[5px]'>
                           새 파일
                         </span>
                       )}
@@ -169,7 +169,7 @@ export default function NoticeUploadEditor({
                   <button
                     type='button'
                     onClick={() => removeFile(index)}
-                    className='cursor-pointer hover:bg-btn-dark-3 p-1 rounded-sm text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
+                    className='cursor-pointer hover:bg-black p-1 rounded-sm text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
                   >
                     삭제
                   </button>

@@ -1,4 +1,3 @@
-
 import {
   Select,
   SelectContent,
@@ -36,7 +35,6 @@ export default function NoticeEditHeader({
   selectedCategory,
   handleCategoryChange,
 }: Props) {
-
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -48,20 +46,20 @@ export default function NoticeEditHeader({
 
   return (
     <div className='w-full md:h-[140px] xl:px-0 text-start'>
-      <div className='flex flex-col gap-4 mt-2 t-r-16 px-[12px] md:px-[20px]'>
+      <div className='flex flex-col gap-4 mt-2 t-r-16 px-[12px]'>
         {/* 제목 */}
         <div>
           <div className='w-[90%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
-        <input
-        type="text"
-        name="title"
-        value={formData.title}
-        onChange={handleInputChange}
-        className="max-w-[310px] t-b-32 px-[10px] 
-          overflow-hidden text-ellipsis whitespace-nowrap"
-        placeholder="제목을 입력하세요"
-        required
-        />
+          <input
+            type='text'
+            name='title'
+            value={formData.title}
+            onChange={handleInputChange}
+            className='max-w-[310px] t-b-32 px-[10px] 
+          overflow-hidden text-ellipsis whitespace-nowrap'
+            placeholder='제목을 입력하세요'
+            required
+          />
         </div>
 
         {/* 구분 && 기간 */}
@@ -78,10 +76,9 @@ export default function NoticeEditHeader({
                   <SelectValue placeholder='전체' />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value='all'>전체</SelectItem>
-                  {CATEGORY_LIST.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
+                  {CATEGORY_LIST.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
                     </SelectItem>
                   ))}
                 </SelectContent>

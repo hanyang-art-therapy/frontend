@@ -18,12 +18,12 @@ type NoticeData = {
 
 type NoticeEditTextProps = {
   setFormData: React.Dispatch<React.SetStateAction<NoticeData>>;
-  loading: boolean;
+  isLoading: boolean;
   editor: Editor | null;
 };
 
 export default function NoticeEditText({
-  loading,
+  isLoading,
   editor,
 }: NoticeEditTextProps) {
   const { noticeNo } = useParams<{ noticeNo: string }>();
@@ -39,7 +39,7 @@ export default function NoticeEditText({
       <div>
         {/* textarea 대신 TipTap EditorContent 사용 */}
         <div className='w-full border border-gray-300 rounded-sm'>
-          <EditorContent 
+          <EditorContent
             editor={editor}
             className='min-h-[200px] p-4 prose prose-sm max-w-none
             [&_.ProseMirror]:outline-none 
@@ -56,16 +56,16 @@ export default function NoticeEditText({
         <Button
           type='button'
           onClick={handleCancel}
-          className='h-[20px] w-[80px] t-r-16 bg-bg-primary/50 hover:bg-bg-primary text-white rounded-sm'
+          className='w-[80px] t-r-16 bg-destructive hover:bg-destructive/80 '
         >
           취소
         </Button>
         <Button
           type='submit'
-          disabled={loading}
-          className='h-[20px] w-[80px] t-r-16 bg-bg-secondary/50 hover:bg-bg-secondary text-white rounded-sm'
+          disabled={isLoading}
+          className='w-[80px] t-r-16 bg-primary hover:bg-primary/80 '
         >
-          {loading ? '처리중...' : isEdit ? '수정 완료' : '작성 완료'}
+          {isLoading ? '처리중...' : '완료'}
         </Button>
       </div>
     </div>
