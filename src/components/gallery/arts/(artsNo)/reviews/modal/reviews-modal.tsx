@@ -110,7 +110,7 @@ export default function ReviewsModal({
 
   const handleBanClick = async () => {
     try {
-      const response = await banReview({
+      await banReview({
         artsNo: artsNo,
         reviewsNo: selectedReview.reviewsNo,
       });

@@ -6,16 +6,19 @@ export default function IsFixedCheckbox({
   setIsFixed: (checked: boolean) => void;
 }) {
   return (
-    <div className='flex items-center gap-2 m-2'>
+    <div className='flex items-center gap-2 md:m-2'>
       <input
         type='checkbox'
         checked={isFixed}
         onChange={(e) => setIsFixed(e.target.checked)}
         id='isFixed'
-        className='w-4 h-4 border-gray-300 rounded border'
+        className='w-4 h-4 border-2 border-bg-gray-d/60 rounded'
       />
-      <label htmlFor='isFixed' className='t-b-16'>
+      <label htmlFor='isFixed' className='t-b-16 hidden md:block'>
         중요한 게시물로 설정
+      </label>
+      <label htmlFor='isFixed' className='t-b-16 block md:hidden'>
+        중요
       </label>
     </div>
   );
