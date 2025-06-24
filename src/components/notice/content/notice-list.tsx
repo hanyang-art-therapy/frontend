@@ -5,6 +5,7 @@ import NoticeNoData from '@/components/notice/notice-noresult/notice-no-data';
 import { Button } from '@/components/ui/button';
 import Pagination from '@/components/ui/pagination';
 import { getEgType } from '@/lib/helper/notice';
+import { useAuthStore } from '@/store/auth';
 import { GetNoticesResponse } from '@/types/notice/notice';
 import { FileText } from 'lucide-react';
 import type { Dispatch, SetStateAction } from 'react';
@@ -26,6 +27,7 @@ export default function NoticeList({
 }: NoticeTableProps) {
   const navigate = useNavigate();
   const { content, totalElements } = notices;
+  const { role } = useAuthStore.getState();
 
   if (totalElements === 0) {
     return <NoticeNoData />;
@@ -57,14 +59,15 @@ export default function NoticeList({
         <NoticeTable notices={content} />
       </div>
 
-      <Button
-        type='button'
-        onClick={() => navigate('/notice/write')}
-        className='h-[30px] md:h-[40px] w-[80px] md:w-[120px] mt-[30px] ml-auto'
-      >
-        글쓰기
-      </Button>
-
+      {role === 'ADMIN' && (
+        <Button
+          type='button'
+          onClick={() => navigate('/notice/write')}
+          className='h-[30px] md:h-[40px] w-[80px] md:w-[120px] mt-[30px] ml-auto'
+        >
+          글쓰기
+        </Button>
+      )}
       <Pagination
         currentPage={notices.page + 1}
         totalPages={notices.totalPages}

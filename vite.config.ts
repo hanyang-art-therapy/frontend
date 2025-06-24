@@ -7,14 +7,14 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths(), tailwindcss()],
-//   server: {
-//     https: {
-//       key: fs.readFileSync(path.resolve(__dirname, 'certs/localhost-key.pem')),
-//       cert: fs.readFileSync(path.resolve(__dirname, 'certs/localhost.pem')),
-//     },
-//     port: 5173,
-//     host: 'localhost',
-//   },
+  // server: {
+  //   https: {
+  //     key: fs.readFileSync(path.resolve(__dirname, 'certs/localhost-key.pem')),
+  //     cert: fs.readFileSync(path.resolve(__dirname, 'certs/localhost.pem')),
+  //   },
+  //   port: 5173,
+  //   host: 'localhost',
+  // },
   base: '/',
   resolve: {
     alias: {
