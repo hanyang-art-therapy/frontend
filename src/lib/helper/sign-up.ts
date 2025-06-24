@@ -9,27 +9,21 @@ export const getValidationStates = ({
   watch,
   errors,
   isUserIdValid,
-  isEmailValid,
+  // isEmailValid,
   isStudentNoValid,
   userType,
 }: {
   watch: UseFormWatch<SignUpFormValues>;
   errors: FieldErrors<SignUpFormValues>;
   isUserIdValid: boolean;
-  isEmailValid: boolean;
+  // isEmailValid: boolean;
   isStudentNoValid: boolean;
   userType: UserType;
 }) => {
   const userIdValid =
     !errors.userId && Boolean(watch('userId')) && isUserIdValid;
 
-  const emailValid =
-    userIdValid &&
-    !errors.emailId &&
-    !errors.emailDomain &&
-    Boolean(watch('emailId')) &&
-    Boolean(watch('emailDomain')) &&
-    isEmailValid;
+  const emailValid = userIdValid;
 
   const passwordValid =
     emailValid && !errors.password && Boolean(watch('password'));
