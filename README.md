@@ -205,4 +205,7 @@
 |<img src="https://github.com/user-attachments/assets/18f0284c-e0be-4bed-830a-a2a82edbb9cd" width="70%"/> <img src="https://github.com/user-attachments/assets/544953d4-6e2a-41fe-b8f7-4cd11449ef60" width="29%"/>|
 |작품 상세 디자인|
 
-
+|작품 상세 페이지|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/c5fc22e6-a0de-4225-aa31-cb50b63c5ab6" width="70%"/>|
+|작품 상세 디자인|
