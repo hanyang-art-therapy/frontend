@@ -1,3 +1,4 @@
+import IsFixedCheckbox from '@/components/notice/notice-write/editor-tools/infixed-checkbox';
 import {
   Select,
   SelectContent,
@@ -29,12 +30,16 @@ type Props = {
   handleCategoryChange: (value: string) => void;
 };
 
+import React, { useState } from 'react';
+
 export default function NoticeEditHeader({
   formData,
   setFormData,
   selectedCategory,
   handleCategoryChange,
 }: Props) {
+  const [isFixed, setIsFixed] = useState(false);
+
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -46,17 +51,16 @@ export default function NoticeEditHeader({
 
   return (
     <div className='w-full md:h-[140px] xl:px-0 text-start'>
-      <div className='flex flex-col gap-4 mt-2 t-r-16 px-[12px]'>
-        {/* 제목 */}
-        <div>
-          <div className='w-[90%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
+      <div className='flex flex-col gap-4 m-2 t-r-16 px-[12px] md:px-0'>
+         <IsFixedCheckbox isFixed={isFixed} setIsFixed={setIsFixed} />
+        <div className='flex justify-start items-center md:ml-0 border-b-2 md:border-b-0 border-b-bg-gray-d/40 pb-2 md:pb-0'>
+          <label className='t-b-16 whitespace-nowrap'>제목 :</label>
           <input
             type='text'
             name='title'
             value={formData.title}
             onChange={handleInputChange}
-            className='max-w-[310px] t-b-32 px-[10px] 
-          overflow-hidden text-ellipsis whitespace-nowrap'
+            className='w-[220px] md:w-auto t-b-24 px-[10px] overflow-hidden text-ellipsis whitespace-nowrap'
             placeholder='제목을 입력하세요'
             required
           />
@@ -67,7 +71,7 @@ export default function NoticeEditHeader({
           {/* 구분 */}
           <div className='flex items-center gap-2 t-r-16'>
             <div className='flex flex-col md:flex-row items-center gap-2 md:gap-4'>
-              <label className='t-b-16 whitespace-nowrap'>구분</label>
+              <label className='t-b-16 whitespace-nowrap w-[40px] mr-[8px] md:mr-0'>구분</label>
               <Select
                 value={selectedCategory}
                 onValueChange={handleCategoryChange}
@@ -94,7 +98,7 @@ export default function NoticeEditHeader({
                   name='periodStart'
                   value={formData.periodStart}
                   onChange={handleInputChange}
-                  className='border-2 border-bg-gray-d/60 rounded px-2 py-2 w-[122px] md:w-[140px]'
+                  className='border-2 border-bg-gray-d/60 rounded px-2 py-2 w-[118px] md:w-[140px]'
                 />
               </div>
             </div>
@@ -107,7 +111,7 @@ export default function NoticeEditHeader({
                 name='periodEnd'
                 value={formData.periodEnd}
                 onChange={handleInputChange}
-                className='border-2 border-bg-gray-d/60 rounded px-2 py-2 w-[122px] md:w-[140px]'
+                className='border-2 border-bg-gray-d/60 rounded px-2 py-2 w-[118px] md:w-[140px]'
               />
             </div>
           </div>

@@ -63,15 +63,16 @@ export default function NoticeDetail() {
     <div className='w-full h-full mt-[80px] md:mt-[120px]'>
       <div className='w-full max-w-[1260px] mx-auto px-5'>
         <div className='flex justify-start items-center pb-[20px] gap-2'>
-          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-black'>
+          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-bg-secondary'>
             <Volume2 size={40} strokeWidth={2} />
           </div>
           <strong className='p-2 text-bg-black t-b-32'>공지사항</strong>
         </div>
+        <div className='w-[96%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
       </div>
 
       <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
-        <div className='w-full md:h-[140px] xl:px-0 border-t py-[10px] text-start'>
+        <div className='w-full md:h-[140px] xl:px-0 py-[10px] text-start'>
           <div className='flex flex-col gap-4 mt-2 t-r-16 px-[20px]'>
             <h1 className='t-b-32 font-bold'>{noticeContent.title}</h1>
             <div className='md:flex md:flex-row t-r-14 md:p-[10px] flex gap-2 md:gap-4 flex-wrap'>
@@ -125,7 +126,7 @@ export default function NoticeDetail() {
         </div>
 
         {/* 파일 */}
-        <div className='w-full h-auto md:px-5 py-4 md:py-6 border-t flex flex-col gap-2 bg-bg-gray-fa'>
+        <div className='w-full h-auto md:px-5 py-4 md:py-6 flex flex-col gap-2 bg-bg-gray-fa  border-t border-b border-bg-gray-d '>
           <div className='px-6 flex flex-col gap-4'>
             <div className='flex flex-col gap-2 t-r-16'>
               {noticeContent.files && noticeContent.files.length > 0 ? (
@@ -153,7 +154,7 @@ export default function NoticeDetail() {
           </div>
         </div>
         {/* 이전글과 다음글 */}
-        <div className='w-full px-5 xl:px-0 py-6 border-t t-r-16 flex justify-center'>
+        <div className='w-full px-5 xl:px-0 py-6 t-r-16 flex justify-center'>
           {noticeContent && (
             <NoticeNav
               next={noticeContent.next}

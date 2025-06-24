@@ -217,16 +217,21 @@ const editor = useEditor({
   }
 
   return (
-    <div className='h-full w-full max-w-[1260px] pt-[80px] px-1 md:px-5 xl:px-0 mx-auto text-center'>
-      <div className='w-full text-center'>
-        <div className='flex justify-start items-center gap-1 w-full px-2 md:px-0 pb-[12px] md:pb-[18px]'>
-          <div className='p-2 rounded-[5px] text-white bg-secondary'>
-            <NotepadText size={32} strokeWidth={2} />
+    <div className='h-full w-full max-w-[1260px] md:pt-[40px] px-1 md:px-5 xl:px-0 mx-auto text-center'>
+      <div className='w-full text-center mt-[80px]'>
+        <div className='w-full max-w-[1260px] mx-auto px-5 md:px-0'>
+        <div className='flex justify-start items-center pb-[10px] md:pb-[20px] gap-2'>
+          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-bg-secondary/90'>
+            <NotepadText size={40} strokeWidth={2} />
           </div>
-          <strong className='p-2 ext-gray-6 t-b-24'>게시물 작성</strong>
+          <strong className='p-2 text-bg-black t-b-32'>게시물 작성</strong>
         </div>
+        <div className='w-[96%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
+      </div>
+      <div className='flex px-2 md:px-0'>
         <IsFixedCheckbox isFixed={isFixed} setIsFixed={setIsFixed} />
-        <div className='flex flex-col md:flex-row gap-4 mb-4 overflow-x-auto'>
+      </div>
+        <div className='flex flex-col md:flex-row gap-4 mb-4 overflow-x-auto px-4 md:px-0'>
           <TitleAndCategoryInput
             title={title}
             setTitle={setTitle}

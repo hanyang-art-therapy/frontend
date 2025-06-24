@@ -56,7 +56,7 @@ export default function EditorSection({ editor, className }: Props) {
 
   return (
     <div className={className}>
-    <div className='m-1 rounded-sm border-2 border-bg-gray-d/60'>
+    <div className='m-1 rounded-sm border-2 border-bg-gray-d/60 mx-0 md:mx-0'>
       {editor && <Toolbar editor={editor} />}
       <EditorContent
         editor={editor}

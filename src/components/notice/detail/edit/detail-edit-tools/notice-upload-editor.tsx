@@ -114,10 +114,10 @@ export default function NoticeUploadEditor({
 
   return (
     <div className='relative'>
-      <div className='w-full h-auto min-h-[70px] md:px-5 py-4 md:py-6 border-t border-bg-gray-d flex flex-col gap-2 bg-btn-gray-fa'>
-        <div className='px-6 flex flex-col gap-4'>
+      <div className='w-full h-auto min-h-[70px] md:px-5 py-4 md:py-6 border-t border-b border-bg-gray-d flex flex-col gap-2 bg-btn-gray-fa'>
+        <div className='px-4 md:px-6 flex flex-col gap-2 md:gap-4'>
           <div className='flex gap-2 items-center'>
-            <span className='t-r-16s text-bg-black mr-4'>파일 첨부:</span>
+            <span className='t-b-16 text-bg-black mr-4'>파일 첨부:</span>
             <input
               type='file'
               id='fileUpload'
