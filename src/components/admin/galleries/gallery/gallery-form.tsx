@@ -1,17 +1,27 @@
 import FormField from '@/components/admin/form-field';
 import { Button } from '@/components/ui/button';
-import { postGallery } from '@/apis/admin/galleries';
+import { getGalleries, postGallery } from '@/apis/admin/galleries';
 import { PostGalleryRequest } from '@/types/admin/galleries';
 import { Gallery } from '@/types';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { toast } from 'sonner';
 import { handleApiError } from '@/components/common/error-handler';
+import {
+  getGalleriesTest,
+  postGalleryTest,
+} from '@/apis/admin/tester/galleries';
 
 type Props = {
   postedYears: string[];
+  role: string | null;
+  setGalleries: Dispatch<SetStateAction<Gallery[]>>;
 };
 
-export default function GalleryForm({ postedYears }: Props) {
+export default function GalleryForm({
+  postedYears,
+  role,
+  setGalleries,
+}: Props) {
   const [form, setForm] = useState<Omit<Gallery, 'galleriesNo'>>({
     title: '',
     startDate: '',
@@ -56,15 +66,24 @@ export default function GalleryForm({ postedYears }: Props) {
       toast.error('종료일자가 시작일자보다 빠를 수 없습니다.');
       return;
     }
+    const submitForm: PostGalleryRequest = {
+      title: form.title,
+      startDate: form.startDate,
+      endDate: form.endDate,
+    };
 
     try {
-      const submitForm: PostGalleryRequest = {
-        title: form.title,
-        startDate: form.startDate,
-        endDate: form.endDate,
-      };
-      const res = await postGallery(submitForm);
-      toast.success(res.message);
+      let response;
+
+      if (role === 'TESTER') {
+        response = await postGalleryTest(submitForm);
+        await getGalleriesTest().then(setGalleries);
+      } else {
+        response = await postGallery(submitForm);
+        await getGalleries().then(setGalleries);
+      }
+
+      toast.success(response.message);
       setForm({ title: '', startDate: '', endDate: '' });
     } catch (error) {
       toast.error(handleApiError(error));

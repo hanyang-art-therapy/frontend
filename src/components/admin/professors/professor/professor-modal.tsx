@@ -1,5 +1,4 @@
-import { getProfessor } from '@/apis/admin/professors';
-import { postFile } from '@/apis/common/file';
+import { postFile, postFileTest } from '@/apis/common/file';
 import FormField from '@/components/admin/form-field';
 import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
@@ -20,6 +19,7 @@ import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 type Props = {
+  role: string | null;
   professor: ProfessorsResponse;
   onEdit: (form: PatchProfessorRequest) => Promise<MessageResponse>;
   onDelete: (professorNo: number) => Promise<MessageResponse>;
@@ -27,6 +27,7 @@ type Props = {
 };
 
 export default function ProfessorModal({
+  role,
   professor,
   onEdit,
   onDelete,
@@ -45,25 +46,16 @@ export default function ProfessorModal({
   const [previewUrl, setPreviewUrl] = useState('');
 
   useEffect(() => {
-    try {
-      const fetchProfessor = async () => {
-        const response = await getProfessor(professor.professorNo);
-        setForm({
-          professorNo: professor.professorNo,
-          professorName: professor.professorName,
-          position: professor.position,
-          major: professor.major,
-          email: response?.email ?? '',
-          tel: response?.tel ?? '',
-          filesNo: null,
-        });
-        setPreviewUrl(response?.files?.url || '');
-      };
-
-      fetchProfessor();
-    } catch (error) {
-      toast.error(handleApiError(error));
-    }
+    setForm({
+      professorNo: professor.professorNo,
+      professorName: professor.professorName,
+      position: professor.position,
+      major: professor.major,
+      email: professor?.email ?? '',
+      tel: professor?.tel ?? '',
+      filesNo: null,
+    });
+    setPreviewUrl(professor?.files?.url || '');
   }, [professor]);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -88,7 +80,13 @@ export default function ProfessorModal({
 
     setUploading(true);
     try {
-      const uploadedFile = await postFile([selected]);
+      let uploadedFile;
+
+      if (role === 'TESTER') {
+        uploadedFile = await postFileTest([selected], 'professors');
+      } else {
+        uploadedFile = await postFile([selected]);
+      }
 
       setForm((prev) => ({
         ...prev,

@@ -4,31 +4,43 @@ import type {
   PostProfessorRequest,
   ProfessorsResponse,
 } from '@/types/admin/professors';
+import { toast } from 'sonner';
 
 export const getProfessorsTest = async (): Promise<ProfessorsResponse[]> => {
-  const res = await supabase.from('professors').select('*');
-  return res.data as ProfessorsResponse[];
+  const { data, error } = await supabase.from('professors').select('*');
+
+  if (error) {
+    toast.error('교수 목록 조회에 실패했습니다');
+  }
+
+  return data as ProfessorsResponse[];
 };
 
 export const patchProfessorTest = async (
   professorNo: number,
   data: Omit<PatchProfessorRequest, 'professorNo'>
 ) => {
-  const res = await supabase
-    .from('professor')
+  const { error } = await supabase
+    .from('professors')
     .update(data)
     .eq('professorNo', professorNo);
 
-  return res.data;
+  if (error) {
+    toast.error('교수 정보 수정이 실패했습니다');
+  }
+  return { message: '교수 정보가 수정 되었습니다' };
 };
 
 export const deleteProfessorTest = async (professorNo: number) => {
-  const res = await supabase
-    .from('professor')
+  const { error } = await supabase
+    .from('professors')
     .delete()
     .eq('professorNo', professorNo);
 
-  return res.data;
+  if (error) {
+    toast.error('교수 삭제에 실패했습니다');
+  }
+  return { message: '교수진 정보 삭제가 완료되었습니다' };
 };
 
 export const postProfessorTest = async (data: PostProfessorRequest) => {

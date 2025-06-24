@@ -1,16 +1,26 @@
-import { postProfessor } from '@/apis/admin/professors';
-import { postProfessorTest } from '@/apis/admin/tester/professors';
-import { postFile } from '@/apis/common/file';
+import { getProfessors, postProfessor } from '@/apis/admin/professors';
+import {
+  getProfessorsTest,
+  postProfessorTest,
+} from '@/apis/admin/tester/professors';
+import { postFile, postFileTest } from '@/apis/common/file';
 import FormField from '@/components/admin/form-field';
 import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
 import { MAX_FILE_SIZE } from '@/constants/common/common';
 import { useAuthStore } from '@/store/auth';
-import { PostProfessorRequest } from '@/types/admin/professors';
-import { useRef, useState } from 'react';
+import {
+  PostProfessorRequest,
+  ProfessorsResponse,
+} from '@/types/admin/professors';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
-export default function ProfessorForm() {
+type Props = {
+  setProfessors: Dispatch<SetStateAction<ProfessorsResponse[]>>;
+};
+
+export default function ProfessorForm({ setProfessors }: Props) {
   const { role } = useAuthStore();
 
   const [form, setForm] = useState<PostProfessorRequest>({
@@ -43,7 +53,13 @@ export default function ProfessorForm() {
 
     setUploading(true);
     try {
-      const uploadedFiles = await postFile([selected]);
+      let uploadedFiles;
+
+      if (role === 'TESTER') {
+        uploadedFiles = await postFileTest([selected], 'professors');
+      } else {
+        uploadedFiles = await postFile([selected]);
+      }
 
       setForm((prev) => ({
         ...prev,
@@ -86,8 +102,10 @@ export default function ProfessorForm() {
       let res;
       if (role === 'TESTER') {
         await postProfessorTest(form);
+        await getProfessorsTest().then(setProfessors);
       } else {
         res = await postProfessor(form);
+        await getProfessors().then(setProfessors);
       }
 
       toast.success(res?.message);

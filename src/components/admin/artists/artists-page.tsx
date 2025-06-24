@@ -46,7 +46,7 @@ export default function AdminArtist() {
             role={role}
           />
         ) : (
-          <ArtistForm setArtistsList={setArtistsList} />
+          <ArtistForm setArtistsList={setArtistsList} role={role} />
         )}
       </div>
     </>
