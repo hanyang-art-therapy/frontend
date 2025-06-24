@@ -64,6 +64,22 @@ export const getArtistsTest = async ({
   };
 };
 
+export const getArtistTest = async (
+  artistNo: number
+): Promise<ArtistResponse> => {
+  const { data, error } = await supabase
+    .from('artists')
+    .select('artistNo, artistName, studentNo, cohort')
+    .eq('artistNo', artistNo)
+    .single();
+
+  if (error) {
+    toast.error(error.message);
+  }
+
+  return data as ArtistResponse;
+};
+
 export const patchArtistTest = async (
   artistNo: number,
   data: Omit<PatchArtistRequest, 'artistNo'>
@@ -71,11 +87,11 @@ export const patchArtistTest = async (
   await supabase
     .from('artists')
     .update({
-      artist_name: data.artistName,
-      student_no: data.studentNo,
+      artistName: data.artistName,
+      studentNo: data.studentNo,
       cohort: data.cohort,
     })
-    .eq('artist_no', artistNo);
+    .eq('artistNo', artistNo);
 
   return {
     message: '작가정보가 수정되었습니다',
@@ -83,15 +99,19 @@ export const patchArtistTest = async (
 };
 
 export const deleteArtistTest = async (artistNo: number) => {
-  await supabase.from('artists').delete().eq('artist_no', artistNo);
+  await supabase.from('artists').delete().eq('artistNo', artistNo);
+
+  return {
+    message: '작가정보가 삭제되었습니다',
+  };
 };
 
 export const postArtistTest = async (data: PostArtistRequest) => {
-  const { data: artistData, error } = await supabase
+  const { error } = await supabase
     .from('artists')
     .insert({
-      artist_name: data.artistName,
-      student_no: data.studentNo,
+      artistName: data.artistName,
+      studentNo: data.studentNo,
       cohort: data.cohort,
     })
     .select('artistNo, artistName, studentNo, cohort');
@@ -100,5 +120,7 @@ export const postArtistTest = async (data: PostArtistRequest) => {
     toast.error(error.message);
   }
 
-  return artistData;
+  return {
+    message: '작가정보가 추가되었습니다',
+  };
 };

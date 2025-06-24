@@ -1,4 +1,5 @@
 import { Files, Notice } from '@/types';
+
 export type NoticeCategory =
   | 'GENERAL'
   | 'PRACTICE'
@@ -17,6 +18,7 @@ export type PostNoticeRequest = Pick<
 export type GetNoticesRequest = {
   page?: number;
   keyword?: string;
+  category?: NoticeCategory;
 };
 
 export type GetNoticeRequest = Pick<Notice, 'noticeNo'>;
@@ -42,23 +44,27 @@ export type PatchNoticeRequest = {
 };
 
 export type PaginationResponse<T> = {
-  totalElements: number;
   content: T[];
-  totalCount: number;
+  isLast: boolean;
   page: number;
-  pageSize: number;
+  totalElements: number;
+  totalPages: number;
 };
 
-export type GetNoticesResponse = PaginationResponse<
-  Pick<
-    Notice,
-    'noticeNo' | 'category' | 'title' | 'createdAt' | 'viewCount'
-  > & {
-    isFixed: boolean;
-    hasFile: boolean;
-  }
->;
+export type GetNoticesResponse = PaginationResponse<GetNoticesContent>;
+
+export type GetNoticesContent = Pick<
+  Notice,
+  'noticeNo' | 'category' | 'title' | 'createdAt' | 'viewCount'
+> & {
+  isFixed: boolean;
+  hasFile: boolean;
+};
 
 export type GetNoticeResponse = Omit<Notice, 'userNo' | 'filesNo'> & {
   files: Pick<Files, 'filesNo' | 'name' | 'url'>[];
+  previous: NoticeNav;
+  next: NoticeNav;
 };
+
+export type NoticeNav = Pick<Notice, 'noticeNo' | 'title' | 'createdAt'>;

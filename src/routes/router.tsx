@@ -8,20 +8,23 @@ import {
   adminArtistLoader,
   adminArtsLoader,
   adminUserLoader,
+  adminProfessorsLoader,
+  adminGalleriesLoader,
 } from '@/routes/loaders/admin';
 import { artLoader } from '@/routes/loaders/art/art-loader';
 import { galleryLoader } from '@/routes/loaders/gallery/gallery-loader';
 import { homeLoader } from '@/routes/loaders/home/home-loader';
+import { introProfessorLoader } from '@/routes/loaders/intro/professor-loader';
 import {
   myPageLoader,
   myPostsLoader,
   myProfileLoader,
   myReviewsLoader,
 } from '@/routes/loaders/my-page';
+import { noticeLoader } from '@/routes/loaders/notice-loader';
 import { rootLoader } from '@/routes/loaders/root-loader';
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import { introProfessorLoader } from './loaders/intro/professor-loader';
 
 const HomePage = lazy(() => import('@/pages/page'));
 const GalleryPage = lazy(() => import('@/pages/gallery/page'));
@@ -143,6 +146,7 @@ const router = createBrowserRouter([
       {
         path: '/notice',
         element: lazyElement({ Element: NoticePage }),
+        loader: noticeLoader,
       },
       {
         path: 'notice/:noticeNo',
@@ -186,10 +190,12 @@ const router = createBrowserRouter([
           {
             path: 'galleries',
             element: lazyElement({ Element: AdminGalleryPage }),
+            loader: adminGalleriesLoader,
           },
           {
             path: 'professors',
             element: lazyElement({ Element: AdminProfessorPage }),
+            loader: adminProfessorsLoader,
           },
         ],
       },

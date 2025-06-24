@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { getNotices } from '@/apis/notice/notice';
+import { handleApiError } from '@/components/common/error-handler';
+import Search from '@/components/ui/search';
 import {
   Select,
   SelectContent,
@@ -7,89 +8,70 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import Search from '@/components/ui/search';
 import { CATEGORY_LIST } from '@/constants/notice/notice-category';
+import { getEgType } from '@/lib/helper/notice';
+import { type GetNoticesResponse } from '@/types/notice/notice';
+import { type Dispatch, type SetStateAction } from 'react';
+import { toast } from 'sonner';
 
-const categoryList = CATEGORY_LIST;
+type NoticeSearchProps = {
+  filter: string;
+  searchValue: string;
+  setFilter: Dispatch<SetStateAction<string>>;
+  setSearchValue: Dispatch<SetStateAction<string>>;
+  setNotices: Dispatch<SetStateAction<GetNoticesResponse>>;
+};
 
-export const NoticeSearch = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const selectedCategory = searchParams.get('category') ?? 'all';
+export default function NoticeSearch({
+  filter,
+  searchValue,
+  setFilter,
+  setSearchValue,
+  setNotices,
+}: NoticeSearchProps) {
+  const handleSearchChange = async () => {
+    try {
+      const response = await getNotices({
+        keyword: searchValue,
+        category: getEgType(filter),
+      });
 
-  const getEgType = (category: string) => {
-    if (category === '일반') {
-      return 'GENERAL';
+      setNotices(response);
+    } catch (error) {
+      console.log(error);
+      toast.error(handleApiError(error));
     }
-    if (category === '실습') {
-      return 'PRACTICE';
-    }
-    if (category === '모집') {
-      return 'RECRUIT';
-    }
-    if (category === '전시') {
-      return 'EXHIBITION';
-    }
-
-    return 'ACADEMIC';
   };
 
-  const handleCategoryChange = async (category: string) => {
-    setSearchParams((prevSearchParams) => {
-      const enCategory = getEgType(category);
-
-      if (category === 'all') prevSearchParams.delete('category');
-      else prevSearchParams.set('category', enCategory);
-
-      return prevSearchParams;
-    });
-  };
-
-  const [searchValue, setSearchValue] = useState('');
-  const handleSearch = () => {
-    if (searchValue) {
-      setSearchParams((prev) => {
-        prev.set('keyword', searchValue);
-        return prev;
-      });
-    } else {
-      setSearchParams((prev) => {
-        prev.delete('keyword');
-        return prev;
-      });
-    }
+  const handleSelectChange = (value: string) => {
+    setFilter(value);
   };
 
   return (
-    <div className='w-full text-center'>
-      {/* 구분 선택 && 검색바 */}
-      <div className='flex w-full items-center gap-2 md:gap-4 mt-4 pb-[20px] md:pb-[32px]'>
-        <Select
-          value={selectedCategory}
-          onValueChange={(value) => handleCategoryChange(value)}
-        >
-          <SelectTrigger className='md:px-4 md:py-2 border rounded w-[80px] md:w-[150px]'>
-            <SelectValue placeholder='전체 기수' />
-          </SelectTrigger>
+    <div className='flex gap-2 mb-[20px] mt-4'>
+      <Select value={filter} onValueChange={handleSelectChange}>
+        <SelectTrigger className='w-[100px]'>
+          <SelectValue placeholder='필터' />
+        </SelectTrigger>
 
-          <SelectContent>
-            <SelectItem value='all'>구분</SelectItem>
-            {categoryList.map((cat) => (
-              <SelectItem key={cat} value={cat}>
-                {cat}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <SelectContent>
+          <SelectItem key='all' value='전체'>
+            전체
+          </SelectItem>
 
-        <div className='flex-1'>
-          <Search
-            placeholder='검색어를 입력하세요'
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-            onSearch={handleSearch}
-          />
-        </div>
-      </div>
+          {CATEGORY_LIST.map((category) => (
+            <SelectItem key={category} value={category}>
+              {category}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Search
+        placeholder='제목이나 내용으로 검색'
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        onSearch={handleSearchChange}
+      />
     </div>
   );
-};
+}
