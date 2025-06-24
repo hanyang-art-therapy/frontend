@@ -64,11 +64,10 @@ export const banReview = async ({
   artsNo,
   reviewsNo,
 }: BanReviewRequest): Promise<MessageResponse> => {
-  const response = await axiosInstance.patch(
-    `/galleries/arts/${artsNo}/reviews/${reviewsNo}/ban`
-  );
-
-  console.log(response);
+  const response = await axiosInstance.post(`/admin/users/ban`, {
+    artsNo,
+    reviewsNo,
+  });
 
   return response.data;
 };

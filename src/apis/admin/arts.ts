@@ -36,7 +36,7 @@ export const getAdminArts = async ({
   return res.data;
 };
 
-export const getAdminArtByNo = async (
+export const getAdminArt = async (
   artsNo: number
 ): Promise<AdminArtResponse> => {
   const res = await apiInstance.get(`/admin/arts/${artsNo}`);

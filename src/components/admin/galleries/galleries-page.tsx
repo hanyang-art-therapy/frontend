@@ -12,18 +12,14 @@ export default function AdminGalleries() {
 
   const { role } = useAuthStore();
   const [selectedTab, setSelectedTab] = useState<TabType>('view');
-  const [postedYears, setPostedYears] = useState<string[]>([]);
+  // const [postedYears, setPostedYears] = useState<string[]>([]);
   const [galleries, setGalleries] = useState<GalleriesResponse[]>(loaderData);
 
   const content =
     selectedTab === 'view' ? (
       <GalleryView galleries={galleries} setGalleries={setGalleries} />
     ) : (
-      <GalleryForm
-        postedYears={postedYears}
-        role={role}
-        setGalleries={setGalleries}
-      />
+      <GalleryForm postedYears={[]} role={role} setGalleries={setGalleries} />
     );
 
   return (

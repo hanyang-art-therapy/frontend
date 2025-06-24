@@ -16,11 +16,16 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 type AdminArtViewProps = {
+  role: string | null;
   arts: InfiniteScrollResponse<AdminArtsResponse>;
   galleries: GalleriesResponse[];
 };
 
-export default function AdminArtView({ arts, galleries }: AdminArtViewProps) {
+export default function AdminArtView({
+  role,
+  arts,
+  galleries,
+}: AdminArtViewProps) {
   const [keyword, setKeyword] = useState('');
   const [filter, setFilter] = useState('artName');
   const [searhedArts, setSearhedArts] = useState<AdminArtsResponse[]>(
@@ -227,6 +232,7 @@ export default function AdminArtView({ arts, galleries }: AdminArtViewProps) {
       {/* 작품 상세 모달창 */}
       {selectedArt && (
         <AdminArtModal
+          role={role}
           artsNo={selectedArt.artsNo}
           galleries={galleries}
           onEdit={handleEdit}

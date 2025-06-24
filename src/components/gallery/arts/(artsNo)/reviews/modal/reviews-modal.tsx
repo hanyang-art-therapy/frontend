@@ -115,9 +115,7 @@ export default function ReviewsModal({
         reviewsNo: selectedReview.reviewsNo,
       });
 
-      console.log(response);
-
-      toast.success('리뷰가 정지되었습니다.');
+      toast.success(response.message);
     } catch (error) {
       const errorMessage = handleApiError(error);
       toast.error(errorMessage);
