@@ -109,7 +109,7 @@ export default function NoticeDetail() {
             <div className='flex gap-4 mt-4 justify-end items-end absolute bottom-4 right-4'>
               <Button
                 onClick={() => navigate(`/notice/${noticeNo}/edit`)}
-                className='w-[80px] t-r-16 bg-primary hover:bg-primary/80 '
+                  className='w-[80px] h-[20px] t-r-16 bg-bg-primary/80 hover:bg-bg-primary'
               >
                 수정
               </Button>
@@ -117,7 +117,7 @@ export default function NoticeDetail() {
               <Button
                 disabled={isDeleting}
                 onClick={handleDelete}
-                className='w-[80px] t-r-16 bg-destructive hover:bg-destructive/80 '
+                className='w-[80px] h-[20px] t-r-16  bg-destructive/80 hover:bg-destructive'
               >
                 삭제
               </Button>
@@ -126,8 +126,8 @@ export default function NoticeDetail() {
         </div>
 
         {/* 파일 */}
-        <div className='w-full h-auto md:px-5 py-4 md:py-6 flex flex-col gap-2 bg-bg-gray-fa  border-t border-b border-bg-gray-d '>
-          <div className='px-6 flex flex-col gap-4'>
+        <div className='w-full h-auto md:px-5 py-4 md:py-6 flex flex-col gap-2 bg-bg-gray-fa  border-t border-b border-bg-gray-d'>
+          <div className='px-4 md:px-6 flex flex-col gap-4'>
             <div className='flex flex-col gap-2 t-r-16'>
               {noticeContent.files && noticeContent.files.length > 0 ? (
                 noticeContent.files.map((file, index) => (
@@ -136,12 +136,12 @@ export default function NoticeDetail() {
                     className='flex items-center gap-2 cursor-pointer w-max border-b border-transparent hover:border-b hover:border-gray-6'
                   >
                     <div className='w-[20px] h-[20px] md:w-[22px] md:h-[22px] flex justify-center items-center text-primary'>
-                      <Download size={16} strokeWidth={2} />
+                      <Download size={16} strokeWidth={2} className='text-btn-dark-3'/>
                     </div>
                     <a
                       href={file.url}
                       target='_blank'
-                      className='text-bg-secondary hover:underline'
+                      className='text-btn-dark-3 hover:text-bg-primary'
                     >
                       {file.name}
                     </a>
