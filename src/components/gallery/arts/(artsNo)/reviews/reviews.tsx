@@ -98,7 +98,7 @@ export default function Reviews({
       });
 
       setReviews((prev) => {
-        const newReviews = [...prev.content, response.data];
+        const newReviews = [response.data, ...prev.content];
 
         return {
           ...prev,
