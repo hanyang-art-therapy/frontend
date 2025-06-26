@@ -121,8 +121,6 @@ export default function ArtistView({
     return response;
   };
 
-  const handleClose = () => setSelectedArtist(null);
-
   const loadArtists = useCallback(
     async (reset = false) => {
       try {
@@ -187,6 +185,8 @@ export default function ArtistView({
       toast.error(handleApiError(error));
     }
   };
+
+  const handleClose = () => setSelectedArtist(null);
 
   return (
     <>

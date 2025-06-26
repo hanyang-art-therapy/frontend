@@ -11,8 +11,15 @@ import { handleApiError } from '@/components/common/error-handler';
 import { toast } from 'sonner';
 import { useLoaderData } from 'react-router-dom';
 import Search from '@/components/ui/search';
+import {
+  getUsersTest,
+  getUserTest,
+  patchUserTest,
+} from '@/apis/admin/tester/users';
+import { useAuthStore } from '@/store/auth';
 
 export default function AdminUserPage() {
+  const { role: authRole } = useAuthStore();
   const loaderData = useLoaderData() as InfiniteScrollResponse<UsersResponse>;
   const [users, setUsers] = useState<UsersResponse[]>(loaderData.content);
   const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
@@ -25,38 +32,55 @@ export default function AdminUserPage() {
   const handleEdit = async (
     form: PatchUserRequest
   ): Promise<MessageResponse> => {
+    let response;
     const { userNo, userId, userName, email, studentNo, role, userStatus } =
       form;
-    const res = await patchUser(userNo, {
-      userId,
-      userName,
-      email,
-      studentNo,
-      role,
-      userStatus,
-    });
 
-    try {
+    if (authRole === 'TESTER') {
+      response = await patchUserTest(userNo, {
+        userId,
+        userName,
+        email,
+        studentNo,
+        role,
+        userStatus,
+      });
+
+      const updated = await getUsersTest({});
+      setUsers(updated.content);
+    } else {
+      response = await patchUser(userNo, {
+        userId,
+        userName,
+        email,
+        studentNo,
+        role,
+        userStatus,
+      });
+
       const updated = await getUsers();
       setUsers(updated.content);
-    } catch (error) {
-      toast.error(handleApiError(error));
     }
 
     setSelectedUser(null);
-    return res;
+    return response;
   };
 
   const handleSelectUser = async (userNo: number) => {
     try {
-      const userDetail = await getUser(userNo);
-      setSelectedUser(userDetail);
+      let user;
+
+      if (authRole === 'TESTER') {
+        user = await getUserTest(userNo);
+      } else {
+        user = await getUser(userNo);
+      }
+
+      setSelectedUser(user);
     } catch (error) {
       toast.error(handleApiError(error));
     }
   };
-
-  const handleClose = () => setSelectedUser(null);
 
   const handleSearch = async () => {
     const response = await getUsers(searchValue.trim());
@@ -106,6 +130,8 @@ export default function AdminUserPage() {
       if (observer.current) observer.current.disconnect();
     };
   }, [hasNext, loadMoreUsers, searchValue]);
+
+  const handleClose = () => setSelectedUser(null);
 
   return (
     <div>
