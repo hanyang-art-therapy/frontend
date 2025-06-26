@@ -8,12 +8,10 @@ import ToolTip from '@/components/ui/tooltip';
 import { useAuthStore } from '@/store/auth';
 import { LoaderCircle } from 'lucide-react';
 import { FormEvent, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export default function SignInForm() {
-  const navigate = useNavigate();
-
   const { setAccessToken, setRole, setUserNo } = useAuthStore();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -40,18 +38,15 @@ export default function SignInForm() {
     try {
       const response = await signIn({ userId: userId.trim(), password });
 
-      if (response.role === 'ADMIN' || response.role === 'TESTER') {
-        navigate('/admin/users');
-
-        toast.success('관리자로 로그인하였습니다');
-      } else {
-        navigate('/');
-        toast.success('로그인하였습니다');
-      }
-
       setAccessToken(response.accessToken);
       setRole(response.role);
       setUserNo(response.userNo);
+
+      if (response.role === 'ADMIN' || response.role === 'TESTER') {
+        toast.success('관리자로 로그인하였습니다');
+      } else {
+        toast.success('로그인하였습니다');
+      }
 
       if (isUserIdRemember) {
         localStorage.setItem('userId', userId);
