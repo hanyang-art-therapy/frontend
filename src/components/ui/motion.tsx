@@ -46,13 +46,22 @@ export function AnimatedSection({
     <motion.section
       className={className}
       initial={{ opacity: 0, y: distance }}
-      whileInView={{
+      animate={{
         opacity: 1,
         y: 0,
         transition: {
           duration,
           ease: 'easeOut',
           delay,
+        },
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: duration * 0.8,
+          ease: 'easeOut',
+          delay: delay * 0.5,
         },
       }}
       viewport={{ once: true, amount: 0.1 }}
@@ -90,6 +99,7 @@ export function StaggeredList({
       className={className}
       variants={customStaggerContainer}
       initial='hidden'
+      animate='visible'
       whileInView='visible'
       viewport={{ once: true, amount: 0.1 }}
     >
