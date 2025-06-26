@@ -1,4 +1,5 @@
 import { refresh } from '@/apis/auth/refresh';
+import { handleApiError } from '@/components/common/error-handler';
 import { myPostsLoader } from '@/routes/loaders/my-page/posts';
 import { myProfileLoader } from '@/routes/loaders/my-page/profile';
 import { myReviewsLoader } from '@/routes/loaders/my-page/reviews';
@@ -11,8 +12,7 @@ const myPageLoader = async () => {
 
     return null;
   } catch (error) {
-    console.error(error);
-    toast.error('로그인이 필요합니다.');
+    toast.error(handleApiError(error));
     return redirect('/sign-in');
   }
 };

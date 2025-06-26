@@ -1,6 +1,6 @@
-import { CLINICAL_ACTIVITIES } from '@/constants/clinical/clinical';
-import { ArrowLeft, ArrowRight, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { CLINICAL_ACTIVITIES } from '@/constants/clinical/clinical';
+import { AlignJustify, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function ClinicalNav({ category }: { category: string }) {
@@ -23,30 +23,53 @@ export default function ClinicalNav({ category }: { category: string }) {
     else navigate('/clinical');
   };
 
+  const handleListClick = () => {
+    navigate('/clinical');
+  };
+
   return (
-    <div className='flex justify-between mt-15'>
-      <Button
-        variant='outline'
-        className='group transition-colors duration-200 group xl:w-[200px] md:w-[120px] w-[96px]'
-        onClick={handlePrevClick}
-      >
-        <div className='group-hover:-translate-x-1 transition-transform duration-500'>
-          {prevActivity ? <ArrowLeft size={20} /> : <Home size={20} />}
-        </div>
-        <span className='t-r-16'>{prevActivity?.title ?? '홈'}</span>
-      </Button>
+    <div className='grid grid-cols-3 justify-between items-center mt-15'>
+      <div className='flex justify-start'>
+        {prevActivity && (
+          <Button
+            variant='outline'
+            className='group transition-colors duration-200 group xl:w-[200px] md:w-[120px] w-[96px]'
+            onClick={handlePrevClick}
+          >
+            <div className='group-hover:-translate-x-1 transition-transform duration-500'>
+              <ArrowLeft size={20} />
+            </div>
+            <span className='t-r-16'>{prevActivity?.title}</span>
+          </Button>
+        )}
+      </div>
 
-      <Button
-        variant='outline'
-        className='group transition-colors duration-200 group xl:w-[200px] md:w-[120px] w-[96px]'
-        onClick={handleNextClick}
-      >
-        <span className='t-r-16'>{nextActivity?.title ?? '홈'}</span>
+      <div className='flex justify-center'>
+        <Button
+          variant='outline'
+          className='group transition-colors duration-200 group xl:w-[200px] md:w-[120px] w-[96px]'
+          onClick={handleListClick}
+        >
+          <AlignJustify size={20} />
+          <span className='t-r-16'>목록</span>
+        </Button>
+      </div>
 
-        <div className='group-hover:translate-x-1 transition-transform duration-500'>
-          {nextActivity ? <ArrowRight size={20} /> : <Home size={20} />}
-        </div>
-      </Button>
+      <div className='flex justify-end'>
+        {nextActivity && (
+          <Button
+            variant='outline'
+            className='group ml-auto transition-colors duration-200 group xl:w-[200px] md:w-[120px] w-[96px]'
+            onClick={handleNextClick}
+          >
+            <span className='t-r-16'>{nextActivity?.title}</span>
+
+            <div className='group-hover:translate-x-1 transition-transform duration-500'>
+              <ArrowRight size={20} />
+            </div>
+          </Button>
+        )}
+      </div>
     </div>
   );
 }
