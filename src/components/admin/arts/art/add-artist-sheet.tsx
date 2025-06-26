@@ -188,7 +188,7 @@ export default function AddArtistSheet({
         </Button>
       </SheetTrigger>
 
-      <SheetContent className='w-[400px] sm:w-[540px]'>
+      <SheetContent className='w-full sm:w-[540px]'>
         <SheetHeader>
           <SheetTitle>작가 관리</SheetTitle>
           <SheetDescription>
@@ -222,7 +222,7 @@ export default function AddArtistSheet({
           </div>
 
           {/* 작가 목록 */}
-          <div className='flex-1 overflow-y-auto max-h-[60vh] space-y-4'>
+          <div className='flex-1 overflow-y-auto max-h-[50vh] space-y-4'>
             {artists.content.length > 0 ? (
               <>
                 {artists.content.map((artist) => {

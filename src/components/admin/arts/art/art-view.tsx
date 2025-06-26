@@ -197,7 +197,7 @@ export default function AdminArtView({
           onSearch={handleSearch}
         />
       </div>
-      <div className='border border-btn-gray-d rounded max-h-[600px] divide-y divide-btn-gray-d'>
+      <div className='max-h-[100vw] md:max-h-[400px] overflow-y-scroll border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
         {/* 작품 목록 헤더 */}
         <div className='grid grid-cols-[1fr_3fr_3fr] leading-[44px] divide-x divide-btn-gray-d text-center t-b-14 text-nowrap top-0 bg-bg-gray-fa'>
           <div>No.</div>

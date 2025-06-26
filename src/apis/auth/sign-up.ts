@@ -13,14 +13,14 @@ export const signUp = async ({
   userId,
   password,
   userName,
-  // email,
+  email,
   studentNo,
 }: SignUpRequest): Promise<MessageResponse> => {
   const response = await apiInstance.post('/user/sign-up', {
     userId,
     password,
     userName,
-    // email,
+    email,
     studentNo,
   });
 

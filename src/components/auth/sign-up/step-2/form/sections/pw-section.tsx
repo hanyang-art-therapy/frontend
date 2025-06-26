@@ -27,6 +27,7 @@ export default function PwSection({
   const confirmPassword = watch('confirmPassword');
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (password && confirmPassword) trigger('confirmPassword');
@@ -42,18 +43,20 @@ export default function PwSection({
         >
           비밀번호 <Required nbsp />
         </label>
-        <Input
-          id='password'
-          type='password'
-          aria-label='비밀번호'
-          className='w-[200px] h-[45px] t-r-16'
-          placeholder='비밀번호를 입력해주세요.'
-          {...register('password')}
-        />
-        <ShowPassword
-          showPassword={showPassword}
-          setShowPassword={setShowPassword}
-        />
+        <div className='relative'>
+          <Input
+            id='password'
+            type={showPassword ? 'text' : 'password'}
+            aria-label='비밀번호'
+            className='w-[200px] h-[45px] t-r-16 pr-12'
+            placeholder='비밀번호를 입력해주세요.'
+            {...register('password')}
+          />
+          <ShowPassword
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
+          />
+        </div>
 
         {errors.password && (
           <p className='text-destructive t-r-14'>{errors.password.message}</p>
@@ -68,19 +71,20 @@ export default function PwSection({
         >
           비밀번호 확인 <Required nbsp />
         </label>
-        <Input
-          id='confirmPassword'
-          type='password'
-          aria-label='비밀번호 확인'
-          className='w-[200px] h-[45px] t-r-16'
-          placeholder='비밀번호를 입력해주세요.'
-          {...register('confirmPassword')}
-        />
-
-        <ShowPassword
-          showPassword={showPassword}
-          setShowPassword={setShowPassword}
-        />
+        <div className='relative'>
+          <Input
+            id='confirmPassword'
+            type={showConfirmPassword ? 'text' : 'password'}
+            aria-label='비밀번호 확인'
+            className='w-[200px] h-[45px] t-r-16 pr-12'
+            placeholder='비밀번호를 입력해주세요.'
+            {...register('confirmPassword')}
+          />
+          <ShowPassword
+            showPassword={showConfirmPassword}
+            setShowPassword={setShowConfirmPassword}
+          />
+        </div>
 
         {errors.confirmPassword && (
           <p className='text-destructive t-r-14'>

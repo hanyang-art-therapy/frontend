@@ -391,9 +391,15 @@ export default function AdminArtModal({
           </div>
         </div>
 
-        <DialogFooter className='grid grid-cols-2 mx-auto mt-[10px]'>
-          <Button onClick={handleSubmit}>수정</Button>
-          <Button variant='destructive' onClick={handleDelete}>
+        <DialogFooter className='grid grid-cols-2 gap-[10px] mx-auto mt-[10px] w-[100%] md:w-auto'>
+          <Button className='w-full md:w-[200px]' onClick={handleSubmit}>
+            수정
+          </Button>
+          <Button
+            className='w-full md:w-[200px]'
+            variant='destructive'
+            onClick={handleDelete}
+          >
             삭제
           </Button>
         </DialogFooter>

@@ -117,7 +117,7 @@ export default function UserModal({ user, onEdit, onClose }: Props) {
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className='max-w-[700px]'>
+      <DialogContent className='sm:max-w-[700px]'>
         <DialogHeader>
           <DialogTitle className='text-center'>USER INFO</DialogTitle>
           <DialogDescription className='text-center'>

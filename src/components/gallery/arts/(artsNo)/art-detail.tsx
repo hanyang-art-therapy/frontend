@@ -8,7 +8,7 @@ import type { ArtReview } from '@/types/gallery/review';
 
 type ArtDetailProps = {
   artDetail: ArtDetailType | null;
-  reviews: ArtReviewsPagination<ArtReview> | null;
+  reviews: ArtReviewsPagination<ArtReview>;
   artsNo: string;
 };
 
