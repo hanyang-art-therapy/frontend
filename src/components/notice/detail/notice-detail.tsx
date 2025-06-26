@@ -77,14 +77,14 @@ export default function NoticeDetail() {
             <h1 className='t-b-32 font-bold'>{noticeContent.title}</h1>
             <div className='md:flex md:flex-row t-r-14 md:p-[10px] flex gap-2 md:gap-4 flex-wrap'>
               <div className='flex items-center gap-2 w-1.5/2 md:w-auto t-r-16'>
-                <strong className='text-btn-gray-9'>구분</strong>
+                <strong className='text-btn-dark-3'>구분</strong>
                 {getKoType(noticeContent.category)}
-                <strong className='text-btn-gray-9'>작성일</strong>
+                <strong className='text-btn-dark-3'>작성일</strong>
                 {formatTimeStamp(noticeContent.createdAt)}
               </div>
 
               <div className='flex items-center gap-2 w-1.5/2 md:w-auto t-r-16'>
-                <strong className='text-btn-gray-9'>기간</strong>
+                <strong className='text-btn-dark-3'>기간</strong>
                 {noticeContent.periodStart
                   ? formatTimeStamp(noticeContent.periodStart)
                   : '기간 없음'}
@@ -92,7 +92,7 @@ export default function NoticeDetail() {
                 {noticeContent.periodEnd
                   ? formatTimeStamp(noticeContent.periodEnd)
                   : '기간 없음'}
-                <strong className='text-btn-gray-9'>조회수</strong>
+                <strong className='text-btn-dark-3'>조회수</strong>
                 {noticeContent.viewCount}
               </div>
             </div>
