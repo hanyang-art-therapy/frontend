@@ -21,11 +21,11 @@ export default function MyReviewList({ myReviews }: MyReviewListProps) {
   const { content: reviews } = myReviews;
 
   return (
-    <ul className='flex flex-col border-t border-b'>
+    <ul className='flex flex-col border-y border-gray-9'>
       {reviews.map((review, index) => (
         <li
           key={review.reviewsNo}
-          className='border-b border-b-black border-muted last:border-b-0 hover:bg-primary/10 hover:text-bg-primary transition-all duration-300'
+          className='border-b border-b-bg-gray-d border-muted last:border-b-0 hover:bg-primary/10 hover:text-bg-primary transition-all duration-300'
         >
           <Link
             to={`/gallery/${review.artsNo}`}
