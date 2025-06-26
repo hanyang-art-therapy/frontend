@@ -3,7 +3,9 @@ import { Ban, Check, Edit, RotateCcw, Trash } from 'lucide-react';
 
 type ReviewsModalActionsProps = {
   isEditing: boolean;
-  isAdmin: boolean;
+  role: string | null;
+  userNo: number | null;
+  selectedReviewUserNo: number | null;
   handleCancelClick: () => void;
   handleConfirmClick: () => void;
   handleEditClick: () => void;
@@ -13,13 +15,18 @@ type ReviewsModalActionsProps = {
 
 export default function ReviewsModalActions({
   isEditing,
-  isAdmin,
+  role,
+  userNo,
+  selectedReviewUserNo,
   handleCancelClick,
   handleConfirmClick,
   handleEditClick,
   handleDeleteClick,
   handleBanClick,
 }: ReviewsModalActionsProps) {
+  const isAdmin = role === 'ADMIN';
+  const isMyReview = userNo === selectedReviewUserNo;
+
   return (
     <div className='flex gap-6 items-center justify-center'>
       {isEditing ? (
@@ -45,7 +52,7 @@ export default function ReviewsModalActions({
         )
       )}
 
-      {!isEditing && (
+      {!isEditing && isMyReview && userNo && (
         <ReviewsModalActionsButton
           icon={<Trash className='w-5 h-5' />}
           name='삭제'

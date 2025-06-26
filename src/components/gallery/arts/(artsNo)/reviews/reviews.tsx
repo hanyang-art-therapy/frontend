@@ -23,7 +23,7 @@ import { toast } from 'sonner';
 type ReviewsProps = {
   artName: string;
   artsNo: string;
-  initialReviews: ArtReviewsPagination<ArtReview> | null;
+  initialReviews: ArtReviewsPagination<ArtReview>;
 };
 
 type PreviewImage = {
@@ -42,7 +42,7 @@ export default function Reviews({
 }: ReviewsProps) {
   const imageInputRef = useRef<HTMLInputElement>(null);
 
-  const { userNo } = useAuthStore();
+  const { userNo, role } = useAuthStore();
 
   const [page, setPage] = useState(1);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -50,13 +50,8 @@ export default function Reviews({
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isImageUploadLoading, setIsImageUploadLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState<PreviewImage | null>(null);
-  const [reviews, setReviews] = useState<ArtReviewsPagination<ArtReview>>(
-    initialReviews ?? {
-      content: [],
-      page: 0,
-      isLast: false,
-    }
-  );
+  const [reviews, setReviews] =
+    useState<ArtReviewsPagination<ArtReview>>(initialReviews);
   const [selectedReview, setSelectedReview] = useState<ArtReview>(
     {} as ArtReview
   );
@@ -150,7 +145,7 @@ export default function Reviews({
   return (
     <div className='flex w-full flex-col items-start gap-4'>
       {/* 미술관 미술치료 + 리뷰 개수 */}
-      <ReviewsTitle commentsLength={reviews?.content.length || 0} />
+      <ReviewsTitle commentsLength={reviews.totalElements} />
 
       {/* 리뷰 작성 */}
       <div className='flex flex-col w-full border border-bg-gray-d p-2 gap-5 md:pb-6 rounded-[5px]'>
@@ -192,6 +187,8 @@ export default function Reviews({
       {isDialogOpen && (
         <Suspense fallback={null}>
           <ReviewsModal
+            role={role}
+            userNo={userNo}
             artsNo={Number(artsNo)}
             artName={artName}
             isDialogOpen={isDialogOpen}

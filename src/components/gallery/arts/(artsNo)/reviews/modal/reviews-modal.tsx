@@ -11,7 +11,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { useAuthStore } from '@/store/auth';
 import type { ArtReviewsPagination } from '@/types';
 import type { ArtReview } from '@/types/gallery/review';
 import { X } from 'lucide-react';
@@ -25,6 +24,8 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 
 type ReviewsModalProps = {
+  role: string | null;
+  userNo: number | null;
   artsNo: number;
   artName: string;
   isDialogOpen: boolean;
@@ -35,6 +36,8 @@ type ReviewsModalProps = {
 };
 
 export default function ReviewsModal({
+  role,
+  userNo,
   artsNo,
   artName,
   isDialogOpen,
@@ -45,7 +48,6 @@ export default function ReviewsModal({
 }: ReviewsModalProps) {
   const reviewImages = selectedReview.files;
   const imageUrl = reviewImages?.[0]?.url;
-  const { role, userNo } = useAuthStore();
 
   const [editedText, setEditedText] = useState(selectedReview.reviewText);
   const [isEditing, setIsEditing] = useState(false);
@@ -73,14 +75,11 @@ export default function ReviewsModal({
     }
   };
 
-  const handleDeleteButtonClick = async () => {
+  const handleDeleteButtonClick = () => {
     setIsDeleteDialogOpen(true);
   };
 
-  const handleDeleteConfirm = async () => {
-    setIsDialogOpen(false);
-    setIsDeleteDialogOpen(false);
-
+  const handleDeleteConfirmClick = async () => {
     try {
       await deleteReview({
         artsNo: artsNo,
@@ -96,10 +95,14 @@ export default function ReviewsModal({
         };
       });
 
+      setIsDeleteDialogOpen(false);
+      setIsDialogOpen(false);
+
       toast.success('리뷰가 삭제되었습니다.');
     } catch (error) {
       const errorMessage = handleApiError(error);
       toast.error(errorMessage);
+      setIsDeleteDialogOpen(false);
     }
   };
 
@@ -119,6 +122,8 @@ export default function ReviewsModal({
     } catch (error) {
       const errorMessage = handleApiError(error);
       toast.error(errorMessage);
+    } finally {
+      setIsDialogOpen(false);
     }
   };
 
@@ -145,7 +150,7 @@ export default function ReviewsModal({
         >
           <div className='flex flex-col h-full max-h-[95vh]'>
             <DialogHeader className='relative flex flex-row items-center justify-between pb-4 sm:pb-6 px-4 sm:px-8 pt-4 sm:pt-8'>
-              <DialogTitle className='flex flex-wrap items-center gap-2 sm:gap-3 t-b-18 sm:t-b-24'>
+              <DialogTitle className='flex flex-wrap items-center gap-2 sm:gap-3 t-b-18'>
                 <div className='flex items-center gap-1 sm:gap-2'>
                   <span className='t-m-16 sm:t-m-18'>
                     {selectedReview.userName ?? '익명'}의
@@ -180,7 +185,9 @@ export default function ReviewsModal({
               {(role === 'ADMIN' || userNo === selectedReview.userNo) && (
                 <ReviewsModalActions
                   isEditing={isEditing}
-                  isAdmin={role === 'ADMIN'}
+                  role={role}
+                  userNo={userNo}
+                  selectedReviewUserNo={selectedReview.userNo}
                   handleCancelClick={handleCancelClick}
                   handleConfirmClick={handleConfirmClick}
                   handleEditClick={handleEditClick}
@@ -202,7 +209,7 @@ export default function ReviewsModal({
       <DeleteReviewModal
         isDeleteDialogOpen={isDeleteDialogOpen}
         setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-        handleDeleteConfirm={handleDeleteConfirm}
+        handleDeleteConfirm={handleDeleteConfirmClick}
       />
     </>
   );
