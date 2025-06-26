@@ -20,8 +20,8 @@ export default function NoticeTable({ notices }: NoticeTableProps) {
 
   return (
     <table className='w-full border-collapse table-fixed'>
-      <thead className='bg-white t-r-16 border-b border-t border-b-bg-gray-d '>
-        <tr className=' bg-bg-gray-fa'>
+      <thead className='bg-white t-r-16 border-b border-t border-b-bg-gray-d'>
+        <tr className='bg-bg-gray-fa'>
           <th className='p-2 w-[40px] md:w-[70px] min-w-[40px]'>No.</th>
           <th className='p-2 w-[80px] md:w-[100px] min-w-[50px]'>구분</th>
           <th className='p-2 md:max-w-[750px] min-w-[150px]'>제목</th>
@@ -51,20 +51,19 @@ export default function NoticeTable({ notices }: NoticeTableProps) {
             <td className='max-w-[100px] sm:w-[90px] p-2 text-left relative group overflow-hidden whitespace-nowrap text-ellipsis t-m-16'>
               <span className='flex items-center gap-2'>
                 {item.isFixed ? (
-                  <Pin
-                    size={20}
-                    color='#fff'
-                    strokeWidth={2}
-                    className='bg-bg-primary rounded-lg p-1'
-                  />
+                  <>
+                    <Pin
+                      size={20}
+                      color='#fff'
+                      strokeWidth={2}
+                      className='bg-bg-primary rounded-lg p-1'
+                    />
+                    {item.title}
+                  </>
                 ) : (
                   item.title
                 )}
-                {item.title}
               </span>
-              <div className='absolute bottom-full left-0 mb-1 w-max max-w-[200px] px-2 py-1 bg-btn-gray-9 text-white t-r-12 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none'>
-                {item.title}
-              </div>
             </td>
             <td className='p-2 hidden md:table-cell text-center align-middle'>
               {item.hasFile && (
