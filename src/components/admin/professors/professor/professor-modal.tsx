@@ -153,7 +153,7 @@ export default function ProfessorModal({
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className='max-w-[700px]'>
+      <DialogContent className='sm:max-w-[700px]'>
         <DialogHeader>
           <DialogTitle className='text-center'>PROFESSOR INFO</DialogTitle>
           <DialogDescription className='text-center'>
