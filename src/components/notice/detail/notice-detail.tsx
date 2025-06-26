@@ -99,10 +99,17 @@ export default function NoticeDetail() {
           </div>
         </div>
 
-        {/* 본문 내용 */}
+        {/* 본문 내용 - 목록 스타일 추가 */}
         <div className='w-full h-auto min-h-[300px] p-[20px] md:p-[30px] relative'>
           <div
-            className='mt-2 t-r-16 leading-relaxed prose prose-sm md:prose-base max-w-none'
+            className='mt-2 t-r-16 leading-relaxed prose prose-sm md:prose-base max-w-none
+              [&_ul]:list-disc [&_ul]:list-outside [&_ul]:ml-6 [&_ul]:pl-0
+              [&_ol]:list-decimal [&_ol]:list-outside [&_ol]:ml-6 [&_ol]:pl-0
+              [&_li]:my-1 [&_li]:pl-2 [&_li]:relative
+              [&_.tiptap-bullet-list]:list-disc [&_.tiptap-bullet-list]:list-outside [&_.tiptap-bullet-list]:ml-6
+              [&_.tiptap-ordered-list]:list-decimal [&_.tiptap-ordered-list]:list-outside [&_.tiptap-ordered-list]:ml-6
+              [&_.tiptap-list-item]:pl-2 [&_.tiptap-list-item]:my-1
+              [&_a]:underline [&_a]:cursor-pointer [&_a]:text-blue-600 [&_a]:hover:text-blue-800'
             dangerouslySetInnerHTML={{ __html: noticeContent.content }}
           />
           {role === 'ADMIN' && (

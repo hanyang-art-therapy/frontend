@@ -30,10 +30,10 @@ export default function TitleAndCategoryInput({
           placeholder='제목을 입력해주세요'
           className='flex-grow border-2 border-bg-gray-d/60 rounded px-3 py-2 min-w-[150px]'
         />
-      </div>
 
+      </div>
       {/* 구분 */}
-      <div className='flex items-center gap-2 min-w-[140px]'>
+      <div className='flex items-center justify-center gap-2 min-w-[140px]'>
         <label className='whitespace-nowrap w-[30px]'>구분</label>
         <Select
           value={selectedCategory}

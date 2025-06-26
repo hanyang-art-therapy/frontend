@@ -183,6 +183,19 @@ export default function NoticeEditForm() {
       }),
     ],
     content: formData.content || '<p>여기에 내용을 입력하세요</p>',
+     // 에디터에 목록 스타일 적용
+    editorProps: {
+      attributes: {
+        class: 'prose prose-sm md:prose-base max-w-none focus:outline-none ' +
+               '[&_ul]:list-disc [&_ul]:list-outside [&_ul]:ml-6 [&_ul]:pl-0 ' +
+               '[&_ol]:list-decimal [&_ol]:list-outside [&_ol]:ml-6 [&_ol]:pl-0 ' +
+               '[&_li]:my-1 [&_li]:pl-2 [&_li]:relative ' +
+               '[&_.tiptap-bullet-list]:list-disc [&_.tiptap-bullet-list]:list-outside [&_.tiptap-bullet-list]:ml-6 ' +
+               '[&_.tiptap-ordered-list]:list-decimal [&_.tiptap-ordered-list]:list-outside [&_.tiptap-ordered-list]:ml-6 ' +
+               '[&_.tiptap-list-item]:pl-2 [&_.tiptap-list-item]:my-1 ' +
+               '[&_a]:underline [&_a]:cursor-pointer [&_a]:text-blue-600 [&_a]:hover:text-blue-800'
+      }
+    }
   });
 
   useEffect(() => {

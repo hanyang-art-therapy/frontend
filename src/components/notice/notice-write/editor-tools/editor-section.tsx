@@ -9,14 +9,12 @@ type Props = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function EditorSection({ editor, className }: Props) {
-  // 에디터가 마운트된 후 스타일 적용
   useEffect(() => {
     if (!editor) return;
 
     const addLinkStyles = () => {
       const proseMirror = document.querySelector('.ProseMirror');
       if (proseMirror) {
-        // 기존 스타일 제거 후 새로 추가
         const existingStyle = document.getElementById('tiptap-link-styles');
         if (existingStyle) {
           existingStyle.remove();
@@ -45,9 +43,9 @@ export default function EditorSection({ editor, className }: Props) {
       }
     };
 
-    // 에디터 업데이트 시마다 스타일 확인
+
     editor.on('update', addLinkStyles);
-    addLinkStyles(); // 초기 실행
+    addLinkStyles();
 
     return () => {
       editor.off('update', addLinkStyles);

@@ -12,6 +12,10 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
+import ListItem from '@tiptap/extension-list-item';
+import BulletList from '@tiptap/extension-bullet-list';
+import OrderedList from '@tiptap/extension-ordered-list';
+import Image from '@tiptap/extension-image';
 import { Button } from '@/components/ui/button';
 import { handleApiError } from '@/components/common/error-handler';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
@@ -97,61 +101,71 @@ export default function NoticeWrite() {
 
 const editor = useEditor({
   extensions: [
-    StarterKit,
+    // StarterKit에서 목록 관련 기능들을 제외하고 사용
+    StarterKit.configure({
+      bulletList: false,
+      orderedList: false,
+      listItem: false,
+    }),
+    // 목록 관련 확장들을 명시적으로 추가 (중복 제거)
+    BulletList.configure({
+      HTMLAttributes: {
+        class: 'tiptap-bullet-list',
+      },
+    }),
+    OrderedList.configure({
+      HTMLAttributes: {
+        class: 'tiptap-ordered-list',
+      },
+    }),
+    ListItem.configure({
+      HTMLAttributes: {
+        class: 'tiptap-list-item',
+      },
+    }),
     TextAlign.configure({ types: ['heading', 'paragraph'] }),
     TextStyle,
     FontSize,
     Underline,
+    Image.configure({
+    inline: false,
+    allowBase64: true,
+    }),
     Color,
-    Highlight.configure({ multicolor: true }),    
+    Highlight.configure({ multicolor: true }),
     Link.configure({
-        openOnClick: false,
-        autolink: true,
-        defaultProtocol: 'https',
-        protocols: ['http', 'https'],
-        isAllowedUri: (url, ctx) => {
-          try {
-            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`${ctx.defaultProtocol}://${url}`)
-            if (!ctx.defaultValidate(parsedUrl.href)) {
-              return false
-            }
-            const disallowedProtocols = ['ftp', 'file', 'mailto']
-            const protocol = parsedUrl.protocol.replace(':', '')
-
-            if (disallowedProtocols.includes(protocol)) {
-              return false
-            }
-            const allowedProtocols = ctx.protocols.map(p => (typeof p === 'string' ? p : p.scheme))
-
-            if (!allowedProtocols.includes(protocol)) {
-              return false
-            }
-            const disallowedDomains = ['example-phishing.com', 'malicious-site.net']
-            const domain = parsedUrl.hostname
-
-            if (disallowedDomains.includes(domain)) {
-              return false
-            }
-            return true
-          } catch {
-            return false
-          }
-        },
-        shouldAutoLink: url => {
-          try {
-            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`https://${url}`)
-            const disallowedDomains = ['example-no-autolink.com', 'another-no-autolink.com']
-            const domain = parsedUrl.hostname
-
-            return !disallowedDomains.includes(domain)
-          } catch {
-            return false
-          }
-        },
-
-      }),
+      openOnClick: false,
+      autolink: true,
+      defaultProtocol: 'https',
+      protocols: ['http', 'https'],
+      isAllowedUri: (url, ctx) => {
+        try {
+          const parsedUrl = url.includes(':') ? new URL(url) : new URL(`${ctx.defaultProtocol}://${url}`)
+          const disallowedProtocols = ['ftp', 'file', 'mailto']
+          const protocol = parsedUrl.protocol.replace(':', '')
+          const allowedProtocols = ctx.protocols.map(p => (typeof p === 'string' ? p : p.scheme))
+          const disallowedDomains = ['example-phishing.com', 'malicious-site.net']
+          if (!ctx.defaultValidate(parsedUrl.href)) return false
+          if (disallowedProtocols.includes(protocol)) return false
+          if (!allowedProtocols.includes(protocol)) return false
+          if (disallowedDomains.includes(parsedUrl.hostname)) return false
+          return true
+        } catch {
+          return false
+        }
+      },
+      shouldAutoLink: url => {
+        try {
+          const parsedUrl = url.includes(':') ? new URL(url) : new URL(`https://${url}`)
+          const disallowedDomains = ['example-no-autolink.com', 'another-no-autolink.com']
+          return !disallowedDomains.includes(parsedUrl.hostname)
+        } catch {
+          return false
+        }
+      },
+    }),
   ],
-  content: '<p style="text-align:left;">여기에 내용을 입력하세요</p>',
+  content: '<p>여기에 내용을 입력하세요</p>',
   editorProps: {
     attributes: {
       class: 'prose prose-lg max-w-none focus:outline-none',
@@ -245,14 +259,22 @@ const editor = useEditor({
             setEndDate={setEndDate}
           />
         </div>
-        <EditorSection editor={editor} className="ProseMirror [&_a]:underline [&_a]:cursor-pointer [&_a]:text-blue-600 [&_a]:hover:text-blue"/>
-
+        <EditorSection 
+          editor={editor}
+          className="ProseMirror 
+            [&_ul]:list-disc [&_ul]:list-outside [&_ul]:ml-6 [&_ul]:pl-0
+            [&_ol]:list-decimal [&_ol]:list-outside [&_ol]:ml-6 [&_ol]:pl-0
+            [&_li]:my-1 [&_li]:pl-2 [&_li]:relative
+            [&_.tiptap-bullet-list]:list-disc [&_.tiptap-bullet-list]:list-outside [&_.tiptap-bullet-list]:ml-6
+            [&_.tiptap-ordered-list]:list-decimal [&_.tiptap-ordered-list]:list-outside [&_.tiptap-ordered-list]:ml-6
+            [&_.tiptap-list-item]:pl-2 [&_.tiptap-list-item]:my-1
+            [&_a]:underline [&_a]:cursor-pointer [&_a]:text-blue-600 [&_a]:hover:text-blue-800"
+        />
         <ToolbarUpload
           editor={editor}
           uploadedFiles={uploadedFiles}
           setUploadedFiles={setUploadedFiles}
         />
-
         <div className='flex justify-between mt-4 px-[8px]'>
           <NoticeNav />
           <Button

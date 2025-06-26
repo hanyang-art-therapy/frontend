@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Editor } from '@tiptap/react';
-import { Paperclip, Image, Download, LucideIcon } from 'lucide-react';
+import { Paperclip, Download, LucideIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { postFile } from '@/apis/common/file';
 
@@ -46,8 +46,6 @@ const ToolbarButton = ({
 
 const buttonShadowClass =
   'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)]';
-const buttonShadowClassHidden =
-  'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)] hidden md:block';
 
 export default function ToolbarUpload({
   editor,
@@ -162,12 +160,6 @@ export default function ToolbarUpload({
               icon={Paperclip}
               onClick={triggerFileUpload}
               className={buttonShadowClass}
-              disabled={uploading}
-            />
-            <ToolbarButton
-              icon={Image}
-              onClick={triggerFileUpload}
-              className={buttonShadowClassHidden}
               disabled={uploading}
             />
             {uploading && (
