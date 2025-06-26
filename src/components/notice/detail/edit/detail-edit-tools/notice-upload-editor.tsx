@@ -142,7 +142,7 @@ export default function NoticeUploadEditor({
               formData.files.map((file, index) => (
                 <div
                   key={index}
-                  className='flex items-center justify-between group'
+                  className='flex items-center justify-between group gap-2'
                 >
                   <div className='flex items-center gap-2 cursor-pointer w-max border-b border-transparent hover:border-bg-gray-d'>
                     <div className='w-[20px] h-[20px] md:w-[22px] md:h-[22px] text-primary flex justify-center items-center'>
@@ -151,7 +151,7 @@ export default function NoticeUploadEditor({
                     <div className='flex items-center gap-2'>
                       <span className='text-bg-secondary'>{file.name}</span>
                       {file.isNew && (
-                        <span className='t-r-12 bg-primary text-white px-2 py-1 rounded-[5px]'>
+                        <span className='w-[56px] t-r-12 bg-primary text-white px-2 py-1 rounded-[5px]'>
                           새 파일
                         </span>
                       )}
@@ -160,7 +160,7 @@ export default function NoticeUploadEditor({
                   <button
                     type='button'
                     onClick={() => removeFile(index)}
-                    className='cursor-pointer hover:bg-black p-1 rounded-sm text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
+                    className='min-w-[46px] cursor-pointer p-1 rounded-sm text-white font-medium t-b-14 bg-bg-gray-d hover:bg-btn-dark-3'
                   >
                     삭제
                   </button>

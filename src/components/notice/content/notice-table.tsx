@@ -52,12 +52,9 @@ export default function NoticeTable({ notices }: NoticeTableProps) {
               <span className='flex items-center gap-2'>
                 {item.isFixed ? (
                   <>
-                    <Pin
-                      size={20}
-                      color='#fff'
-                      strokeWidth={2}
-                      className='bg-bg-primary rounded-lg p-1'
-                    />
+                    <div className='w-5 h-5 bg-bg-primary rounded-full flex items-center justify-center shrink-0'>
+                      <Pin size={12} color='#fff' strokeWidth={2} />
+                    </div>
                     {item.title}
                   </>
                 ) : (
