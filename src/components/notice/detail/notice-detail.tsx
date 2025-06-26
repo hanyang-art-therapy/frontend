@@ -116,7 +116,7 @@ export default function NoticeDetail() {
             <div className='flex gap-4 mt-4 justify-end items-end absolute bottom-4 right-4'>
               <Button
                 onClick={() => navigate(`/notice/${noticeNo}/edit`)}
-                  className='w-[80px] h-[20px] t-r-16 bg-bg-primary/80 hover:bg-bg-primary'
+                className='w-[80px] h-[20px] t-r-16 bg-bg-primary/80 hover:bg-bg-primary'
               >
                 수정
               </Button>
@@ -140,10 +140,14 @@ export default function NoticeDetail() {
                 noticeContent.files.map((file, index) => (
                   <div
                     key={index}
-                    className='flex items-center gap-2 cursor-pointer w-max border-b border-transparent hover:border-b hover:border-gray-6'
+                    className='group flex justify-center items-center gap-2 cursor-pointer w-max  border-b border-transparent hover:border-b-bg-gray-d transition-colors'
                   >
                     <div className='w-[20px] h-[20px] md:w-[22px] md:h-[22px] flex justify-center items-center text-primary'>
-                      <Download size={16} strokeWidth={2} className='text-btn-dark-3'/>
+                      <Download
+                        size={16}
+                        strokeWidth={2}
+                        className='text-btn-dark-3 group-hover:text-bg-primary transition-colors duration-300'
+                      />
                     </div>
                     <a
                       href={file.url}
@@ -152,6 +156,9 @@ export default function NoticeDetail() {
                     >
                       {file.name}
                     </a>
+                    <span className='t-r-14 text-btn-gray-9 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+                      다운로드
+                    </span>
                   </div>
                 ))
               ) : (

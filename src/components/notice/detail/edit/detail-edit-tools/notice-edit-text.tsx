@@ -1,5 +1,3 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Editor, EditorContent } from '@tiptap/react';
 
 type NoticeFile = {
@@ -22,22 +20,10 @@ type NoticeEditTextProps = {
   editor: Editor | null;
 };
 
-export default function NoticeEditText({
-  isLoading,
-  editor,
-}: NoticeEditTextProps) {
-  const { noticeNo } = useParams<{ noticeNo: string }>();
-  const navigate = useNavigate();
-  const isEdit = Boolean(noticeNo);
-
-  const handleCancel = () => {
-    navigate(isEdit ? `/notice/${noticeNo}` : '/notice');
-  };
-
+export default function NoticeEditText({ editor }: NoticeEditTextProps) {
   return (
     <div className='mt-2 t-r-16 leading-relaxed'>
       <div>
-        {/* textarea 대신 TipTap EditorContent 사용 */}
         <div className='md:w-full border-2 border-bg-gray-d/60 rounded-sm mx-3 md:mx-0'>
           <EditorContent
             editor={editor}
@@ -50,23 +36,6 @@ export default function NoticeEditText({
             [&_.ProseMirror_p]:padding-0'
           />
         </div>
-      </div>
-      {/* 버튼 */}
-      <div className='flex gap-4 mt-4 justify-end items-end pb-[20px] px-4'>
-        <Button
-          type='button'
-          onClick={handleCancel}
-          className='w-[80px] h-[20px] t-r-16 bg-destructive hover:bg-destructive/80 '
-        >
-          취소
-        </Button>
-        <Button
-          type='submit'
-          disabled={isLoading}
-          className='w-[80px] h-[20px] t-r-16 bg-primary hover:bg-primary/80 '
-        >
-          {isLoading ? '처리중...' : '완료'}
-        </Button>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { Paperclip, Image, Download } from 'lucide-react';
+import { Paperclip, Download } from 'lucide-react';
 import { postFile } from '@/apis/common/file';
 import { LucideIcon } from 'lucide-react';
 
@@ -52,9 +52,6 @@ const ToolbarButton = ({
 
 const buttonShadowClass =
   'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)]';
-const buttonShadowClassHidden =
-  'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)] hidden md:block';
-
 export default function NoticeUploadEditor({
   formData,
   setFormData,
@@ -131,12 +128,6 @@ export default function NoticeUploadEditor({
               icon={Paperclip}
               onClick={triggerFileUpload}
               className={buttonShadowClass}
-              disabled={uploading}
-            />
-            <ToolbarButton
-              icon={Image}
-              onClick={triggerFileUpload}
-              className={buttonShadowClassHidden}
               disabled={uploading}
             />
             {uploading && (

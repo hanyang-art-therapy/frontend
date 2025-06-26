@@ -11,6 +11,8 @@ import { CATEGORY_LIST } from '@/constants/notice/notice-category';
 type NoticeFile = {
   name: string;
   url: string;
+  filesNo?: number;
+  isNew?: boolean;
 };
 
 type NoticeData = {
@@ -19,6 +21,7 @@ type NoticeData = {
   content: string;
   periodStart: string;
   periodEnd: string;
+  isFixed?: boolean;
   files?: NoticeFile[];
 };
 
@@ -30,16 +33,12 @@ type Props = {
   handleCategoryChange: (value: string) => void;
 };
 
-import React, { useState } from 'react';
-
 export default function NoticeEditHeader({
   formData,
   setFormData,
   selectedCategory,
   handleCategoryChange,
 }: Props) {
-  const [isFixed, setIsFixed] = useState(false);
-
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -49,10 +48,17 @@ export default function NoticeEditHeader({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleIsFixedChange = (isFixed: boolean) => {
+    setFormData((prev) => ({ ...prev, isFixed }));
+  };
+
   return (
     <div className='w-full md:h-[140px] xl:px-0 text-start'>
       <div className='flex flex-col gap-4 m-2 t-r-16 px-[12px] md:px-0'>
-         <IsFixedCheckbox isFixed={isFixed} setIsFixed={setIsFixed} />
+        <IsFixedCheckbox
+          isFixed={formData.isFixed || false}
+          setIsFixed={handleIsFixedChange}
+        />
         <div className='flex justify-start items-center md:ml-0 border-b-2 md:border-b-0 border-b-bg-gray-d/40 pb-2 md:pb-0'>
           <label className='t-b-16 whitespace-nowrap'>제목 :</label>
           <input
@@ -60,7 +66,7 @@ export default function NoticeEditHeader({
             name='title'
             value={formData.title}
             onChange={handleInputChange}
-            className='w-[220px] md:w-auto t-b-24 px-[10px] overflow-hidden text-ellipsis whitespace-nowrap'
+            className='w-[220px] md:w-full t-b-24 px-[10px] overflow-hidden text-ellipsis whitespace-nowrap'
             placeholder='제목을 입력하세요'
             required
           />
@@ -69,9 +75,11 @@ export default function NoticeEditHeader({
         {/* 구분 && 기간 */}
         <div className='flex flex-row flex-wrap gap-2 pt-r-14 md:gap-4 pb-[10px] md:pb-[10px]'>
           {/* 구분 */}
-          <div className='flex items-center gap-2 t-r-16'>
+          <div className='flex items-center gap-2 md:gap-4 t-r-16'>
             <div className='flex flex-col md:flex-row items-center gap-2 md:gap-4'>
-              <label className='t-b-16 whitespace-nowrap w-[40px] mr-[8px] md:mr-0'>구분</label>
+              <label className='t-b-16 whitespace-nowrap w-[40px] mr-[8px] md:mr-0'>
+                구분
+              </label>
               <Select
                 value={selectedCategory}
                 onValueChange={handleCategoryChange}

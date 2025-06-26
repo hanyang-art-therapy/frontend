@@ -41,13 +41,27 @@ export default function NoticeTable({ notices }: NoticeTableProps) {
             key={item.noticeNo}
             onClick={() => navigate(`/notice/${item.noticeNo}`)}
             className={`hover:bg-bg-gray-fa cursor-pointer border-b border-b-bg-gray-d t-r-16 max-h-[40px] ${
-              item.isFixed ? 'bg-bg-primary/ hover:bg-bg-primary/6 t-b-16' : 'bg-white'
+              item.isFixed
+                ? 'bg-bg-primary/6 hover:bg-bg-primary/6 t-b-16'
+                : 'bg-white'
             }`}
           >
             <td className='p-2 text-center h-[40px]'>{index + 1}</td>
             <td className='p-2 text-center'>{getType(item.category)}</td>
             <td className='max-w-[100px] sm:w-[90px] p-2 text-left relative group overflow-hidden whitespace-nowrap text-ellipsis t-m-16'>
-               <span className='flex items-center gap-2'>{item.isFixed ? <Pin size={16} color='#333' strokeWidth={1.5}/>: item.title}{item.title}</span>
+              <span className='flex items-center gap-2'>
+                {item.isFixed ? (
+                  <Pin
+                    size={20}
+                    color='#fff'
+                    strokeWidth={2}
+                    className='bg-bg-primary rounded-lg p-1'
+                  />
+                ) : (
+                  item.title
+                )}
+                {item.title}
+              </span>
               <div className='absolute bottom-full left-0 mb-1 w-max max-w-[200px] px-2 py-1 bg-btn-gray-9 text-white t-r-12 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none'>
                 {item.title}
               </div>

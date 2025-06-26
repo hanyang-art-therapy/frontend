@@ -1,9 +1,6 @@
 import { Editor } from '@tiptap/react';
 import { useState, useEffect } from 'react';
-import {
-  AArrowDown,
-  AArrowUp,
-} from 'lucide-react';
+import { AArrowDown, AArrowUp } from 'lucide-react';
 
 type FontButtonsProps = {
   editor: Editor | null;
@@ -28,22 +25,21 @@ const FontSizeButton = ({
   <button
     type='button'
     className={`cursor-pointer ${className} ${
-      isActive 
-        ? 'bg-[var(--bg-primary)] shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]' 
+      isActive
+        ? 'bg-[var(--bg-primary)] shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]'
         : ''
     }`}
     onClick={onClick}
     disabled={disabled}
   >
-    <Icon 
-      strokeWidth={1.5} 
-      width={20} 
-      height={20} 
-      color={isActive ? 'white' : color} 
+    <Icon
+      strokeWidth={1.5}
+      width={20}
+      height={20}
+      color={isActive ? 'white' : color}
     />
   </button>
 );
-
 
 // 구분선
 const Divider = () => (
@@ -110,7 +106,6 @@ export default function FontSizeButtons({ editor }: FontButtonsProps) {
     setCurrentFontSize(newSize);
   };
 
-
   return (
     <>
       {/* 글씨 크기 */}
@@ -133,7 +128,6 @@ export default function FontSizeButtons({ editor }: FontButtonsProps) {
           disabled={currentFontSize >= fontSizes[fontSizes.length - 1]}
         />
         <Divider />
-       
       </div>
     </>
   );

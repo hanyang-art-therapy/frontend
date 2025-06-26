@@ -3,7 +3,6 @@ import FontSizeButtons from './toolbar-buttons/font-size-buttons';
 import TextColorButtons from './toolbar-buttons/text-color-buttons';
 import TextStyleButtons from './toolbar-buttons/text-style-buttons';
 import ListAlignButtons from './toolbar-buttons/list-align-buttons';
-import ImageUploadButton from './toolbar-buttons/image-upload-button';
 
 type ToolbarProps = {
   editor: Editor | null;
@@ -25,9 +24,9 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
           <TextColorButtons editor={editor} />
         </div>
         <div className='flex justify-start items-center'>
-        <TextStyleButtons editor={editor} />
-        <ListAlignButtons editor={editor} />
-        <Divider />
+          <TextStyleButtons editor={editor} />
+          <ListAlignButtons editor={editor} />
+          <Divider />
         </div>
       </div>
     </div>
