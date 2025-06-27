@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { MessageResponse } from '@/types';
 import type {
   AdminArtResponse,
@@ -324,9 +325,10 @@ export default function AdminArtModal({
                 value={art?.galleriesNo?.toString() || ''}
                 onValueChange={handleGalleryChange}
               >
-                <SelectTrigger className='w-full border-none outline-none focus:ring-0 focus:ring-offset-0 '>
+                <SelectTrigger className='w-full border-none outline-none focus:ring-0 focus:ring-offset-0 t-r-14'>
                   <SelectValue placeholder='전시회를 선택해주세요' />
                 </SelectTrigger>
+
                 <SelectContent>
                   {galleries.map((gallery) => (
                     <SelectItem
@@ -339,6 +341,8 @@ export default function AdminArtModal({
                 </SelectContent>
               </Select>
             </FormField>
+
+            {!art && <Skeleton className='w-full h-[125px] sm:h-[144px]' />}
 
             {art?.artists.map((artist) => (
               <FormField
