@@ -119,7 +119,7 @@ export default function ArtistForm({ setArtistsList, role }: Props) {
               placeholder={placeholder}
               onChange={handleChange}
               autoComplete='off'
-              className='w-full px-[20px] outline-none cursor-pointer'
+              className='w-full px-[20px] outline-none'
             />
           </FormField>
         ))}

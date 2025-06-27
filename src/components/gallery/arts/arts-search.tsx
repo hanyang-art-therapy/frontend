@@ -33,6 +33,8 @@ export default function ArtsSearch({ setLastId }: ArtsSearchProps) {
   };
 
   const handleYearChange = async (year: string) => {
+    setLastId(0);
+
     setSearchParams((prevSearchParams) => {
       prevSearchParams.set('year', year);
 

@@ -15,10 +15,10 @@ export default function IsFixedCheckbox({
         className='w-4 h-4 border-2 border-bg-gray-d/60 rounded'
       />
       <label htmlFor='isFixed' className='t-b-16 hidden md:block'>
-        중요한 게시물로 설정
+        이 게시물을 상단에 고정
       </label>
       <label htmlFor='isFixed' className='t-b-16 block md:hidden'>
-        중요
+        상단 고정
       </label>
     </div>
   );

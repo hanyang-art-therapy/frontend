@@ -101,14 +101,14 @@ export default function ProfessorForm({ setProfessors }: Props) {
     try {
       let res;
       if (role === 'TESTER') {
-        await postProfessorTest(form);
+        res = await postProfessorTest(form);
         await getProfessorsTest().then(setProfessors);
       } else {
         res = await postProfessor(form);
         await getProfessors().then(setProfessors);
       }
 
-      toast.success(res?.message);
+      toast.success(res.message);
       setForm({
         professorName: '',
         position: '',

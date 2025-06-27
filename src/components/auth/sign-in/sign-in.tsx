@@ -3,9 +3,13 @@ import { useAuthStore } from '@/store/auth';
 import { Navigate } from 'react-router-dom';
 
 export default function SignIn() {
-  const { accessToken } = useAuthStore();
+  const { role } = useAuthStore();
 
-  if (accessToken) {
+  if (role === 'ADMIN' || role === 'TESTER') {
+    return <Navigate to='/admin/users' replace />;
+  }
+
+  if (role) {
     return <Navigate to='/' replace />;
   }
 

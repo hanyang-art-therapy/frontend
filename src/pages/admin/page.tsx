@@ -8,12 +8,12 @@ import { toast } from 'sonner';
 
 export default function AdminPage() {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const { role } = useAuthStore();
+
+  const navigate = useNavigate();
   const isAdminOrTester = role === 'ADMIN' || role === 'TESTER';
 
   useEffect(() => {
-    // 관리자거나 테스터인 경우
     if (!isAdminOrTester) {
       toast('관리자 권한이 없습니다.');
       navigate('/', { replace: true });

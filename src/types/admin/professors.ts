@@ -15,7 +15,7 @@ export type PatchProfessorRequest = Pick<
   Professor,
   'professorNo' | 'professorName' | 'position' | 'major' | 'email' | 'tel'
 > & {
-  filesNo: number | null;
+  filesNo?: number | null;
 };
 
 // [POST] 등록 요청

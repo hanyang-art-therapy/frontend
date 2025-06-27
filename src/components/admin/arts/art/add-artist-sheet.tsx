@@ -1,4 +1,5 @@
 import { getArtists } from '@/apis/admin/artists';
+import { getArtistsTest } from '@/apis/admin/tester/artists';
 import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -19,25 +20,37 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import type { InfiniteScrollResponse } from '@/types';
+import type { AdminArtResponse } from '@/types/admin/arts';
 import type { ArtistResponse } from '@/types/admin/artists';
 import { UserRoundPlus } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  type Dispatch,
+  type SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { toast } from 'sonner';
 
-type Artist = {
+type ArtArtist = {
   artistNo: number;
   description: string;
   name: string;
 };
 
 type AddArtistSheetProps = {
-  currentArtists?: Artist[];
-  onUpdateArtists: (artists: Artist[]) => void;
+  role: string | null;
+  currentArtists?: ArtArtist[];
+  onUpdateArtists: (artists: ArtArtist[]) => void;
+  setArt: Dispatch<SetStateAction<AdminArtResponse | null>>;
 };
 
 export default function AddArtistSheet({
+  role,
   currentArtists = [],
   onUpdateArtists,
+  setArt,
 }: AddArtistSheetProps) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -51,7 +64,7 @@ export default function AddArtistSheet({
     lastId: 0,
     hasNext: false,
   });
-  const [selectedArtists, setSelectedArtists] = useState<Artist[]>([]);
+  const [selectedArtists, setSelectedArtists] = useState<ArtArtist[]>([]);
 
   const observerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver | null>(null);
@@ -155,12 +168,44 @@ export default function AddArtistSheet({
   const handleUpdateArtists = () => {
     onUpdateArtists(selectedArtists);
     setIsSheetOpen(false);
+
+    if (selectedArtists.length > 1) {
+      setArt((prev) => {
+        if (!prev) return null;
+
+        return {
+          ...prev,
+          artType: 'GROUP',
+        };
+      });
+    } else {
+      setArt((prev) => {
+        if (!prev) return null;
+
+        return {
+          ...prev,
+          artType: 'SINGLE',
+        };
+      });
+    }
+
     toast.success('작가 정보가 업데이트되었습니다.');
   };
 
   const handleOpenSheet = async () => {
     setIsSheetOpen(true);
-    await loadArtists(true);
+
+    if (role === 'TESTER') {
+      const res = await getArtistsTest({});
+
+      setArtists({
+        content: res.content,
+        lastId: 0,
+        hasNext: false,
+      });
+    } else {
+      await loadArtists(true);
+    }
   };
 
   const getButtonText = () => {
@@ -188,7 +233,7 @@ export default function AddArtistSheet({
         </Button>
       </SheetTrigger>
 
-      <SheetContent className='w-[400px] sm:w-[540px]'>
+      <SheetContent className='w-full sm:w-[540px]'>
         <SheetHeader>
           <SheetTitle>작가 관리</SheetTitle>
           <SheetDescription>
@@ -222,7 +267,7 @@ export default function AddArtistSheet({
           </div>
 
           {/* 작가 목록 */}
-          <div className='flex-1 overflow-y-auto max-h-[60vh] space-y-4'>
+          <div className='flex-1 overflow-y-auto max-h-[50vh] space-y-4'>
             {artists.content.length > 0 ? (
               <>
                 {artists.content.map((artist) => {

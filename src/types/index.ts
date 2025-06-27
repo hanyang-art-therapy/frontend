@@ -151,6 +151,9 @@ export type ArtReviewsPagination<T> = {
   content: T[];
   page: number;
   isLast: boolean;
+  size: number;
+  totalElements: number;
+  totalPages: number;
 };
 
 export type InfiniteScrollResponse<T> = {

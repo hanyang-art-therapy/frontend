@@ -8,7 +8,7 @@ import { useLoaderData } from 'react-router-dom';
 export default function NoticeContent() {
   const loaderData = useLoaderData();
 
-  const [filter, setFilter] = useState('일반');
+  const [filter, setFilter] = useState('전체');
   const [searchValue, setSearchValue] = useState('');
   const [notices, setNotices] = useState<GetNoticesResponse>(loaderData);
 

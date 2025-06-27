@@ -1,6 +1,7 @@
 type VideoBannerProps = {
   src: string;
   title: string;
+  className?: string;
 };
 
 export default function VideoBanner({ src, title }: VideoBannerProps) {
@@ -14,7 +15,7 @@ export default function VideoBanner({ src, title }: VideoBannerProps) {
         muted
         playsInline
       />
-      <span className='t-b-80'>{title}</span>
+      <span className='t-b-80 w-full text-center'>{title}</span>
     </div>
   );
 }

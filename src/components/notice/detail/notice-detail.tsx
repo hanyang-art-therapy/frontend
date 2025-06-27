@@ -77,14 +77,14 @@ export default function NoticeDetail() {
             <h1 className='t-b-32 font-bold'>{noticeContent.title}</h1>
             <div className='md:flex md:flex-row t-r-14 md:p-[10px] flex gap-2 md:gap-4 flex-wrap'>
               <div className='flex items-center gap-2 w-1.5/2 md:w-auto t-r-16'>
-                <strong className='text-btn-gray-9'>구분</strong>
+                <strong className='text-btn-dark-3'>구분</strong>
                 {getKoType(noticeContent.category)}
-                <strong className='text-btn-gray-9'>작성일</strong>
+                <strong className='text-btn-dark-3'>작성일</strong>
                 {formatTimeStamp(noticeContent.createdAt)}
               </div>
 
               <div className='flex items-center gap-2 w-1.5/2 md:w-auto t-r-16'>
-                <strong className='text-btn-gray-9'>기간</strong>
+                <strong className='text-btn-dark-3'>기간</strong>
                 {noticeContent.periodStart
                   ? formatTimeStamp(noticeContent.periodStart)
                   : '기간 없음'}
@@ -92,24 +92,31 @@ export default function NoticeDetail() {
                 {noticeContent.periodEnd
                   ? formatTimeStamp(noticeContent.periodEnd)
                   : '기간 없음'}
-                <strong className='text-btn-gray-9'>조회수</strong>
+                <strong className='text-btn-dark-3'>조회수</strong>
                 {noticeContent.viewCount}
               </div>
             </div>
           </div>
         </div>
 
-        {/* 본문 내용 */}
+        {/* 본문 내용 - 목록 스타일 추가 */}
         <div className='w-full h-auto min-h-[300px] p-[20px] md:p-[30px] relative'>
           <div
-            className='mt-2 t-r-16 leading-relaxed prose prose-sm md:prose-base max-w-none'
+            className='mt-2 t-r-16 leading-relaxed prose prose-sm md:prose-base max-w-none
+              [&_ul]:list-disc [&_ul]:list-outside [&_ul]:ml-6 [&_ul]:pl-0
+              [&_ol]:list-decimal [&_ol]:list-outside [&_ol]:ml-6 [&_ol]:pl-0
+              [&_li]:my-1 [&_li]:pl-2 [&_li]:relative
+              [&_.tiptap-bullet-list]:list-disc [&_.tiptap-bullet-list]:list-outside [&_.tiptap-bullet-list]:ml-6
+              [&_.tiptap-ordered-list]:list-decimal [&_.tiptap-ordered-list]:list-outside [&_.tiptap-ordered-list]:ml-6
+              [&_.tiptap-list-item]:pl-2 [&_.tiptap-list-item]:my-1
+              [&_a]:underline [&_a]:cursor-pointer [&_a]:text-blue-600 [&_a]:hover:text-blue-800'
             dangerouslySetInnerHTML={{ __html: noticeContent.content }}
           />
           {role === 'ADMIN' && (
             <div className='flex gap-4 mt-4 justify-end items-end absolute bottom-4 right-4'>
               <Button
                 onClick={() => navigate(`/notice/${noticeNo}/edit`)}
-                className='w-[80px] t-r-16 bg-primary hover:bg-primary/80 '
+                className='w-[80px] h-[20px] t-r-16 bg-bg-primary/80 hover:bg-bg-primary'
               >
                 수정
               </Button>
@@ -117,7 +124,7 @@ export default function NoticeDetail() {
               <Button
                 disabled={isDeleting}
                 onClick={handleDelete}
-                className='w-[80px] t-r-16 bg-destructive hover:bg-destructive/80 '
+                className='w-[80px] h-[20px] t-r-16  bg-destructive/80 hover:bg-destructive'
               >
                 삭제
               </Button>
@@ -126,25 +133,39 @@ export default function NoticeDetail() {
         </div>
 
         {/* 파일 */}
-        <div className='w-full h-auto md:px-5 py-4 md:py-6 flex flex-col gap-2 bg-bg-gray-fa  border-t border-b border-bg-gray-d '>
-          <div className='px-6 flex flex-col gap-4'>
+        <div className='w-full h-auto md:px-5 py-4 md:py-6 flex flex-col gap-2 bg-bg-gray-fa  border-t border-b border-bg-gray-d'>
+          <div className='px-4 md:px-6 flex flex-col gap-4'>
             <div className='flex flex-col gap-2 t-r-16'>
               {noticeContent.files && noticeContent.files.length > 0 ? (
                 noticeContent.files.map((file, index) => (
                   <div
                     key={index}
-                    className='flex items-center gap-2 cursor-pointer w-max border-b border-transparent hover:border-b hover:border-gray-6'
+                    className='group flex justify-center items-center gap-2 cursor-pointer w-max  border-b border-transparent hover:border-b-bg-gray-d transition-colors'
                   >
                     <div className='w-[20px] h-[20px] md:w-[22px] md:h-[22px] flex justify-center items-center text-primary'>
-                      <Download size={16} strokeWidth={2} />
+                      <Download
+                        size={16}
+                        strokeWidth={2}
+                        className='text-btn-dark-3 group-hover:text-bg-primary transition-colors duration-300'
+                      />
                     </div>
                     <a
                       href={file.url}
                       target='_blank'
-                      className='text-bg-secondary hover:underline'
+                      className='
+                        text-btn-dark-3 
+                        hover:text-bg-primary 
+                        max-w-[260px] md:max-w-full
+                        overflow-hidden 
+                        text-ellipsis 
+                        whitespace-nowrap
+                      '
                     >
                       {file.name}
                     </a>
+                    <span className='t-r-14 text-btn-gray-9 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+                      다운로드
+                    </span>
                   </div>
                 ))
               ) : (

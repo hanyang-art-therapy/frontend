@@ -24,7 +24,7 @@ export default function Step({ items, step, onChange, className }: StepProps) {
               key={index}
               style={{ width }}
               className={cn(
-                'border-r border-r-bg-gray-d first:border-l-1 first:border-l-bg-gray-d last:border-r-0 hover:bg-primary/10 hover:text-primary transition-all duration-300',
+                'border-r border-r-bg-gray-d first:border-l-1 first:border-l-bg-gray-d last:border-r-1 hover:bg-primary/10 hover:text-primary transition-all duration-300',
                 step === item.value && 'bg-primary/10 text-primary'
               )}
             >

@@ -13,11 +13,11 @@ export default function MyPostList({ myPosts }: MyPostListProps) {
   }
 
   return (
-    <ul className='flex flex-col border-t border-b'>
+    <ul className='flex flex-col border-y border-gray-9'>
       {myPosts.map((post, index) => (
         <li
           key={post.artsNo}
-          className='border-b border-b-black border-muted last:border-b-0 hover:bg-primary/10 hover:text-bg-primary transition-all duration-300'
+          className='border-b border-b-bg-gray-d border-muted last:border-b-0 hover:bg-primary/10 hover:text-bg-primary transition-all duration-300'
         >
           <Link
             to={`/gallery/${post.artsNo}`}

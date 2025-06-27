@@ -3,20 +3,36 @@ import {
   getGalleries,
   patchGallery,
 } from '@/apis/admin/galleries';
-import GalleryModal from '@/components/admin/galleries/gallery/gallery-modal';
+import {
+  deleteGalleryTest,
+  getGalleriesTest,
+  patchGalleryTest,
+} from '@/apis/admin/tester/galleries';
+import DialogLoading from '@/components/ui/dialog-loading';
 import { MessageResponse } from '@/types';
 import {
   GalleriesResponse,
   PatchGalleryRequest,
 } from '@/types/admin/galleries';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, Suspense, lazy, useState } from 'react';
+
+const GalleryModal = lazy(
+  () => import('@/components/admin/galleries/gallery/gallery-modal')
+);
 
 type Props = {
+  role: string | null;
+  postedYears: string[];
   galleries: GalleriesResponse[];
   setGalleries: Dispatch<SetStateAction<GalleriesResponse[]>>;
 };
 
-export default function GalleryView({ galleries, setGalleries }: Props) {
+export default function GalleryView({
+  role,
+  postedYears,
+  galleries,
+  setGalleries,
+}: Props) {
   const [selectedGallery, setSelectedGallery] =
     useState<GalleriesResponse | null>(null);
 
@@ -24,13 +40,27 @@ export default function GalleryView({ galleries, setGalleries }: Props) {
     form: PatchGalleryRequest
   ): Promise<MessageResponse> => {
     const { galleriesNo, title, startDate, endDate } = form;
-    const res = await patchGallery(galleriesNo, {
-      title,
-      startDate,
-      endDate,
-    });
 
-    await getGalleries().then((galleries) => setGalleries(galleries));
+    let res: MessageResponse;
+
+    if (role === 'TESTER') {
+      res = await patchGalleryTest(galleriesNo, {
+        title,
+        startDate,
+        endDate,
+      });
+
+      await getGalleriesTest().then((galleries) => setGalleries(galleries));
+    } else {
+      res = await patchGallery(galleriesNo, {
+        title,
+        startDate,
+        endDate,
+      });
+
+      await getGalleries().then((galleries) => setGalleries(galleries));
+    }
+
     setSelectedGallery(null);
 
     return res;
@@ -39,19 +69,20 @@ export default function GalleryView({ galleries, setGalleries }: Props) {
   const handleDelete = async (
     galleriesNo: number
   ): Promise<MessageResponse> => {
-    const res = await deleteGallery(galleriesNo);
+    let res: MessageResponse;
 
-    await getGalleries().then((galleries) => setGalleries(galleries));
+    if (role === 'TESTER') {
+      res = await deleteGalleryTest(galleriesNo);
+      await getGalleriesTest().then((galleries) => setGalleries(galleries));
+    } else {
+      res = await deleteGallery(galleriesNo);
+      await getGalleries().then((galleries) => setGalleries(galleries));
+    }
+
     setSelectedGallery(null);
 
     return res;
   };
-
-  const handleClose = () => setSelectedGallery(null);
-
-  const postedYears = galleries.map(
-    (g) => (g.startDate.split('-')[0], g.endDate.split('-')[0])
-  );
 
   return (
     <>
@@ -96,13 +127,15 @@ export default function GalleryView({ galleries, setGalleries }: Props) {
 
       {/* 전시회 상세 모달 */}
       {selectedGallery && (
-        <GalleryModal
-          postedYears={postedYears}
-          gallery={selectedGallery}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onClose={handleClose}
-        />
+        <Suspense fallback={<DialogLoading />}>
+          <GalleryModal
+            postedYears={postedYears}
+            gallery={selectedGallery}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onClose={() => setSelectedGallery(null)}
+          />
+        </Suspense>
       )}
     </>
   );

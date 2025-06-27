@@ -19,6 +19,16 @@ export const getNotices = async ({
     params: { page, keyword, category },
   });
 
+  if (response.status === 204) {
+    return {
+      content: [],
+      page: 0,
+      totalElements: 0,
+      totalPages: 0,
+      isLast: true,
+    };
+  }
+
   return response.data;
 };
 

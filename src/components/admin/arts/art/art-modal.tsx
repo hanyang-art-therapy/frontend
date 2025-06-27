@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -19,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { MessageResponse } from '@/types';
 import type {
   AdminArtResponse,
@@ -83,18 +85,6 @@ export default function AdminArtModal({
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    if (name === 'artType') {
-      setArt((prev) => {
-        if (!prev) return null;
-        return {
-          ...prev,
-          artType:
-            prev.artists.length > 1 ? 'GROUP' : (prev.artType as 'SINGLE'),
-        };
-      });
-      return;
-    }
 
     setArt((prev) => {
       if (!prev) return null;
@@ -204,7 +194,7 @@ export default function AdminArtModal({
         caption: art.caption,
         artType: art.artists.length > 1 ? 'GROUP' : 'SINGLE',
         coDescription: art.coDescription,
-        filesNo: newFileNo,
+        filesNo: newFileNo ?? undefined,
         artists: art.artists.map((artist) => ({
           artistNo: artist.artistNo,
           description: artist.description,
@@ -270,15 +260,18 @@ export default function AdminArtModal({
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className='max-w-[1000px] overflow-y-auto max-h-[80vh]'>
+      <DialogContent className='sm:max-w-[700px] overflow-y-auto max-h-[80vh]'>
         <DialogHeader>
           <DialogTitle className='text-center'>ARTWORK INFO</DialogTitle>
+          <DialogDescription className='text-center'>
+            작품 상세 정보
+          </DialogDescription>
         </DialogHeader>
 
         <div className='flex gap-[15px]'>
           {/* 이미지 업로드 */}
-          <div className='flex flex-col items-center gap-[10px]'>
-            <div className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
+          <div className='flex flex-col items-center gap-[15px]'>
+            <div className='w-[100px] md:w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
               <img
                 src={artImageUrl}
                 alt='preview'
@@ -332,9 +325,10 @@ export default function AdminArtModal({
                 value={art?.galleriesNo?.toString() || ''}
                 onValueChange={handleGalleryChange}
               >
-                <SelectTrigger className='w-full border-none outline-none focus:ring-0 focus:ring-offset-0 '>
+                <SelectTrigger className='w-full border-none outline-none focus:ring-0 focus:ring-offset-0 t-r-14'>
                   <SelectValue placeholder='전시회를 선택해주세요' />
                 </SelectTrigger>
+
                 <SelectContent>
                   {galleries.map((gallery) => (
                     <SelectItem
@@ -347,6 +341,8 @@ export default function AdminArtModal({
                 </SelectContent>
               </Select>
             </FormField>
+
+            {!art && <Skeleton className='w-full h-[125px] sm:h-[144px]' />}
 
             {art?.artists.map((artist) => (
               <FormField
@@ -384,16 +380,24 @@ export default function AdminArtModal({
 
             <div className='h-10 flex items-center justify-center'>
               <AddArtistSheet
+                role={role}
                 currentArtists={art?.artists || []}
                 onUpdateArtists={handleUpdateArtists}
+                setArt={setArt}
               />
             </div>
           </div>
         </div>
 
-        <DialogFooter className='grid grid-cols-2 mx-auto mt-[10px]'>
-          <Button onClick={handleSubmit}>수정</Button>
-          <Button variant='destructive' onClick={handleDelete}>
+        <DialogFooter className='grid grid-cols-2 gap-[10px] mx-auto mt-[10px] w-[100%] md:w-auto'>
+          <Button className='w-full md:w-[200px]' onClick={handleSubmit}>
+            수정
+          </Button>
+          <Button
+            className='w-full md:w-[200px]'
+            variant='destructive'
+            onClick={handleDelete}
+          >
             삭제
           </Button>
         </DialogFooter>

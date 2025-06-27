@@ -1,4 +1,3 @@
-import type { ProfessorsResponse } from '@/types/admin/professors';
 import {
   Dialog,
   DialogContent,
@@ -6,7 +5,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Mail, Phone, User, GraduationCap, Briefcase } from 'lucide-react';
+import type { ProfessorsResponse } from '@/types/admin/professors';
+import { Mail, Phone, User } from 'lucide-react';
 
 type ProfessorDetailDialogProps = {
   professor: ProfessorsResponse;
@@ -21,91 +21,84 @@ export default function ProfessorDetailDialog({
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent className='sm:max-w-[700px]'>
+      <DialogContent className='sm:max-w-[600px] max-h-[90vh] overflow-y-auto'>
         <DialogHeader>
-          <DialogTitle className='t-b-24'>
-            {professor.professorName}
-          </DialogTitle>
+          <DialogTitle />
         </DialogHeader>
 
-        <div className='flex flex-col md:flex-row gap-8 mt-6'>
-          {/* 사진 영역 */}
-          <div className='w-40 h-48 mx-auto md:mx-0 flex-shrink-0'>
-            {professor.files?.url ? (
-              <img
-                src={professor.files.url}
-                alt={`${professor.professorName} 교수`}
-                className='w-full h-full object-cover rounded-[5px]'
-              />
-            ) : (
-              <div className='w-full h-full flex items-center justify-center bg-btn-gray-fa rounded-[5px]'>
-                <User size={48} className='text-gray-6' />
+        <div className='space-y-12'>
+          <div className='flex items-start gap-6 rounded-[5px]'>
+            <div className='relative'>
+              <div className='w-24 h-28 sm:w-28 sm:h-32 rounded-[5px] overflow-hidden border border-bg-gray-d'>
+                {professor.files?.url ? (
+                  <img
+                    src={professor.files.url}
+                    alt={`${professor.professorName} 사진`}
+                    className='w-full h-full object-cover'
+                  />
+                ) : (
+                  <div className='w-full h-full flex items-center justify-center bg-white'>
+                    <User size={32} className='text-gray-6' />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* 정보 영역 */}
-          <div className='flex-1 space-y-6'>
-            <div className='grid gap-4'>
+            <div className='flex-1'>
+              <span className='t-b-24 mb-2'>{professor.professorName}</span>
               {professor.position && (
-                <div className='flex items-start gap-3 p-4 bg-btn-gray-fa rounded-[5px]'>
-                  <div className='p-2 bg-white rounded-[5px] border border-btn-gray-d'>
-                    <Briefcase size={20} className='text-gray-6' />
-                  </div>
-                  <div>
-                    <p className='t-m-14 mb-1'>직위</p>
-                    <p className='t-r-16'>{professor.position}</p>
-                  </div>
-                </div>
+                <p className='t-m-18 text-gray-6 mb-1'> {professor.position}</p>
               )}
-
               {professor.major && (
-                <div className='flex items-start gap-3 p-4 bg-btn-gray-fa rounded-[5px]'>
-                  <div className='p-2 bg-white rounded-[5px] border border-btn-gray-d'>
-                    <GraduationCap size={20} className='text-gray-6' />
-                  </div>
-                  <div>
-                    <p className='t-m-14 mb-1'>전공</p>
-                    <p className='t-r-16'>{professor.major}</p>
-                  </div>
-                </div>
-              )}
-
-              {professor.email && (
-                <div className='flex items-start gap-3 p-4 bg-btn-gray-fa rounded-[5px]'>
-                  <div className='p-2 bg-white rounded-[5px] border border-btn-gray-d'>
-                    <Mail size={20} className='text-gray-6' />
-                  </div>
-                  <div>
-                    <p className='t-m-14 mb-1'>이메일</p>
-                    <a
-                      href={`mailto:${professor.email}`}
-                      className='t-r-16 text-success hover:underline transition-colors'
-                    >
-                      {professor.email}
-                    </a>
-                  </div>
-                </div>
-              )}
-
-              {professor.tel && (
-                <div className='flex items-start gap-3 p-4 bg-btn-gray-fa rounded-[5px]'>
-                  <div className='p-2 bg-white rounded-[5px] border border-btn-gray-d'>
-                    <Phone size={20} className='text-gray-6' />
-                  </div>
-                  <div>
-                    <p className='t-m-14 mb-1'>연락처</p>
-                    <a
-                      href={`tel:${professor.tel}`}
-                      className='t-r-16 text-success hover:underline transition-colors'
-                    >
-                      {professor.tel}
-                    </a>
-                  </div>
-                </div>
+                <p className='t-r-14 text-gray-6'>{professor.major}</p>
               )}
             </div>
           </div>
+
+          {(professor.email || professor.tel) && (
+            <div className='space-y-3'>
+              <span className='t-b-18 mb-3 flex items-center gap-2'>
+                <div className='w-1 h-4 bg-primary rounded-full'></div>
+                연락처 정보
+              </span>
+
+              <div className='grid gap-3'>
+                {professor.email && (
+                  <div className='group'>
+                    <a
+                      href={`mailto:${professor.email}`}
+                      className='flex items-center gap-3 p-4 bg-white border border-bg-gray-d rounded-[5px] hover:border-primary hover:shadow-sm transition-all duration-200'
+                    >
+                      <div className='p-2 bg-primary/10 rounded-[5px] group-hover:bg-primary/20 transition-colors'>
+                        <Mail size={16} className='text-primary' />
+                      </div>
+                      <div className='flex-1 min-w-0'>
+                        <p className='t-r-14 mb-1'>이메일</p>
+                        <p className='t-m-16 truncate'>{professor.email}</p>
+                      </div>
+                    </a>
+                  </div>
+                )}
+
+                {professor.tel && (
+                  <div className='group'>
+                    <a
+                      href={`tel:${professor.tel}`}
+                      className='flex items-center gap-3 p-4 bg-white border border-bg-gray-d rounded-[5px] hover:border-primary transition-all duration-200'
+                    >
+                      <div className='p-2 bg-primary/10 rounded-[5px] group-hover:bg-primary/20 transition-colors'>
+                        <Phone size={16} className='text-primary' />
+                      </div>
+                      <div className='flex-1 min-w-0'>
+                        <p className='t-r-14 mb-1'>연락처</p>
+                        <p className='t-m-16'>{professor.tel}</p>
+                      </div>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

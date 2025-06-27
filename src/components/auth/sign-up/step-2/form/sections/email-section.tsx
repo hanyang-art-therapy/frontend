@@ -16,7 +16,7 @@ import type {
 } from 'react-hook-form';
 import { toast } from 'sonner';
 import { cn, formatTimeLeft } from '@/lib/utils';
-import { Check } from 'lucide-react';
+import { Check, LoaderCircle } from 'lucide-react';
 
 type EmailSectionProps = {
   isEmailValid: boolean;
@@ -48,6 +48,7 @@ export default function EmailSection({
   const [timer, setTimer] = useState(180);
   const [isTimerActive, setIsTimerActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isResending, setIsResending] = useState(false);
 
   const isCustomDomain = selectedDomain === 'custom';
   const watchEmailDomain = watch('emailDomain');
@@ -134,6 +135,7 @@ export default function EmailSection({
     e: MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
+    setIsResending(true);
 
     try {
       const emailId = watch('emailId');
@@ -153,6 +155,8 @@ export default function EmailSection({
       const errorMessage = handleApiError(error);
       toast.error(errorMessage);
       setIsResend(false);
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -213,7 +217,11 @@ export default function EmailSection({
               onClick={handleSendVerificationClick}
               disabled={showVerification || isLoading}
             >
-              인증 메일 발송
+              {isLoading ? (
+                <LoaderCircle className='w-4 h-4 animate-spin' />
+              ) : (
+                '인증 메일 발송'
+              )}
             </Button>
           </div>
 
@@ -286,9 +294,13 @@ export default function EmailSection({
                   aria-label='메일 재전송'
                   className='h-[45px] px-4 t-r-14 text-black'
                   onClick={handleResendVerifyCodeClick}
-                  disabled={isResend || isVerificationCodeValid}
+                  disabled={isResend || isVerificationCodeValid || isResending}
                 >
-                  재전송
+                  {isResending ? (
+                    <LoaderCircle className='w-4 h-4 animate-spin' />
+                  ) : (
+                    '재전송'
+                  )}
                 </Button>
               </div>
             </div>

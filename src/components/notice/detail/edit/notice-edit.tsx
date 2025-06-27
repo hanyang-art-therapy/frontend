@@ -1,9 +1,9 @@
 import { getNotice, patchNotice } from '@/apis/notice/notice';
-import NoticeEditHeader from '@/components/notice/detail/edit/detail-edit-tools/notice-edit-header';
-import NoticeEditText from '@/components/notice/detail/edit/detail-edit-tools/notice-edit-text';
-import NoticeUploadEditor from '@/components/notice/detail/edit/detail-edit-tools/notice-upload-editor';
+import NoticeEditHeader from '@/components/notice/detail/edit/tools/notice-edit-header';
+import NoticeEditText from '@/components/notice/detail/edit/tools/notice-edit-text';
+import NoticeUploadEditor from '@/components/notice/detail/edit/tools/notice-upload-editor';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
-import ToolbarHeading from '@/components/notice/notice-write/toolbar-tools/toolbar-heading'; // 실제 경로로 수정 필요
+import ToolbarHeading from '@/components/notice/notice-write/toolbar-tools/toolbar-heading';
 import { Button } from '@/components/ui/button';
 import { getEgType, getKoType } from '@/lib/helper/notice';
 import { Extension } from '@tiptap/core';
@@ -18,7 +18,7 @@ import StarterKit from '@tiptap/starter-kit';
 import axios from 'axios';
 import { FilePenLine } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { AlertTriangle } from 'lucide-react';
 
@@ -98,9 +98,15 @@ const FontSize = Extension.create({
   },
 });
 
-export default function NoticeEditForm() {
+export default function NoticeEdit() {
   const { noticeNo } = useParams<{ noticeNo: string }>();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // selectedCategory 상태 추가 (URL 쿼리값과 동기화)
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchParams.get('category') ?? '일반'
+  );
 
   const [formData, setFormData] = useState<NoticeData>({
     title: '',
@@ -115,6 +121,7 @@ export default function NoticeEditForm() {
   const [dataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const isEdit = Boolean(noticeNo);
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -183,6 +190,19 @@ export default function NoticeEditForm() {
       }),
     ],
     content: formData.content || '<p>여기에 내용을 입력하세요</p>',
+    editorProps: {
+      attributes: {
+        class:
+          'prose prose-sm md:prose-base max-w-none focus:outline-none ' +
+          '[&_ul]:list-disc [&_ul]:list-outside [&_ul]:ml-6 [&_ul]:pl-0 ' +
+          '[&_ol]:list-decimal [&_ol]:list-outside [&_ol]:ml-6 [&_ol]:pl-0 ' +
+          '[&_li]:my-1 [&_li]:pl-2 [&_li]:relative ' +
+          '[&_.tiptap-bullet-list]:list-disc [&_.tiptap-bullet-list]:list-outside [&_.tiptap-bullet-list]:ml-6 ' +
+          '[&_.tiptap-ordered-list]:list-decimal [&_.tiptap-ordered-list]:list-outside [&_.tiptap-ordered-list]:ml-6 ' +
+          '[&_.tiptap-list-item]:pl-2 [&_.tiptap-list-item]:my-1 ' +
+          '[&_a]:underline [&_a]:cursor-pointer [&_a]:text-blue-600 [&_a]:hover:text-blue-800',
+      },
+    },
   });
 
   useEffect(() => {
@@ -213,6 +233,12 @@ export default function NoticeEditForm() {
   }, [formData.content, editor]);
 
   useEffect(() => {
+    const category = searchParams.get('category') ?? '일반';
+    setSelectedCategory(category);
+  }, [searchParams]);
+
+  // 수정 모드일 때 데이터 불러오기
+  useEffect(() => {
     if (isEdit && noticeNo) {
       fetchNoticeData(noticeNo);
     } else {
@@ -220,6 +246,7 @@ export default function NoticeEditForm() {
     }
   }, [isEdit, noticeNo]);
 
+  // 공지 데이터 불러오기
   const fetchNoticeData = async (id: string) => {
     try {
       setDataLoading(true);
@@ -238,6 +265,8 @@ export default function NoticeEditForm() {
         isFixed: data.isFixed || false,
         files: data.files || [],
       });
+
+      setSelectedCategory(getKoType(data.category) || '일반');
     } catch {
       setError('서버 오류가 발생했습니다.');
       toast.error('서버 오류가 발생했습니다.');
@@ -246,6 +275,27 @@ export default function NoticeEditForm() {
     }
   };
 
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev.toString());
+      if (category === 'all') {
+        newParams.delete('category');
+      } else {
+        newParams.set('category', category);
+      }
+      return newParams;
+    });
+
+    const engCategory = getEgType(category) || category;
+    setFormData((prev) => ({
+      ...prev,
+      category: engCategory,
+    }));
+  };
+
+  // 제출 처리
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -258,13 +308,10 @@ export default function NoticeEditForm() {
 
     try {
       if (isEdit && noticeNo) {
-        const convertedCategory =
-          getEgType(formData.category) || formData.category;
-
-        await patchNotice(parseInt(noticeNo), {
+        const updateData = {
           title: formData.title,
           content: editor?.getHTML() || formData.content,
-          category: convertedCategory,
+          category: formData.category,
           periodStart: formData.periodStart,
           periodEnd: formData.periodEnd,
           isFixed: formData.isFixed ?? false,
@@ -272,7 +319,9 @@ export default function NoticeEditForm() {
             formData.files
               ?.map((file) => file.filesNo!)
               .filter((id): id is number => !!id) ?? null,
-        });
+        };
+
+        await patchNotice(parseInt(noticeNo), updateData);
 
         toast.success('게시글 수정이 완료되었습니다.');
         navigate(`/notice/${noticeNo}`);
@@ -280,7 +329,6 @@ export default function NoticeEditForm() {
         const result = await axios.post('/api/notice', formData);
         toast.success('게시글 등록이 완료되었습니다.');
         navigate(`/notice/${result.data.noticeNo}`);
-        return;
       }
     } catch (err) {
       console.error('Submit error:', err);
@@ -305,11 +353,13 @@ export default function NoticeEditForm() {
   if (error) {
     return (
       <div className='w-full h-full mt-[80px] md:mt-[120px]'>
-        <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
+        <div className='flex flex-col items-center justify-center w-full md:max-w-[1260px] mx-auto'>
           <div className='flex justify-center items-center w-full h-[400px] md:h-[140px] xl:px-0 py-[10px] text-start bg-white'>
             <div className='flex flex-col justify-center items-center gap-4 mt-2 t-r-16 px-[20px]'>
-              <AlertTriangle color='#333333' size={32}/>
-              <div className='t-b-16 text-btn-dark-3 mb-4 text-center'>{error}</div>
+              <AlertTriangle color='#333333' size={32} />
+              <div className='t-b-16 text-btn-dark-3 mb-4 text-center'>
+                {error}
+              </div>
               <Button
                 onClick={() => navigate('/notice')}
                 className='w-[180px] h-[40px] t-b-16 bg-bg-primary hover:bg-bg-secondary text-white rounded-sm'
@@ -322,7 +372,9 @@ export default function NoticeEditForm() {
       </div>
     );
   }
-
+  const handleCancel = () => {
+    navigate(isEdit ? `/notice/${noticeNo}` : '/notice');
+  };
   return (
     <div className='w-full h-full mt-[80px] md:mt-[120px]'>
       <div className='w-full max-w-[1260px] mx-auto px-5 md:px-0'>
@@ -338,39 +390,48 @@ export default function NoticeEditForm() {
         className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'
         onSubmit={handleSubmit}
       >
-
         <NoticeEditHeader
           formData={formData}
           setFormData={setFormData}
           loading={false}
-          selectedCategory={getKoType(formData.category)}
-          handleCategoryChange={(value: string) => {
-            const converted = getEgType(value) || value;
-            setFormData((prev) => ({
-              ...prev,
-              category: converted,
-            }));
-          }}
-          
+          selectedCategory={selectedCategory}
+          handleCategoryChange={handleCategoryChange}
         />
-        <div className='md:mt-[40px]'>
-        </div>
+        <div className='md:mt-[40px]'></div>
         <div className='w-full xl:px-0 mb-4 ml-12 md:ml-0'>
           <ToolbarHeading editor={editor} />
         </div>
 
-        <div className='w-full h-auto'>
+        <div className='w-full h-auto flex flex-col gap-2'>
           <NoticeEditText
             setFormData={setFormData}
             isLoading={isLoading}
             editor={editor}
           />
           <NoticeUploadEditor formData={formData} setFormData={setFormData} />
-          <div className='w-full px-5 xl:px-0 py-6 t-r-16 flex justify-center'></div>
-          <div className='w-full t-r-16 flex justify-center'>
-            <NoticeNav noticeNo={noticeNo ?? ''} />
+          <div className='w-full flex items-center px-4'>
+            <div className='flex-1 flex justify-center'>
+              <NoticeNav noticeNo={noticeNo ?? ''} />
+            </div>
+            <div className='flex gap-4'>
+              <Button
+                type='button'
+                onClick={handleCancel}
+                className='w-[80px] h-[20px] t-r-16 bg-destructive hover:bg-destructive/80'
+              >
+                취소
+              </Button>
+              <Button
+                type='submit'
+                disabled={isLoading}
+                className='w-[80px] h-[20px] t-r-16 bg-primary hover:bg-primary/80'
+              >
+                {isLoading ? '처리중...' : '완료'}
+              </Button>
+            </div>
           </div>
         </div>
+        
       </form>
     </div>
   );

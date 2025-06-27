@@ -1,9 +1,9 @@
 import { signUp } from '@/apis/auth/sign-up';
 import {
-  // EmailSection,
-  UserIdSection,
+  EmailSection,
   PwSection,
   StudentNoSection,
+  UserIdSection,
   UserNameSection,
   UserTypeSection,
 } from '@/components/auth/sign-up/step-2/form/sections';
@@ -29,17 +29,17 @@ export default function SignUpForm({
 }: {
   setProgress: Dispatch<SetStateAction<number>>;
 }) {
-  // const [selectedDomain, setSelectedDomain] = useState('hanyang.ac.kr');
+  const [selectedDomain, setSelectedDomain] = useState('hanyang.ac.kr');
   const [isLoading, setIsLoading] = useState(false);
   const [userType, setUserType] = useState<UserType>('member');
   const [isStudentNoValid, setIsStudentNoValid] = useState(true);
-  // const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const [isUserIdValid, setIsUserIdValid] = useState(false);
 
   const {
     register,
     handleSubmit,
-    // setValue,
+    setValue,
     watch,
     reset,
     setError,
@@ -54,7 +54,7 @@ export default function SignUpForm({
   });
 
   const onSubmit = async (data: SignUpFormValues) => {
-    // const email = data.emailId + '@' + data.emailDomain;
+    const email = data.emailId + '@' + data.emailDomain;
 
     setIsLoading(true);
 
@@ -63,19 +63,18 @@ export default function SignUpForm({
         userId: data.userId,
         password: data.password,
         userName: data.userName,
-        // email,
+        email,
         studentNo:
           userType === 'member'
             ? Number((data as MemberSignUpFormValues).studentNo)
             : undefined,
       });
-
-      setProgress(3);
     } catch (error) {
       const errorMessage = handleApiError(error);
       toast(errorMessage);
     }
 
+    setProgress(3);
     reset();
     setIsLoading(false);
   };
@@ -92,7 +91,7 @@ export default function SignUpForm({
     isLoading ||
     !isValid ||
     (userType === 'member' && !isStudentNoValid) ||
-    // !isEmailValid ||
+    !isEmailValid ||
     !isUserIdValid;
 
   const { emailValid, passwordValid, confirmPasswordValid, studentNoValid } =
@@ -100,7 +99,7 @@ export default function SignUpForm({
       watch,
       errors,
       isUserIdValid,
-      // isEmailValid,
+      isEmailValid,
       isStudentNoValid,
       userType,
     });
@@ -117,7 +116,7 @@ export default function SignUpForm({
         setIsUserIdValid={setIsUserIdValid}
       />
 
-      {/* <AppearContainer show={isUserIdValid}>
+      <AppearContainer show={isUserIdValid}>
         <EmailSection
           isEmailValid={isEmailValid}
           selectedDomain={selectedDomain}
@@ -129,9 +128,9 @@ export default function SignUpForm({
           setIsEmailValid={setIsEmailValid}
           setSelectedDomain={setSelectedDomain}
         />
-      </AppearContainer> */}
+      </AppearContainer>
 
-      <AppearContainer show={emailValid}>
+      <AppearContainer show={isUserIdValid}>
         <PwSection
           register={register}
           errors={errors}
