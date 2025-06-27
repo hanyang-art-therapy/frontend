@@ -151,7 +151,7 @@ export default function NoticeUploadEditor({
                     <div className='flex items-center gap-2'>
                       <span className='text-bg-secondary'>{file.name}</span>
                       {file.isNew && (
-                        <span className='w-[56px] t-r-12 bg-primary text-white px-2 py-1 rounded-[5px]'>
+                        <span className='t-r-14 bg-bg-secondary/40 text-bg-black px-2 py-1 rounded'>
                           새 파일
                         </span>
                       )}
