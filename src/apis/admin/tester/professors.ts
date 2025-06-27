@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { MessageResponse } from '@/types';
 import type {
   PatchProfessorRequest,
   PostProfessorRequest,
@@ -7,13 +8,23 @@ import type {
 import { toast } from 'sonner';
 
 export const getProfessorsTest = async (): Promise<ProfessorsResponse[]> => {
-  const { data, error } = await supabase.from('professors').select('*');
+  const { data, error } = await supabase.from('professors').select(
+    `
+    professorNo,
+    professorName,
+    position,
+    major,
+    email,
+    tel,
+    files:files(url)
+   `
+  );
 
   if (error) {
     toast.error('교수 목록 조회에 실패했습니다');
   }
 
-  return data as ProfessorsResponse[];
+  return data as unknown as ProfessorsResponse[];
 };
 
 export const patchProfessorTest = async (
@@ -43,6 +54,10 @@ export const deleteProfessorTest = async (professorNo: number) => {
   return { message: '교수진 정보 삭제가 완료되었습니다' };
 };
 
-export const postProfessorTest = async (data: PostProfessorRequest) => {
+export const postProfessorTest = async (
+  data: PostProfessorRequest
+): Promise<MessageResponse> => {
   await supabase.from('professors').insert(data);
+
+  return { message: '교수진 등록이 완료되었습니다' };
 };
