@@ -65,7 +65,10 @@ export default function GalleryModal({
     const startYear = form.startDate.split('-')[0];
     const endYear = form.endDate.split('-')[0];
     const filteredYears = postedYears.filter((postedYear) => {
-      return postedYear !== endYear || postedYear !== startYear;
+      return (
+        postedYear !== gallery.startDate.split('-')[0] ||
+        postedYear !== gallery.endDate.split('-')[0]
+      );
     });
 
     // 유효성 검사
@@ -115,12 +118,6 @@ export default function GalleryModal({
     }
   };
 
-  const fields = [
-    { id: 'title', label: '제목' },
-    { id: 'startDate', label: '시작 일자' },
-    { id: 'endDate', label: '종료 일자' },
-  ];
-
   return (
     <Dialog open onOpenChange={onClose}>
       <DialogContent className='sm:max-w-[700px]'>
@@ -132,19 +129,42 @@ export default function GalleryModal({
         </DialogHeader>
 
         <div className='w-full border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
-          {fields.map(({ id, label }) => (
-            <FormField key={id} id={id} label={label}>
-              <input
-                id={id}
-                name={id}
-                type={id === 'startDate' || id === 'endDate' ? 'date' : 'text'}
-                value={form[id as keyof GalleryFormState] ?? ''}
-                onChange={handleChange}
-                autoComplete='off'
-                className='w-full px-[15px] outline-none cursor-pointer'
-              />
-            </FormField>
-          ))}
+          <FormField id='title' label='제목'>
+            <input
+              id='title'
+              name='title'
+              value={form.title ?? ''}
+              onChange={handleChange}
+              autoComplete='off'
+              className='w-full px-[15px] outline-none'
+            />
+          </FormField>
+
+          <FormField id='startDate' label='시작 일자'>
+            <input
+              id='startDate'
+              name='startDate'
+              type='date'
+              value={form.startDate ?? ''}
+              onChange={handleChange}
+              onClick={(e) => e.currentTarget.showPicker()}
+              autoComplete='off'
+              className='w-full px-[15px] outline-none cursor-pointer h-full'
+            />
+          </FormField>
+
+          <FormField id='endDate' label='종료 일자'>
+            <input
+              id='endDate'
+              name='endDate'
+              type='date'
+              value={form.endDate ?? ''}
+              onChange={handleChange}
+              onClick={(e) => e.currentTarget.showPicker()}
+              autoComplete='off'
+              className='w-full px-[15px] outline-none cursor-pointer h-full'
+            />
+          </FormField>
         </div>
 
         <DialogFooter className='grid grid-cols-2 gap-[10px] mx-auto mt-[10px] w-[100%] md:w-auto'>

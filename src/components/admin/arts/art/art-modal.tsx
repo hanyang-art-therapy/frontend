@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -83,18 +84,6 @@ export default function AdminArtModal({
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    if (name === 'artType') {
-      setArt((prev) => {
-        if (!prev) return null;
-        return {
-          ...prev,
-          artType:
-            prev.artists.length > 1 ? 'GROUP' : (prev.artType as 'SINGLE'),
-        };
-      });
-      return;
-    }
 
     setArt((prev) => {
       if (!prev) return null;
@@ -204,7 +193,7 @@ export default function AdminArtModal({
         caption: art.caption,
         artType: art.artists.length > 1 ? 'GROUP' : 'SINGLE',
         coDescription: art.coDescription,
-        filesNo: newFileNo,
+        filesNo: newFileNo ?? undefined,
         artists: art.artists.map((artist) => ({
           artistNo: artist.artistNo,
           description: artist.description,
@@ -270,15 +259,18 @@ export default function AdminArtModal({
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className='max-w-[1000px] overflow-y-auto max-h-[80vh]'>
+      <DialogContent className='sm:max-w-[700px] overflow-y-auto max-h-[80vh]'>
         <DialogHeader>
           <DialogTitle className='text-center'>ARTWORK INFO</DialogTitle>
+          <DialogDescription className='text-center'>
+            작품 상세 정보
+          </DialogDescription>
         </DialogHeader>
 
         <div className='flex gap-[15px]'>
           {/* 이미지 업로드 */}
-          <div className='flex flex-col items-center gap-[10px]'>
-            <div className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
+          <div className='flex flex-col items-center gap-[15px]'>
+            <div className='w-[100px] md:w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
               <img
                 src={artImageUrl}
                 alt='preview'
@@ -384,8 +376,10 @@ export default function AdminArtModal({
 
             <div className='h-10 flex items-center justify-center'>
               <AddArtistSheet
+                role={role}
                 currentArtists={art?.artists || []}
                 onUpdateArtists={handleUpdateArtists}
+                setArt={setArt}
               />
             </div>
           </div>

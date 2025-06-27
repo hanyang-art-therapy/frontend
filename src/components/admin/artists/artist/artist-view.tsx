@@ -5,6 +5,8 @@ import {
   useEffect,
   useRef,
   useState,
+  Suspense,
+  lazy,
 } from 'react';
 import {
   ArtistsResponse,
@@ -18,7 +20,6 @@ import {
   patchArtist,
   deleteArtist,
 } from '@/apis/admin/artists';
-import ArtistModal from '@/components/admin/artists/artist/artist-modal';
 import { handleApiError } from '@/components/common/error-handler';
 import { toast } from 'sonner';
 import {
@@ -35,6 +36,11 @@ import {
   getArtistTest,
   patchArtistTest,
 } from '@/apis/admin/tester/artists';
+import DialogLoading from '@/components/ui/dialog-loading';
+
+const ArtistModal = lazy(
+  () => import('@/components/admin/artists/artist/artist-modal')
+);
 
 type Props = {
   artistsList: InfiniteScrollResponse<ArtistsResponse>;
@@ -177,8 +183,14 @@ export default function ArtistView({
   }, [artistsList.hasNext, loadArtists]);
 
   const handleSearchChange = async () => {
+    let response;
+
     try {
-      const response = await getArtists({ keyword: searchValue, filter });
+      if (role === 'TESTER') {
+        response = await getArtistsTest({ keyword: searchValue, filter });
+      } else {
+        response = await getArtists({ keyword: searchValue, filter });
+      }
 
       setArtistsList(response);
     } catch (error) {
@@ -266,12 +278,14 @@ export default function ArtistView({
 
       {/* 작가 상세 모달 */}
       {selectedArtist && (
-        <ArtistModal
-          artist={selectedArtist}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onClose={handleClose}
-        />
+        <Suspense fallback={<DialogLoading />}>
+          <ArtistModal
+            artist={selectedArtist}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onClose={handleClose}
+          />
+        </Suspense>
       )}
     </>
   );

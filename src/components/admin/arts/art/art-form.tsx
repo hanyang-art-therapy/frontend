@@ -1,4 +1,5 @@
 import { postAdminArt } from '@/apis/admin/arts';
+import { postAdminArtTest } from '@/apis/admin/tester/arts';
 import { postFile, postFileTest } from '@/apis/common/file';
 import SelectArtistDialog from '@/components/admin/arts/art/select-artist-dialog';
 import FormField from '@/components/admin/form-field';
@@ -93,12 +94,19 @@ export default function AdminArtForm({
     try {
       setIsSubmitting(true);
 
-      await postAdminArt({
-        ...form,
-        galleriesNo: Number(form.galleriesNo),
-        artType: form.artistList.length > 1 ? 'GROUP' : 'SINGLE',
-      });
-      toast.success('작품 등록이 완료되었습니다.');
+      let res;
+
+      if (role === 'TESTER') {
+        res = await postAdminArtTest(form);
+      } else {
+        res = await postAdminArt({
+          ...form,
+          galleriesNo: Number(form.galleriesNo),
+          artType: form.artistList.length > 1 ? 'GROUP' : 'SINGLE',
+        });
+      }
+
+      toast.success(res.message);
       setSelectedTab('view');
     } catch (error) {
       toast.error(handleApiError(error));

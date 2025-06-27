@@ -1,25 +1,25 @@
 import FormField from '@/components/admin/form-field';
+import { handleApiError } from '@/components/common/error-handler';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
-  DialogDescription,
 } from '@/components/ui/dialog';
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
-import { UserResponse, PatchUserRequest } from '@/types/admin/users';
-import { User, MessageResponse } from '@/types';
-import { useState, useEffect } from 'react';
+import type { MessageResponse, User } from '@/types';
+import type { PatchUserRequest, UserResponse } from '@/types/admin/users';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { handleApiError } from '@/components/common/error-handler';
 
 type Props = {
   user: UserResponse;
@@ -27,9 +27,10 @@ type Props = {
   onClose: () => void;
 };
 
-export default function UserModal({ user, onEdit, onClose }: Props) {
-  type UserFormState = Omit<User, 'password'>;
+type UserFormState = Omit<User, 'password'>;
 
+export default function UserModal({ user, onEdit, onClose }: Props) {
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
   const [form, setForm] = useState<UserFormState>({
     userNo: 0,
     userId: '',
@@ -106,6 +107,10 @@ export default function UserModal({ user, onEdit, onClose }: Props) {
     }
   };
 
+  const handleDialogChange = (open: boolean) => {
+    if (!open && !isSelectOpen) onClose();
+  };
+
   const fields = [
     { id: 'userId', label: '아이디' },
     { id: 'role', label: '유형' },
@@ -116,7 +121,7 @@ export default function UserModal({ user, onEdit, onClose }: Props) {
   ];
 
   return (
-    <Dialog open onOpenChange={onClose}>
+    <Dialog open onOpenChange={handleDialogChange}>
       <DialogContent className='sm:max-w-[700px]'>
         <DialogHeader>
           <DialogTitle className='text-center'>USER INFO</DialogTitle>
@@ -137,6 +142,7 @@ export default function UserModal({ user, onEdit, onClose }: Props) {
                       role: value as 'USER' | 'ARTIST' | 'ADMIN',
                     }))
                   }
+                  onOpenChange={setIsSelectOpen}
                 >
                   <SelectTrigger className='w-full border-none bg-white/0 outline-none cursor-pointer'>
                     <SelectValue placeholder='' />

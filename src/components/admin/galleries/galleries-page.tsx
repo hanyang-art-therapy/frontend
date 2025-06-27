@@ -1,7 +1,7 @@
 import GalleryForm from '@/components/admin/galleries/gallery/gallery-form';
 import GalleryView from '@/components/admin/galleries/gallery/gallery-view';
 import TabButton from '@/components/admin/tab-btn';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { TabType } from '@/components/admin/tab-btn';
 import { GalleriesResponse } from '@/types/admin/galleries';
 import { useLoaderData } from 'react-router-dom';
@@ -11,15 +11,29 @@ export default function AdminGalleries() {
   const loaderData = useLoaderData();
 
   const { role } = useAuthStore();
+
   const [selectedTab, setSelectedTab] = useState<TabType>('view');
-  // const [postedYears, setPostedYears] = useState<string[]>([]);
+  const [postedYears, setPostedYears] = useState<string[]>([]);
   const [galleries, setGalleries] = useState<GalleriesResponse[]>(loaderData);
+
+  useEffect(() => {
+    setPostedYears(galleries.map((gallery) => gallery.startDate.split('-')[0]));
+  }, [galleries]);
 
   const content =
     selectedTab === 'view' ? (
-      <GalleryView galleries={galleries} setGalleries={setGalleries} />
+      <GalleryView
+        role={role}
+        postedYears={postedYears}
+        galleries={galleries}
+        setGalleries={setGalleries}
+      />
     ) : (
-      <GalleryForm postedYears={[]} role={role} setGalleries={setGalleries} />
+      <GalleryForm
+        role={role}
+        postedYears={postedYears}
+        setGalleries={setGalleries}
+      />
     );
 
   return (

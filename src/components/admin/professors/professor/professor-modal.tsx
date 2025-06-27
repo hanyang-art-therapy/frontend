@@ -15,7 +15,7 @@ import {
   PatchProfessorRequest,
   ProfessorsResponse,
 } from '@/types/admin/professors';
-import { useEffect, useRef, useState } from 'react';
+import { type SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 type Props = {
@@ -123,7 +123,7 @@ export default function ProfessorModal({
         major: form.major,
         email: form.email,
         tel: form.tel,
-        filesNo: form.filesNo,
+        filesNo: form.filesNo ?? undefined,
       };
       const res = await onEdit(submitForm);
       toast.success(res.message);
@@ -141,6 +141,10 @@ export default function ProfessorModal({
     } catch (error) {
       toast.error(handleApiError(error));
     }
+  };
+
+  const handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = '/images/no-image.jpg';
   };
 
   const fields = [
@@ -164,16 +168,12 @@ export default function ProfessorModal({
           {/* 이미지 업로드 */}
           <div className='flex flex-col items-center gap-[15px]'>
             <div className='w-[100px] md:w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
-              {previewUrl ? (
-                <img
-                  src={previewUrl}
-                  alt='preview'
-                  className='w-full h-full object-cover'
-                  style={{ cursor: 'default' }}
-                />
-              ) : (
-                <span className='t-r-14 text-gray-6'>NO IMAGE</span>
-              )}
+              <img
+                src={previewUrl}
+                alt='preview'
+                className='w-full h-full object-cover'
+                onError={handleImageError}
+              />
             </div>
             <input
               id='image-upload'

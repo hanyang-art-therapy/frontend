@@ -8,14 +8,18 @@ import {
   getProfessorsTest,
   patchProfessorTest,
 } from '@/apis/admin/tester/professors';
-import ProfessorModal from '@/components/admin/professors/professor/professor-modal';
+import DialogLoading from '@/components/ui/dialog-loading';
 import { useAuthStore } from '@/store/auth';
 import { MessageResponse } from '@/types';
 import type {
   PatchProfessorRequest,
   ProfessorsResponse,
 } from '@/types/admin/professors';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, Suspense, lazy, useState } from 'react';
+
+const ProfessorModal = lazy(
+  () => import('@/components/admin/professors/professor/professor-modal')
+);
 
 type Props = {
   professors: ProfessorsResponse[];
@@ -132,13 +136,15 @@ export default function ProfessorView({ professors, setProfessors }: Props) {
 
       {/* 교수진 상세 모달 */}
       {selectedProfessors && (
-        <ProfessorModal
-          role={role}
-          professor={selectedProfessors}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onClose={handleClose}
-        />
+        <Suspense fallback={<DialogLoading />}>
+          <ProfessorModal
+            role={role}
+            professor={selectedProfessors}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onClose={handleClose}
+          />
+        </Suspense>
       )}
     </>
   );

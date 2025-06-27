@@ -1,22 +1,33 @@
-import { useRef, useState, useEffect, useCallback } from 'react';
-import type {
-  UsersResponse,
-  UserResponse,
-  PatchUserRequest,
-} from '@/types/admin/users';
-import { InfiniteScrollResponse, MessageResponse } from '@/types';
-import { getUsers, getUser, patchUser } from '@/apis/admin/users';
-import UserModal from '@/components/admin/users/user/user-modal';
-import { handleApiError } from '@/components/common/error-handler';
-import { toast } from 'sonner';
-import { useLoaderData } from 'react-router-dom';
-import Search from '@/components/ui/search';
 import {
   getUsersTest,
   getUserTest,
   patchUserTest,
 } from '@/apis/admin/tester/users';
+import { getUser, getUsers, patchUser } from '@/apis/admin/users';
+import { handleApiError } from '@/components/common/error-handler';
+import DialogLoading from '@/components/ui/dialog-loading';
+import Search from '@/components/ui/search';
 import { useAuthStore } from '@/store/auth';
+import { InfiniteScrollResponse, MessageResponse } from '@/types';
+import type {
+  PatchUserRequest,
+  UserResponse,
+  UsersResponse,
+} from '@/types/admin/users';
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { useLoaderData } from 'react-router-dom';
+import { toast } from 'sonner';
+
+const UserModal = lazy(
+  () => import('@/components/admin/users/user/user-modal')
+);
 
 export default function AdminUserPage() {
   const { role: authRole } = useAuthStore();
@@ -83,7 +94,14 @@ export default function AdminUserPage() {
   };
 
   const handleSearch = async () => {
-    const response = await getUsers(searchValue.trim());
+    let response;
+
+    if (authRole === 'TESTER') {
+      response = await getUsersTest({ keyword: searchValue.trim() });
+    } else {
+      response = await getUsers(searchValue.trim());
+    }
+
     setUsers(response.content);
   };
 
@@ -99,7 +117,7 @@ export default function AdminUserPage() {
     } catch (error) {
       toast.error(handleApiError(error));
     }
-  }, [hasNext, lastId]);
+  }, [hasNext, lastId, searchValue]);
 
   useEffect(() => {
     const rafId = requestAnimationFrame(() => {
@@ -130,8 +148,6 @@ export default function AdminUserPage() {
       if (observer.current) observer.current.disconnect();
     };
   }, [hasNext, loadMoreUsers, searchValue]);
-
-  const handleClose = () => setSelectedUser(null);
 
   return (
     <div>
@@ -193,11 +209,13 @@ export default function AdminUserPage() {
 
       {/* 상세 모달 */}
       {selectedUser && (
-        <UserModal
-          user={selectedUser}
-          onEdit={handleEdit}
-          onClose={handleClose}
-        />
+        <Suspense fallback={<DialogLoading />}>
+          <UserModal
+            user={selectedUser}
+            onEdit={handleEdit}
+            onClose={() => setSelectedUser(null)}
+          />
+        </Suspense>
       )}
     </div>
   );
