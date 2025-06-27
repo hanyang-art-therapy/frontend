@@ -40,7 +40,7 @@ export type PatchAdminArtRequest = Pick<
   | 'coDescription'
   | 'artsNo'
 > & {
-  filesNo: number | null;
+  filesNo?: number | null;
   artists:
     | (Pick<Artist, 'artistNo'> &
         Pick<ArtArtistRel, 'description'> & { name: string })[]
