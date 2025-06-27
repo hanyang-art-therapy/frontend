@@ -1,27 +1,12 @@
+import { getKoType } from '@/lib/helper/notice';
 import { formatTimeStamp } from '@/lib/utils';
 import type { GetNoticesResponse } from '@/types/notice/notice';
-import { Paperclip, Plus } from 'lucide-react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Paperclip, Pin, Plus } from 'lucide-react';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 
 export default function ContentsSection() {
   const response = useLoaderData() as GetNoticesResponse;
-
-  const getType = (category: string) => {
-    if (category === 'GENERAL') {
-      return '일반';
-    }
-    if (category === 'PRACTICE') {
-      return '실습';
-    }
-    if (category === 'RECRUIT') {
-      return '모집';
-    }
-    if (category === 'EXHIBITION') {
-      return '전시';
-    }
-
-    return '학술';
-  };
+  const navigate = useNavigate();
 
   return (
     <section className='w-full flex justify-center py-[60px]'>
@@ -53,16 +38,30 @@ export default function ContentsSection() {
             {response.content.slice(0, 5).map((notice, index) => (
               <li
                 key={notice.noticeNo}
-                className='grid grid-cols-[45px_80px_auto_100px] md:grid-cols-[70px_100px_auto_100px_100px_140px] items-center leading-[40px] t-r-16 hover:bg-primary/5'
+                onClick={() => navigate(`/notice/${notice.noticeNo}`)}
+                className={`grid grid-cols-[45px_80px_auto_100px] md:grid-cols-[70px_100px_auto_100px_100px_140px] items-center leading-[40px] t-r-16 cursor-pointer ${
+                  notice.isFixed
+                    ? 'bg-bg-primary/6'
+                    : 'bg-white hover:bg-bg-gray-fa'
+                }`}
               >
                 <span className='text-center'>{index + 1}</span>
-                <span className='text-center'>{getType(notice.category)}</span>
-                <Link
-                  to={`/notice/${notice.noticeNo}`}
-                  className='transition truncate t-m-16'
-                >
-                  {notice.title}
-                </Link>
+                <span className='text-center'>
+                  {getKoType(notice.category)}
+                </span>
+                <p className='flex items-center gap-2'>
+                  {notice.isFixed ? (
+                    <>
+                      <span className='w-5 h-5 bg-bg-primary rounded-full flex items-center justify-center shrink-0'>
+                        <Pin size={12} color='#fff' strokeWidth={2} />
+                      </span>
+                      <span className='t-b-16'>{notice.title}</span>
+                    </>
+                  ) : (
+                    notice.title
+                  )}
+                </p>
+
                 <span className='text-gray-9 text-center t-r-14 hidden md:inline'>
                   {notice.hasFile && (
                     <div className='flex justify-center items-center'>
