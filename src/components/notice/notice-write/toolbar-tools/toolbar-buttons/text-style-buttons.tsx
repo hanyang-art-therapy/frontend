@@ -29,7 +29,7 @@ const ToolbarButton = ({
     type='button'
     className={`cursor-pointer ${className} ${
       isActive 
-        ? 'bg-[var(--bg-primary)] shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]' 
+        ? 'bg-[var(--bg-primary)] shadow-sm' 
         : ''
     }`}
     onClick={onClick}
@@ -50,9 +50,9 @@ const Divider = () => (
 );
 
 const buttonShadowClass =
-  'border-1 border-[#ddd] p-1 rounded-sm shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)] mr-2';
+  'border-1 border-[#ddd] p-1 rounded-sm shadow-sm mr-2';
 const buttonShadowClassHidden =
-  'border-1 border-[#ddd] p-1 rounded-sm shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)] hidden md:block';
+  'border-1 border-[#ddd] p-1 rounded-sm shadow-sm hidden md:block';
 
 export default function TextStyleButtons({ editor }: FontButtonsProps) {
  

@@ -108,10 +108,8 @@ export default function FontSizeButtons({ editor }: FontButtonsProps) {
 
   return (
     <>
-      {/* 글씨 크기 */}
       <div className='flex justify-start md:justify-center md:pl-2 items-center gap-2 md:gap-[10px]'>
-        {/* 현재 폰트 사이즈 */}
-        <span className='hidden md:block t-r-16 px-2 border-1 border-gray-300 min-w-[60px] rounded-sm text-center'>
+        <span className='hidden md:block t-r-16 px-2 border-1 border-bg-gray-d/60 min-w-[60px] rounded-sm text-center'>
           {currentFontSize}px
         </span>
         <FontSizeButton

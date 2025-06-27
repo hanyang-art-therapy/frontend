@@ -30,7 +30,7 @@ const ColorButton = ({
     onClick={onClick}
   >
     <div 
-      className="w-[20px] h-[20px] border border-gray-300"
+      className="w-[20px] h-[20px] border border-bg-gray-d/60"
       style={{ backgroundColor: color }}
     />
   </button>
@@ -73,11 +73,11 @@ const ToolbarButton = ({
 
 // 구분선
 const Divider = () => (
-  <div className='w-[1px] h-[25px] mx-[15px] bg-[#cacad6] hidden md:block' />
+  <div className='w-[1px] h-[25px] mx-[15px] bg-bg-gray-d hidden md:block' />
 );
 
 const buttonShadowClass =
-  'border-1 border-[#ddd] p-1 rounded-sm shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)]';
+  'border-1 border-[#ddd] p-1 rounded-sm shadow-sm';
 
 export default function TextColorButtons({ editor }: FontButtonsProps) {
 

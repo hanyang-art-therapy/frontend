@@ -59,13 +59,12 @@
   min-height: 1.2em !important;
 }
 
-/* 목록 항목 내부의 p 태그 스타일 조정 */
+
 .ProseMirror li p {
   margin: 0;
   padding: 0;
 }
 
-/* 포커스 및 커서 스타일 */
 .ProseMirror li:focus {
   outline: none;
 }

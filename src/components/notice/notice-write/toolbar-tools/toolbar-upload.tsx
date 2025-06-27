@@ -45,7 +45,7 @@ const ToolbarButton = ({
 );
 
 const buttonShadowClass =
-  'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)]';
+  'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-sm';
 
 export default function ToolbarUpload({
   editor,
@@ -55,13 +55,10 @@ export default function ToolbarUpload({
 }: ToolbarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
-
-  // 내부 상태 관리 (uploadedFiles, setUploadedFiles가 없을 때 대비)
   const [internalUploadedFiles, setInternalUploadedFiles] = useState<
     NoticeFile[]
   >([]);
 
-  // 실제 사용하는 파일 상태와 setter
   const actualUploadedFiles = uploadedFiles.length
     ? uploadedFiles
     : internalUploadedFiles;
@@ -130,7 +127,6 @@ export default function ToolbarUpload({
     toast.success('파일이 삭제되었습니다.');
   };
 
-  // showPreview 대신 파일 존재 여부로 미리보기 표시 결정
   const hasFiles = actualUploadedFiles && actualUploadedFiles.length > 0;
 
   return (

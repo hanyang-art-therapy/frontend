@@ -1,7 +1,7 @@
 import { getNotice, patchNotice } from '@/apis/notice/notice';
-import NoticeEditHeader from '@/components/notice/detail/edit/detail-edit-tools/notice-edit-header';
-import NoticeEditText from '@/components/notice/detail/edit/detail-edit-tools/notice-edit-text';
-import NoticeUploadEditor from '@/components/notice/detail/edit/detail-edit-tools/notice-upload-editor';
+import NoticeEditHeader from '@/components/notice/detail/edit/tools/notice-edit-header';
+import NoticeEditText from '@/components/notice/detail/edit/tools/notice-edit-text';
+import NoticeUploadEditor from '@/components/notice/detail/edit/tools/notice-upload-editor';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
 import ToolbarHeading from '@/components/notice/notice-write/toolbar-tools/toolbar-heading';
 import { Button } from '@/components/ui/button';
@@ -377,15 +377,7 @@ export default function NoticeEditForm() {
   };
   return (
     <div className='w-full h-full mt-[80px] md:mt-[120px]'>
-      <div className='w-full max-w-[1260px] mx-auto px-5 md:px-0'>
-        <div className='flex justify-start items-center pb-[10px] md:pb-[20px] gap-2'>
-          <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-bg-secondary/90'>
-            <FilePenLine size={40} strokeWidth={2} />
-          </div>
-          <strong className='p-2 text-bg-black t-b-32'>게시물 수정</strong>
-        </div>
-        <div className='w-[96%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
-      </div>
+ 
       <form
         className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'
         onSubmit={handleSubmit}
@@ -431,6 +423,7 @@ export default function NoticeEditForm() {
             </div>
           </div>
         </div>
+        
       </form>
     </div>
   );
