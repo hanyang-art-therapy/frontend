@@ -152,7 +152,14 @@ export default function NoticeDetail() {
                     <a
                       href={file.url}
                       target='_blank'
-                      className='text-btn-dark-3 hover:text-bg-primary'
+                      className='
+                        text-btn-dark-3 
+                        hover:text-bg-primary 
+                        max-w-[260px] md:max-w-full
+                        overflow-hidden 
+                        text-ellipsis 
+                        whitespace-nowrap
+                      '
                     >
                       {file.name}
                     </a>

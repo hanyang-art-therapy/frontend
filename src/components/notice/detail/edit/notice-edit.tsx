@@ -353,7 +353,7 @@ export default function NoticeEdit() {
   if (error) {
     return (
       <div className='w-full h-full mt-[80px] md:mt-[120px]'>
-        <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
+        <div className='flex flex-col items-center justify-center w-full md:max-w-[1260px] mx-auto'>
           <div className='flex justify-center items-center w-full h-[400px] md:h-[140px] xl:px-0 py-[10px] text-start bg-white'>
             <div className='flex flex-col justify-center items-center gap-4 mt-2 t-r-16 px-[20px]'>
               <AlertTriangle color='#333333' size={32} />

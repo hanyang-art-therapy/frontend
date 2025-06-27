@@ -282,7 +282,7 @@ export default function NoticeWrite() {
             [&_.tiptap-bullet-list]:list-disc [&_.tiptap-bullet-list]:list-outside [&_.tiptap-bullet-list]:ml-6
             [&_.tiptap-ordered-list]:list-decimal [&_.tiptap-ordered-list]:list-outside [&_.tiptap-ordered-list]:ml-6
             [&_.tiptap-list-item]:pl-2 [&_.tiptap-list-item]:my-1
-            [&_a]:underline [&_a]:cursor-pointer [&_a]:text-blue-600 [&_a]:hover:text-blue-800'
+            [&_a]:underline [&_a]:cursor-pointer [&_a]:text-bg-secondary/50 [&_a]:hover:text-bg-secondary'
         />
         <ToolbarUpload
           editor={editor}

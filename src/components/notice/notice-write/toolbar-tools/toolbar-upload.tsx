@@ -179,7 +179,7 @@ export default function ToolbarUpload({
               actualUploadedFiles.map((file, index) => (
                 <div
                   key={index}
-                  className='flex items-center justify-between group'
+                  className='flex items-center justify-between group gap-2'
                 >
                   <div className='flex items-center gap-2 cursor-pointer w-max border-b border-transparent hover:border-bg-gray-d'>
                        <div className='w-[20px] h-[20px] md:w-[22px] md:h-[22px] text-primary flex justify-center items-center'>
@@ -188,7 +188,7 @@ export default function ToolbarUpload({
                     <div className='flex items-center gap-2'>
                       <span className='text-bg-secondary'>{file.name}</span>
                       {file.isNew && (
-                        <span className='t-r-14 bg-bg-secondary/40 text-white px-2 py-1 rounded'>
+                        <span className='flex justify-center items-center w-[80px] h-[24px] t-r-14 bg-bg-secondary/40 text-white px-2 py-1 rounded'>
                           새 파일
                         </span>
                       )}
