@@ -1,6 +1,6 @@
 import { Editor } from '@tiptap/react';
 import { useState, useEffect } from 'react';
-import { AArrowDown, AArrowUp } from 'lucide-react';
+import { AArrowDown, AArrowUp, LucideIcon } from 'lucide-react';
 
 type FontButtonsProps = {
   editor: Editor | null;
@@ -14,8 +14,7 @@ const FontSizeButton = ({
   className = '',
   isActive = false,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
+  icon: LucideIcon;
   onClick: () => void;
   disabled?: boolean;
   color?: string;

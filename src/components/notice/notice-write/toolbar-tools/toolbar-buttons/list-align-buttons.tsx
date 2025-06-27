@@ -1,5 +1,5 @@
 import { Editor } from '@tiptap/react';
-import { Link, Link2Off } from 'lucide-react';
+import { Link, Link2Off, LucideIcon } from 'lucide-react';
 import {
   List,
   ListOrdered,
@@ -21,8 +21,7 @@ const ToolbarButton = ({
   className = '',
   isActive = false,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
+  icon: LucideIcon;
   onClick: () => void;
   disabled?: boolean;
   color?: string;

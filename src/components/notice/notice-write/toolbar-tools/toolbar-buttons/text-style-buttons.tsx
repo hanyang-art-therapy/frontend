@@ -4,6 +4,7 @@ import {
   Baseline,
   Highlighter,
 } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
 type FontButtonsProps = {
   editor: Editor | null;
@@ -17,8 +18,8 @@ const ToolbarButton = ({
   className = '',
   isActive = false,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
+
+  icon: LucideIcon;
   onClick: () => void;
   disabled?: boolean;
   color?: string;

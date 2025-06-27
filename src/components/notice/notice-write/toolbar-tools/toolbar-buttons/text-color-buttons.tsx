@@ -2,6 +2,7 @@ import { Editor } from '@tiptap/react';
 import {
   Bold,
   Italic,
+  LucideIcon,
   Strikethrough,
 } from 'lucide-react';
 
@@ -44,8 +45,7 @@ const ToolbarButton = ({
   className = '',
   isActive = false,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
+  icon: LucideIcon;
   onClick: () => void;
   disabled?: boolean;
   color?: string;

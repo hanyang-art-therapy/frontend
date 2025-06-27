@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Editor } from '@tiptap/react';
-import { Paperclip, Download } from 'lucide-react';
+import { Paperclip, Download, LucideIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { postFile } from '@/apis/common/file';
 
@@ -27,8 +27,7 @@ const ToolbarButton = ({
   className = '',
   isActive = false,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
+  icon: LucideIcon;
   onClick: () => void;
   disabled?: boolean;
   color?: string;
