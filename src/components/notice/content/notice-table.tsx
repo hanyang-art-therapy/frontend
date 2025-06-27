@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 type NoticeTableProps = {
   notices: GetNoticesContent[];
+  page: number;
 };
 
-export default function NoticeTable({ notices }: NoticeTableProps) {
+export default function NoticeTable({ notices, page }: NoticeTableProps) {
   const navigate = useNavigate();
 
   const getType = (category: string) => {
@@ -46,7 +47,9 @@ export default function NoticeTable({ notices }: NoticeTableProps) {
                 : 'bg-white'
             }`}
           >
-            <td className='p-2 text-center h-[40px]'>{index + 1}</td>
+            <td className='p-2 text-center h-[40px]'>
+              {page * 10 + index + 1}
+            </td>
             <td className='p-2 text-center'>{getType(item.category)}</td>
             <td className='max-w-[100px] sm:w-[90px] p-2 text-left relative group overflow-hidden whitespace-nowrap text-ellipsis t-m-16'>
               <span className='flex items-center gap-2'>

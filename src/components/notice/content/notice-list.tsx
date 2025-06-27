@@ -56,7 +56,7 @@ export default function NoticeList({
       </strong>
 
       <div className='w-full overflow-x-auto min-h-[452px]'>
-        <NoticeTable notices={content} />
+        <NoticeTable notices={content} page={notices.page} />
       </div>
 
       {role === 'ADMIN' && (

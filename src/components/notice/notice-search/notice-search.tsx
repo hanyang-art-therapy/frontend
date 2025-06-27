@@ -43,8 +43,20 @@ export default function NoticeSearch({
     }
   };
 
-  const handleSelectChange = (value: string) => {
+  const handleSelectChange = async (value: string) => {
     setFilter(value);
+
+    try {
+      const response = await getNotices({
+        keyword: searchValue,
+        category: getEgType(value),
+      });
+
+      setNotices(response);
+    } catch (error) {
+      console.log(error);
+      toast.error(handleApiError(error));
+    }
   };
 
   return (
