@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { Paperclip, Image, Download } from 'lucide-react';
+import { Paperclip, Download } from 'lucide-react';
 import { postFile } from '@/apis/common/file';
-import { LucideIcon } from 'lucide-react';
 
 type NoticeFile = {
   filesNo?: number;
@@ -33,27 +32,35 @@ const ToolbarButton = ({
   disabled = false,
   color = '#333333',
   className = '',
+  isActive = false,
 }: {
-  icon: LucideIcon;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  icon: any;
   onClick: () => void;
   disabled?: boolean;
   color?: string;
   className?: string;
+  isActive?: boolean;
 }) => (
   <button
     type='button'
-    className={`cursor-pointer ${className}`}
+    className={`cursor-pointer ${className} ${
+      isActive ? 'bg-[var(--bg-primary)] shadow-sm' : ''
+    }`}
     onClick={onClick}
     disabled={disabled}
   >
-    <Icon strokeWidth={1.5} size={26} color={color} />
+    <Icon
+      strokeWidth={1.5}
+      width={20}
+      height={20}
+      color={isActive ? 'white' : color}
+    />
   </button>
 );
 
 const buttonShadowClass =
-  'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)]';
-const buttonShadowClassHidden =
-  'border-1 border-[#ddd] p-1 rounded-sm bg-white shadow-[inset_0_-2px_2px_rgba(0,0,0,0.1)] hidden md:block';
+  'border-1 border-[#ddd] p-1 rounded-sm shadow-sm mr-2';
 
 export default function NoticeUploadEditor({
   formData,
@@ -112,6 +119,8 @@ export default function NoticeUploadEditor({
     toast.success('파일이 삭제되었습니다.');
   };
 
+  const hasFiles = formData.files && formData.files.length > 0;
+
   return (
     <div className='relative'>
       <div className='w-full h-auto min-h-[70px] md:px-5 py-4 md:py-6 border-t border-b border-bg-gray-d flex flex-col gap-2 bg-btn-gray-fa'>
@@ -132,26 +141,22 @@ export default function NoticeUploadEditor({
               onClick={triggerFileUpload}
               className={buttonShadowClass}
               disabled={uploading}
+              isActive={hasFiles} 
             />
-            <ToolbarButton
-              icon={Image}
-              onClick={triggerFileUpload}
-              className={buttonShadowClassHidden}
-              disabled={uploading}
-            />
+           
             {uploading && (
               <span className='t-r-16 text-bg-secondary'>업로드 중...</span>
             )}
           </div>
 
-          <div className='flex flex-col gap-2 t-r-16'>
-            {!formData.files || formData.files.length === 0 ? (
+          <div className='flex flex-col gap-2 t-r-16 text-start'>
+            {!hasFiles ? (
               <div>첨부된 파일이 없습니다.</div>
             ) : (
-              formData.files.map((file, index) => (
+              formData.files?.map((file, index) => (
                 <div
                   key={index}
-                  className='flex items-center justify-between group'
+                  className='flex items-center justify-between group gap-2 mr-4 md:mr-0'
                 >
                   <div className='flex items-center gap-2 cursor-pointer w-max border-b border-transparent hover:border-bg-gray-d'>
                     <div className='w-[20px] h-[20px] md:w-[22px] md:h-[22px] text-primary flex justify-center items-center'>
@@ -160,7 +165,7 @@ export default function NoticeUploadEditor({
                     <div className='flex items-center gap-2'>
                       <span className='text-bg-secondary'>{file.name}</span>
                       {file.isNew && (
-                        <span className='t-r-12 bg-primary text-white px-2 py-1 rounded-[5px]'>
+                        <span className='flex justify-center items-center w-[82px] h-[24px] t-r-14 bg-bg-secondary/40 text-white px-2 py-1 rounded'>
                           새 파일
                         </span>
                       )}
@@ -169,7 +174,7 @@ export default function NoticeUploadEditor({
                   <button
                     type='button'
                     onClick={() => removeFile(index)}
-                    className='cursor-pointer hover:bg-black p-1 rounded-sm text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity'
+                    className='min-w-[46px] cursor-pointer p-1 rounded-sm text-white font-medium t-b-14 bg-bg-gray-d hover:bg-btn-dark-3'
                   >
                     삭제
                   </button>

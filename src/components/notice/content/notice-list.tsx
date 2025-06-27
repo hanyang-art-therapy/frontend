@@ -55,7 +55,7 @@ export default function NoticeList({
         개의 게시물
       </strong>
 
-      <div className='w-full overflow-x-auto'>
+      <div className='w-full overflow-x-auto min-h-[452px]'>
         <NoticeTable notices={content} />
       </div>
 
