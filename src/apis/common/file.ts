@@ -56,7 +56,7 @@ export const postFileTest = async (
   const uploadResults = [];
 
   for (const file of files) {
-    const fileName = `${Math.random().toString(36).substring(2)}-${file.name}`;
+    const fileName = `${Math.random().toString(36).substring(2)}`;
     const filePath = `${category}/${fileName}`;
 
     const { error: uploadError } = await supabase.storage

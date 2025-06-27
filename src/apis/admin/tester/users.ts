@@ -11,16 +11,15 @@ import type {
 import { toast } from 'sonner';
 
 export const getUsersTest = async ({
-  filter,
   keyword,
 }: InfiniteKeywordSearchRequest): Promise<
   InfiniteScrollResponse<UsersResponse>
 > => {
-  if (filter && keyword) {
+  if (keyword) {
     const { data, error } = await supabase
       .from('users')
       .select('userNo, userName, userId, studentNo')
-      .ilike(filter, `%${keyword}%`);
+      .ilike('userName', `%${keyword}%`);
 
     if (error) {
       toast.error(error.message);

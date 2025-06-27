@@ -12,14 +12,14 @@ import {
 } from '@/apis/admin/tester/galleries';
 
 type Props = {
-  postedYears: string[];
   role: string | null;
+  postedYears: string[];
   setGalleries: Dispatch<SetStateAction<Gallery[]>>;
 };
 
 export default function GalleryForm({
-  postedYears,
   role,
+  postedYears,
   setGalleries,
 }: Props) {
   const [form, setForm] = useState<Omit<Gallery, 'galleriesNo'>>({
@@ -41,27 +41,28 @@ export default function GalleryForm({
 
     const startYear = form.startDate.split('-')[0];
     const endYear = form.endDate.split('-')[0];
-    const filteredYears = postedYears.filter((postedYear) => {
-      return postedYear !== endYear || postedYear !== startYear;
-    });
 
     // 유효성 검사
     if (!form.title || !form.startDate || !form.endDate) {
       toast.error('전시 제목, 전시 기간 모두 입력해주세요.');
       return;
     }
-    if (filteredYears.includes(startYear)) {
+
+    if (postedYears.includes(startYear)) {
       toast.error('해당년도에 이미 전시회가 등록되어 있습니다.');
       return;
     }
-    if (filteredYears.includes(endYear)) {
+
+    if (postedYears.includes(endYear)) {
       toast.error('해당년도에 이미 전시회가 등록되어 있습니다.');
       return;
     }
+
     if (startYear !== endYear) {
       toast.error('시작년도와 종료년도는 같아야 합니다.');
       return;
     }
+
     if (form.startDate > form.endDate) {
       toast.error('종료일자가 시작일자보다 빠를 수 없습니다.');
       return;
@@ -90,29 +91,48 @@ export default function GalleryForm({
     }
   };
 
-  const fields = [
-    { id: 'title', label: '제목', placeholder: '전시회명' },
-    { id: 'startDate', label: '시작 일자' },
-    { id: 'endDate', label: '종료 일자' },
-  ];
-
   return (
     <form className='flex flex-col gap-[30px]' onSubmit={handleSubmit}>
       <div className='border border-btn-gray-d rounded overflow-hidden divide-y divide-btn-gray-d'>
-        {fields.map(({ id, label, placeholder }) => (
-          <FormField key={id} id={id} label={label}>
-            <input
-              id={id}
-              name={id}
-              type={id === 'startDate' || id === 'endDate' ? 'date' : 'text'}
-              value={form[id as keyof PostGalleryRequest] ?? ''}
-              placeholder={placeholder}
-              onChange={handleChange}
-              autoComplete='off'
-              className='w-full px-[15px] outline-none cursor-pointer'
-            />
-          </FormField>
-        ))}
+        <FormField id='title' label='제목'>
+          <input
+            id='title'
+            name='title'
+            value={form.title ?? ''}
+            placeholder='전시회명'
+            onChange={handleChange}
+            autoComplete='off'
+            className='w-full px-[15px] outline-none'
+          />
+        </FormField>
+
+        <FormField id='startDate' label='시작 일자'>
+          <input
+            id='startDate'
+            name='startDate'
+            type='date'
+            value={form.startDate ?? ''}
+            placeholder='시작 일자'
+            onChange={handleChange}
+            onClick={(e) => e.currentTarget.showPicker()}
+            autoComplete='off'
+            className='w-full px-[15px] outline-none cursor-pointer h-full'
+          />
+        </FormField>
+
+        <FormField id='endDate' label='종료 일자'>
+          <input
+            id='endDate'
+            name='endDate'
+            type='date'
+            value={form.endDate ?? ''}
+            placeholder='종료 일자'
+            onChange={handleChange}
+            onClick={(e) => e.currentTarget.showPicker()}
+            autoComplete='off'
+            className='w-full px-[15px] outline-none cursor-pointer h-full'
+          />
+        </FormField>
       </div>
 
       <Button type='submit' className='ml-auto'>

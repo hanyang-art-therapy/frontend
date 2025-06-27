@@ -18,32 +18,10 @@ export const getAdminArtsTest = async ({
 }: InfiniteKeywordSearchRequest): Promise<
   InfiniteScrollResponse<AdminArtsResponse>
 > => {
-  if (filter && keyword) {
-    const { data, error } = await supabase
-      .from('arts')
-      .select('*')
-      .ilike(filter, `%${keyword}%`);
-
-    if (error) {
-      toast.error(error.message);
-    }
-
-    if (data) {
-      return {
-        content: data,
-        lastId: 0,
-        hasNext: false,
-      };
-    }
-
-    return {
-      content: [],
-      lastId: 0,
-      hasNext: false,
-    };
-  }
-
-  const { data, error } = await supabase.rpc('get_admin_arts');
+  const { data, error } = await supabase.rpc('get_admin_arts', {
+    filter,
+    keyword,
+  });
 
   if (error) {
     toast.error(error.message);
@@ -62,16 +40,12 @@ export const getAdminArtTest = async (
   return data as AdminArtResponse;
 };
 
-export const patchAdminArt = async (
-  artsNo: number,
+export const patchAdminArtTest = async (
   data: PatchAdminArtRequest
 ): Promise<MessageResponse> => {
-  const { error } = await supabase
-    .from('arts')
-    .update({
-      ...data,
-    })
-    .eq('artsNo', artsNo);
+  const { error } = await supabase.rpc('patch_art', {
+    art_data: data,
+  });
 
   if (error) {
     toast.error(error.message);
@@ -99,7 +73,9 @@ export const deleteAdminArt = async (
 export const postAdminArtTest = async (
   data: PostAdminArtRequest
 ): Promise<MessageResponse> => {
-  const { error } = await supabase.from('arts').insert(data);
+  const { error } = await supabase.rpc('post_art', {
+    art_data: data,
+  });
 
   if (error) {
     toast.error(error.message);

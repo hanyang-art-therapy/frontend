@@ -1,6 +1,7 @@
 import { deleteAdminArt, getAdminArts, patchAdminArt } from '@/apis/admin/arts';
-import AdminArtModal from '@/components/admin/arts/art/art-modal';
+import { getAdminArtsTest, patchAdminArtTest } from '@/apis/admin/tester/arts';
 import { handleApiError } from '@/components/common/error-handler';
+import DialogLoading from '@/components/ui/dialog-loading';
 import Search from '@/components/ui/search';
 import {
   Select,
@@ -12,8 +13,19 @@ import {
 import type { InfiniteScrollResponse, MessageResponse } from '@/types';
 import { AdminArtsResponse, PatchAdminArtRequest } from '@/types/admin/arts';
 import type { GalleriesResponse } from '@/types/admin/galleries';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { toast } from 'sonner';
+
+const AdminArtModal = lazy(
+  () => import('@/components/admin/arts/art/art-modal')
+);
 
 type AdminArtViewProps = {
   role: string | null;
@@ -70,21 +82,28 @@ export default function AdminArtView({
       artists,
     } = form;
 
-    const res = await patchAdminArt(artsNo, {
-      galleriesNo,
-      artName,
-      caption,
-      artType,
-      coDescription,
-      filesNo,
-      artists: artists.map((value) => ({
-        artistNo: value.artistNo,
-        description: value.description,
-        name: value.name,
-      })),
-      artsNo,
-    });
+    let res;
 
+    if (role === 'TESTER') {
+      res = await patchAdminArtTest(form);
+    } else {
+      res = await patchAdminArt(artsNo, {
+        galleriesNo,
+        artName,
+        caption,
+        artType,
+        coDescription,
+        filesNo,
+        artsNo,
+        artists: artists.map((value) => ({
+          artistNo: value.artistNo,
+          description: value.description,
+          name: value.name,
+        })),
+      });
+    }
+
+    toast.success(res.message);
     setSelectedArt(null);
 
     setSearhedArts((searchedArts) =>
@@ -117,8 +136,14 @@ export default function AdminArtView({
   const handleClose = () => setSelectedArt(null);
 
   const handleSearch = async () => {
+    let response;
+
     try {
-      const response = await getAdminArts({ keyword, filter });
+      if (role === 'TESTER') {
+        response = await getAdminArtsTest({ keyword, filter });
+      } else {
+        response = await getAdminArts({ keyword, filter });
+      }
 
       setSearchedData(response);
     } catch (error) {
@@ -231,14 +256,16 @@ export default function AdminArtView({
 
       {/* 작품 상세 모달창 */}
       {selectedArt && (
-        <AdminArtModal
-          role={role}
-          artsNo={selectedArt.artsNo}
-          galleries={galleries}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onClose={handleClose}
-        />
+        <Suspense fallback={<DialogLoading />}>
+          <AdminArtModal
+            role={role}
+            artsNo={selectedArt.artsNo}
+            galleries={galleries}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onClose={handleClose}
+          />
+        </Suspense>
       )}
     </>
   );
