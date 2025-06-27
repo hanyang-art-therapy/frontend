@@ -42,9 +42,7 @@ export default function NoticeTable({ notices, page }: NoticeTableProps) {
             key={item.noticeNo}
             onClick={() => navigate(`/notice/${item.noticeNo}`)}
             className={`hover:bg-bg-gray-fa cursor-pointer border-b border-b-bg-gray-d t-r-16 max-h-[40px] ${
-              item.isFixed
-                ? 'bg-bg-primary/6 hover:bg-bg-primary/6 t-b-16'
-                : 'bg-white'
+              item.isFixed ? 'bg-bg-primary/6 t-b-16' : 'bg-white'
             }`}
           >
             <td className='p-2 text-center h-[40px]'>
@@ -58,7 +56,7 @@ export default function NoticeTable({ notices, page }: NoticeTableProps) {
                     <div className='w-5 h-5 bg-bg-primary rounded-full flex items-center justify-center shrink-0'>
                       <Pin size={12} color='#fff' strokeWidth={2} />
                     </div>
-                    {item.title}
+                    <span className='t-b-16'>{item.title}</span>
                   </>
                 ) : (
                   item.title
@@ -72,10 +70,10 @@ export default function NoticeTable({ notices, page }: NoticeTableProps) {
                 </div>
               )}
             </td>
-            <td className='p-2 hidden md:table-cell text-center'>
+            <td className='p-2 hidden md:table-cell text-gray-9 text-center t-r-14'>
               {item.viewCount}
             </td>
-            <td className='p-2 text-center text-btn-gray-9'>
+            <td className='p-2 text-center text-btn-gray-9 t-r-14'>
               {formatTimeStamp(item.createdAt)}
             </td>
           </tr>
