@@ -311,9 +311,11 @@
 
 <br/>
 
+<br/>
+
 |작품 상세 페이지|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/18f0284c-e0be-4bed-830a-a2a82edbb9cd" height="300"/> <img src="https://github.com/user-attachments/assets/544953d4-6e2a-41fe-b8f7-4cd11449ef60" height="300"/>|
+|<img src="https://github.com/user-attachments/assets/c5fc22e6-a0de-4225-aa31-cb50b63c5ab6" height="300" width="694" overflow="hidden"/>|
 |FE|
 |작품 상세 디자인|
 |BE|
@@ -321,12 +323,24 @@
 
 <br/>
 
-|작품 상세 페이지|
+|작품 상세 페이지 - 댓글 작성|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/c5fc22e6-a0de-4225-aa31-cb50b63c5ab6" height="300"/>|
+|<img src="https://github.com/user-attachments/assets/f5ec587e-d83a-45a0-9419-5d8492face82" height="300" width="694" overflow="hidden"/>|
 |FE|
 |작품 상세 디자인|
 |BE|
 |설명을 입력해주세요.|
 
 <br/>
+
+|작품 상세 페이지 - 댓글 보기(모달)|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/95db021d-3d5a-4c67-9d0a-6e9957152f48" height="300" width="694" overflow="hidden"/>|
+|FE|
+|작품 상세 디자인|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+
