@@ -81,6 +81,205 @@
 
 ## 🖼️ 화면 구성
 
+|유저-로그인|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/f198fcc6-cfeb-4287-aa58-848a121d5af4" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|JWT 기반 로그인 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+|유저-회원가입/약관동의|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/86bb1af4-7ec2-41a4-8d75-6ac1cc161fe3" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|약관 동의/미동의에 따라 다음 단계 진행 여부 토글|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+|유저-회원가입/회원정보 입력|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/38273863-5a9b-44d4-8a2c-8a6c6b74cf2e" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|회원 정보 입력 및 react-hook-form으로 유효성 검증|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+|유저-회원가입/완료|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/c4e18cf7-3262-4216-8455-9b8d31e67f35" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|lottie를 통한 회원가입 완료 디자인|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+|유저-나의 찾기/아이디|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/d7610cae-545e-4aea-b085-6fa70987b83f" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|이메일과 이름 기반 아이디 찾기 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+|유저-나의 찾기/비밀번호|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/00a31e66-3fac-432d-b1fb-486a228a19d2" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|이메일과 아이디를 통한 비밀번호 찾기 및 임시 비밀번호 발급 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+|유저-마이페이지/내가 쓴 리뷰|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/4754ad49-1ce0-4f14-906e-db0c235a50c9" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|내가 쓴 리뷰 조회 및 페이지네이션 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+|유저-마이페이지/나의 작품|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/49e83a6c-3199-4448-b699-e032a4ffc9ae" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|나의 작품 조회 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+|유저-마이페이지/개인정보 관리|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/21369e42-bc0c-4d22-9e0b-419ea39f4673" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|개인정보 조회 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+|유저-마이페이지/개인정보 수정|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/83f5db59-cd4d-4af0-831c-c89b1647dffc" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|인증 기반의 개인정보 수정 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+|유저-마이페이지/비밀번호 변경|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/b86f5f59-b534-4e83-90e4-9d539913ce9f" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|react-hook-form 기반의 비밀번호 변경 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+
+|학과소개-메인|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/d848bee4-f3c3-4bec-88bf-655700704852" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|학과소개 오버뷰 및 메인 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+
+|학과소개-소개 상세|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/889b611f-0e64-45f6-86e2-28be10f351b5" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|학과소개 상세 조회 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+
+|임상활동-메인|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/f56b4210-e357-4828-b93c-91f05d0f05a8" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|임상활동 오버뷰 및 메인 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+
+|임상활동-활동 상세|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/7498a2f0-5f81-41f3-968a-0b8462b52765" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|임상활동 상세 조회 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+
+|입학안내|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/98d64f4a-397c-430f-a827-d2fbed0dcf6f" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|입학안내 페이지|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+
+|갤러리-전시소개|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/af0ab468-ef54-4f4d-9602-4c0849407241" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|갤러리 전시회 소개 조회 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+
+|갤러리-미술관 미술치료|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/abc52e25-e0c2-4e88-b206-71b481a1d319" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|갤러리 미술관 미술치료 소개 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+
+|갤러리-작품 조회|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/3eaedc89-b94b-46b0-8ffe-ad87c86deab3" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|FE|
+|기수 & 연도별 작품 조회 및 무한 스크롤 기능|
+|BE|
+|설명을 입력해주세요.|
+
+<br/>
+
+
 |관리자-회원 조회/전체 조회|
 |:---:|
 |<img src="https://github.com/user-attachments/assets/c1b4edab-0eea-420a-8179-8a32fa685326" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
