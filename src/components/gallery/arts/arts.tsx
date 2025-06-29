@@ -51,6 +51,8 @@ export default function Arts() {
     try {
       const response = await getArts({
         lastId,
+        year: year ? Number(year) : undefined,
+        cohort: cohort ? Number(cohort) : undefined,
       });
 
       setArts((prev) => ({
@@ -63,7 +65,7 @@ export default function Arts() {
     } catch (error) {
       toast.error(handleApiError(error));
     }
-  }, [arts.hasNext, lastId]);
+  }, [arts.hasNext, lastId, year, cohort]);
 
   useEffect(() => {
     const rafId = requestAnimationFrame(() => {
