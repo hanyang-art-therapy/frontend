@@ -137,7 +137,7 @@ export default function AdminArtForm({
     <form className='flex flex-col gap-[30px]'>
       <div className='flex gap-[15px] items-start'>
         <div className='flex flex-col items-center gap-[15px]'>
-          <div className='w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
+          <div className='w-[100px] md:w-[130px] aspect-[4/5] border border-btn-gray-d bg-btn-gray-fa rounded flex items-center justify-center overflow-hidden'>
             {previewUrl ? (
               <img
                 src={previewUrl}
