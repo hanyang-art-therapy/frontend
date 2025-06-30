@@ -2,10 +2,34 @@ import GalleryIntroContentTitle from '@/components/gallery/intro/gallery-intro-c
 import { AnimatedSection, StaggeredList } from '@/components/ui/motion';
 import { GALLERY_INTRO } from '@/constants/gallery/intro';
 import { parseTextWithBold } from '@/lib/helper/text-bolder';
+import { useEffect, useState } from 'react';
+import { getArtIntro } from '@/apis/gallery/gallery';
+import type { ArtIntroResponse } from '@/types/gallery/gallery';
+import { toast } from 'sonner';
+import { handleApiError } from '@/components/common/error-handler';
 
 export default function GalleryIntro() {
   const { intro, purpose, participants, artTherapy, schedule, guide } =
     GALLERY_INTRO;
+
+  const [galleryIntroData, setGalleryIntroData] = useState<ArtIntroResponse>({
+    title: '',
+    startDate: '',
+    endDate: '',
+  });
+
+  useEffect(() => {
+    const fetchGalleryIntro = async () => {
+      try {
+        const response = await getArtIntro();
+        setGalleryIntroData(response);
+      } catch (error) {
+        toast.error(handleApiError(error));
+      }
+    };
+
+    fetchGalleryIntro();
+  }, []);
 
   return (
     <div className='mx-auto xl:px-0 px-5 md:pt-[100px] pt-[60px] grid gap-[60px] md:gap-[100px]'>
@@ -69,7 +93,7 @@ export default function GalleryIntro() {
         <GalleryIntroContentTitle
           icon={artTherapy.icon}
           title={artTherapy.title}
-          subTitle={artTherapy.subTitle}
+          subTitle={galleryIntroData.title}
         />
 
         <StaggeredList
