@@ -284,7 +284,7 @@ export default function SelectArtistDialog({
                         {isSelected && (
                           <div className='mt-2'>
                             <textarea
-                              placeholder='해당 작가의 작품 설명을 입력해주세요.'
+                              placeholder='해당 작가의 작품 설명 입력'
                               className='w-full p-2 border border-gray-9 rounded t-r-14'
                               rows={3}
                               value={textAreaDescription(fetchedArtist)}

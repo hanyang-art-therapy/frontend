@@ -34,7 +34,7 @@ export default function ReviewsModalTextArea({
               value={editedText}
               onChange={handleTextChange}
               onKeyDown={handleKeyDown}
-              placeholder='리뷰 내용을 입력해주세요.'
+              placeholder='리뷰 내용 입력'
             />
             <div className='absolute bottom-3 sm:bottom-4 right-3 sm:right-4 flex items-center gap-2 px-2 sm:px-3 py-1 bg-bg-gray-fa rounded-[5px] opacity-0 group-focus-within:opacity-100 transition-opacity duration-200'>
               <span className='t-r-12 text-gray-6'>

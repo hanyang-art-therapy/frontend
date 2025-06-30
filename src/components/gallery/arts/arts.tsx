@@ -6,12 +6,23 @@ import ArtsNoResult from '@/components/gallery/arts/arts-no-result';
 import ArtsSearch from '@/components/gallery/arts/arts-search';
 import { InfiniteScrollResponse } from '@/types';
 import type { Art } from '@/types/gallery/art';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  type Dispatch,
+  type SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
-export default function Arts() {
-  const [lastId, setLastId] = useState<number>(0);
+type ArtsProps = {
+  lastId: number;
+  setLastId: Dispatch<SetStateAction<number>>;
+};
+
+export default function Arts({ lastId, setLastId }: ArtsProps) {
   const [arts, setArts] = useState<InfiniteScrollResponse<Art>>({
     content: [],
     lastId: 0,

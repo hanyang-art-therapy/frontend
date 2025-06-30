@@ -219,7 +219,7 @@ export default function AdminArtForm({
               <textarea
                 id='coDescription'
                 name='coDescription'
-                placeholder='공동작품 설명을 입력해주세요'
+                placeholder='공동작품 설명 입력'
                 className='w-full px-[15px] py-2 outline-none'
                 rows={10}
                 onChange={handleCoDescriptionChange}

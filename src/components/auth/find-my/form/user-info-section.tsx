@@ -27,19 +27,15 @@ export default function UserInfoSection({
       <Input
         id={fieldName}
         className='w-[300px] h-[45px]'
-        placeholder={`${label + (isIdFind ? '을' : '를')} 입력해주세요`}
+        placeholder={`${label} 입력`}
         {...register(fieldName as 'userName' | 'userId')}
       />
       {isIdFind
         ? errors.userName && (
-            <p className='text-destructive t-r-14'>
-              {errors.userName.message}
-            </p>
+            <p className='text-destructive t-r-14'>{errors.userName.message}</p>
           )
         : errors.userId && (
-            <p className='text-destructive t-r-14'>
-              {errors.userId.message}
-            </p>
+            <p className='text-destructive t-r-14'>{errors.userId.message}</p>
           )}
     </div>
   );

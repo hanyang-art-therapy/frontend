@@ -27,18 +27,14 @@ export default function TitleAndCategoryInput({
           type='text'
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder='제목을 입력해주세요'
+          placeholder='제목 입력'
           className='flex-grow border-2 border-bg-gray-d/60 rounded px-3 py-2 min-w-[150px]'
         />
-
       </div>
       {/* 구분 */}
       <div className='flex items-center justify-center gap-2 min-w-[140px]'>
         <label className='whitespace-nowrap w-[30px]'>구분</label>
-        <Select
-          value={selectedCategory}
-          onValueChange={handleCategoryChange}
-        >
+        <Select value={selectedCategory} onValueChange={handleCategoryChange}>
           <SelectTrigger className='border rounded w-[90px] md:w-[100px] px-2 py-1 md:px-3 md:py-2'>
             <SelectValue placeholder='구분' />
           </SelectTrigger>

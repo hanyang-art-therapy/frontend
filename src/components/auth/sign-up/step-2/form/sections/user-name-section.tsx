@@ -17,7 +17,8 @@ export default function UserNameSection({
       <label
         aria-label='이름'
         htmlFor='userName'
-        className='t-b-16 flex items-center'>
+        className='t-b-16 flex items-center'
+      >
         이름 <Required nbsp />
       </label>
       <Input
@@ -25,7 +26,7 @@ export default function UserNameSection({
         aria-label='이름'
         autoComplete='username'
         className='w-[200px] h-[45px]'
-        placeholder='이름을 입력해주세요.'
+        placeholder='이름 입력'
         {...register('userName')}
       />
 

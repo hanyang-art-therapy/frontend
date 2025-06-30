@@ -79,8 +79,8 @@ export default function StudentNoSection({
           aria-label='학번'
           onBlur={handleBlur}
           pattern='[0-9]*'
-          className='w-[200px] h-[45px] t-r-16'
-          placeholder='학번을 입력해주세요.'
+          className='w-[200px] h-[45px] t-r-14'
+          placeholder='학번 입력'
           {...rest}
         />
       </div>

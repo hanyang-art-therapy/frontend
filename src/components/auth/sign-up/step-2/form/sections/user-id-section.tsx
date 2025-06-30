@@ -68,7 +68,7 @@ export default function UserIdSection({
           onBlur={handleBlur}
           className='w-[200px] h-auto'
           autoComplete='username'
-          placeholder='아이디를 입력해주세요.'
+          placeholder='아이디 입력'
           {...rest}
         />
       </div>

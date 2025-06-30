@@ -78,7 +78,7 @@ export default function Reviews({
   }, [artsNo, page]);
 
   const handlePostReview = async () => {
-    if (!comment.trim()) return toast.error('댓글을 입력해주세요.');
+    if (!comment.trim()) return toast.error('댓글을 입력해주세요');
 
     try {
       setIsSubmitLoading(true);
