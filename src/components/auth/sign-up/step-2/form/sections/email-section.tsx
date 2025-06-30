@@ -180,8 +180,8 @@ export default function EmailSection({
                   id='email'
                   aria-label='이메일 ID'
                   {...register('emailId')}
-                  className='w-[200px] h-[45px] t-r-16'
-                  placeholder='이메일을 입력해주세요.'
+                  className='w-[200px] h-[45px] t-r-14'
+                  placeholder='이메일 입력'
                   autoComplete='email'
                   disabled={showVerification}
                 />
@@ -194,7 +194,7 @@ export default function EmailSection({
               <Input
                 aria-label='이메일 도메인'
                 {...register('emailDomain')}
-                className='w-[200px] h-[45px] t-r-16'
+                className='w-[200px] h-[45px] t-r-14'
                 placeholder='직접 입력'
                 autoComplete='email'
                 value={domainValue}

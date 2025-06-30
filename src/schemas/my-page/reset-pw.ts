@@ -19,7 +19,7 @@ export const resetPwFormSchema = z
         /^[a-zA-Z0-9!@#$%^&*~]+$/,
         '허용되지 않은 문자가 포함되어 있습니다'
       ),
-    confirmPassword: z.string().min(1, '비밀번호 확인을 입력해주세요.'),
+    confirmPassword: z.string().min(1, '비밀번호 확인을 입력해주세요'),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: '비밀번호가 일치하지 않습니다.',
