@@ -1,6 +1,6 @@
 import { EditorContent, Editor } from '@tiptap/react';
 import Toolbar from '../toolbar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
   editor: Editor | null;
@@ -51,7 +51,6 @@ export default function EditorSection({ editor, className }: Props) {
       editor.off('update', addLinkStyles);
     };
   }, [editor]);
-
   return (
     <div className={className}>
     <div className='m-1 rounded-sm border-2 border-bg-gray-d/60 mx-0 md:mx-0'>

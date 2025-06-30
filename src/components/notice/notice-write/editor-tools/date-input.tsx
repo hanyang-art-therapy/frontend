@@ -20,7 +20,8 @@ export default function DateInput({
           type='date'
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className='border-2 border-bg-gray-d/60 rounded px-3 py-2 min-w-[140px] md:w-[140px]'
+          onClick={(e) => e.currentTarget.showPicker()}
+          className='border-2 border-bg-gray-d/60 rounded px-3 py-2 md:w-auto min-w-[160px]'
         />
       </div>
 
@@ -33,7 +34,8 @@ export default function DateInput({
           type='date'
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-          className='border-2 border-bg-gray-d/60 rounded px-3 py-2 w-auto md:w-[140px]'
+          onClick={(e) => e.currentTarget.showPicker()}
+          className='border-2 border-bg-gray-d/60 rounded px-3 py-2 md:w-auto min-w-[160px]'
         />
       </div>
     </div>
