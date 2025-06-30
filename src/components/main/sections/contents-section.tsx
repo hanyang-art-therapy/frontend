@@ -39,24 +39,25 @@ export default function ContentsSection() {
               <li
                 key={notice.noticeNo}
                 onClick={() => navigate(`/notice/${notice.noticeNo}`)}
-                className={`grid grid-cols-[45px_80px_auto_100px] md:grid-cols-[70px_100px_auto_100px_100px_140px] items-center leading-[40px] t-r-16 cursor-pointer ${
-                  notice.isFixed
-                    ? 'bg-bg-primary/6'
-                    : 'bg-white hover:bg-bg-gray-fa'
+                className={`grid grid-cols-[45px_80px_auto_100px] md:grid-cols-[70px_100px_auto_100px_100px_140px] items-center leading-[40px] t-r-16 cursor-pointer truncate hover:bg-bg-primary/10 ${
+                  notice.isFixed ? 'bg-bg-primary/5' : 'bg-white'
                 }`}
               >
                 <span className='text-center'>{index + 1}</span>
                 <span className='text-center'>
                   {getKoType(notice.category)}
                 </span>
-                <p className='flex items-center gap-2'>
+                <p className='min-w-0 truncate text-nowrap whitespace-nowrap'>
                   {notice.isFixed ? (
-                    <>
-                      <span className='w-5 h-5 bg-bg-primary rounded-full flex items-center justify-center shrink-0'>
-                        <Pin size={12} color='#fff' strokeWidth={2} />
-                      </span>
-                      <span className='t-b-16'>{notice.title}</span>
-                    </>
+                    <span className='t-b-16 relative'>
+                      <Pin
+                        size={12}
+                        color='#fff'
+                        strokeWidth={2}
+                        className='w-5 h-5 p-1 bg-bg-primary inline-block rounded-2xl absolute top-[50%] translate-y-[-50%]'
+                      />
+                      <span className='ml-6'>{notice.title}</span>
+                    </span>
                   ) : (
                     notice.title
                   )}
