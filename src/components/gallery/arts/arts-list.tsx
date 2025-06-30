@@ -35,6 +35,8 @@ export default function ArtsList({ art }: ArtsListProps) {
             src={art.files.url}
             alt={art.artName}
             aria-label={art.artName}
+            loading='eager'
+            fetchPriority='high'
             className='md:min-w-[230px] h-auto aspect-[1/1] object-cover box-shadow-style transition-transform duration-300 group-hover:scale-105'
           />
 

@@ -22,7 +22,7 @@ export default function StudentNoField({
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         className={`sm:w-[300px] w-full h-[45px] ${className || ''}`}
-        placeholder='학번을 입력해주세요'
+        placeholder='학번 입력'
       />
     </div>
   );

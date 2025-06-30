@@ -12,10 +12,12 @@ export default function Gallery() {
   const [intro, therapy, arts] = GALLERY_STEP_ITEMS;
   const searchStep = searchParams.get('step') || arts.value;
   const [step, setStep] = useState(searchStep);
+  const [lastId, setLastId] = useState<number>(0);
 
   const handleStepChange = (step: string) => {
     setSearchParams({ step });
     setStep(step);
+    setLastId(0);
   };
 
   useEffect(() => {
@@ -39,7 +41,9 @@ export default function Gallery() {
       <div className='md:max-w-[1260px] w-full mx-auto'>
         {step === intro.value && <GalleryIntro key={`intro-${step}`} />}
         {step === therapy.value && <Gallerytherapy key={`therapy-${step}`} />}
-        {step === arts.value && <Arts key={`arts-${step}`} />}
+        {step === arts.value && (
+          <Arts key={`arts-${step}`} lastId={lastId} setLastId={setLastId} />
+        )}
       </div>
     </div>
   );

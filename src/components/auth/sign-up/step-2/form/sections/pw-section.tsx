@@ -43,13 +43,13 @@ export default function PwSection({
         >
           비밀번호 <Required nbsp />
         </label>
-        <div className='relative'>
+        <div className='relative w-fit'>
           <Input
             id='password'
             type={showPassword ? 'text' : 'password'}
             aria-label='비밀번호'
-            className='w-[200px] h-[45px] t-r-16 pr-12'
-            placeholder='비밀번호를 입력해주세요.'
+            className='w-[200px] h-[45px] t-r-14 pr-12'
+            placeholder='비밀번호 입력'
             {...register('password')}
           />
           <ShowPassword
@@ -71,13 +71,13 @@ export default function PwSection({
         >
           비밀번호 확인 <Required nbsp />
         </label>
-        <div className='relative'>
+        <div className='relative w-fit'>
           <Input
             id='confirmPassword'
             type={showConfirmPassword ? 'text' : 'password'}
             aria-label='비밀번호 확인'
-            className='w-[200px] h-[45px] t-r-16 pr-12'
-            placeholder='비밀번호를 입력해주세요.'
+            className='w-[200px] h-[45px] t-r-14 pr-12'
+            placeholder='비밀번호 확인 입력'
             {...register('confirmPassword')}
           />
           <ShowPassword

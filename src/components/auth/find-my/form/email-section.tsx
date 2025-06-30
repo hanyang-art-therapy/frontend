@@ -47,7 +47,7 @@ export default function EmailSection({
         <Input
           {...register('emailId')}
           className='w-[200px] h-[45px]'
-          placeholder='이메일을 입력해주세요'
+          placeholder='이메일 입력'
         />
 
         <span className='t-r-16 hidden md:block'>@</span>

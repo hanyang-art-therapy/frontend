@@ -1,23 +1,25 @@
-import { getArts, getCohorts, getYears } from '@/apis/gallery/art';
-import type { ArtsPagination } from '@/types';
-import type {
-  Art,
-  GetCohortsResponse,
-  GetYearsResponse,
-} from '@/types/gallery/art';
+import { getCohorts, getYears } from '@/apis/gallery/art';
+import type { GetCohortsResponse, GetYearsResponse } from '@/types/gallery/art';
 
 export type GalleryLoaderData = {
-  artsResponse: ArtsPagination<Art>;
   cohortsResponse: GetCohortsResponse;
   yearsResponse: GetYearsResponse;
 };
 
-export const galleryLoader = async (): Promise<GalleryLoaderData> => {
-  const [artsResponse, cohortsResponse, yearsResponse] = await Promise.all([
-    getArts({}),
-    getCohorts(),
+export const galleryLoader = async ({
+  request,
+}: {
+  request: Request;
+}): Promise<GalleryLoaderData> => {
+  const url = new URL(request.url);
+  const yearParam = url.searchParams.get('year');
+
+  const year = yearParam ? Number(yearParam) : new Date().getFullYear();
+
+  const [cohortsResponse, yearsResponse] = await Promise.all([
+    getCohorts({ year }),
     getYears(),
   ]);
 
-  return { artsResponse, cohortsResponse, yearsResponse };
+  return { cohortsResponse, yearsResponse };
 };
