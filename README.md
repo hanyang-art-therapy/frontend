@@ -83,7 +83,7 @@
 
 |유저-로그인|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/f198fcc6-cfeb-4287-aa58-848a121d5af4" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/625b3e55-a815-443e-bb3f-94b3b2fe8009" height="300"/> <img src="https://github.com/user-attachments/assets/98e3e26e-161d-4785-a92c-0282f63d2b0c"  height="300"/>|
 |FE|
 |JWT 기반 로그인 기능|
 |BE|
@@ -93,7 +93,7 @@
 
 |유저-회원가입/약관동의|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/86bb1af4-7ec2-41a4-8d75-6ac1cc161fe3" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/d4cc258b-557f-4f1b-ba3b-5914856cb8e7" height="300"/> <img src="https://github.com/user-attachments/assets/67aceba7-7201-474d-b19c-7418e618a247"  height="300"/>|
 |FE|
 |약관 동의/미동의에 따라 다음 단계 진행 여부 토글|
 |BE|
@@ -103,7 +103,7 @@
 
 |유저-회원가입/회원정보 입력|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/38273863-5a9b-44d4-8a2c-8a6c6b74cf2e" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/c4d8a81e-bf66-4e0c-9a74-c1fb77aa8500" height="300"/> <img src="https://github.com/user-attachments/assets/5da270cb-ab1e-47d0-8ce7-e9bb883193a2"  height="300"/>|
 |FE|
 |회원 정보 입력 및 react-hook-form으로 유효성 검증|
 |BE|
@@ -113,7 +113,7 @@
 
 |유저-회원가입/완료|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/c4e18cf7-3262-4216-8455-9b8d31e67f35" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/de870771-1a84-413a-b876-9e45c5f7cbe4" height="300"/> <img src="https://github.com/user-attachments/assets/c739d450-681a-4349-8bbe-9d3ee25dc3ba"  height="300"/>|
 |FE|
 |lottie를 통한 회원가입 완료 디자인|
 |BE|
@@ -123,7 +123,7 @@
 
 |유저-나의 찾기/아이디|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/d7610cae-545e-4aea-b085-6fa70987b83f" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/9805f34d-2f1c-4712-a9d9-6bd95903ef04" height="300"/> <img src="https://github.com/user-attachments/assets/0d46ce88-bc18-4966-a409-b01f07e09e8d"  height="300"/>|
 |FE|
 |이메일과 이름 기반 아이디 찾기 기능|
 |BE|
@@ -133,7 +133,7 @@
 
 |유저-나의 찾기/비밀번호|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/00a31e66-3fac-432d-b1fb-486a228a19d2" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/0b193404-b5a0-4487-9612-aef23c169893" height="300"/> <img src="https://github.com/user-attachments/assets/62be81e0-d4f0-43a4-8685-b2d266d1586f"  height="300"/>|
 |FE|
 |이메일과 아이디를 통한 비밀번호 찾기 및 임시 비밀번호 발급 기능|
 |BE|
@@ -143,7 +143,7 @@
 
 |유저-마이페이지/내가 쓴 리뷰|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/4754ad49-1ce0-4f14-906e-db0c235a50c9" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/994cdc08-3817-41d7-9f8b-898c2962cffb" height="300"/> <img src="https://github.com/user-attachments/assets/6893359f-4ae2-4381-a2fa-65bc4622defb"  height="300"/>|
 |FE|
 |내가 쓴 리뷰 조회 및 페이지네이션 기능|
 |BE|
@@ -153,7 +153,7 @@
 
 |유저-마이페이지/나의 작품|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/49e83a6c-3199-4448-b699-e032a4ffc9ae" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/b680a210-e26e-4ee1-a563-e803754550bb" height="300"/> <img src="https://github.com/user-attachments/assets/de1e59df-4de4-4ea7-a7b7-9df8fae5808b"  height="300"/>|
 |FE|
 |나의 작품 조회 기능|
 |BE|
@@ -163,7 +163,7 @@
 
 |유저-마이페이지/개인정보 관리|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/21369e42-bc0c-4d22-9e0b-419ea39f4673" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/d1cb8645-364a-4e95-9499-c47933d3130e" height="300"/> <img src="https://github.com/user-attachments/assets/d1309d71-b421-44c5-af22-cdd0c7d3cc42"  height="300"/>|
 |FE|
 |개인정보 조회 기능|
 |BE|
@@ -173,7 +173,7 @@
 
 |유저-마이페이지/개인정보 수정|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/83f5db59-cd4d-4af0-831c-c89b1647dffc" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/5e73146b-d3a0-4576-a158-93f1836829d0" height="300"/> <img src="https://github.com/user-attachments/assets/70d88112-a987-4187-a12e-95b869c9c828"  height="300"/>|
 |FE|
 |인증 기반의 개인정보 수정 기능|
 |BE|
@@ -183,7 +183,7 @@
 
 |유저-마이페이지/비밀번호 변경|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/b86f5f59-b534-4e83-90e4-9d539913ce9f" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/113c08c6-8a39-4e1e-847b-a96f3949a464" height="300"/> <img src="https://github.com/user-attachments/assets/591f7a5f-493a-487b-91b5-955f2b6b9817"  height="300"/>|
 |FE|
 |react-hook-form 기반의 비밀번호 변경 기능|
 |BE|
@@ -194,7 +194,7 @@
 
 |학과소개-메인|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/d848bee4-f3c3-4bec-88bf-655700704852" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/942e77a8-0a92-4f16-bebe-7f95861a8755" height="300"/> <img src="https://github.com/user-attachments/assets/a4a180fa-e3ea-494e-94e7-40439dcde7b8"  height="300"/>|
 |FE|
 |학과소개 오버뷰 및 메인 기능|
 |BE|
@@ -205,7 +205,7 @@
 
 |학과소개-소개 상세|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/889b611f-0e64-45f6-86e2-28be10f351b5" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/aa44979c-15e7-4162-ace0-06c9b79ee07b" height="300"/> <img src="https://github.com/user-attachments/assets/a0bf297f-e162-42c9-a605-0cc30dda1a9a"  height="300"/>|
 |FE|
 |학과소개 상세 조회 기능|
 |BE|
@@ -216,7 +216,7 @@
 
 |임상활동-메인|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/f56b4210-e357-4828-b93c-91f05d0f05a8" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/9b28ca08-2110-4c7b-9055-c9f045a8754a" height="300"/> <img src="https://github.com/user-attachments/assets/cb92887e-2a35-4a4d-ae05-a48ce4c9718d"  height="300"/>|
 |FE|
 |임상활동 오버뷰 및 메인 기능|
 |BE|
@@ -227,7 +227,7 @@
 
 |임상활동-활동 상세|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/7498a2f0-5f81-41f3-968a-0b8462b52765" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/a026c14f-0855-477f-b8cc-976985df4287" height="300"/> <img src="https://github.com/user-attachments/assets/6e4a1016-6eb5-4222-9820-30d4755e1dc5"  height="300"/>|
 |FE|
 |임상활동 상세 조회 기능|
 |BE|
@@ -238,7 +238,7 @@
 
 |입학안내|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/98d64f4a-397c-430f-a827-d2fbed0dcf6f" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/5987811b-48fe-4242-b6b6-895e42c907ee" height="300"/> <img src="https://github.com/user-attachments/assets/a81aa8db-a734-4b52-b944-7647e7134bca"  height="300"/>|
 |FE|
 |입학안내 페이지|
 |BE|
@@ -249,7 +249,7 @@
 
 |갤러리-전시소개|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/af0ab468-ef54-4f4d-9602-4c0849407241" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/56fd7acf-03c1-4e9b-8f9c-99232bc7ef71" height="300"/> <img src="https://github.com/user-attachments/assets/84655965-4e58-4240-8a93-e2d46e4e0d15"  height="300"/>|
 |FE|
 |갤러리 전시회 소개 조회 기능|
 |BE|
@@ -260,7 +260,7 @@
 
 |갤러리-미술관 미술치료|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/abc52e25-e0c2-4e88-b206-71b481a1d319" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/628583e2-fe45-47dc-bf2f-49ce39b14cd2" height="300"/> <img src="https://github.com/user-attachments/assets/2fd416aa-9f86-43bd-9c14-c0e6ac0f8c34"  height="300"/>|
 |FE|
 |갤러리 미술관 미술치료 소개 기능|
 |BE|
@@ -271,7 +271,7 @@
 
 |갤러리-작품 조회|
 |:---:|
-|<img src="https://github.com/user-attachments/assets/3eaedc89-b94b-46b0-8ffe-ad87c86deab3" height="300"/> <img src="https://github.com/user-attachments/assets/f4e0c0de-bf8b-40d0-b63f-b628a66a4278"  height="300"/>|
+|<img src="https://github.com/user-attachments/assets/9ad6cb27-86ea-4ac8-a149-138da7c59320" height="300"/> <img src="https://github.com/user-attachments/assets/92afdae9-ee85-4ecf-ac44-e21114173d7f"  height="300"/>|
 |FE|
 |기수 & 연도별 작품 조회 및 무한 스크롤 기능|
 |BE|
