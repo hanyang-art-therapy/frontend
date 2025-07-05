@@ -1,6 +1,6 @@
 import { EditorContent, Editor } from '@tiptap/react';
 import Toolbar from '../toolbar';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 type Props = {
   editor: Editor | null;
@@ -43,7 +43,6 @@ export default function EditorSection({ editor, className }: Props) {
       }
     };
 
-
     editor.on('update', addLinkStyles);
     addLinkStyles();
 
@@ -53,13 +52,13 @@ export default function EditorSection({ editor, className }: Props) {
   }, [editor]);
   return (
     <div className={className}>
-    <div className='m-1 rounded-sm border-2 border-bg-gray-d/60 mx-0 md:mx-0'>
-      {editor && <Toolbar editor={editor} />}
-      <EditorContent
-        editor={editor}
-        className='p-[20px] min-h-[350px] md:min-h-[450px] text-black prose prose-lg max-w-none'
-      />
-    </div>
+      <div className='m-1 rounded-sm border-2 border-bg-gray-d/60 mx-0 md:mx-0'>
+        {editor && <Toolbar editor={editor} />}
+        <EditorContent
+          editor={editor}
+          className='p-[20px] min-h-[350px] md:min-h-[450px] text-black prose prose-lg max-w-none'
+        />
+      </div>
     </div>
   );
 }

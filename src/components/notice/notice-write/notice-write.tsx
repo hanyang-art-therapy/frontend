@@ -16,7 +16,6 @@ import ListItem from '@tiptap/extension-list-item';
 import BulletList from '@tiptap/extension-bullet-list';
 import OrderedList from '@tiptap/extension-ordered-list';
 import Image from '@tiptap/extension-image';
-import Placeholder from '@tiptap/extension-placeholder';
 import { Button } from '@/components/ui/button';
 import { handleApiError } from '@/components/common/error-handler';
 import NoticeNav from '@/components/notice/notice-nav.tsx/notice-nav';
@@ -134,9 +133,6 @@ export default function NoticeWrite() {
       }),
       Color,
       Highlight.configure({ multicolor: true }),
-      Placeholder.configure({
-      placeholder: '여기에 내용을 입력하세요',
-    }),
       Link.configure({
         openOnClick: false,
         autolink: true,
@@ -246,14 +242,14 @@ export default function NoticeWrite() {
     return null;
   }
 
-    const handleCancel = () => {
+  const handleCancel = () => {
     navigate('/notice');
   };
 
   return (
     <div className='h-full w-full max-w-[1260px] md:pt-[40px] px-1 md:px-5 xl:px-0 mx-auto text-center'>
       <div className='w-full text-center mt-[80px]'>
-        <div className='w-full max-w-[1260px] mx-auto px-5 md:px-0'>
+        <div className='w-full max-w-[1260px] mx-auto px-4 md:px-0'>
           <div className='flex justify-start items-center pb-[10px] md:pb-[20px] gap-2'>
             <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-bg-secondary/90'>
               <NotepadText size={40} strokeWidth={2} />
@@ -262,10 +258,10 @@ export default function NoticeWrite() {
           </div>
           <div className='w-full border-t-1 border-t-bg-gray-d'></div>
         </div>
-        <div className='flex items-center gap-2 md:m-2 px-2 md:px-0'>
+        <div className='flex items-center gap-2 px-5 py-2 md:m-2 md:px-0'>
           <IsFixedCheckbox isFixed={isFixed} setIsFixed={setIsFixed} />
         </div>
-        <div className='flex flex-col md:flex-row gap-4 mb-4 overflow-x-auto px-4 md:px-[10px] py-4 pb-2 md:pb-4 md:py-0'>
+        <div className='flex flex-col md:flex-row gap-2 mb-4 overflow-x-auto px-5 md:px-[10px] pb-2 md:pb-4 md:py-0'>
           <TitleAndCategoryInput
             title={title}
             setTitle={setTitle}
@@ -295,21 +291,23 @@ export default function NoticeWrite() {
           uploadedFiles={uploadedFiles}
           setUploadedFiles={setUploadedFiles}
         />
-        <div className='grid grid-cols-3 justify-center items-center mt-4 px-[8px] gap-4'>
+        <div className='grid grid-cols-3 justify-center items-center mt-4 gap-4'>
           <NoticeNav />
           <Button
             type='submit'
             onClick={handleSubmit}
             className='t-r-16 bg-primary hover:bg-primary/80 xl:w-[200px] md:w-[120px] w-[96px]'
-          >완료</Button>
+          >
+            완료
+          </Button>
           <Button
             type='button'
             onClick={handleCancel}
             className='t-r-16 bg-destructive hover:bg-destructive/80 xl:w-[200px] md:w-[120px] w-[96px]'
-            >
+          >
             취소
-            </Button>
-          </div>
+          </Button>
+        </div>
       </div>
     </div>
   );

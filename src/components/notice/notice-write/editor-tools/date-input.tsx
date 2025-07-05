@@ -12,7 +12,7 @@ export default function DateInput({
   return (
     <div className='flex flex-col md:flex-row gap-2 md:gap-4'>
       {/* 시작일 */}
-      <div className='flex items-center md:gap-4 pr-[10px] md:pr-0'>
+      <div className='flex items-center md:gap-2 pr-[10px] md:pr-0'>
         <label className='t-b-16 whitespace-nowrap t-b-16 w-[40px] mr-[8px] md:mr-0'>
           시작일
         </label>
@@ -26,7 +26,7 @@ export default function DateInput({
       </div>
 
       {/* 종료일 */}
-      <div className='flex items-center md:gap-4'>
+      <div className='flex items-center md:gap-2'>
         <label className='whitespace-nowrap t-b-16 w-[40px] mr-[8px] md:mr-0'>
           종료일
         </label>
