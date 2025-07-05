@@ -13,7 +13,7 @@ export default function NoticeNav({ next, prev }: NoticeNavProps) {
   const navigate = useNavigate();
 
   return (
-    <div className='flex'>
+    <div className='flex gap-2'>
       {/* 이전 글 버튼 (왼쪽) */}
       <div className='flex justify-start'>
         {next && (

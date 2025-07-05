@@ -291,22 +291,26 @@ export default function NoticeWrite() {
           uploadedFiles={uploadedFiles}
           setUploadedFiles={setUploadedFiles}
         />
-        <div className='grid grid-cols-3 justify-center items-center mt-4 gap-4'>
-          <NoticeNav />
-          <Button
-            type='submit'
-            onClick={handleSubmit}
-            className='t-r-16 bg-primary hover:bg-primary/80 xl:w-[200px] md:w-[120px] w-[96px]'
-          >
-            완료
-          </Button>
-          <Button
-            type='button'
-            onClick={handleCancel}
-            className='t-r-16 bg-destructive hover:bg-destructive/80 xl:w-[200px] md:w-[120px] w-[96px]'
-          >
-            취소
-          </Button>
+        <div className='flex justify-between items-center mt-4 gap-4 w-full'>
+          <div className='flex justify-start'>
+            <NoticeNav />
+          </div>
+          <div className='flex justify-end gap-2'>
+            <Button
+              type='submit'
+              onClick={handleSubmit}
+              className='t-r-16 bg-primary hover:bg-primary/80 xl:w-[200px] md:w-[120px] w-[96px]'
+            >
+              완료
+            </Button>
+            <Button
+              type='button'
+              onClick={handleCancel}
+              className='t-r-16 bg-destructive hover:bg-destructive/80 xl:w-[200px] md:w-[120px] w-[96px]'
+            >
+              취소
+            </Button>
+          </div>
         </div>
       </div>
     </div>
