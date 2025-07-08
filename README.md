@@ -40,8 +40,9 @@
 ## 🎨 프로젝트 역할 분담
 
 **김이지**
-- 메인페이지 전체<br />
+- UI 디자인 (헤더, 풋터, 네비, 메인 페이지, 갤러리, 로그인, 회원가입, 마이 페이지, 관리자 페이지, 준비중 페이지)<br />
 - 공통 컴포넌트 (헤더, 풋터, 네비, 스켈레톤, 준비중 페이지)<br />
+- 메인 페이지 전체<br />
 - 관리자 페이지 / 회원 조회 (검색, 무한스크롤, 조회, 상세조회)<br />
 - 관리자 페이지 / 작가 관리 (검색, 무한스크롤, 조회, 상세조회, 수정, 삭제, 등록)<br />
 - 관리자 페이지 / 전시회 관리 (조회, 상세조회, 수정, 삭제, 등록)<br />
@@ -395,7 +396,7 @@
 |:---:|
 |<img src="https://github.com/user-attachments/assets/5989e401-06e5-4ea9-bbb2-4ba69f8ed35b" height="300"/> <img src="https://github.com/user-attachments/assets/f53e42a6-a3ae-4a7f-a38e-9c7e43e17656"  height="300"/>|
 |FE|
-|모바일 버튼 사이즈 고치기. 작품 정보 수정 및 삭제 가능|
+|작품 정보 수정 및 삭제 가능|
 
 
 <br/>
@@ -458,7 +459,7 @@
 |:---:|
 |<img src="https://github.com/user-attachments/assets/8b8c6eee-c002-4a3f-9f80-a45f33c98988" height="300"/> <img src="https://github.com/user-attachments/assets/d7696bd2-aa80-4d55-a1d2-17f1dc8dd6f8"  height="300"/>|
 |FE|
-|모바일 max-h-[650px]로 수정하기. 데스크탑: Hover 시 서브메뉴 보임 <br /> 모바일: 드롭다운 형식으로 메인 메뉴 클릭시 아래로 서브메뉴 펼쳐짐|
+|데스크탑: Hover 시 서브메뉴 보임 <br /> 모바일: 드롭다운 형식으로 메인 메뉴 클릭시 아래로 서브메뉴 펼쳐짐|
 
 
 <br/>
@@ -485,7 +486,7 @@
 |:---:|
 |<img src="https://github.com/user-attachments/assets/ffa46d26-3d68-4155-a856-736c701c002d" height="300"/> <img src="https://github.com/user-attachments/assets/828fc9e9-bbf8-4cdc-b98d-d1146f3fade2"  height="300"/>|
 |FE|
-|모바일 버전 UI 디자인 수정 필요. 홈페이지 전체 경로 확인 가능한 사이트맵|
+|홈페이지 전체 경로 확인 가능한 사이트맵|
 
 
 <br/>
