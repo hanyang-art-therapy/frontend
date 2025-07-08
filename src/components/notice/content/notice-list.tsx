@@ -55,18 +55,20 @@ export default function NoticeList({
         개의 게시물
       </strong>
 
-      <div className='w-full overflow-x-auto min-h-[452px]'>
+      <div className='w-full overflow-x-auto'>
         <NoticeTable notices={content} page={notices.page} />
       </div>
 
       {role === 'ADMIN' && (
-        <Button
+        <div className='flex justify-end py-6'>
+         <Button
           type='button'
           onClick={() => navigate('/notice/write')}
-          className='h-[30px] md:h-[40px] w-[80px] md:w-[120px] mt-[30px] ml-auto'
-        >
-          글쓰기
+            className='t-r-16 bg-bg-primary hover:bg-bg-primary/80 xl:w-[200px] md:w-[120px] w-[96px]'
+            >
+            글쓰기
         </Button>
+        </div>
       )}
       <Pagination
         currentPage={notices.page + 1}

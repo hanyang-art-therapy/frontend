@@ -103,13 +103,11 @@ export default function NoticeWrite() {
 
   const editor = useEditor({
     extensions: [
-      // StarterKit에서 목록 관련 기능들을 제외하고 사용
       StarterKit.configure({
         bulletList: false,
         orderedList: false,
         listItem: false,
       }),
-      // 목록 관련 확장들을 명시적으로 추가 (중복 제거)
       BulletList.configure({
         HTMLAttributes: {
           class: 'tiptap-bullet-list',
@@ -179,10 +177,10 @@ export default function NoticeWrite() {
         },
       }),
     ],
-    content: '<p>여기에 내용을 입력하세요</p>',
+    content: '',
     editorProps: {
       attributes: {
-        class: 'prose prose-lg max-w-none focus:outline-none',
+        class: 'text-start prose prose-lg max-w-none focus:outline-none',
       },
     },
   });
@@ -244,22 +242,26 @@ export default function NoticeWrite() {
     return null;
   }
 
+  const handleCancel = () => {
+    navigate('/notice');
+  };
+
   return (
     <div className='h-full w-full max-w-[1260px] md:pt-[40px] px-1 md:px-5 xl:px-0 mx-auto text-center'>
       <div className='w-full text-center mt-[80px]'>
-        <div className='w-full max-w-[1260px] mx-auto px-5 md:px-0'>
+        <div className='w-full max-w-[1260px] mx-auto px-4 md:px-0'>
           <div className='flex justify-start items-center pb-[10px] md:pb-[20px] gap-2'>
             <div className='p-3 rounded-[5px] w-[40px] h-[40px] flex justify-center items-center text-white bg-bg-secondary/90'>
               <NotepadText size={40} strokeWidth={2} />
             </div>
             <strong className='p-2 text-bg-black t-b-32'>게시물 작성</strong>
           </div>
-          <div className='w-[96%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
+          <div className='w-full border-t-1 border-t-bg-gray-d'></div>
         </div>
-        <div className='flex px-2 md:px-0'>
+        <div className='flex items-center gap-2 px-5 py-2 md:m-2 md:px-0'>
           <IsFixedCheckbox isFixed={isFixed} setIsFixed={setIsFixed} />
         </div>
-        <div className='flex flex-col md:flex-row gap-4 mb-4 overflow-x-auto px-4 md:px-0'>
+        <div className='flex flex-col md:flex-row gap-2 mb-4 overflow-x-auto px-5 md:px-[10px] pb-2 md:pb-4 md:py-0'>
           <TitleAndCategoryInput
             title={title}
             setTitle={setTitle}
@@ -289,17 +291,24 @@ export default function NoticeWrite() {
           uploadedFiles={uploadedFiles}
           setUploadedFiles={setUploadedFiles}
         />
-        <div className='flex items-center mt-4 px-[8px]'>
-          <div className='flex-1 flex justify-center'>
+        <div className='flex justify-between items-center mt-4 gap-4 w-full'>
+          <div className='flex justify-start'>
             <NoticeNav />
           </div>
-          <div>
+          <div className='flex justify-end gap-2'>
+            <Button
+              type='submit'
+              onClick={handleSubmit}
+              className='t-r-16 bg-primary hover:bg-primary/80 xl:w-[200px] md:w-[120px] w-[96px]'
+            >
+              완료
+            </Button>
             <Button
               type='button'
-              className='h-[30px] md:h-[40px] w-[80px] md:w-[120px]'
-              onClick={handleSubmit}
+              onClick={handleCancel}
+              className='t-r-16 bg-destructive hover:bg-destructive/80 xl:w-[200px] md:w-[120px] w-[96px]'
             >
-              작성완료
+              취소
             </Button>
           </div>
         </div>

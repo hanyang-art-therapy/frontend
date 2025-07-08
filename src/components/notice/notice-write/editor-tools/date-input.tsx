@@ -12,7 +12,7 @@ export default function DateInput({
   return (
     <div className='flex flex-col md:flex-row gap-2 md:gap-4'>
       {/* 시작일 */}
-      <div className='flex items-center md:gap-4 pr-[10px] md:pr-0'>
+      <div className='flex items-center md:gap-2 pr-[10px] md:pr-0'>
         <label className='t-b-16 whitespace-nowrap t-b-16 w-[40px] mr-[8px] md:mr-0'>
           시작일
         </label>
@@ -20,12 +20,13 @@ export default function DateInput({
           type='date'
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className='border-2 border-bg-gray-d/60 rounded px-3 py-2 min-w-[140px] md:w-[140px]'
+          onClick={(e) => e.currentTarget.showPicker()}
+          className='border-2 border-bg-gray-d/60 rounded px-3 py-2 md:w-auto min-w-[160px]'
         />
       </div>
 
       {/* 종료일 */}
-      <div className='flex items-center md:gap-4'>
+      <div className='flex items-center md:gap-2'>
         <label className='whitespace-nowrap t-b-16 w-[40px] mr-[8px] md:mr-0'>
           종료일
         </label>
@@ -33,7 +34,8 @@ export default function DateInput({
           type='date'
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-          className='border-2 border-bg-gray-d/60 rounded px-3 py-2 w-auto md:w-[140px]'
+          onClick={(e) => e.currentTarget.showPicker()}
+          className='border-2 border-bg-gray-d/60 rounded px-3 py-2 md:w-auto min-w-[160px]'
         />
       </div>
     </div>

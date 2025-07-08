@@ -68,7 +68,7 @@ export default function NoticeDetail() {
           </div>
           <strong className='p-2 text-bg-black t-b-32'>공지사항</strong>
         </div>
-        <div className='w-[96%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
+        <div className='w-full border-t-1  border-t-bg-gray-d'></div>
       </div>
 
       <div className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'>
@@ -96,11 +96,13 @@ export default function NoticeDetail() {
                 {noticeContent.viewCount}
               </div>
             </div>
+            <div className='w-full border-t-1 border-t-bg-gray-d py-[8px]'></div>
           </div>
+          
         </div>
 
         {/* 본문 내용 - 목록 스타일 추가 */}
-        <div className='w-full h-auto min-h-[300px] p-[20px] md:p-[30px] relative'>
+        <div className='w-full h-auto min-h-[300px] py-0 px-[20px] md:p-[20px] relative'>
           <div
             className='mt-2 t-r-16 leading-relaxed prose prose-sm md:prose-base max-w-none
               [&_ul]:list-disc [&_ul]:list-outside [&_ul]:ml-6 [&_ul]:pl-0
@@ -131,10 +133,9 @@ export default function NoticeDetail() {
             </div>
           )}
         </div>
-
         {/* 파일 */}
-        <div className='w-full h-auto md:px-5 py-4 md:py-6 flex flex-col gap-2 bg-bg-gray-fa  border-t border-b border-bg-gray-d'>
-          <div className='px-4 md:px-6 flex flex-col gap-4'>
+        <div className='w-full h-auto px-[10px] py-4 md:py-6 flex flex-col gap-2'>
+          <div className='flex justify-center items-start h-auto min-h-[50px] px-5 md:px-6 flex-col gap-4 bg-bg-gray-fa border-t border-b border-bg-gray-d'>
             <div className='flex flex-col gap-2 t-r-16'>
               {noticeContent.files && noticeContent.files.length > 0 ? (
                 noticeContent.files.map((file, index) => (
@@ -174,6 +175,7 @@ export default function NoticeDetail() {
             </div>
           </div>
         </div>
+
         {/* 이전글과 다음글 */}
         <div className='w-full px-5 xl:px-0 py-6 t-r-16 flex justify-center'>
           {noticeContent && (

@@ -6,7 +6,7 @@ export default function IsFixedCheckbox({
   setIsFixed: (checked: boolean) => void;
 }) {
   return (
-    <div className='flex items-center gap-2 md:m-2'>
+    <div className='flex items-center gap-2'>
       <input
         type='checkbox'
         checked={isFixed}

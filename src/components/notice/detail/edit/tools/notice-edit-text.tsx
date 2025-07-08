@@ -24,7 +24,7 @@ export default function NoticeEditText({ editor }: NoticeEditTextProps) {
   return (
     <div className='mt-2 t-r-16 leading-relaxed'>
       <div>
-        <div className='md:w-full border-2 border-bg-gray-d/60 rounded-sm mx-3 md:mx-0'>
+        <div className='md:w-full rounded-sm mx-3 md:mx-0 p-4'>
           <EditorContent
             editor={editor}
             className='min-h-[200px] p-2 md:p-4 md:pl-4 prose prose-sm
