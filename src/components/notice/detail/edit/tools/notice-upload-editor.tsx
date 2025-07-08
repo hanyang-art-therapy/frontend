@@ -122,7 +122,7 @@ export default function NoticeUploadEditor({
   const hasFiles = formData.files && formData.files.length > 0;
 
   return (
-    <div className='relative'>
+    <div className='relative px-[10px] md:px-0'>
       <div className='w-full h-auto min-h-[70px] md:px-5 py-4 md:py-6 border-t border-b border-bg-gray-d flex flex-col gap-2 bg-btn-gray-fa'>
         <div className='px-4 md:px-6 flex flex-col gap-2 md:gap-4'>
           <div className='flex gap-2 items-center'>

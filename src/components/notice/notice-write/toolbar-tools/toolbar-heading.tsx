@@ -17,9 +17,9 @@ export default function ToolbarHeading({ editor }: ToolbarProps) {
   if (!editor) return null;
 
   return (
-    <div className='w-full md:border-1 md:rounded-sm md:border-b-2 border-bg-gray-d/60 md:mx-0'>
+    <div className='w-full border-1 rounded-sm border-b-1 border-bg-gray-d/60 md:mx-0 p-2'>
       <div className='flex flex-col md:flex-row md:items-center justify-center md:justify-start md:p-[8px] gap-2 md:gap-0'>
-        <div className='flex justify-start items-center gap-5'>
+        <div className='flex justify-start items-center gap-2'>
           <FontSizeButtons editor={editor} />
           <TextColorButtons editor={editor} />
         </div>

@@ -384,12 +384,13 @@ export default function NoticeEdit() {
           </div>
           <strong className='p-2 text-bg-black t-b-32'>게시물 수정</strong>
         </div>
-        <div className='w-[96%] border-t-2 border-t-btn-gray-9 py-[8px]'></div>
+        <div className='w-full border-t-1 border-t-bg-gray-d pt-0 md:pt-2'></div>
       </div>
       <form
-        className='flex flex-col items-center justify-center w-full max-w-[1260px] mx-auto'
+        className='flex flex-col items-center justify-center w-full max-w-[1260px] h-full mx-auto'
         onSubmit={handleSubmit}
       >
+        {/* 제목 구분 시작일 종료일  */}
         <NoticeEditHeader
           formData={formData}
           setFormData={setFormData}
@@ -397,41 +398,38 @@ export default function NoticeEdit() {
           selectedCategory={selectedCategory}
           handleCategoryChange={handleCategoryChange}
         />
-        <div className='md:mt-[40px]'></div>
-        <div className='w-full xl:px-0 mb-4 ml-12 md:ml-0'>
-          <ToolbarHeading editor={editor} />
-        </div>
+        <div className='w-full xl:px-0 mb-4 ml-12 md:ml-0'>{/* 툴바 툴 */}</div>
 
-        <div className='w-full h-auto flex flex-col gap-2'>
-          <NoticeEditText
-            setFormData={setFormData}
-            isLoading={isLoading}
-            editor={editor}
-          />
+        <div className='w-full h-auto flex flex-col gap-2 px-[6px] md:px-0'>
+          <div className='border-1 border-bg-gray-d/60'>
+            <ToolbarHeading editor={editor} />
+            <NoticeEditText
+              setFormData={setFormData}
+              isLoading={isLoading}
+              editor={editor}
+            />
+          </div>
           <NoticeUploadEditor formData={formData} setFormData={setFormData} />
-          <div className='w-full flex items-center px-4'>
-            <div className='flex-1 flex justify-center'>
-              <NoticeNav noticeNo={noticeNo ?? ''} />
-            </div>
-            <div className='flex gap-4'>
-              <Button
-                type='button'
-                onClick={handleCancel}
-                className='w-[80px] h-[20px] t-r-16 bg-destructive hover:bg-destructive/80'
-              >
-                취소
-              </Button>
-              <Button
-                type='submit'
-                disabled={isLoading}
-                className='w-[80px] h-[20px] t-r-16 bg-primary hover:bg-primary/80'
-              >
-                {isLoading ? '처리중...' : '완료'}
-              </Button>
-            </div>
+        </div>
+        <div className='w-full flex justify-between items-center px-4 gap-4 py-6'>
+          <NoticeNav noticeNo={noticeNo ?? ''} />
+          <div className='flex justify-center items-center gap-3'>
+            <Button
+              type='submit'
+              disabled={isLoading}
+              className='t-r-16 bg-primary hover:bg-primary/80 xl:w-[200px] md:w-[120px] w-[96px]'
+            >
+              {isLoading ? '처리중...' : '완료'}
+            </Button>
+            <Button
+              type='button'
+              onClick={handleCancel}
+              className='t-r-16 bg-destructive hover:bg-destructive/80 xl:w-[200px] md:w-[120px] w-[96px]'
+            >
+              취소
+            </Button>
           </div>
         </div>
-        
       </form>
     </div>
   );
