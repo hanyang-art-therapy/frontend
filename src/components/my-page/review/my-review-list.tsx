@@ -47,6 +47,20 @@ export default function MyReviewList({ myReviews }: MyReviewListProps) {
           </Link>
         </li>
       ))}
+
+      {Array.from({
+        length: 5 - reviews.slice(0, 5).length,
+      }).map((_, i) => (
+        <li
+          key={`empty-row-${i}`}
+          className='border-b border-b-bg-gray-d border-muted px-1 md:px-5 py-[13px] last:border-b-0 hover:bg-primary/10 hover:text-bg-primary transition-all duration-300'
+        >
+          <div className='flex flex-col items-center cursor-pointer'>
+            <p className='t-m-18'>&nbsp;</p>
+            <p className='t-r-14 mt-[10px]'>&nbsp;</p>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 }

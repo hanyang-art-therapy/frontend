@@ -155,8 +155,8 @@ export default function ProfessorForm({ setProfessors }: Props) {
             type='file'
             accept='image/*'
             ref={fileInputRef}
-            className='hidden'
             onChange={handleFileChange}
+            className='hidden'
           />
           <Button
             type='button'

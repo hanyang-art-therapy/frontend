@@ -4,6 +4,7 @@ import type {
   Art,
   ArtDetail,
   ArtsRequest,
+  CohortsRequest,
   GetCohortsResponse,
   GetYearsResponse,
 } from '@/types/gallery/art';
@@ -34,8 +35,12 @@ export const getYears = async (): Promise<GetYearsResponse> => {
   return response.data;
 };
 
-export const getCohorts = async (): Promise<GetCohortsResponse> => {
-  const response = await apiInstance.get('/galleries/cohorts');
+export const getCohorts = async ({
+  year,
+}: Partial<CohortsRequest>): Promise<GetCohortsResponse> => {
+  const response = await apiInstance.get('/galleries/cohorts', {
+    params: { year },
+  });
 
   return response.data;
 };

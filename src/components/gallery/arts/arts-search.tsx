@@ -48,7 +48,10 @@ export default function ArtsSearch({ setLastId }: ArtsSearchProps) {
         value={selectedCohort}
         onValueChange={(value) => handleCohortChange(value)}
       >
-        <SelectTrigger className='px-4 py-2 border rounded mr-auto mt-[30px]'>
+        <SelectTrigger
+          className='px-4 py-2 border rounded mr-auto mt-[30px]'
+          aria-label='기수 선택'
+        >
           <SelectValue placeholder='전체 기수' />
         </SelectTrigger>
 
@@ -66,7 +69,10 @@ export default function ArtsSearch({ setLastId }: ArtsSearchProps) {
         value={selectedYear}
         onValueChange={(value) => handleYearChange(value)}
       >
-        <SelectTrigger className='px-4 py-2 border rounded mr-auto mt-[30px]'>
+        <SelectTrigger
+          className='px-4 py-2 border rounded mr-auto mt-[30px]'
+          aria-label='연도 선택'
+        >
           <SelectValue placeholder='전체 연도' />
         </SelectTrigger>
 

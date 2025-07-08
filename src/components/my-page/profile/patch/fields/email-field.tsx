@@ -55,19 +55,19 @@ export default function EmailField({
       originalEmailId === localEmailId &&
       originalEmailDomain === localEmailDomain
     ) {
-      return toast.error('기존 이메일을 사용할 수 없습니다.');
+      return toast.error('기존 이메일을 사용할 수 없습니다');
     }
 
     if (!localEmailId || !localEmailDomain) {
-      return toast.error('이메일을 입력해주세요.');
+      return toast.error('이메일을 입력해주세요');
     }
 
     if (localEmailId.length > 30) {
-      return toast.error('이메일은 30자 이하로 입력해주세요.');
+      return toast.error('이메일은 30자 이하로 입력해주세요');
     }
 
     if (localEmailDomain.length > 30) {
-      return toast.error('이메일 도메인은 30자 이하로 입력해주세요.');
+      return toast.error('이메일 도메인은 30자 이하로 입력해주세요');
     }
 
     setIsLoading(true);

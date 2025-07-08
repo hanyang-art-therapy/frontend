@@ -22,7 +22,7 @@ export default function NameField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={`h-[45px] sm:w-[300px] w-full ${className || ''}`}
-        placeholder='이름을 입력해주세요'
+        placeholder='이름 입력'
       />
     </div>
   );

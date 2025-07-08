@@ -25,7 +25,6 @@ export default function Pagination({
   totalPages,
   onPageChange,
 }: CommonPaginationProps) {
-
   const pageNumbers = getPageNumbers(currentPage, totalPages, 5);
 
   const handlePrevious = () => {

@@ -36,12 +36,15 @@ export default function PwField({
 
       <td className='t-r-16 px-2 sm:px-4 rounded-[5px] bg-white'>
         <div className='flex flex-col gap-1 justify-between py-2'>
-          <div className='relative w-fit'>
+          <div className='relative w-full'>
             <Input
               id={id}
               type={showPassword ? 'text' : 'password'}
               {...register(fieldKey)}
-              className={cn('sm:w-[30vw] w-fit', error && 'border-destructive')}
+              className={cn(
+                'sm:w-[30vw] w-full',
+                error && 'border-destructive'
+              )}
               autoComplete={label}
               required
             />

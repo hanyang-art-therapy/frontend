@@ -25,6 +25,10 @@ export type ArtsRequest = {
   cohort?: number;
 };
 
+export type CohortsRequest = {
+  year?: number;
+};
+
 export type GetCohortsResponse = {
   cohorts: number[];
 };

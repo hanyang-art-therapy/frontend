@@ -1,10 +1,7 @@
-import type { LucideProps } from 'lucide-react';
-import type { ForwardRefExoticComponent } from 'react';
+import type { LucideIcon } from 'lucide-react';
 
 type GalleryIntroTitleProps = {
-  icon: ForwardRefExoticComponent<
-    Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
-  >;
+  icon: LucideIcon;
   title: string;
   subTitle?: string;
 };
