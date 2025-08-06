@@ -35,8 +35,7 @@ export const SCHOLARSHIP_CONSTANTS = {
         },
         {
           discountRate: '40% 감면',
-          condition:
-            '한양대학교 서울 캠퍼스, ERICA 학부 졸업(예정)자, 한양사이버대학교 졸업',
+          condition: 'ERICA 학부 졸업(예정)자',
         },
         {
           discountRate: '30% 감면',
@@ -46,7 +45,7 @@ export const SCHOLARSHIP_CONSTANTS = {
         {
           discountRate: '20% 감면',
           condition:
-            '다음 중 하나에 해당되는 경우:\n– 공무원, 군인, 국공기업 임원\n– 전공 관련 자격증 소지자\n– 초·중·고 정규직 교사\n– 본교 교직원, AMP 수료자\n– 국가유공자 및 직계가족 등',
+            '다음 중 하나에 해당되는 경우:\n– 공무원, 군인, 국공기업 임원\n– 전공 관련 자격증 소지자\n– 초·중·고 정규직 교사\n– 본교 교직원, AMP 수료자\n– 국가유공자 및 직계가족 등\n– 한양사이버대학교 졸업\n– 한양대학교 서울 캠퍼스',
         },
       ],
     },
